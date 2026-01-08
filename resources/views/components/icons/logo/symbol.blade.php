@@ -1,4 +1,4 @@
-@props(['size' => 'sm'])
+@props(['size' => 'lg'])
 
 @if($size === 'lg')
   <svg width="440" height="441" viewBox="0 0 440 441" fill="none" xmlns="http://www.w3.org/2000/svg" {{ $attributes->merge(['class' => '']) }}>
