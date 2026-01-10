@@ -1,8 +1,11 @@
 @section('meta_title', 'Kontakt – Büro')
 @section('meta_description', '')
 <x-layout.inner title="Kontakt">
+  
   <div class="flex flex-col gap-y-24 md:gap-y-40 lg:gap-56">
+
     <div>
+
       <x-headings.section class="mb-12 md:mb-16 lg:mb-18">
         Zürich
       </x-headings.section>
@@ -12,7 +15,7 @@
         alt="weberbrunner architektur ag Zürich"
         maps-url="https://maps.google.com">
 
-        <x-headings.h3 weight="normal">
+        <x-headings.h3 variant="normal">
           weberbrunner architektur ag
         </x-headings.h3>
 
@@ -27,8 +30,10 @@
           </a>
         </p>
       </x-cards.location>
+
     </div>
     <div>
+
       <x-headings.section class="mb-12 md:mb-16 lg:mb-18">
         Berlin
       </x-headings.section>
@@ -37,7 +42,8 @@
         image="images/dummy-location-berlin.jpg"
         alt="weberbrunner pischetsrieder architektur Gesellschaft von Architekten mbH"
         maps-url="https://maps.google.com">
-        <x-headings.h3 weight="normal">
+
+        <x-headings.h3 variant="normal">
           weberbrunner pischetsrieder architektur<br>Gesellschaft von Architekten mbH
         </x-headings.h3>
         <p>
@@ -51,6 +57,9 @@
           </a>
         </p>
       </x-cards.location>
+
     </div>
+
   </div>
+
 </x-layout.inner>

@@ -1,7 +1,7 @@
 @props([
-  'weight' => 'semibold',
+  'variant' => 'semibold',
 ])
 
-<h3 {{ $attributes->merge(['class' => 'font-' . $weight]) }}>
+<h3 {{ $attributes->merge(['class' => 'font-' . $variant]) }}>
   {{ $slot }}
 </h3>
