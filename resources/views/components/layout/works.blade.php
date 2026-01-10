@@ -2,7 +2,7 @@
 
 <x-layout.partials.body>
 
-  <div class="lg:grid lg:grid-cols-12 w-full flex-1 px-20 lg:px-40">
+  <div class="lg:grid lg:grid-cols-12 w-full flex-1 px-20 lg:pl-40 lg:pr-0">
     <nav class="hidden lg:block lg:col-span-2">
       [Nav]
     </nav>

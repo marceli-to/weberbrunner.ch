@@ -2,7 +2,7 @@
 
 <x-layout.partials.body>
 
-  <x-layout.partials.header class="flex gap-x-40 lg:gap-x-0 lg:grid lg:grid-cols-12 w-full px-20 lg:px-40">
+  <x-layout.partials.header class="flex gap-x-40 lg:gap-x-0 lg:grid lg:grid-cols-12 w-full px-20 lg:pl-40 lg:pr-0">
     <div class="lg:col-span-2">
       [Backlink]
     </div>

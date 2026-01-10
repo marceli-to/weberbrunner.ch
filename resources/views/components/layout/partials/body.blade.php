@@ -7,7 +7,7 @@
     text-xs
     md:text-lg
     lg:text-xl
-    leading-[1.25]
+    leading-[1.35]
     tracking-[0.005em]
     min-h-screen
     flex 

@@ -26,6 +26,9 @@
 
   /* Breakpoints */
   --breakpoint-xs: 400px;
+
+  /* Max widths */
+  --max-width-prose: 85ch;
 }
 
 @layer base {
@@ -37,6 +40,7 @@
 }
 
 @layer utilities {
+
   .w-col-3 {
     width: calc(var(--col-width) * 3 + var(--grid-gap) * 2) !important;
   }
@@ -54,3 +58,7 @@ strong {
   @apply font-semibold;
 }
 
+p:not(:last-child),
+ul:not(:last-child):not(nav ul) {
+  @apply mb-16 lg:mb-24;
+}

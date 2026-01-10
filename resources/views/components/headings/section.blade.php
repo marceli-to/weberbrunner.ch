@@ -6,10 +6,6 @@
   $tag = 'h' . $level;
 @endphp
 
-<div >
-
-  <{{ $tag }} {{ $attributes->merge(['class' => 'relative border-b border-black']) }}>
-    {{ $slot }}
-  </{{ $tag }}>
-
-</div>
+<{{ $tag }} {{ $attributes->merge(['class' => 'relative border-b border-black font-semibold pb-6 md:pb-8 lg:pb-10']) }}>
+  {{ $slot }}
+</{{ $tag }}>
