@@ -26,7 +26,7 @@
           :active="Route::is('page.works*')" />
 
         <x-menu.item
-          url="{{ route('page.about.contact') }}"
+          url="{{ route('page.about') }}"
           title="Büro"
           :level="1"
           :active="Route::is('page.about*')" />
