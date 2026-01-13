@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <x-menu.wrapper class="bg-white px-20 py-20 w-full h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:relative md:bg-transparent md:h-auto md:w-auto md:mt-60 lg:mt-80 md:px-0 md:py-0" />
+    <x-menu.page.wrapper class="bg-white px-20 py-20 w-full h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:relative md:bg-transparent md:h-auto md:w-auto md:mt-60 lg:mt-80 md:px-0 md:py-0" />
     <x-menu.buttons.hide class="w-24 h-auto fixed top-25 right-25 z-50 md:hidden" />
     
   </x-layout.partials.header>

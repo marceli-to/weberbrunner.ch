@@ -1,5 +1,5 @@
 <body
-  x-data="{ menu: false }"
+  x-data="{ menu: false, filter: false }"
   class="
     antialiased 
     font-sans

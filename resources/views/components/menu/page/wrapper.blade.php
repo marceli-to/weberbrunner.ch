@@ -13,19 +13,19 @@
   x-transition:leave-end="opacity-0"
   class="{{ $class ?? ''}}">
 
-  <nav class="h-[inherit] flex flex-col justify-between">
+  <nav class="min-h-[inherit] flex flex-col justify-between">
 
     <div x-data="{ submenu: {{ Route::is('page.about*') ? 'true' : 'false' }} }" class="flex flex-col gap-y-20 md:gap-y-24">
 
-      <ul class="flex flex-col gap-y-24 md:gap-y-16">
+      <ul class="flex flex-col gap-y-16 md:gap-y-12">
 
-        <x-menu.item
+        <x-menu.page.item
           url="{{ route('page.works') }}"
           title="Arbeiten"
           :level="1"
           :active="Route::is('page.works*')" />
 
-        <x-menu.item
+        <x-menu.page.item
           url="{{ route('page.about') }}"
           title="Büro"
           :level="1"
@@ -52,26 +52,26 @@
 
           <ul class="flex flex-col gap-y-2">
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about') }}"
               title="Profil"
               :level="2"
               :active="Route::is('page.about')"
               class="md:hidden" />
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.team') }}"
               title="Team"
               :level="2"
               :active="Route::is('page.about.team')" />
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.jobs') }}"
               title="Jobs"
               :level="2"
               :active="Route::is('page.about.jobs')" />
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.contact') }}"
               title="Kontakt"
               :level="2"
@@ -79,7 +79,7 @@
           </ul>
 
           <ul class="flex flex-col gap-y-2">
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.network') }}"
               title="Netzwerk"
               :level="2"
@@ -87,19 +87,19 @@
           </ul>
 
           <ul class="flex flex-col gap-y-2">
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.talks') }}"
               title="Vorträge"
               :level="2"
               :active="Route::is('page.about.talks')" />
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.jury') }}"
               title="Jury"
               :level="2"
               :active="Route::is('page.about.jury')" />
 
-            <x-menu.item
+            <x-menu.page.item
               url="{{ route('page.about.awards') }}"
               title="Auszeichnungen"
               :level="2"

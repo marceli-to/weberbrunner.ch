@@ -11,7 +11,7 @@
   <div class="md:grid md:grid-cols-12 w-full flex-1 pl-20 lg:pl-40 lg:pr-0 {{ $containerClass ?? ''}}">
 
     <div class="md:col-span-3 ">
-      <x-menu.wrapper class="bg-white px-20 py-20 w-full h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:sticky md:top-40 md:bg-transparent md:h-auto md:w-auto md:mt-20 lg:mt-40 md:px-0 md:py-0" />
+      <x-menu.page.wrapper class="bg-white px-20 py-20 w-full h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:sticky md:top-40 md:bg-transparent md:h-auto md:w-auto md:mt-20 lg:mt-40 md:px-0 md:py-0" />
       <x-menu.buttons.hide class="w-24 h-auto fixed top-25 right-25 z-50 md:hidden" />
     </div>
 

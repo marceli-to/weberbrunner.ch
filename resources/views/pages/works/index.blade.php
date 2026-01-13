@@ -1,5 +1,5 @@
 @section('meta_title', 'Arbeiten')
-
-<x-layout.works>
-
+@section('meta_description', '')
+<x-layout.works title="Arbeiten">
+  <livewire:projects />
 </x-layout.works>
