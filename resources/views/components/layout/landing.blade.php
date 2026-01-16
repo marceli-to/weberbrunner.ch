@@ -13,7 +13,7 @@
         <x-menu.buttons.show class="md:hidden w-32 h-auto fixed top-25 right-20 z-50" />
       </div>
       <div class="md:order-1 flex justify-center">
-        <x-icons.logo.symbol class="w-full h-auto max-w-280 lg:max-w-300 xl:max-w-440" />
+        <x-icons.logo.symbol size="lg" class="w-full h-auto max-w-280 lg:max-w-300 xl:max-w-440" />
       </div>
     </div>
 

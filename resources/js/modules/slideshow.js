@@ -14,7 +14,7 @@ export default function initSlideshows() {
       centeredSlides: false,
       direction: 'horizontal',
       speed: 800,
-      spaceBetween: 0,
+      spaceBetween: 10,
       navigation: {
         nextEl: '.swiper-btn-next',
         prevEl: '.swiper-btn-prev',
