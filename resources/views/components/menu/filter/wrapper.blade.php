@@ -21,7 +21,7 @@
   x-transition:leave-end="opacity-0"
   class="{{ $class ?? ''}}">
 
-  <nav class="flex flex-col justify-between gap-y-60">
+  <nav class="bg-white flex flex-col justify-between gap-y-60">
     
     <div class="flex flex-col gap-y-20 md:gap-y-40">
 
