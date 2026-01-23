@@ -15,9 +15,9 @@
 
   <nav class="min-h-[inherit] flex flex-col justify-between">
 
-    <div x-data="{ submenu: {{ Route::is('page.about*') ? 'true' : 'false' }} }" class="flex flex-col gap-y-20 md:gap-y-24">
+    <div x-data="{ submenu: {{ Route::is('page.about*') ? 'true' : 'false' }} }" class="flex flex-col gap-y-20 md:gap-y-40">
 
-      <ul class="flex flex-col gap-y-16 md:gap-y-12">
+      <ul class="flex flex-col gap-y-16 md:gap-y-8">
 
         <x-menu.page.item
           url="{{ route('page.works') }}"

@@ -22,9 +22,9 @@
 
   <nav class="min-h-[inherit] flex flex-col justify-between md:gap-y-60">
     
-    <div class="flex flex-col gap-y-20 md:gap-y-24">
+    <div class="flex flex-col gap-y-20 md:gap-y-40">
 
-      <ul class="flex flex-col gap-y-16 md:gap-y-12">
+      <ul class="flex flex-col gap-y-16 md:gap-y-8">
 
         <x-menu.page.item
           url="{{ route('page.works') }}"

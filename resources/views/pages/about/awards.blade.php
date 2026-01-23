@@ -2,7 +2,7 @@
 @section('meta_description', '')
 <x-layout.inner title="Auszeichnungen">
 
-  <x-headings.section class="mb-6 md:mb-8 lg:mb-10">
+  <x-headings.section class="mb-6 md:mb-12 lg:mb-18">
     Auszeichnungen und Preise
   </x-headings.section>
 

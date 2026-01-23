@@ -1,8 +1,8 @@
 <div class="md:grid md:grid-cols-12 w-full">
 
-  <div class="md:col-span-3">
+  <div class="md:col-span-3 lg:col-span-4">
     <x-menu.filter.wrapper 
-      class="bg-white px-20 py-20 w-3/4 h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:sticky md:top-40 md:h-auto md:bg-transparent md:w-auto md:mt-20 lg:mt-40 md:px-0 md:py-0"
+      class="bg-white px-20 py-20 md:pr-0 md:pl-20 lg:pl-40 w-3/4 h-full max-h-dvh fixed left-0 top-0 z-30 md:!block md:sticky md:top-14 lg:mt-40 md:h-auto md:bg-transparent md:w-auto md:py-0"
       :types="$types"
       :status="$status"
       :locations="$locations"
@@ -12,7 +12,7 @@
       :availableLocations="$availableLocations" />
   </div>
 
-  <div class="md:min-h-(--content-full-height-md) lg:min-h-(--content-full-height-lg) md:col-span-9 md:border-l md:border-black overflow-x-hidden">
+  <div class="md:min-h-(--content-full-height-md) lg:min-h-(--content-full-height-lg) md:col-span-9 lg:col-span-8 md:border-l md:border-black overflow-x-hidden">
     
     {{-- Mobile: 2 columns --}}
     <div class="flex md:hidden min-h-(--content-full-height) border-t border-black">

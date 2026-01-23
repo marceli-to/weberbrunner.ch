@@ -2,25 +2,21 @@
   'info' => null,
 ])
 
-<div class="_md:pl-20 _lg:pl-40">
-
-  <div {{ $attributes->merge(['class' => 'swiper']) }} data-slideshow>
+<div {{ $attributes->merge(['class' => 'swiper']) }} data-slideshow>
+  
+  <div class="swiper-wrapper relative">
     
-    <div class="swiper-wrapper relative">
-      
-      <div class="swiper-slide w-col-3-offset ml-30 pl-10 justify-center items-center bg-white !hidden lg:!flex">
-        @if($info)
-          {{ $info }}
-        @endif
-      </div>
-      
-      {{ $slot }}
-
+    <div class="swiper-slide w-col-3-offset pl-40 pr-10 justify-center items-center bg-white !hidden lg:!flex">
+      @if($info)
+        {{ $info }}
+      @endif
     </div>
-
-    <button class="swiper-btn-prev cursor-pointer absolute left-0 top-0 z-50 w-20 lg:w-40 h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) lg:h-(--slideshow-item-height-lg)"></button>
-    <button class="swiper-btn-next cursor-pointer absolute right-0 top-0 z-50 w-20 lg:w-40 h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) lg:h-(--slideshow-item-height-lg)"></button>
+    
+    {{ $slot }}
 
   </div>
-  
+
+  <button class="swiper-btn-prev cursor-pointer absolute left-0 top-0 z-50 w-20 lg:w-40 h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) lg:h-(--slideshow-item-height-lg)"></button>
+  <button class="swiper-btn-next cursor-pointer absolute right-0 top-0 z-50 w-20 lg:w-40 h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) lg:h-(--slideshow-item-height-lg)"></button>
+
 </div>

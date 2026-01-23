@@ -3,3 +3,6 @@ ssh wbgch18@wbg.ch
 
 # GITHUB
 https://github.com/marceli-to/weberbrunner.ch.git
+
+# PHP binary
+/usr/local/php84/bin/php

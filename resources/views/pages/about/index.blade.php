@@ -3,9 +3,11 @@
 
 <x-layout.inner title="Büro">
   
-  <x-icons.logo.symbol size="lg" class="w-full h-auto max-w-[60%] lg:max-w-480 rotate-90 mb-30 md:mb-50 lg:mb-70" />
+  <div class="md:grid md:grid-cols-9">
+    <x-icons.logo.symbol size="lg" class="w-full h-auto max-w-[60%] md:max-w-none md:col-span-4 rotate-90 mb-30 md:mb-50 lg:mb-70" />
+  </div>
   
-  <x-headings.section class="mb-6 md:mb-8 lg:mb-10">
+  <x-headings.section class="mb-6 md:mb-12 lg:mb-18">
     Büro
   </x-headings.section>
   

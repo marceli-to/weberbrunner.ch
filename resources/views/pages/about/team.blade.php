@@ -3,7 +3,7 @@
 
 <x-layout.inner
   title="Team"
-  containerClass="!pl-0 md:!pl-40"
+  containerClass="!pl-0 md:!pl-20 lg:!pl-0"
   headerClass="pl-20"
   mainClass="!pb-0 relative">
 

@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CxCyO2oR.css",
+    "file": "assets/app-0H4WvxoX.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -15,14 +15,6 @@
   "resources/fonts/Routine-Book.woff2": {
     "file": "assets/Routine-Book-CPeqd7l6.woff2",
     "src": "resources/fonts/Routine-Book.woff2"
-  },
-  "resources/fonts/Routine-Regular.woff": {
-    "file": "assets/Routine-Regular-DeRzt1oq.woff",
-    "src": "resources/fonts/Routine-Regular.woff"
-  },
-  "resources/fonts/Routine-Regular.woff2": {
-    "file": "assets/Routine-Regular-C7f5m7Gb.woff2",
-    "src": "resources/fonts/Routine-Regular.woff2"
   },
   "resources/fonts/Routine-Semibold.woff": {
     "file": "assets/Routine-Semibold-Drd267j1.woff",
