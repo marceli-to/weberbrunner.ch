@@ -31,6 +31,9 @@ class Seed extends Command
 		$this->info('Seeding projects...');
 		$this->call('app:seed-projects');
 
+		$this->info('Seeding blog posts...');
+		$this->call('app:seed-posts');
+
 		$this->info('Updating media dimensions...');
 		$this->call('media:update-dimensions', ['--force' => true]);
 

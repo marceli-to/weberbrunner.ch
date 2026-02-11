@@ -3,17 +3,26 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBlogStore } from '../../stores/blog'
 import { useToast } from '../../composables/useToast'
+import { useConfirm } from '../../composables/useConfirm'
+import Burger from '../../components/icons/Burger.vue'
+import draggable from 'vuedraggable'
 
 const router = useRouter()
 const store = useBlogStore()
 const toast = useToast()
+const { confirm } = useConfirm()
 
 onMounted(() => {
 	store.fetchPosts()
 })
 
 async function handleDelete(post) {
-	if (!confirm(`Delete "${post.title}"?`)) return
+	const ok = await confirm({
+		message: `Möchtest Du den Eintrag «${post.title}» wirklich löschen?`,
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (!ok) return
 	await store.deletePost(post.id)
 	toast.success('Post deleted')
 }
@@ -44,46 +53,56 @@ async function handleDelete(post) {
       <table v-else class="w-full text-sm">
         <thead>
           <tr class="border-b border-silver text-left">
+            <th></th>
             <th class="py-8 font-semibold text-gray">Title</th>
             <th class="py-8 font-semibold text-gray w-80">Status</th>
             <th class="py-8 font-semibold text-gray w-128">Created</th>
             <th class="py-8 font-semibold text-gray w-128 text-right">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr
-            v-for="post in store.posts"
-            :key="post.id"
-            class="border-b border-snow"
-          >
-            <td class="py-8 text-black">{{ post.title }}</td>
-            <td class="py-8">
-              <span
-                class="text-sm"
-                :class="post.publish ? 'text-lime' : 'text-gray'"
-              >
-                {{ post.publish ? 'Published' : 'Draft' }}
-              </span>
-            </td>
-            <td class="py-8 text-gray">
-              {{ new Date(post.created_at).toLocaleDateString('de-CH') }}
-            </td>
-            <td class="py-8 text-right">
-              <button
-                class="text-black font-semibold mr-12"
-                @click="router.push({ name: 'blog.edit', params: { id: post.id } })"
-              >
-                Edit
-              </button>
-              <button
-                class="text-red font-semibold"
-                @click="handleDelete(post)"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <draggable
+          v-model="store.posts"
+          tag="tbody"
+          item-key="id"
+          handle=".drag-handle"
+          ghost-class="bg-snow"
+          drag-class="bg-white"
+          @end="store.reorderPosts"
+        >
+          <template #item="{ element: post }">
+            <tr class="border-b border-silver">
+              <td class="py-12 w-24">
+                <Burger class="w-14 cursor-grab drag-handle" />
+              </td>
+              <td class="py-12 text-black">{{ post.title }}</td>
+              <td class="py-12">
+                <span
+                  class="text-sm"
+                  :class="post.publish ? 'text-lime' : 'text-gray'"
+                >
+                  {{ post.publish ? 'Published' : 'Draft' }}
+                </span>
+              </td>
+              <td class="py-12 text-gray">
+                {{ new Date(post.created_at).toLocaleDateString('de-CH') }}
+              </td>
+              <td class="py-12 text-right">
+                <button
+                  class="text-black font-semibold mr-12"
+                  @click="router.push({ name: 'blog.edit', params: { id: post.id } })"
+                >
+                  Edit
+                </button>
+                <button
+                  class="text-red font-semibold"
+                  @click="handleDelete(post)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </template>
+        </draggable>
       </table>
     </div>
 	</div>

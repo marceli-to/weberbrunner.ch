@@ -13,6 +13,7 @@ Route::prefix('dashboard')
 			->group(function () {
 				Route::get('/', 'index');
 				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
 				Route::get('/{post}', 'show');
 				Route::put('/{post}', 'update');
 				Route::delete('/{post}', 'destroy');

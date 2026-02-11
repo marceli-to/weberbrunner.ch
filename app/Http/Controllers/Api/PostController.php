@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Post\DeleteAction as DeletePostAction;
+use App\Actions\Post\ReorderAction as ReorderPostAction;
 use App\Actions\Post\StoreAction as StorePostAction;
 use App\Actions\Post\UpdateAction as UpdatePostAction;
 use App\Http\Controllers\Controller;
@@ -15,9 +16,16 @@ class PostController extends Controller
 {
 	public function index()
 	{
-		$posts = Post::orderBy('created_at', 'desc')->get();
+		$posts = Post::orderBy('sort_order')->get();
 
 		return PostResource::collection($posts);
+	}
+
+	public function reorder()
+	{
+		(new ReorderPostAction)->execute(request('items'));
+
+		return response()->json(null, 204);
 	}
 
 	public function store(StorePostRequest $request)

@@ -6,4 +6,5 @@ export default {
 	store: (data) => api.post('/blog', data),
 	update: (id, data) => api.put(`/blog/${id}`, data),
 	destroy: (id) => api.delete(`/blog/${id}`),
+	reorder: (items) => api.patch('/blog/reorder', { items }),
 }

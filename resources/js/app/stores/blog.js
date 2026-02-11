@@ -55,5 +55,13 @@ export const useBlogStore = defineStore('blog', {
 			await blogApi.destroy(id)
 			this.posts = this.posts.filter(p => p.id !== id)
 		},
+
+		async reorderPosts() {
+			const items = this.posts.map((post, index) => ({
+				id: post.id,
+				sort_order: index,
+			}))
+			await blogApi.reorder(items)
+		},
 	},
 })

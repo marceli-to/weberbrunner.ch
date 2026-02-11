@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Post extends Model
 {
-	protected $fillable = ['title', 'slug', 'content', 'publish'];
+	protected $fillable = ['title', 'slug', 'content', 'publish', 'sort_order'];
 
 	protected $casts = [
 		'publish' => 'boolean',
