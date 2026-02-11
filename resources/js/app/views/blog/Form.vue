@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useBlogStore } from '../../stores/blog'
 import { useMediaStore } from '../../stores/media'
 import { useToast } from '../../composables/useToast'
+import { useConfirm } from '../../composables/useConfirm'
 import MediaUploader from '../../components/media/MediaUploader.vue'
 import MediaGrid from '../../components/media/MediaGrid.vue'
 import MediaEditModal from '../../components/media/MediaEditModal.vue'
@@ -14,6 +15,7 @@ const router = useRouter()
 const store = useBlogStore()
 const mediaStore = useMediaStore()
 const toast = useToast()
+const { confirm } = useConfirm()
 
 const isEdit = computed(() => !!route.params.id)
 const editingMedia = ref(null)
@@ -75,6 +77,12 @@ async function onSaveMedia({ uuid, data }) {
 }
 
 async function onDeleteMedia(media) {
+	const ok = await confirm({
+		message: 'Möchtest Du dieses Bild wirklich löschen?',
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (!ok) return
 	await mediaStore.deleteItem(media.uuid)
 }
 
