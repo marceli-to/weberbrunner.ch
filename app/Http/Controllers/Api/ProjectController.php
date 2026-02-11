@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Actions\Project\DeleteAction as DeleteProjectAction;
+use App\Actions\Project\ReorderAction as ReorderProjectAction;
+use App\Actions\Project\StoreAction as StoreProjectAction;
+use App\Actions\Project\UpdateAction as UpdateProjectAction;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\UpdateProjectRequest;
+use App\Http\Resources\ProjectResource;
+use App\Models\Project;
+
+class ProjectController extends Controller
+{
+	public function index()
+	{
+		$query = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
+			->orderBy('sort_order');
+
+		if (request('search')) {
+			$query->where(function ($q) {
+				$q->where('title', 'like', '%' . request('search') . '%')
+					->orWhere('description', 'like', '%' . request('search') . '%');
+			});
+		}
+
+		if (request('category')) {
+			$query->whereHas('categories', fn ($q) => $q->where('categories.id', request('category')));
+		}
+
+		if (request('status')) {
+			$query->whereHas('statuses', fn ($q) => $q->where('statuses.id', request('status')));
+		}
+
+		if (request('location')) {
+			$query->where('location_id', request('location'));
+		}
+
+		if (request()->has('publish')) {
+			$query->where('publish', request()->boolean('publish'));
+		}
+
+		if (request()->boolean('trashed')) {
+			$query->onlyTrashed();
+		}
+
+		return ProjectResource::collection($query->get());
+	}
+
+	public function store(StoreProjectRequest $request)
+	{
+		$project = (new StoreProjectAction)->execute($request->validated());
+
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+	}
+
+	public function show(Project $project)
+	{
+		$project->load(['attributes', 'media', 'categories', 'statuses', 'location']);
+
+		return new ProjectResource($project);
+	}
+
+	public function update(UpdateProjectRequest $request, Project $project)
+	{
+		$project = (new UpdateProjectAction)->execute($project, $request->validated());
+
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+	}
+
+	public function destroy(Project $project)
+	{
+		(new DeleteProjectAction)->execute($project);
+
+		return response()->json(null, 204);
+	}
+
+	public function restore(string $uuid)
+	{
+		$project = Project::withTrashed()->where('uuid', $uuid)->firstOrFail();
+		$project->restore();
+
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+	}
+
+	public function reorder()
+	{
+		(new ReorderProjectAction)->execute(request('items'));
+
+		return response()->json(null, 204);
+	}
+}

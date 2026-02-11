@@ -2,20 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-	/** @use HasFactory<\Database\Factories\UserFactory> */
-	use HasFactory, Notifiable;
+	use HasFactory, HasUuid, LogsActivity, Notifiable, SoftDeletes;
 
 	protected $fillable = [
+		'firstname',
 		'name',
 		'email',
 		'password',
+		'role',
 	];
 
 	protected $hidden = [
@@ -29,5 +33,27 @@ class User extends Authenticatable
 			'email_verified_at' => 'datetime',
 			'password' => 'hashed',
 		];
+	}
+
+	public function isAdmin(): bool
+	{
+		return $this->role === 'admin';
+	}
+
+	public function isEditor(): bool
+	{
+		return $this->role === 'editor';
+	}
+
+	public function isViewer(): bool
+	{
+		return $this->role === 'viewer';
+	}
+
+	public function getActivitylogOptions(): LogOptions
+	{
+		return LogOptions::defaults()
+			->logAll()
+			->logOnlyDirty();
 	}
 }

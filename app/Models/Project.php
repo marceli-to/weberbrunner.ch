@@ -2,24 +2,39 @@
 
 namespace App\Models;
 
+use App\Traits\HasUuid;
+use App\Traits\Sortable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
+	use HasFactory, HasUuid, LogsActivity, Sortable, SoftDeletes;
+
 	protected $fillable = [
 		'title',
 		'slug',
 		'description',
-		'location',
+		'location_id',
 		'publish',
+		'sort_order',
 	];
 
 	protected $casts = [
 		'publish' => 'boolean',
 	];
+
+	public function location(): BelongsTo
+	{
+		return $this->belongsTo(Location::class);
+	}
 
 	public function attributes(): HasMany
 	{
@@ -49,5 +64,12 @@ class Project extends Model
 	public function scopePublished($query)
 	{
 		return $query->where('publish', true);
+	}
+
+	public function getActivitylogOptions(): LogOptions
+	{
+		return LogOptions::defaults()
+			->logAll()
+			->logOnlyDirty();
 	}
 }
