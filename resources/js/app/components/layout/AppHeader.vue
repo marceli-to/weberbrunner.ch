@@ -23,7 +23,7 @@ function logout() {
 				<LogoMark class="w-25 h-25 -mt-5" />
 			</div>
 
-			<div class="col-span-9">
+			<div class="col-span-8 col-start-4">
 				<div class="flex justify-between">
 
 					<h1 class="text-lg font-semibold text-black leading-none">

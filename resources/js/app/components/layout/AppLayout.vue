@@ -13,7 +13,7 @@ const { state: confirmState, onConfirm, onCancel } = useConfirm()
 		<AppHeader />
 		<div class="bg-snow grid grid-cols-12 gap-x-20 flex-1">
 			<AppSidebar />
-			<main class="col-span-10 bg-snow relative pt-40">
+			<main class="col-span-9 col-start-4 bg-snow relative pt-40">
 				<ToastContainer />
 				<slot />
 			</main>
