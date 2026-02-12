@@ -5,7 +5,7 @@ namespace App\Http\Requests\ProjectAttribute;
 use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectAttributeRequest extends FormRequest
+class ReorderProjectAttributeRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
@@ -15,8 +15,9 @@ class StoreProjectAttributeRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'label' => 'required|string|max:255',
-			'value' => 'required|string|max:255',
+			'items' => 'required|array',
+			'items.*.id' => 'required|integer|exists:project_attributes,id',
+			'items.*.sort_order' => 'required|integer',
 		];
 	}
 }

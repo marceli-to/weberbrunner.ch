@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Job;
 
+use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateJobRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('update', $this->route('job'));
 	}
 
 	public function rules(): array

@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Media;
 
+use App\Models\Media;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UploadMediaRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('create', Media::class);
 	}
 
 	public function rules(): array

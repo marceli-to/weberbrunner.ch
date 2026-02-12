@@ -8,6 +8,7 @@ use App\Actions\Project\StoreAction as StoreProjectAction;
 use App\Actions\Project\UpdateAction as UpdateProjectAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
+use App\Http\Requests\Project\ReorderProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
@@ -16,6 +17,8 @@ class ProjectController extends Controller
 {
 	public function index()
 	{
+		$this->authorize('viewAny', Project::class);
+
 		$query = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
 			->orderBy('sort_order');
 
@@ -51,6 +54,8 @@ class ProjectController extends Controller
 
 	public function store(StoreProjectRequest $request)
 	{
+		$this->authorize('create', Project::class);
+
 		$project = (new StoreProjectAction)->execute($request->validated());
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
@@ -58,6 +63,8 @@ class ProjectController extends Controller
 
 	public function show(Project $project)
 	{
+		$this->authorize('view', $project);
+
 		$project->load(['attributes', 'media', 'categories', 'statuses', 'location']);
 
 		return new ProjectResource($project);
@@ -65,6 +72,8 @@ class ProjectController extends Controller
 
 	public function update(UpdateProjectRequest $request, Project $project)
 	{
+		$this->authorize('update', $project);
+
 		$project = (new UpdateProjectAction)->execute($project, $request->validated());
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
@@ -72,6 +81,8 @@ class ProjectController extends Controller
 
 	public function destroy(Project $project)
 	{
+		$this->authorize('delete', $project);
+
 		(new DeleteProjectAction)->execute($project);
 
 		return response()->json(null, 204);
@@ -80,14 +91,18 @@ class ProjectController extends Controller
 	public function restore(string $uuid)
 	{
 		$project = Project::withTrashed()->where('uuid', $uuid)->firstOrFail();
+		$this->authorize('restore', $project);
+
 		$project->restore();
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
 	}
 
-	public function reorder()
+	public function reorder(ReorderProjectRequest $request)
 	{
-		(new ReorderProjectAction)->execute(request('items'));
+		$this->authorize('create', Project::class);
+
+		(new ReorderProjectAction)->execute($request->validated('items'));
 
 		return response()->json(null, 204);
 	}

@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\TeamMemberBio;
 
+use App\Models\TeamMember;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTeamMemberBioRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('update', $this->route('teamMember'));
 	}
 
 	public function rules(): array

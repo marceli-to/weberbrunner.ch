@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,8 +24,8 @@ class MediaResource extends JsonResource
 			'orientation' => $this->orientation,
 			'is_teaser' => $this->is_teaser,
 			'sort_order' => $this->sort_order,
-			'thumbnail_url' => '/img/uploads/' . $this->file . '?w=200&h=200&fit=crop',
-			'preview_url' => '/img/uploads/' . $this->file . '?w=800&fit=max',
+			'thumbnail_url' => ImageController::signUrl('uploads/' . $this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
+			'preview_url' => ImageController::signUrl('uploads/' . $this->file, ['w' => 800, 'fit' => 'max']),
 		];
 	}
 }

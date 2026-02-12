@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\TeamMember;
 
+use App\Models\TeamMember;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTeamMemberRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('create', TeamMember::class);
 	}
 
 	public function rules(): array

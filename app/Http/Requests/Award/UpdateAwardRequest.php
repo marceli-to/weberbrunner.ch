@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Award;
 
+use App\Models\Award;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAwardRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('update', $this->route('award'));
 	}
 
 	public function rules(): array

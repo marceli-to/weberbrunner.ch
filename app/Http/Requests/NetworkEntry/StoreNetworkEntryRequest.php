@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\NetworkEntry;
 
+use App\Models\NetworkEntry;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreNetworkEntryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('create', NetworkEntry::class);
 	}
 
 	public function rules(): array

@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Jury;
 
+use App\Models\Jury;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreJuryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('create', Jury::class);
 	}
 
 	public function rules(): array

@@ -18,6 +18,8 @@ class MediaController extends Controller
 {
 	public function upload(UploadMediaRequest $request)
 	{
+		$this->authorize('create', Media::class);
+
 		$data = (new UploadMediaAction)->execute($request->file('file'));
 
 		return response()->json(['data' => $data]);
@@ -25,6 +27,8 @@ class MediaController extends Controller
 
 	public function update(UpdateMediaRequest $request, Media $media)
 	{
+		$this->authorize('update', $media);
+
 		$media = (new UpdateMediaAction)->execute($media, $request->validated());
 
 		return new MediaResource($media);
@@ -32,6 +36,8 @@ class MediaController extends Controller
 
 	public function destroy(Media $media)
 	{
+		$this->authorize('delete', $media);
+
 		(new DeleteMediaAction)->execute($media);
 
 		return response()->json(null, 204);
@@ -39,6 +45,8 @@ class MediaController extends Controller
 
 	public function reorder(ReorderMediaRequest $request)
 	{
+		$this->authorize('create', Media::class);
+
 		(new ReorderMediaAction)->execute($request->validated('items'));
 
 		return response()->json(['message' => 'ok']);
@@ -46,6 +54,8 @@ class MediaController extends Controller
 
 	public function teaser(Media $media)
 	{
+		$this->authorize('update', $media);
+
 		$media = (new SetTeaserAction)->execute($media);
 
 		return new MediaResource($media);

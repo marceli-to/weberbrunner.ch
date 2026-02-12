@@ -5,7 +5,7 @@ namespace App\Http\Requests\Location;
 use App\Models\Location;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLocationRequest extends FormRequest
+class ReorderLocationRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
@@ -15,7 +15,9 @@ class StoreLocationRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
+			'items' => 'required|array',
+			'items.*.id' => 'required|integer|exists:locations,id',
+			'items.*.sort_order' => 'required|integer',
 		];
 	}
 }

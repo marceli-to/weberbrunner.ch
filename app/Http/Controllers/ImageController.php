@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use League\Glide\ServerFactory;
 use League\Glide\Server;
+use League\Glide\Signatures\SignatureFactory;
+use League\Glide\Signatures\SignatureException;
 
 class ImageController extends Controller
 {
@@ -22,7 +24,17 @@ class ImageController extends Controller
 
 	public function show(Request $request, string $path): Response
 	{
-		$cachedPath = $this->server->makeImage($path, $request->all());
+		try {
+			SignatureFactory::create(config('app.key'))
+				->validateRequest('/img/' . $path, $request->all());
+		} catch (SignatureException $e) {
+			abort(403, 'Invalid image signature.');
+		}
+
+		$params = $request->all();
+		unset($params['s']);
+
+		$cachedPath = $this->server->makeImage($path, $params);
 		$cache = $this->server->getCache();
 		$imageContent = $cache->read($cachedPath);
 		$mimeType = $cache->mimeType($cachedPath);
@@ -31,5 +43,13 @@ class ImageController extends Controller
 			->header('Content-Type', $mimeType)
 			->header('Cache-Control', 'max-age=31536000, public')
 			->header('Expires', now()->addYear()->toRfc7231String());
+	}
+
+	public static function signUrl(string $path, array $params = []): string
+	{
+		$signature = SignatureFactory::create(config('app.key'));
+		$params['s'] = $signature->generateSignature('/img/' . $path, $params);
+
+		return '/img/' . $path . '?' . http_build_query($params);
 	}
 }

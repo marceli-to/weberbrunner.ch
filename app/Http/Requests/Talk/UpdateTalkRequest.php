@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Talk;
 
+use App\Models\Talk;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTalkRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('update', $this->route('talk'));
 	}
 
 	public function rules(): array

@@ -8,6 +8,7 @@ use App\Actions\Job\StoreAction as StoreJobAction;
 use App\Actions\Job\UpdateAction as UpdateJobAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Job\StoreJobRequest;
+use App\Http\Requests\Job\ReorderJobRequest;
 use App\Http\Requests\Job\UpdateJobRequest;
 use App\Http\Resources\JobResource;
 use App\Models\Job;
@@ -16,6 +17,8 @@ class JobController extends Controller
 {
 	public function index()
 	{
+		$this->authorize('viewAny', Job::class);
+
 		$jobs = Job::with('location')->orderBy('sort_order')->get();
 
 		return JobResource::collection($jobs);
@@ -23,6 +26,8 @@ class JobController extends Controller
 
 	public function store(StoreJobRequest $request)
 	{
+		$this->authorize('create', Job::class);
+
 		$job = (new StoreJobAction)->execute($request->validated());
 
 		return new JobResource($job->load('location'));
@@ -30,6 +35,8 @@ class JobController extends Controller
 
 	public function show(Job $job)
 	{
+		$this->authorize('view', $job);
+
 		$job->load('location');
 
 		return new JobResource($job);
@@ -37,6 +44,8 @@ class JobController extends Controller
 
 	public function update(UpdateJobRequest $request, Job $job)
 	{
+		$this->authorize('update', $job);
+
 		$job = (new UpdateJobAction)->execute($job, $request->validated());
 
 		return new JobResource($job->load('location'));
@@ -44,6 +53,8 @@ class JobController extends Controller
 
 	public function destroy(Job $job)
 	{
+		$this->authorize('delete', $job);
+
 		(new DeleteJobAction)->execute($job);
 
 		return response()->json(null, 204);
@@ -52,14 +63,18 @@ class JobController extends Controller
 	public function restore(string $uuid)
 	{
 		$job = Job::withTrashed()->where('uuid', $uuid)->firstOrFail();
+		$this->authorize('restore', $job);
+
 		$job->restore();
 
 		return new JobResource($job->load('location'));
 	}
 
-	public function reorder()
+	public function reorder(ReorderJobRequest $request)
 	{
-		(new ReorderJobAction)->execute(request('items'));
+		$this->authorize('create', Job::class);
+
+		(new ReorderJobAction)->execute($request->validated('items'));
 
 		return response()->json(null, 204);
 	}

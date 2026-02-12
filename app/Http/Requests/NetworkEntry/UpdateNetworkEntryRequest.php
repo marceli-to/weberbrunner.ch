@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\NetworkEntry;
 
+use App\Models\NetworkEntry;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateNetworkEntryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return true;
+		return $this->user()->can('update', $this->route('networkEntry'));
 	}
 
 	public function rules(): array

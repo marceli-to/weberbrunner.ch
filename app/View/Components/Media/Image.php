@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Media;
 
+use App\Http\Controllers\ImageController;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -93,26 +94,24 @@ class Image extends Component
         $useHeight = $height ?? $this->height;
 
         if ($useWidth) {
-            $params[] = 'w=' . $useWidth;
+            $params['w'] = $useWidth;
         }
 
         if ($useHeight) {
-            $params[] = 'h=' . $useHeight;
+            $params['h'] = $useHeight;
         }
 
         if ($this->fit) {
-            $params[] = 'fit=' . $this->fit;
+            $params['fit'] = $this->fit;
         }
 
         if ($format) {
-            $params[] = 'fm=' . $format;
+            $params['fm'] = $format;
         }
 
-        $params[] = 'q=' . $this->quality;
+        $params['q'] = $this->quality;
 
-        $queryString = implode('&', $params);
-
-        return '/img/' . $this->src . ($queryString ? '?' . $queryString : '');
+        return ImageController::signUrl($this->src, $params);
     }
 
     public function getMimeType(string $format): string

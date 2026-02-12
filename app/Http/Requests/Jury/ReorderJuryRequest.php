@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Media;
+namespace App\Http\Requests\Jury;
 
-use App\Models\Media;
+use App\Models\Jury;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReorderMediaRequest extends FormRequest
+class ReorderJuryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Media::class);
+		return $this->user()->can('create', Jury::class);
 	}
 
 	public function rules(): array
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.uuid' => 'required|string|exists:media,uuid',
+			'items.*.id' => 'required|integer|exists:juries,id',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

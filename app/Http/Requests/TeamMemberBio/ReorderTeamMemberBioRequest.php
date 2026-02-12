@@ -5,7 +5,7 @@ namespace App\Http\Requests\TeamMemberBio;
 use App\Models\TeamMember;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTeamMemberBioRequest extends FormRequest
+class ReorderTeamMemberBioRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
@@ -15,8 +15,9 @@ class UpdateTeamMemberBioRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'period' => 'required|string|max:255',
-			'description' => 'required|string',
+			'items' => 'required|array',
+			'items.*.id' => 'required|integer|exists:team_member_bios,id',
+			'items.*.sort_order' => 'required|integer',
 		];
 	}
 }

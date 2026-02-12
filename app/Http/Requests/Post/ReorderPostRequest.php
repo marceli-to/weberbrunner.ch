@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Media;
+namespace App\Http\Requests\Post;
 
-use App\Models\Media;
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReorderMediaRequest extends FormRequest
+class ReorderPostRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Media::class);
+		return $this->user()->can('create', Post::class);
 	}
 
 	public function rules(): array
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.uuid' => 'required|string|exists:media,uuid',
+			'items.*.id' => 'required|integer|exists:posts,id',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

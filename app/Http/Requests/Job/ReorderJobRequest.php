@@ -5,7 +5,7 @@ namespace App\Http\Requests\Job;
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreJobRequest extends FormRequest
+class ReorderJobRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
@@ -15,11 +15,9 @@ class StoreJobRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
-			'description' => 'required|string',
-			'location_id' => 'nullable|exists:locations,id',
-			'contact_email' => 'nullable|email|max:255',
-			'publish' => 'boolean',
+			'items' => 'required|array',
+			'items.*.id' => 'required|integer|exists:job_listings,id',
+			'items.*.sort_order' => 'required|integer',
 		];
 	}
 }

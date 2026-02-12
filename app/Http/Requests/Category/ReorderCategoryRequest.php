@@ -5,7 +5,7 @@ namespace App\Http\Requests\Category;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class ReorderCategoryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
@@ -15,7 +15,9 @@ class StoreCategoryRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
+			'items' => 'required|array',
+			'items.*.id' => 'required|integer|exists:categories,id',
+			'items.*.sort_order' => 'required|integer',
 		];
 	}
 }

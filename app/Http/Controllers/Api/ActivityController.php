@@ -9,6 +9,10 @@ class ActivityController extends Controller
 {
 	public function index()
 	{
+		if (!auth()->user()->isAdmin() && !auth()->user()->isEditor()) {
+			abort(403);
+		}
+
 		$query = Activity::with('causer', 'subject')
 			->latest();
 
