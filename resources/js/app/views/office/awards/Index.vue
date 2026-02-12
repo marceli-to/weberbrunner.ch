@@ -1,22 +1,32 @@
 <script setup>
 import PageTitle from '@/components/ui/PageTitle.vue'
+import Grid from '@/components/ui/Grid.vue'
+import Span from '@/components/ui/Span.vue'
 </script>
 
 <template>
 
-	<div class="grid grid-cols-10 gap-20 mb-20">
-		<PageTitle class="col-span-8 col-start-2">
-      Auszeichnungen
-    </PageTitle>
-	</div>
+	<Grid class="mb-20">
 
-  <div class="grid grid-cols-10 gap-20">
-    <div class="col-span-1 min-h-100 bg-blue-500 flex items-center justify-end">
-      [drag]
-    </div>
-    <div class="col-span-8 min-h-100 bg-green-500"></div>
-    <div class="col-span-1 min-h-100 bg-yellow-500 flex items-center justify-start">
-      [delete]
-    </div>
-  </div>
+		<Span :cols="8" :start="2">
+			<PageTitle>Auszeichnungen</PageTitle>
+		</Span>
+    
+	</Grid>
+
+	<Grid>
+
+		<Span :cols="1" class="min-h-100 bg-blue-500 flex items-center justify-end">
+			[drag]
+		</Span>
+
+		<Span :cols="8" class="min-h-100 bg-green-500">
+		</Span>
+
+		<Span :cols="1" class="min-h-100 bg-yellow-500 flex items-center justify-start">
+			[delete]
+		</Span>
+
+	</Grid>
+
 </template>

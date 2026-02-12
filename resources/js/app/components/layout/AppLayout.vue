@@ -10,14 +10,23 @@ const { state: confirmState, onConfirm, onCancel } = useConfirm()
 
 <template>
 	<div class="min-h-screen flex flex-col">
+    
 		<AppHeader />
-		<div class="bg-snow grid grid-cols-12 gap-x-20 flex-1">
+
+		<div class="bg-snow grid grid-cols-12 gap-20 flex-1">
+
 			<AppSidebar />
-			<main class="col-span-9 col-start-4 bg-snow relative pt-40">
+
+			<main class="col-span-10 col-start-3 bg-snow relative pt-40">
+
 				<ToastContainer />
+
 				<slot />
+
 			</main>
+
 		</div>
+
 		<ConfirmDialog
 			:open="confirmState.open"
 			:message="confirmState.message"
@@ -27,5 +36,6 @@ const { state: confirmState, onConfirm, onCancel } = useConfirm()
 			@confirm="onConfirm"
 			@cancel="onCancel"
 		/>
+
 	</div>
 </template>
