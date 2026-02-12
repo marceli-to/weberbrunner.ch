@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./partials/fonts.css";
 @import "./partials/spacing.css";
+@import "./partials/form.css";
 @import "./vendor/uppy.css";
 @import "./vendor/tiptap.css";
 
@@ -23,11 +24,16 @@
   --color-bronze: #8c6900;
 
   /* Font sizes */
-  --text-sm: 0.75rem;
-  --text-md: 1rem;
-  --text-lg: 1.5rem;
+  --text-sm: 0.75rem; /* 12px */
+  --text-md: 1rem; /* 16px */
+  --text-lg: 1.5rem; /* 24px */
 }
 
+
+/* Border width utility (0.5px) */
+@utility border-thin {
+	border-width: 0.03125rem;
+}
 
 /* Debug for grids */
 .debug-grid {

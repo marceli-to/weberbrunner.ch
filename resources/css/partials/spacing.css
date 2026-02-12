@@ -1,5 +1,6 @@
 @theme {
   --spacing-0: 0rem;
+  --spacing-\.5: 0.03125rem;
   --spacing-1: 0.0625rem;
   --spacing-2: 0.125rem;
   --spacing-3: 0.1875rem;

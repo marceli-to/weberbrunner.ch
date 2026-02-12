@@ -1,62 +1,49 @@
 <x-layout.guest>
 	@if (session('status'))
-		<div>
-			{{ session('status') }}
-		</div>
+		<x-form.status>{{ session('status') }}</x-form.status>
 	@endif
 
-	<form method="POST" action="{{ route('login') }}">
+	@if ($errors->any())
+		<x-form.status type="error">
+      Anmeldung fehlgeschlagen, bitte versuchen Sie es erneut.
+    </x-form.status>
+	@endif
+
+	<form method="POST" action="{{ route('login') }}" class="mt-40 col-span-3">
 		@csrf
 
-		<div>
-			<label for="email">E-Mail</label>
-			<input
-				id="email"
-				type="email"
-				name="email"
-				value="{{ old('email') }}"
-				required
-				autofocus
-				autocomplete="username"
-			/>
-			@foreach ($errors->get('email') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+    <div class="flex flex-col gap-y-10">
+      
+      <div class="flex justify-between">
 
-		<div>
-			<label for="password">Passwort</label>
-			<input
-				id="password"
-				type="password"
-				name="password"
-				required
-				autocomplete="current-password"
-			/>
-			@foreach ($errors->get('password') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+        <h1 class="font-semibold">
+          Anmelden
+        </h1>
 
-		<div>
-			<input
-				id="remember_me"
-				type="checkbox"
-				name="remember"
-			/>
-			<label for="remember_me">Angemeldet bleiben</label>
-		</div>
+        @if (Route::has('password.request'))
+          <a 
+            href="{{ route('password.request') }}"
+            class="font-semibold text-black flex items-center gap-x-5">
+            <x-icons.auth.arrow-right class="w-10 h-auto" />
+            Passwort vergessen?
+          </a>
+        @endif
+      </div>
+  
+      <div>
+        <x-form.input-text id="email" type="email" name="email" :value="old('email')" placeholder="E-Mail" autofocus autocomplete="username" />
+      </div>
 
-		<div>
-			@if (Route::has('password.request'))
-				<a href="{{ route('password.request') }}">
-					Passwort vergessen?
-				</a>
-			@endif
+      <div>
+        <x-form.input-password id="password" name="password" placeholder="Passwort" autocomplete="current-password" />
+      </div>
 
-			<button type="submit">
-				Anmelden
-			</button>
-		</div>
+      <div>
+        <x-form.button>
+          Anmelden
+        </x-form.button>
+      </div>
+
+    </div>
 	</form>
 </x-layout.guest>

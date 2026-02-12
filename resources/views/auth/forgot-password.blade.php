@@ -1,40 +1,43 @@
 <x-layout.guest>
-	<div>
-		Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.
-	</div>
-
 	@if (session('status'))
-		<div>
-			{{ session('status') }}
-		</div>
+		<x-form.status>{{ session('status') }}</x-form.status>
 	@endif
 
-	<form method="POST" action="{{ route('password.email') }}">
+	@if ($errors->any())
+		<x-form.status type="error">
+			Anfrage fehlgeschlagen, bitte versuchen Sie es erneut.
+		</x-form.status>
+	@endif
+
+	<form method="POST" action="{{ route('password.email') }}" class="mt-40 col-span-3">
 		@csrf
 
-		<div>
-			<label for="email">E-Mail</label>
-			<input
-				id="email"
-				type="email"
-				name="email"
-				value="{{ old('email') }}"
-				required
-				autofocus
-			/>
-			@foreach ($errors->get('email') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+		<div class="flex flex-col gap-y-10">
 
-		<div>
-			<a href="{{ route('login') }}">
-				Zurück zum Login
-			</a>
+			<div class="flex justify-between">
 
-			<button type="submit">
-				Link senden
-			</button>
+				<h1 class="font-semibold">
+					Passwort vergessen
+				</h1>
+
+				<a
+					href="{{ route('login') }}"
+					class="font-semibold text-black flex items-center gap-x-5">
+					<x-icons.auth.arrow-right class="w-10 h-auto" />
+					Login
+				</a>
+			</div>
+
+			<div>
+				<x-form.input-text id="email" type="email" name="email" :value="old('email')" placeholder="E-Mail" required autofocus />
+			</div>
+
+			<div>
+				<x-form.button>
+					Link senden
+				</x-form.button>
+			</div>
+
 		</div>
 	</form>
 </x-layout.guest>

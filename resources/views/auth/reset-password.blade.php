@@ -1,57 +1,49 @@
 <x-layout.guest>
-	<form method="POST" action="{{ route('password.store') }}">
+	@if ($errors->any())
+		<x-form.status type="error">
+			Zurücksetzen fehlgeschlagen, bitte versuchen Sie es erneut.
+		</x-form.status>
+	@endif
+
+	<form method="POST" action="{{ route('password.store') }}" class="mt-40 col-span-3">
 		@csrf
 
 		<input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-		<div>
-			<label for="email">E-Mail</label>
-			<input
-				id="email"
-				type="email"
-				name="email"
-				value="{{ old('email', $request->email) }}"
-				required
-				autofocus
-				autocomplete="username"
-			/>
-			@foreach ($errors->get('email') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+		<div class="flex flex-col gap-y-10">
 
-		<div>
-			<label for="password">Neues Passwort</label>
-			<input
-				id="password"
-				type="password"
-				name="password"
-				required
-				autocomplete="new-password"
-			/>
-			@foreach ($errors->get('password') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+			<div class="flex justify-between">
 
-		<div>
-			<label for="password_confirmation">Passwort bestätigen</label>
-			<input
-				id="password_confirmation"
-				type="password"
-				name="password_confirmation"
-				required
-				autocomplete="new-password"
-			/>
-			@foreach ($errors->get('password_confirmation') as $message)
-				<p>{{ $message }}</p>
-			@endforeach
-		</div>
+				<h1 class="font-semibold">
+					Passwort zurücksetzen
+				</h1>
 
-		<div>
-			<button type="submit">
-				Passwort zurücksetzen
-			</button>
+				<a
+					href="{{ route('login') }}"
+					class="font-semibold text-black flex items-center gap-x-5">
+					<x-icons.auth.arrow-right class="w-10 h-auto" />
+					Login
+				</a>
+			</div>
+
+			<div>
+				<x-form.input-text id="email" type="email" name="email" :value="old('email', $request->email)" placeholder="E-Mail" required autofocus autocomplete="username" />
+			</div>
+
+			<div>
+				<x-form.input-password id="password" name="password" placeholder="Neues Passwort" required autocomplete="new-password" />
+			</div>
+
+			<div>
+				<x-form.input-password id="password_confirmation" name="password_confirmation" placeholder="Passwort bestätigen" required autocomplete="new-password" />
+			</div>
+
+			<div>
+				<x-form.button>
+					Passwort zurücksetzen
+				</x-form.button>
+			</div>
+
 		</div>
 	</form>
 </x-layout.guest>

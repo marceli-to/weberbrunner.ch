@@ -1,0 +1,24 @@
+/* Remove browser autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 1000px white inset !important;
+	-webkit-text-fill-color: inherit !important;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Text inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+textarea,
+select {
+	@apply bg-white text-md font-semibold w-full min-h-30 px-10 border-thin border-solid border-black;
+	@apply placeholder:text-md placeholder:font-semibold placeholder:text-black;
+	@apply focus:ring-0 focus:outline-none;
+}
