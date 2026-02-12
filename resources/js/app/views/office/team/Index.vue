@@ -1,5 +1,9 @@
+<script setup>
+import PageTitle from '@/components/ui/PageTitle.vue'
+</script>
+
 <template>
 	<div>
-		<h1 class="text-lg font-semibold">Team</h1>
+		<PageTitle>Team</PageTitle>
 	</div>
 </template>

@@ -1,5 +1,9 @@
+<script setup>
+import PageTitle from '@/components/ui/PageTitle.vue'
+</script>
+
 <template>
 	<div>
-		<h1 class="text-lg font-semibold">Voreinstellungen</h1>
+		<PageTitle>Voreinstellungen</PageTitle>
 	</div>
 </template>
