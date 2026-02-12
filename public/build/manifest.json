@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-D3NbCcHY.css",
+    "file": "assets/app-DPj5AG75.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/site.css": {
-    "file": "assets/site-JzvJ34PO.css",
+    "file": "assets/site-D4m2sbgs.css",
     "src": "resources/css/site.css",
     "isEntry": true,
     "name": "site",
@@ -34,7 +34,7 @@
     "src": "resources/fonts/Routine-Semibold.woff2"
   },
   "resources/js/app/app.js": {
-    "file": "assets/app-D0BOAgca.js",
+    "file": "assets/app-DvWOj4eo.js",
     "name": "app",
     "src": "resources/js/app/app.js",
     "isEntry": true,
@@ -42,8 +42,14 @@
       "assets/app-DMnO7Mbx.css"
     ]
   },
+  "resources/js/modules/auth-form.js": {
+    "file": "assets/auth-form-CkbAdr8q.js",
+    "name": "auth-form",
+    "src": "resources/js/modules/auth-form.js",
+    "isEntry": true
+  },
   "resources/js/site.js": {
-    "file": "assets/site-C5lzlkuH.js",
+    "file": "assets/site-CRIrTAAu.js",
     "name": "site",
     "src": "resources/js/site.js",
     "isEntry": true,

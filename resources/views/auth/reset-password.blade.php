@@ -5,7 +5,7 @@
 		</x-form.status>
 	@endif
 
-	<form method="POST" action="{{ route('password.store') }}" class="mt-40 col-span-3">
+	<form method="POST" action="{{ route('password.store') }}" class="mt-40 col-span-3" data-auth-form>
 		@csrf
 
 		<input type="hidden" name="token" value="{{ $request->route('token') }}">
@@ -27,15 +27,15 @@
 			</div>
 
 			<div>
-				<x-form.input-text id="email" type="email" name="email" :value="old('email', $request->email)" placeholder="E-Mail" required autofocus autocomplete="username" />
+				<x-form.input-text id="email" type="email" name="email" :value="old('email', $request->email)" placeholder="E-Mail" :error="$errors->first('email')" autocomplete="username" />
 			</div>
 
 			<div>
-				<x-form.input-password id="password" name="password" placeholder="Neues Passwort" required autocomplete="new-password" />
+				<x-form.input-password id="password" name="password" placeholder="Neues Passwort" :error="$errors->first('password')" autocomplete="new-password" />
 			</div>
 
 			<div>
-				<x-form.input-password id="password_confirmation" name="password_confirmation" placeholder="Passwort bestätigen" required autocomplete="new-password" />
+				<x-form.input-password id="password_confirmation" name="password_confirmation" placeholder="Passwort bestätigen" :error="$errors->first('password_confirmation')" autocomplete="new-password" />
 			</div>
 
 			<div>

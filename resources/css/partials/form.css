@@ -1,24 +1,28 @@
-/* Remove browser autofill styles */
+/* Chrome / Edge / Safari */
 input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill,
 input:-webkit-autofill:hover,
+textarea:-webkit-autofill:hover,
+select:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-	-webkit-box-shadow: 0 0 0 1000px white inset !important;
-	-webkit-text-fill-color: inherit !important;
-	transition: background-color 5000s ease-in-out 0s;
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+	@apply text-md font-semibold;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+	box-shadow: 0 0 0 1000px white inset !important;
+	-webkit-text-fill-color: black !important;
+	transition: background-color 99999s ease-in-out 0s;
 }
 
 /* Text inputs */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="url"],
-input[type="number"],
-textarea,
-select {
-	@apply bg-white text-md font-semibold w-full min-h-30 px-10 border-thin border-solid border-black;
-	@apply placeholder:text-md placeholder:font-semibold placeholder:text-black;
-	@apply focus:ring-0 focus:outline-none;
+.form-input {
+  @apply bg-white text-md font-semibold w-full min-h-30 px-10 border-thin border-solid border-black;
+  @apply placeholder:text-md placeholder:font-semibold placeholder:text-black;
+  @apply focus:ring-0 focus:outline-none;
+}
+
+/* State */
+.form-input.has-error {
+  @apply bg-red border-red text-white placeholder:text-white;
 }

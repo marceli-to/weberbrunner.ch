@@ -39,6 +39,6 @@
 		</div>
 
 	</div>
+  @vite('resources/js/modules/auth-form.js')
 </x-layout.partials.app.body>
-
-<x-layout.partials.app.footer />
+</html>

@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/site.js',
                 'resources/css/app.css',
                 'resources/js/app/app.js',
+                'resources/js/modules/auth-form.js',
             ],
             refresh: true,
         }),

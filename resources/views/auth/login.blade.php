@@ -9,7 +9,7 @@
     </x-form.status>
 	@endif
 
-	<form method="POST" action="{{ route('login') }}" class="mt-40 col-span-3">
+	<form method="POST" action="{{ route('login') }}" class="mt-40 col-span-3" data-auth-form>
 		@csrf
 
     <div class="flex flex-col gap-y-10">
@@ -31,7 +31,7 @@
       </div>
   
       <div>
-        <x-form.input-text id="email" type="email" name="email" :value="old('email')" placeholder="E-Mail" autofocus autocomplete="username" />
+        <x-form.input-text id="email" type="email" name="email" :value="old('email')" placeholder="E-Mail" autocomplete="username" />
       </div>
 
       <div>
