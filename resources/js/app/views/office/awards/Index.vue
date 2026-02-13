@@ -50,7 +50,7 @@ async function store() {
 
 	<Lightbox :open="showLightbox" title="Neue Kategorie" @close="closeLightbox">
 		<form @submit.prevent="store">
-			<Input v-model="title" placeholder="Bezeichnung" class="form-input" />
+			<Input v-model="title" placeholder="Bezeichnung" class="form-input form-input--lg" />
 			<div class="flex gap-20 mt-24">
 				<Button @click="store" class="flex justify-center">Speichern</Button>
 				<Button @click="closeLightbox" class="flex justify-center">Abbrechen</Button>

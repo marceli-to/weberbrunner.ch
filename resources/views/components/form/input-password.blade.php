@@ -2,7 +2,7 @@
 
 <div class="relative">
 
-	<input {{ $attributes->merge(['type' => 'password']) }} class="form-input {{ $error ? 'has-error' : '' }}" />
+	<input {{ $attributes->merge(['type' => 'password']) }} class="form-input form-input--sm {{ $error ? 'has-error' : '' }}" />
 
 	<button type="button" data-pw-toggle class="absolute right-0 top-1/2 -translate-y-1/2 right-10 {{ $error ? 'text-white' : '' }}">
 

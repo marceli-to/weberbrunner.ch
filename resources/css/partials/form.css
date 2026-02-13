@@ -17,14 +17,23 @@ select:-webkit-autofill:focus {
 
 /* Text inputs */
 .form-input {
-  @apply bg-white text-md font-semibold w-full min-h-30 px-10 border-thin border-solid border-black;
-  @apply placeholder:text-md placeholder:font-semibold placeholder:text-black;
-  @apply focus:ring-0 focus:outline-none;
+	@apply bg-white font-semibold w-full border-thin border-solid border-black;
+	@apply placeholder:font-semibold placeholder:text-black;
+	@apply focus:ring-0 focus:outline-none;
 }
 
-/* State */
+.form-input--sm {
+	@apply text-md min-h-30 px-10;
+	@apply placeholder:text-md;
+}
+
+.form-input--lg {
+	@apply text-lg min-h-50 px-20;
+	@apply placeholder:text-lg;
+}
+
 .form-input.has-error {
-  @apply bg-red border-red text-white placeholder:text-white;
+	@apply bg-red border-red text-white placeholder:text-white;
 }
 
 /* Buttons */
