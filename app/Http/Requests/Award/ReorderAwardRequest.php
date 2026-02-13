@@ -18,6 +18,7 @@ class ReorderAwardRequest extends FormRequest
 			'items' => 'required|array',
 			'items.*.id' => 'required|integer|exists:awards,id',
 			'items.*.sort_order' => 'required|integer',
+			'items.*.section_id' => 'sometimes|integer|exists:sections,id',
 		];
 	}
 }

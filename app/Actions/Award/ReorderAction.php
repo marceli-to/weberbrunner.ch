@@ -9,7 +9,11 @@ class ReorderAction
 	public function execute(array $items): void
 	{
 		foreach ($items as $item) {
-			Award::where('id', $item['id'])->update(['sort_order' => $item['sort_order']]);
+			$update = ['sort_order' => $item['sort_order']];
+			if (isset($item['section_id'])) {
+				$update['section_id'] = $item['section_id'];
+			}
+			Award::where('id', $item['id'])->update($update);
 		}
 	}
 }
