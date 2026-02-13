@@ -45,7 +45,7 @@ function onBackdropClick(e) {
 
 		<Grid :cols="12">
 
-			<Span class="col-start-4 col-span-8 bg-white border border-silver py-24 px-24">
+			<Span class="col-start-4 col-span-8 -mx-20 bg-white border border-silver py-24 px-24">
 
 				<!-- Header -->
 				<div
