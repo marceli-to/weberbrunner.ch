@@ -15,22 +15,33 @@ const showLightbox = ref(false)
 	<Grid class="mb-20">
 
 		<Span class="col-span-8 col-start-2">
+
 			<PageTitle>Auszeichnungen</PageTitle>
+
 		</Span>
 
 		<Span class="col-span-8 col-start-2">
-			<Button @click="showLightbox = true" class="form-button">
-				<template #icon-left>
+
+			<Button 
+        @click="showLightbox = true" 
+        class="px-20">
+
+				<template #icon-right>
 					<Plus class="w-10 h-10" />
 				</template>
+
 				Neue Auszeichnung
+
 			</Button>
+
 		</Span>
 
 	</Grid>
 
 	<Lightbox :open="showLightbox" title="Neue Auszeichnung" @close="showLightbox = false">
+
 		<p>Lightbox content</p>
+    
 	</Lightbox>
 
 </template>
