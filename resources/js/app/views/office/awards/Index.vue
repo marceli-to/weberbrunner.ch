@@ -1,7 +1,13 @@
 <script setup>
+import { ref } from 'vue'
 import PageTitle from '@/components/ui/PageTitle.vue'
-import Grid from '@/components/ui/Grid.vue'
-import Span from '@/components/ui/Span.vue'
+import Grid from '@/components/ui/grid/Grid.vue'
+import Span from '@/components/ui/grid/Span.vue'
+import Button from '@/components/ui/form/Button.vue'
+import Plus from '@/components/icons/Plus.vue'
+import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
+
+const showLightbox = ref(false)
 </script>
 
 <template>
@@ -12,6 +18,19 @@ import Span from '@/components/ui/Span.vue'
 			<PageTitle>Auszeichnungen</PageTitle>
 		</Span>
 
+		<Span class="col-span-8 col-start-2">
+			<Button @click="showLightbox = true">
+				<template #icon-left>
+					<Plus class="w-10 h-10" />
+				</template>
+				Neue Auszeichnung
+			</Button>
+		</Span>
+
 	</Grid>
+
+	<Lightbox :open="showLightbox" title="Neue Auszeichnung" @close="showLightbox = false">
+		<p>Lightbox content</p>
+	</Lightbox>
 
 </template>

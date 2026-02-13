@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBlogStore } from '../../stores/blog'
-import { useToast } from '../../composables/useToast'
-import { useConfirm } from '../../composables/useConfirm'
-import Burger from '../../components/icons/Burger.vue'
+import { useBlogStore } from '@/stores/blog'
+import { useToast } from '@/composables/useToast'
+import { useConfirm } from '@/composables/useConfirm'
+import Burger from '@/components/icons/Burger.vue'
 import draggable from 'vuedraggable'
 
 const router = useRouter()

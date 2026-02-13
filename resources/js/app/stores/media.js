@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import mediaApi from '../api/media'
+import mediaApi from '@/api/media'
 
 export const useMediaStore = defineStore('media', {
 	state: () => ({

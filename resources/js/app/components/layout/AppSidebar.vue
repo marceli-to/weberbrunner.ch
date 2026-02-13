@@ -9,7 +9,7 @@ const isOfficeActive = computed(() => route.name?.startsWith('office.'))
 </script>
 
 <template>
-	<aside class="col-span-2 bg-snow pl-20 border-r border-black">
+	<aside class="col-span-2 pl-20 border-r border-black">
 		<nav class="pt-30">
 			<ul class="flex flex-col gap-y-2">
 				<li>

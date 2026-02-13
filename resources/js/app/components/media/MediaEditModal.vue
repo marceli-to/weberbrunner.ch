@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import Cross from '../icons/Cross.vue'
+import Cross from '@/components/icons/Cross.vue'
 
 const props = defineProps({
 	media: { type: Object, default: null },

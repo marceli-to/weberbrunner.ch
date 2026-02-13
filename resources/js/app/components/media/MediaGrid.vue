@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 import draggable from 'vuedraggable'
-import Cross from '../icons/Cross.vue'
-import PencilCircle from '../icons/PencilCircle.vue'
-import Checkmark from '../icons/Checkmark.vue'
+import Cross from '@/components/icons/Cross.vue'
+import PencilCircle from '@/components/icons/PencilCircle.vue'
+import Checkmark from '@/components/icons/Checkmark.vue'
 
 const props = defineProps({
 	items: { type: Array, default: () => [] },

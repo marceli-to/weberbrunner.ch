@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import blogApi from '../api/blog'
+import blogApi from '@/api/blog'
 
 export const useBlogStore = defineStore('blog', {
 	state: () => ({

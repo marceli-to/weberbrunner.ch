@@ -1,14 +1,14 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useBlogStore } from '../../stores/blog'
-import { useMediaStore } from '../../stores/media'
-import { useToast } from '../../composables/useToast'
-import { useConfirm } from '../../composables/useConfirm'
-import MediaUploader from '../../components/media/MediaUploader.vue'
-import MediaGrid from '../../components/media/MediaGrid.vue'
-import MediaEditModal from '../../components/media/MediaEditModal.vue'
-import Editor from '../../components/ui/editor/Editor.vue'
+import { useBlogStore } from '@/stores/blog'
+import { useMediaStore } from '@/stores/media'
+import { useToast } from '@/composables/useToast'
+import { useConfirm } from '@/composables/useConfirm'
+import MediaUploader from '@/components/media/MediaUploader.vue'
+import MediaGrid from '@/components/media/MediaGrid.vue'
+import MediaEditModal from '@/components/media/MediaEditModal.vue'
+import Editor from '@/components/ui/form/editor/Editor.vue'
 
 const route = useRoute()
 const router = useRouter()
