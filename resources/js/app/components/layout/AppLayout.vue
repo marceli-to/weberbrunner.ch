@@ -20,7 +20,7 @@ const { state: confirmState, onConfirm, onCancel } = useConfirm()
 
 			<AppSidebar />
 
-			<main class="col-span-10 col-start-3 relative pt-40">
+			<main class="col-span-10 col-start-3 relative py-40">
 
 				<ToastContainer />
 

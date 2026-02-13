@@ -10,7 +10,7 @@ const isOfficeActive = computed(() => route.name?.startsWith('office.'))
 
 <template>
 	<aside class="col-span-2 pl-20 border-r border-black">
-		<nav class="pt-30">
+		<nav class="pt-30 sticky top-100">
 			<ul class="flex flex-col gap-y-2">
 				<li>
 					<RouterLink

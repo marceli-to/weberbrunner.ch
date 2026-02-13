@@ -38,28 +38,22 @@ select:-webkit-autofill:focus {
 
 /* Buttons */
 .form-button {
-	@apply cursor-pointer flex items-center gap-x-10 font-semibold text-md text-gray min-h-30;
-	@apply border-thin border-gray bg-white w-full;
-	@apply hover:bg-navy hover:text-white hover:border-navy;
-	@apply transition-colors duration-150;
+	@apply cursor-pointer flex items-center gap-x-10 font-semibold text-md text-gray min-h-30 border-thin border-gray bg-white w-full;
+	@apply hover:bg-navy hover:text-white hover:border-navy transition-colors duration-150;
 }
 
 .form-button--primary {
-	@apply bg-navy border-white text-white;
-	@apply hover:bg-white hover:text-navy hover:border-white;
+	@apply bg-navy border-white text-white hover:bg-white hover:text-navy hover:border-white;
 }
 
 .form-button--secondary {
-	@apply bg-navy border-slate text-slate;
-	@apply hover:border-white hover:text-white hover:bg-navy;
+	@apply bg-navy border-slate text-slate hover:border-white hover:text-white hover:bg-navy;
 }
 
 .form-button--danger {
-	@apply bg-red border-white text-white;
-	@apply hover:bg-white hover:text-red hover:border-white;
+	@apply bg-red border-white text-white hover:bg-white hover:text-red hover:border-white;
 }
 
 .form-button--danger-outline {
-	@apply bg-red text-crimson border-crimson;
-	@apply hover:border-white hover:text-white hover:bg-red;
+	@apply bg-red text-crimson border-crimson hover:border-white hover:text-white hover:bg-red;
 }
