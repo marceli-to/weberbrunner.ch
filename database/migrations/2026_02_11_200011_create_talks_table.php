@@ -11,11 +11,8 @@ return new class extends Migration
 		Schema::create('talks', function (Blueprint $table) {
 			$table->id();
 			$table->uuid('uuid')->unique();
-			$table->string('title');
-			$table->string('event')->nullable();
-			$table->string('location')->nullable();
-			$table->date('date');
-			$table->string('link')->nullable();
+			$table->foreignId('section_id')->nullable()->constrained()->nullOnDelete();
+			$table->text('text')->nullable();
 			$table->boolean('publish')->default(true);
 			$table->integer('sort_order')->default(0);
 			$table->timestamps();

@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('project_attributes', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('label');
             $table->text('value');

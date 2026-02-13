@@ -12,12 +12,8 @@ class TalkResource extends JsonResource
 		return [
 			'id' => $this->id,
 			'uuid' => $this->uuid,
-			'title' => $this->title,
-			'event' => $this->event,
-			'location' => $this->location,
-			'date' => $this->date?->format('Y-m-d'),
+			'text' => $this->text,
 			'section' => new SectionResource($this->whenLoaded('section')),
-			'link' => $this->link,
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
 			'created_at' => $this->created_at,

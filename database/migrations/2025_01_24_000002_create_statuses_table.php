@@ -10,9 +10,12 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->integer('sort_order')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

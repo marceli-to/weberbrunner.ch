@@ -16,10 +16,8 @@ class Jury extends Model
 	use HasFactory, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
-		'title',
-		'description',
+		'text',
 		'section_id',
-		'link',
 		'publish',
 		'sort_order',
 	];

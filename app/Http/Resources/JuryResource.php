@@ -12,10 +12,8 @@ class JuryResource extends JsonResource
 		return [
 			'id' => $this->id,
 			'uuid' => $this->uuid,
-			'title' => $this->title,
-			'description' => $this->description,
+			'text' => $this->text,
 			'section' => new SectionResource($this->whenLoaded('section')),
-			'link' => $this->link,
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
 			'created_at' => $this->created_at,

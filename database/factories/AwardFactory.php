@@ -15,9 +15,7 @@ class AwardFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			'title' => fake()->sentence(3),
-			'description' => fake()->optional()->sentence(),
-			'link' => fake()->optional()->url(),
+			'text' => '<p>' . fake()->sentence(6) . '</p>',
 			'publish' => true,
 		];
 	}

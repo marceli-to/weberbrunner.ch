@@ -10,14 +10,16 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->enum('location', ['zurich', 'berlin'])->default('zurich');
+            $table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();
             $table->boolean('publish')->default(false);
+            $table->integer('sort_order')->default(0);
             $table->timestamps();
-        });
-    }
+            $table->softDeletes();
+        });    }
 
     public function down(): void
     {

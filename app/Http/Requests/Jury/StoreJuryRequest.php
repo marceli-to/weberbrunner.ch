@@ -15,10 +15,8 @@ class StoreJuryRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
-			'description' => 'nullable|string|max:255',
+			'text' => 'nullable|string',
 			'section_id' => 'required|exists:sections,id',
-			'link' => 'nullable|url|max:255',
 			'publish' => 'boolean',
 		];
 	}

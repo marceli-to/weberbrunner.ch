@@ -16,19 +16,14 @@ class Talk extends Model
 	use HasFactory, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
-		'title',
-		'event',
-		'location',
-		'date',
+		'text',
 		'section_id',
-		'link',
 		'publish',
 		'sort_order',
 	];
 
 	protected $casts = [
 		'publish' => 'boolean',
-		'date' => 'date',
 	];
 
 	public function section(): BelongsTo

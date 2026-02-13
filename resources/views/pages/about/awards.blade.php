@@ -12,7 +12,7 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>Auszeichnung «best architects 24»</strong> Sanierung, Um- und Anbau, <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Haus B4, Zürich</a>
+          <strong>Auszeichnung «best architects 24»</strong> Sanierung, Um- und Anbau, <a href="#">Haus B4, Zürich</a>
         </x-cards.award>
       </div>
     </div>
@@ -37,10 +37,10 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>AW20 Architekturpreis Region Winterthur</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Wohnüberbauung Hagmannareal, Winterthur</a>
+          <strong>AW20 Architekturpreis Region Winterthur</strong> für <a href="#">Wohnüberbauung Hagmannareal, Winterthur</a>
         </x-cards.award>
         <x-cards.award>
-          <strong>Auszeichnung «best architects 21»</strong> <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Loft Windisch</a>
+          <strong>Auszeichnung «best architects 21»</strong> <a href="#">Loft Windisch</a>
         </x-cards.award>
       </div>
     </div>
@@ -62,10 +62,10 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>Nominierung ARC-Award 2018</strong> der <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Wohnüberbauung Hagmannareal, Winterthur</a>
+          <strong>Nominierung ARC-Award 2018</strong> der <a href="#">Wohnüberbauung Hagmannareal, Winterthur</a>
         </x-cards.award>
         <x-cards.award>
-          <strong>Auszeichnung Gold «best architects 19»</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Wohnüberbauung Hagmannareal, Winterthur</a>
+          <strong>Auszeichnung Gold «best architects 19»</strong> für <a href="#">Wohnüberbauung Hagmannareal, Winterthur</a>
         </x-cards.award>
       </div>
     </div>
@@ -77,10 +77,10 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>Auszeichnung «best architects 16»</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Mehrfamilienhaus Im Amt, Gutenswil</a>
+          <strong>Auszeichnung «best architects 16»</strong> für <a href="#">Mehrfamilienhaus Im Amt, Gutenswil</a>
         </x-cards.award>
         <x-cards.award>
-          <strong>Auszeichnung «best architects 16»</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Sportzentrum Eselriet, Effretikon</a>
+          <strong>Auszeichnung «best architects 16»</strong> für <a href="#">Sportzentrum Eselriet, Effretikon</a>
         </x-cards.award>
       </div>
     </div>
@@ -92,10 +92,10 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>Auszeichnung «best architects 09»</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Sporthalle Hardau, Zürich</a>
+          <strong>Auszeichnung «best architects 09»</strong> für <a href="#">Sporthalle Hardau, Zürich</a>
         </x-cards.award>
         <x-cards.award>
-          <strong>Europäischer Spengler-Metall Architekturpreis</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Sporthalle Hardau, Zürich</a>
+          <strong>Europäischer Spengler-Metall Architekturpreis</strong> für <a href="#">Sporthalle Hardau, Zürich</a>
         </x-cards.award>
       </div>
     </div>
@@ -107,7 +107,7 @@
       </x-headings.section>
       <div class="flex flex-col gap-y-8 md:gap-y-16">
         <x-cards.award>
-          <strong>Denkmalschutzpreis «Wohnen unter Dächern»</strong> für <a href="#" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Wohnhaus Schaufelberger</a>
+          <strong>Denkmalschutzpreis «Wohnen unter Dächern»</strong> für <a href="#">Wohnhaus Schaufelberger</a>
         </x-cards.award>
       </div>
     </div>

@@ -8,13 +8,12 @@ return new class extends Migration
 {
 	public function up(): void
 	{
-		Schema::create('juries', function (Blueprint $table) {
+		Schema::create('awards', function (Blueprint $table) {
 			$table->id();
 			$table->uuid('uuid')->unique();
-			$table->string('title');
-			$table->string('description')->nullable();
-			$table->unsignedSmallInteger('year');
-			$table->string('link')->nullable();
+			$table->foreignId('section_id')->nullable()->constrained()->nullOnDelete();
+			$table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
+			$table->text('text')->nullable();
 			$table->boolean('publish')->default(true);
 			$table->integer('sort_order')->default(0);
 			$table->timestamps();
@@ -24,6 +23,6 @@ return new class extends Migration
 
 	public function down(): void
 	{
-		Schema::dropIfExists('juries');
+		Schema::dropIfExists('awards');
 	}
 };

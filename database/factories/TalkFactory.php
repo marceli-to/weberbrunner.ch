@@ -15,11 +15,7 @@ class TalkFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			'title' => fake()->sentence(3),
-			'event' => fake()->company(),
-			'location' => fake()->city(),
-			'date' => fake()->date(),
-			'link' => fake()->optional()->url(),
+			'text' => '<p>' . fake()->sentence(6) . '</p>',
 			'publish' => true,
 		];
 	}

@@ -15,12 +15,8 @@ class StoreTalkRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
-			'event' => 'nullable|string|max:255',
-			'location' => 'nullable|string|max:255',
-			'date' => 'required|date',
+			'text' => 'nullable|string',
 			'section_id' => 'nullable|exists:sections,id',
-			'link' => 'nullable|url|max:255',
 			'publish' => 'boolean',
 		];
 	}
