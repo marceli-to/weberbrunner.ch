@@ -3,6 +3,7 @@ defineProps({
 	modelValue: { type: [String, Number], default: '' },
 	options: { type: Array, default: () => [] },
 	disabled: { type: Boolean, default: false },
+	error: { type: String, default: null },
 })
 
 defineEmits(['update:modelValue'])
@@ -12,6 +13,7 @@ defineEmits(['update:modelValue'])
 	<select
 		:value="modelValue"
 		:disabled="disabled"
+		:class="{ 'has-error': error }"
 		@change="$emit('update:modelValue', $event.target.value)"
 	>
 		<slot>

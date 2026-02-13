@@ -3,6 +3,7 @@ defineProps({
 	modelValue: { type: String, default: '' },
 	placeholder: { type: String, default: '' },
 	disabled: { type: Boolean, default: false },
+	error: { type: String, default: null },
 })
 
 defineEmits(['update:modelValue'])
@@ -11,8 +12,9 @@ defineEmits(['update:modelValue'])
 <template>
 	<textarea
 		:value="modelValue"
-		:placeholder="placeholder"
+		:placeholder="error || placeholder"
 		:disabled="disabled"
+		:class="{ 'has-error': error }"
 		@input="$emit('update:modelValue', $event.target.value)"
 	/>
 </template>

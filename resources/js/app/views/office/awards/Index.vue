@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import sectionsApi from '@/api/sections'
+import { useFormErrors } from '@/composables/useFormErrors'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -11,9 +12,11 @@ import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 
 const showLightbox = ref(false)
 const title = ref('')
+const { get, clear, submit } = useFormErrors()
 
 function openLightbox() {
 	title.value = ''
+	clear()
 	showLightbox.value = true
 }
 
@@ -22,8 +25,8 @@ function closeLightbox() {
 }
 
 async function store() {
-	await sectionsApi.store({ title: title.value, type: 'award' })
-	closeLightbox()
+	const ok = await submit(() => sectionsApi.store({ title: title.value, type: 'award' }))
+	if (ok) closeLightbox()
 }
 </script>
 
@@ -50,7 +53,7 @@ async function store() {
 
 	<Lightbox :open="showLightbox" title="Neue Kategorie" @close="closeLightbox">
 		<form @submit.prevent="store">
-			<Input v-model="title" placeholder="Bezeichnung" class="form-input form-input--lg" />
+			<Input v-model="title" :error="get('title')" placeholder="Bezeichnung" class="form-input form-input--lg" @focus="clear('title')" />
 			<div class="flex gap-20 mt-24">
 				<Button @click="store" class="flex justify-center">Speichern</Button>
 				<Button @click="closeLightbox" class="flex justify-center">Abbrechen</Button>

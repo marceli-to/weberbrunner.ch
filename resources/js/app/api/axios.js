@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useToast } from '@/composables/useToast'
 
 const api = axios.create({
   baseURL: '/api/dashboard',
@@ -24,8 +25,15 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Redirect to login if unauthorized
       window.location.href = '/login'
+    } else if (error.response?.status === 422) {
+      // Pass through — handled by useFormErrors
+    } else if (error.response?.status >= 500) {
+      const toast = useToast()
+      toast.error('Server error. Please try again.')
+    } else if (!error.response) {
+      const toast = useToast()
+      toast.error('Network error. Please check your connection.')
     }
     return Promise.reject(error)
   }
