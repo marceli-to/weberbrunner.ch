@@ -30,7 +30,7 @@ select:-webkit-autofill:focus {
 /* Buttons */
 .form-button {
 	@apply cursor-pointer flex items-center gap-x-10 font-semibold text-md text-gray min-h-30;
-	@apply border-thin border-gray bg-white w-full text-left;
+	@apply border-thin border-gray bg-white w-full;
 	@apply hover:bg-navy hover:text-white hover:border-navy;
 	@apply transition-colors duration-150;
 }
