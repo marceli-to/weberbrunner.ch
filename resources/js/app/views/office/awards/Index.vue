@@ -38,6 +38,8 @@ async function storeSection() {
 	if (ok) {
 		close()
 		await fetchAwards()
+		groups.value.unshift(groups.value.pop())
+		await reorderSections()
 	}
 }
 
@@ -152,7 +154,8 @@ onMounted(fetchAwards)
 								handle=".award-drag-handle"
 								ghost-class="opacity-50"
 								animation="150"
-								class="flex flex-col gap-10 mb-20 min-h-20"
+								class="flex flex-col gap-10 min-h-1"
+:class="{ 'mb-20': group.awards.length }"
 								@change="reorderAwards(group)"
 							>
 								<template #item="{ element: award }">
