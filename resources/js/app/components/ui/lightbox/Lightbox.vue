@@ -29,7 +29,7 @@ function onClose() {
 }
 
 function onBackdropClick(e) {
-	if (e.target === dialogRef.value) {
+	if (e.target === dialogRef.value && props.closeable) {
 		onClose()
 	}
 }
@@ -39,7 +39,7 @@ function onBackdropClick(e) {
 
 	<dialog
 		ref="dialogRef"
-		class="p-0 m-auto backdrop:bg-white/50 w-full max-w-full bg-transparent border-none shadow-none"
+		class="p-0 m-auto backdrop:bg-white/60 backdrop:select-none w-full max-w-full bg-transparent border-none shadow-none"
 		@close="onClose"
 		@click="onBackdropClick">
 
