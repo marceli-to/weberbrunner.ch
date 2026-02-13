@@ -19,7 +19,7 @@ const showLightbox = ref(false)
 		</Span>
 
 		<Span class="col-span-8 col-start-2">
-			<Button @click="showLightbox = true">
+			<Button @click="showLightbox = true" class="form-button">
 				<template #icon-left>
 					<Plus class="w-10 h-10" />
 				</template>
