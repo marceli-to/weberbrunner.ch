@@ -19,6 +19,7 @@ class StoreTalkRequest extends FormRequest
 			'event' => 'nullable|string|max:255',
 			'location' => 'nullable|string|max:255',
 			'date' => 'required|date',
+			'section_id' => 'nullable|exists:sections,id',
 			'link' => 'nullable|url|max:255',
 			'publish' => 'boolean',
 		];

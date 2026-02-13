@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\TalkController;
 use App\Http\Controllers\Api\TeamMemberBioController;
@@ -181,6 +182,19 @@ Route::prefix('dashboard')
 				Route::get('/{jury}', 'show');
 				Route::put('/{jury}', 'update');
 				Route::delete('/{jury}', 'destroy');
+				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Sections
+		Route::controller(SectionController::class)
+			->prefix('sections')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::get('/{section}', 'show');
+				Route::put('/{section}', 'update');
+				Route::delete('/{section}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
 

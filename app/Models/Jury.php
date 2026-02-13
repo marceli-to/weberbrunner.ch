@@ -6,6 +6,7 @@ use App\Traits\HasUuid;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -17,7 +18,7 @@ class Jury extends Model
 	protected $fillable = [
 		'title',
 		'description',
-		'year',
+		'section_id',
 		'link',
 		'publish',
 		'sort_order',
@@ -25,8 +26,12 @@ class Jury extends Model
 
 	protected $casts = [
 		'publish' => 'boolean',
-		'year' => 'integer',
 	];
+
+	public function section(): BelongsTo
+	{
+		return $this->belongsTo(Section::class);
+	}
 
 	public function getActivitylogOptions(): LogOptions
 	{

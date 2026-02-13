@@ -19,7 +19,12 @@ class JuryController extends Controller
 	{
 		$this->authorize('viewAny', Jury::class);
 
-		$juries = Jury::orderBy('sort_order')->get();
+		$juries = Jury::with('section')
+			->join('sections', 'juries.section_id', '=', 'sections.id')
+			->orderBy('sections.sort_order')
+			->orderBy('juries.sort_order')
+			->select('juries.*')
+			->get();
 
 		return JuryResource::collection($juries);
 	}
@@ -30,14 +35,14 @@ class JuryController extends Controller
 
 		$jury = (new StoreJuryAction)->execute($request->validated());
 
-		return new JuryResource($jury);
+		return new JuryResource($jury->load('section'));
 	}
 
 	public function show(Jury $jury)
 	{
 		$this->authorize('view', $jury);
 
-		return new JuryResource($jury);
+		return new JuryResource($jury->load('section'));
 	}
 
 	public function update(UpdateJuryRequest $request, Jury $jury)
@@ -46,7 +51,7 @@ class JuryController extends Controller
 
 		$jury = (new UpdateJuryAction)->execute($jury, $request->validated());
 
-		return new JuryResource($jury);
+		return new JuryResource($jury->load('section'));
 	}
 
 	public function destroy(Jury $jury)
@@ -65,7 +70,7 @@ class JuryController extends Controller
 
 		$jury->restore();
 
-		return new JuryResource($jury);
+		return new JuryResource($jury->load('section'));
 	}
 
 	public function reorder(ReorderJuryRequest $request)

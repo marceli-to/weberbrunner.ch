@@ -17,7 +17,6 @@ class AwardFactory extends Factory
 		return [
 			'title' => fake()->sentence(3),
 			'description' => fake()->optional()->sentence(),
-			'year' => fake()->numberBetween(2000, 2026),
 			'link' => fake()->optional()->url(),
 			'publish' => true,
 		];

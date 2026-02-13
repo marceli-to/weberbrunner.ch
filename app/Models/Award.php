@@ -18,7 +18,7 @@ class Award extends Model
 	protected $fillable = [
 		'title',
 		'description',
-		'year',
+		'section_id',
 		'project_id',
 		'link',
 		'publish',
@@ -27,8 +27,12 @@ class Award extends Model
 
 	protected $casts = [
 		'publish' => 'boolean',
-		'year' => 'integer',
 	];
+
+	public function section(): BelongsTo
+	{
+		return $this->belongsTo(Section::class);
+	}
 
 	public function project(): BelongsTo
 	{

@@ -17,7 +17,7 @@ class UpdateAwardRequest extends FormRequest
 		return [
 			'title' => 'required|string|max:255',
 			'description' => 'nullable|string|max:255',
-			'year' => 'required|integer|min:1900|max:2100',
+			'section_id' => 'required|exists:sections,id',
 			'project_id' => 'nullable|exists:projects,id',
 			'link' => 'nullable|url|max:255',
 			'publish' => 'boolean',

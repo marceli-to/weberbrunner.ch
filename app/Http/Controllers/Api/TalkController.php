@@ -19,7 +19,12 @@ class TalkController extends Controller
 	{
 		$this->authorize('viewAny', Talk::class);
 
-		$talks = Talk::orderBy('sort_order')->get();
+		$talks = Talk::with('section')
+			->leftJoin('sections', 'talks.section_id', '=', 'sections.id')
+			->orderBy('sections.sort_order')
+			->orderBy('talks.sort_order')
+			->select('talks.*')
+			->get();
 
 		return TalkResource::collection($talks);
 	}
@@ -30,14 +35,14 @@ class TalkController extends Controller
 
 		$talk = (new StoreTalkAction)->execute($request->validated());
 
-		return new TalkResource($talk);
+		return new TalkResource($talk->load('section'));
 	}
 
 	public function show(Talk $talk)
 	{
 		$this->authorize('view', $talk);
 
-		return new TalkResource($talk);
+		return new TalkResource($talk->load('section'));
 	}
 
 	public function update(UpdateTalkRequest $request, Talk $talk)
@@ -46,7 +51,7 @@ class TalkController extends Controller
 
 		$talk = (new UpdateTalkAction)->execute($talk, $request->validated());
 
-		return new TalkResource($talk);
+		return new TalkResource($talk->load('section'));
 	}
 
 	public function destroy(Talk $talk)
@@ -65,7 +70,7 @@ class TalkController extends Controller
 
 		$talk->restore();
 
-		return new TalkResource($talk);
+		return new TalkResource($talk->load('section'));
 	}
 
 	public function reorder(ReorderTalkRequest $request)

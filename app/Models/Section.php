@@ -6,34 +6,34 @@ use App\Traits\HasUuid;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Talk extends Model
+class Section extends Model
 {
 	use HasFactory, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
 		'title',
-		'event',
-		'location',
-		'date',
-		'section_id',
-		'link',
-		'publish',
+		'type',
 		'sort_order',
 	];
 
-	protected $casts = [
-		'publish' => 'boolean',
-		'date' => 'date',
-	];
-
-	public function section(): BelongsTo
+	public function awards(): HasMany
 	{
-		return $this->belongsTo(Section::class);
+		return $this->hasMany(Award::class);
+	}
+
+	public function juries(): HasMany
+	{
+		return $this->hasMany(Jury::class);
+	}
+
+	public function talks(): HasMany
+	{
+		return $this->hasMany(Talk::class);
 	}
 
 	public function getActivitylogOptions(): LogOptions

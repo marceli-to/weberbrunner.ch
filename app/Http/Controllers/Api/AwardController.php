@@ -19,7 +19,12 @@ class AwardController extends Controller
 	{
 		$this->authorize('viewAny', Award::class);
 
-		$awards = Award::with('project')->orderBy('sort_order')->get();
+		$awards = Award::with('section', 'project')
+			->join('sections', 'awards.section_id', '=', 'sections.id')
+			->orderBy('sections.sort_order')
+			->orderBy('awards.sort_order')
+			->select('awards.*')
+			->get();
 
 		return AwardResource::collection($awards);
 	}
@@ -30,14 +35,14 @@ class AwardController extends Controller
 
 		$award = (new StoreAwardAction)->execute($request->validated());
 
-		return new AwardResource($award->load('project'));
+		return new AwardResource($award->load('section', 'project'));
 	}
 
 	public function show(Award $award)
 	{
 		$this->authorize('view', $award);
 
-		$award->load('project');
+		$award->load('section', 'project');
 
 		return new AwardResource($award);
 	}
@@ -48,7 +53,7 @@ class AwardController extends Controller
 
 		$award = (new UpdateAwardAction)->execute($award, $request->validated());
 
-		return new AwardResource($award->load('project'));
+		return new AwardResource($award->load('section', 'project'));
 	}
 
 	public function destroy(Award $award)
@@ -67,7 +72,7 @@ class AwardController extends Controller
 
 		$award->restore();
 
-		return new AwardResource($award->load('project'));
+		return new AwardResource($award->load('section', 'project'));
 	}
 
 	public function reorder(ReorderAwardRequest $request)

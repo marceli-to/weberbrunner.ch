@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
 		Gate::policy(\App\Models\NetworkEntry::class, \App\Policies\NetworkEntryPolicy::class);
 		Gate::policy(\App\Models\User::class, \App\Policies\UserPolicy::class);
 		Gate::policy(\App\Models\Post::class, \App\Policies\PostPolicy::class);
+		Gate::policy(\App\Models\Section::class, \App\Policies\SectionPolicy::class);
 		Gate::policy(\App\Models\Media::class, \App\Policies\MediaPolicy::class);
 	}
 }

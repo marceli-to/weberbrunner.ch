@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Jury;
+use App\Models\Section;
 
 it('requires authentication', function () {
 	$this->getJson('/api/dashboard/jury')->assertUnauthorized();
@@ -8,7 +9,8 @@ it('requires authentication', function () {
 
 it('lists jury entries', function () {
 	asAdmin();
-	Jury::factory()->count(3)->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	Jury::factory()->count(3)->create(['section_id' => $section->id]);
 	$this->getJson('/api/dashboard/jury')
 		->assertOk()
 		->assertJsonCount(3, 'data');
@@ -16,9 +18,10 @@ it('lists jury entries', function () {
 
 it('creates a jury entry', function () {
 	asAdmin();
+	$section = Section::factory()->create(['type' => 'jury']);
 	$this->postJson('/api/dashboard/jury', [
 		'title' => 'Design Award Jury',
-		'year' => 2025,
+		'section_id' => $section->id,
 	])
 		->assertCreated()
 		->assertJsonPath('data.title', 'Design Award Jury');
@@ -28,22 +31,24 @@ it('validates required fields', function () {
 	asAdmin();
 	$this->postJson('/api/dashboard/jury', [])
 		->assertUnprocessable()
-		->assertJsonValidationErrors(['title', 'year']);
+		->assertJsonValidationErrors(['title', 'section_id']);
 });
 
 it('shows a jury entry', function () {
 	asAdmin();
-	$jury = Jury::factory()->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	$jury = Jury::factory()->create(['section_id' => $section->id]);
 	$this->getJson("/api/dashboard/jury/{$jury->uuid}")
 		->assertOk();
 });
 
 it('updates a jury entry', function () {
 	asAdmin();
-	$jury = Jury::factory()->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	$jury = Jury::factory()->create(['section_id' => $section->id]);
 	$this->putJson("/api/dashboard/jury/{$jury->uuid}", [
 		'title' => 'Updated Jury',
-		'year' => 2024,
+		'section_id' => $section->id,
 	])
 		->assertOk()
 		->assertJsonPath('data.title', 'Updated Jury');
@@ -51,14 +56,16 @@ it('updates a jury entry', function () {
 
 it('deletes a jury entry', function () {
 	asAdmin();
-	$jury = Jury::factory()->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	$jury = Jury::factory()->create(['section_id' => $section->id]);
 	$this->deleteJson("/api/dashboard/jury/{$jury->uuid}")
 		->assertNoContent();
 });
 
 it('restores a soft-deleted jury entry', function () {
 	asAdmin();
-	$jury = Jury::factory()->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	$jury = Jury::factory()->create(['section_id' => $section->id]);
 	$jury->delete();
 	$this->patchJson("/api/dashboard/jury/{$jury->uuid}/restore")
 		->assertOk();
@@ -67,8 +74,9 @@ it('restores a soft-deleted jury entry', function () {
 
 it('reorders jury entries', function () {
 	asAdmin();
-	$a = Jury::factory()->create();
-	$b = Jury::factory()->create();
+	$section = Section::factory()->create(['type' => 'jury']);
+	$a = Jury::factory()->create(['section_id' => $section->id]);
+	$b = Jury::factory()->create(['section_id' => $section->id]);
 	$this->patchJson('/api/dashboard/jury/reorder', [
 		'items' => [
 			['id' => $a->id, 'sort_order' => 2],

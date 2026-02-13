@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TalkResource extends JsonResource
+class SectionResource extends JsonResource
 {
 	public function toArray(Request $request): array
 	{
@@ -13,12 +13,7 @@ class TalkResource extends JsonResource
 			'id' => $this->id,
 			'uuid' => $this->uuid,
 			'title' => $this->title,
-			'event' => $this->event,
-			'location' => $this->location,
-			'date' => $this->date?->format('Y-m-d'),
-			'section' => new SectionResource($this->whenLoaded('section')),
-			'link' => $this->link,
-			'publish' => $this->publish,
+			'type' => $this->type,
 			'sort_order' => $this->sort_order,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
