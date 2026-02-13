@@ -13,6 +13,7 @@ class AwardResource extends JsonResource
 			'id' => $this->id,
 			'uuid' => $this->uuid,
 			'text' => $this->text,
+			'text_plain' => strip_tags($this->text),
 			'section' => new SectionResource($this->whenLoaded('section')),
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,

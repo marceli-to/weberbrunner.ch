@@ -1,6 +1,7 @@
 <script setup>
 defineProps({
 	disabled: { type: Boolean, default: false },
+	type: { type: String, default: 'button' },
 	as: { type: [String, Object], default: 'button' },
 })
 
@@ -14,7 +15,7 @@ const $slots = defineSlots()
 		class="form-button"
 		:class="{ 'justify-between': $slots['icon-right'] }"
 		:disabled="disabled"
-		type="button">
+		:type="type">
 
 		<span v-if="$slots['icon-left']" class="shrink-0">
 			<slot name="icon-left" />

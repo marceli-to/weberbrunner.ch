@@ -11,7 +11,9 @@ use App\Http\Requests\Award\StoreAwardRequest;
 use App\Http\Requests\Award\ReorderAwardRequest;
 use App\Http\Requests\Award\UpdateAwardRequest;
 use App\Http\Resources\AwardResource;
+use App\Http\Resources\SectionResource;
 use App\Models\Award;
+use App\Models\Section;
 
 class AwardController extends Controller
 {
@@ -19,14 +21,18 @@ class AwardController extends Controller
 	{
 		$this->authorize('viewAny', Award::class);
 
-		$awards = Award::with('section', 'project')
-			->join('sections', 'awards.section_id', '=', 'sections.id')
-			->orderBy('sections.sort_order')
-			->orderBy('awards.sort_order')
-			->select('awards.*')
+		$sections = Section::query()
+			->where('type', 'award')
+			->orderBy('sort_order')
+			->with(['awards' => fn ($q) => $q->with('project')->orderBy('sort_order')])
 			->get();
 
-		return AwardResource::collection($awards);
+		$grouped = $sections->map(fn ($section) => [
+			'section' => new SectionResource($section),
+			'awards' => AwardResource::collection($section->awards),
+		]);
+
+		return response()->json(['data' => $grouped]);
 	}
 
 	public function store(StoreAwardRequest $request)
