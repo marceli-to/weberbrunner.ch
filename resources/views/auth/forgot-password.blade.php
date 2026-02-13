@@ -33,7 +33,7 @@
 			</div>
 
 			<div>
-				<x-form.button>
+				<x-form.button class="px-10">
 					Link senden
 				</x-form.button>
 			</div>

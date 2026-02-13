@@ -26,3 +26,11 @@ select:-webkit-autofill:focus {
 .form-input.has-error {
   @apply bg-red border-red text-white placeholder:text-white;
 }
+
+/* Buttons */
+.form-button {
+	@apply cursor-pointer flex items-center gap-x-10 font-semibold text-md text-gray min-h-30;
+	@apply border-thin border-gray bg-white w-full text-left;
+	@apply hover:bg-navy hover:text-white hover:border-navy;
+	@apply transition-colors duration-150;
+}

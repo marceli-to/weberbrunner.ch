@@ -39,7 +39,7 @@
 			</div>
 
 			<div>
-				<x-form.button>
+				<x-form.button class="px-10">
 					Passwort zurücksetzen
 				</x-form.button>
 			</div>

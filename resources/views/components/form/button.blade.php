@@ -1,25 +1,4 @@
-<button 
-  type="submit" 
-  class="
-    cursor-pointer 
-    flex 
-    items-center 
-    gap-x-10 
-    font-semibold 
-    text-md 
-    text-gray 
-    min-h-30 
-    px-10 
-    border-thin 
-    border-gray 
-    bg-white 
-    w-full 
-    text-left
-    hover:bg-navy
-    hover:text-white
-    hover:border-navy
-    transition-colors
-    duration-150">
-  <x-icons.auth.arrow-right size="lg" class="w-15 h-auto" />
-  Anmelden
+<button type="submit" class="form-button">
+	<x-icons.auth.arrow-right size="lg" class="w-15 h-auto" />
+	Anmelden
 </button>
