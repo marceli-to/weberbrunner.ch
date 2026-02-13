@@ -19,4 +19,13 @@ class StoreTeamMemberBioRequest extends FormRequest
 			'description' => 'required|string',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'period.required' => 'Bitte überprüfe die Zeitperiode',
+			'period.max' => 'Bitte überprüfe die Zeitperiode',
+			'description.required' => 'Bitte überprüfe die Beschreibung',
+		];
+	}
 }

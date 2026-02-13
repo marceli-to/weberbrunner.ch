@@ -20,4 +20,11 @@ class UpdateTalkRequest extends FormRequest
 			'publish' => 'boolean',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'section_id.exists' => 'Bitte überprüfe die Sektion',
+		];
+	}
 }

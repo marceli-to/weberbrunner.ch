@@ -19,4 +19,14 @@ class StoreSectionRequest extends FormRequest
 			'type' => 'required|string|in:award,jury,talk',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'title.required' => 'Bitte überprüfe den Titel',
+			'title.max' => 'Bitte überprüfe den Titel',
+			'type.required' => 'Bitte überprüfe den Typ',
+			'type.in' => 'Bitte überprüfe den Typ',
+		];
+	}
 }

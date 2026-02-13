@@ -22,4 +22,15 @@ class StoreJobRequest extends FormRequest
 			'publish' => 'boolean',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'title.required' => 'Bitte überprüfe den Titel',
+			'title.max' => 'Bitte überprüfe den Titel',
+			'description.required' => 'Bitte überprüfe die Beschreibung',
+			'contact_email.email' => 'Bitte überprüfe die Kontakt-E-Mail',
+			'contact_email.max' => 'Bitte überprüfe die Kontakt-E-Mail',
+		];
+	}
 }

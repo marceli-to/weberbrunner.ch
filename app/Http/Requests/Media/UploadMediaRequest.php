@@ -18,4 +18,14 @@ class UploadMediaRequest extends FormRequest
 			'file' => 'required|file|mimes:jpg,jpeg,png,webp,gif|max:51200',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'file.required' => 'Bitte wähle eine Datei aus',
+			'file.file' => 'Bitte überprüfe die Datei',
+			'file.mimes' => 'Bitte überprüfe das Dateiformat (JPG, PNG, WebP oder GIF)',
+			'file.max' => 'Die Datei ist zu gross (max. 50 MB)',
+		];
+	}
 }

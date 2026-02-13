@@ -34,4 +34,19 @@ class StoreTeamMemberRequest extends FormRequest
 			'media.*.caption' => 'nullable|string|max:255',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'firstname.required' => 'Bitte überprüfe den Vornamen',
+			'firstname.max' => 'Bitte überprüfe den Vornamen',
+			'name.required' => 'Bitte überprüfe den Namen',
+			'name.max' => 'Bitte überprüfe den Namen',
+			'email.email' => 'Bitte überprüfe die E-Mail-Adresse',
+			'email.max' => 'Bitte überprüfe die E-Mail-Adresse',
+			'since.integer' => 'Bitte überprüfe das Jahr',
+			'since.min' => 'Bitte überprüfe das Jahr',
+			'since.max' => 'Bitte überprüfe das Jahr',
+		];
+	}
 }

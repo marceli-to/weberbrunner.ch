@@ -19,4 +19,14 @@ class UpdateProjectAttributeRequest extends FormRequest
 			'value' => 'required|string|max:255',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'label.required' => 'Bitte überprüfe das Label',
+			'label.max' => 'Bitte überprüfe das Label',
+			'value.required' => 'Bitte überprüfe den Wert',
+			'value.max' => 'Bitte überprüfe den Wert',
+		];
+	}
 }

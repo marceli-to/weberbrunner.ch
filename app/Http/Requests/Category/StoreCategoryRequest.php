@@ -18,4 +18,12 @@ class StoreCategoryRequest extends FormRequest
 			'title' => 'required|string|max:255',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'title.required' => 'Bitte überprüfe den Titel',
+			'title.max' => 'Bitte überprüfe den Titel',
+		];
+	}
 }

@@ -19,4 +19,12 @@ class UpdateMediaRequest extends FormRequest
 			'caption' => 'nullable|string|max:255',
 		];
 	}
+
+	public function messages(): array
+	{
+		return [
+			'alt.max' => 'Bitte überprüfe den Alt-Text',
+			'caption.max' => 'Bitte überprüfe die Bildunterschrift',
+		];
+	}
 }
