@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import awardsApi from '@/api/awards'
 import sectionsApi from '@/api/sections'
 import { useConfirm } from '@/composables/useConfirm'
@@ -20,6 +20,7 @@ import Plus from '@/components/icons/Plus.vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 
 const groups = ref([])
+const collapsed = reactive(new Set())
 const title = ref('')
 const { confirm } = useConfirm()
 const { get, clear, submit } = useFormErrors()
@@ -71,6 +72,10 @@ async function deleteAward(award) {
 	}
 }
 
+function toggleSection(uuid) {
+	collapsed.has(uuid) ? collapsed.delete(uuid) : collapsed.add(uuid)
+}
+
 async function reorderSections() {
 	const items = groups.value.map((g, i) => ({
 		id: g.section.id,
@@ -101,13 +106,16 @@ onMounted(fetchAwards)
 		</Span>
 
 		<Span class="col-span-8 col-start-2">
+
 			<Button @click="open" class="px-20">
 				<template #icon-right>
 					<Plus class="w-10 h-10" />
 				</template>
 				Neue Kategorie
 			</Button>
+
 		</Span>
+
 	</Grid>
 
 	<!-- Awards -->
@@ -120,9 +128,10 @@ onMounted(fetchAwards)
 			ghost-class="opacity-50"
 			animation="150"
 			class="col-span-10 flex flex-col gap-20"
-			@end="reorderSections"
-		>
+			@end="reorderSections">
+
 			<template #item="{ element: group }">
+
 				<Span class="col-span-10">
 
 					<Grid :cols="10">
@@ -133,11 +142,13 @@ onMounted(fetchAwards)
 						</Span>
 
 						<Span class="col-span-8">
-							<div class="bg-white text-lg font-semibold min-h-50 flex justify-between items-center px-20">
+							<div 
+                class="bg-white text-lg font-semibold min-h-50 flex justify-between items-center px-20 cursor-pointer select-none" 
+                @click="toggleSection(group.section.uuid)">
 								<span>
 									{{ group.section.title }}
 								</span>
-								<Chevron variant="up" size="lg" class="w-20" />
+								<Chevron :variant="collapsed.has(group.section.uuid) ? 'down' : 'up'" size="lg" class="w-20" />
 							</div>
 						</Span>
 
@@ -146,7 +157,7 @@ onMounted(fetchAwards)
 						</Span>
 
 						<!-- Award entries -->
-						<Span class="col-span-10 col-start-1">
+						<Span v-show="!collapsed.has(group.section.uuid)" class="col-span-10 col-start-1">
 							<draggable
 								v-model="group.awards"
 								group="awards"
@@ -155,9 +166,8 @@ onMounted(fetchAwards)
 								ghost-class="opacity-50"
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
-:class="{ 'mb-20': group.awards.length }"
-								@change="reorderAwards(group)"
-							>
+                :class="{ 'mb-20': group.awards.length }"
+								@change="reorderAwards(group)">
 								<template #item="{ element: award }">
 									<Grid :cols="10">
 										<Span class="col-span-1 flex items-center justify-end">
@@ -183,8 +193,11 @@ onMounted(fetchAwards)
 						</Span>
 
 					</Grid>
+
 				</Span>
+
 			</template>
+
 		</draggable>
 
 	</Grid>
