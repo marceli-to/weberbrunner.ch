@@ -1,7 +1,9 @@
 import { ref } from 'vue'
+import { useToast } from '@/composables/useToast'
 
-export function useFormErrors() {
+export function useFormErrors({ toast: showToast = false } = {}) {
 	const errors = ref({})
+	const toast = showToast ? useToast() : null
 
 	function get(field) {
 		const fieldErrors = errors.value[field]
@@ -24,6 +26,9 @@ export function useFormErrors() {
 		} catch (error) {
 			if (error.response?.status === 422) {
 				errors.value = error.response.data.errors || {}
+				if (toast) {
+					toast.error('Bitte überprüfen Sie Ihre Eingaben.')
+				}
 			}
 			return false
 		}
