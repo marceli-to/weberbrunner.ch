@@ -1,6 +1,7 @@
 <script setup>
 import Cross from '@/components/icons/Cross.vue'
 import Checkmark from '@/components/icons/Checkmark.vue'
+import Button from '@/components/ui/form/Button.vue'
 import DialogShell from '@/components/ui/dialog/DialogShell.vue'
 
 const props = defineProps({
@@ -15,20 +16,16 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 const variants = {
 	default: {
-		span: 'bg-white border border-black',
-		message: 'text-black',
-		cancel: 'bg-snow text-black hover:bg-silver',
-		cancelIcon: 'text-black',
-		confirm: 'bg-black text-white hover:bg-gray',
-		confirmIcon: 'text-white',
+		span: 'bg-navy border border-navy',
+		message: 'text-white',
+		cancel: 'secondary',
+		confirm: 'primary',
 	},
 	danger: {
 		span: 'bg-red border border-red',
 		message: 'text-white',
-		cancel: 'bg-white text-red hover:bg-snow',
-		cancelIcon: 'text-red',
-		confirm: 'border border-white text-white hover:bg-white/10',
-		confirmIcon: 'text-white',
+		cancel: 'danger-outline',
+		confirm: 'danger',
 	},
 }
 </script>
@@ -43,28 +40,30 @@ const variants = {
 
 		<div class="flex flex-col gap-y-20">
 
-		<span class="text-md font-semibold" :class="variants[variant].message">
-			{{ message }}
-		</span>
+			<span class="text-md font-semibold" :class="variants[variant].message">
+				{{ message }}
+			</span>
 
-		<div class="flex flex-col gap-8">
-			<button
-				type="button"
-				class="flex items-center justify-between w-full px-16 py-12 text-sm font-semibold transition-colors cursor-pointer"
-				:class="variants[variant].cancel"
-				@click="emit('cancel')">
-				<span>{{ cancelLabel }}</span>
-				<Cross class="w-10 h-10" :class="variants[variant].cancelIcon" />
-			</button>
-			<button
-				type="button"
-				class="flex items-center justify-between w-full px-16 py-12 text-sm font-semibold transition-colors cursor-pointer"
-				:class="variants[variant].confirm"
-				@click="emit('confirm')">
-				<span>{{ confirmLabel }}</span>
-				<Checkmark class="w-12 h-12" :class="variants[variant].confirmIcon" />
-			</button>
-		</div>
+			<div class="flex flex-col gap-8">
+				<Button
+					class="px-20"
+					:variant="variants[variant].cancel"
+					@click="emit('cancel')">
+					{{ cancelLabel }}
+					<template #icon-right>
+						<Cross class="w-10 h-10" />
+					</template>
+				</Button>
+				<Button
+					class="px-20"
+					:variant="variants[variant].confirm"
+					@click="emit('confirm')">
+					{{ confirmLabel }}
+					<template #icon-right>
+						<Checkmark class="w-12 h-12" />
+					</template>
+				</Button>
+			</div>
 
 		</div>
 

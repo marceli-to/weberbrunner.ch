@@ -3,9 +3,18 @@ defineProps({
 	disabled: { type: Boolean, default: false },
 	type: { type: String, default: 'button' },
 	as: { type: [String, Object], default: 'button' },
+	variant: { type: String, default: 'default' },
 })
 
 const $slots = defineSlots()
+
+const variantClasses = {
+	default: '',
+	primary: 'form-button--primary',
+	secondary: 'form-button--secondary',
+	danger: 'form-button--danger',
+	'danger-outline': 'form-button--danger-outline',
+}
 </script>
 
 <template>
@@ -13,7 +22,7 @@ const $slots = defineSlots()
 	<component
 		:is="as"
 		class="form-button"
-		:class="{ 'justify-between': $slots['icon-right'] }"
+		:class="[variantClasses[variant], { 'justify-between': $slots['icon-right'] }]"
 		:disabled="disabled"
 		:type="type">
 
@@ -22,13 +31,13 @@ const $slots = defineSlots()
 		</span>
 
 		<span>
-      <slot />
-    </span>
+			<slot />
+		</span>
 
 		<span v-if="$slots['icon-right']" class="shrink-0">
 			<slot name="icon-right" />
 		</span>
 
 	</component>
-  
+
 </template>
