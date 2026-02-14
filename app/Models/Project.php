@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPublishScope;
 use App\Traits\HasUuid;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
-	use HasFactory, HasUuid, LogsActivity, Sortable, SoftDeletes;
+	use HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
 		'title',
@@ -59,11 +60,6 @@ class Project extends Model
 	public function statuses(): BelongsToMany
 	{
 		return $this->belongsToMany(Status::class);
-	}
-
-	public function scopePublished($query)
-	{
-		return $query->where('publish', true);
 	}
 
 	public function getActivitylogOptions(): LogOptions

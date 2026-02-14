@@ -30,8 +30,8 @@
                     $isInLastRow2 = $index >= $lastRowStart2;
                     $isInLastRow3 = $index >= $lastRowStart3;
                 @endphp
-                <div wire:key="member-{{ $member['firstname'] }}-{{ $member['name'] }}"
-                    id="{{ Str::slug($member['firstname'] . ' ' . $member['name']) }}"
+                <div wire:key="member-{{ $member->slug }}"
+                    id="{{ $member->slug }}"
                     class="bg-white border-black
                         border-b 
                         md:border-r
@@ -43,13 +43,13 @@
                         {{ $isInLastRow3 ? 'lg:border-b-0' : '' }}">
 
                     <x-cards.team
-                        :image="$member['image']"
-                        :firstname="$member['firstname']"
-                        :name="$member['name']"
-                        :title="$member['title']"
-                        :since="$member['since']"
-                        :email="$member['email']"
-                        :slug="$member['slug'] ?? null"
+                        :image="$member->image?->file"
+                        :firstname="$member->firstname"
+                        :name="$member->name"
+                        :title="$member->title"
+                        :since="$member->since"
+                        :email="$member->email"
+                        :slug="$member->slug"
                     />
                 </div>
             @endforeach

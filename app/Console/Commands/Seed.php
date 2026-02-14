@@ -38,6 +38,9 @@ class Seed extends Command
 		$this->info('Seeding blog posts...');
 		$this->call('app:seed-posts');
 
+		$this->info('Seeding team members...');
+		$this->call('app:seed-team');
+
 		$this->info('Seeding office data...');
 		$this->call('app:seed-office-data');
 
