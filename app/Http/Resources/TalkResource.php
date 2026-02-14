@@ -14,6 +14,7 @@ class TalkResource extends JsonResource
 			'uuid' => $this->uuid,
 			'text' => $this->text,
 			'text_plain' => strip_tags($this->text),
+			'link' => $this->link,
 			'section' => new SectionResource($this->whenLoaded('section')),
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,

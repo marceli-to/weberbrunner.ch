@@ -10,6 +10,7 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Editor from '@/components/ui/form/editor/Editor.vue'
 import ActionBar from '@/components/ui/form/ActionBar.vue'
+import Input from '@/components/ui/form/Input.vue'
 import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
@@ -21,12 +22,14 @@ const sectionTitle = ref('')
 const sectionId = ref(null)
 const form = ref({
 	text: '',
+	link: '',
 })
 
 onMounted(async () => {
 	if (isEdit.value) {
 		const { data } = await talksApi.show(route.params.id)
 		form.value.text = data.data.text || ''
+		form.value.link = data.data.link || ''
 		sectionTitle.value = data.data.section?.title || ''
 		sectionId.value = data.data.section?.id || null
 	} else if (route.query.section) {
@@ -39,9 +42,9 @@ onMounted(async () => {
 async function handleSubmit() {
 	let ok
 	if (isEdit.value) {
-		ok = await submit(() => talksApi.update(route.params.id, { text: form.value.text }))
+		ok = await submit(() => talksApi.update(route.params.id, { text: form.value.text, link: form.value.link || null }))
 	} else {
-		ok = await submit(() => talksApi.store({ text: form.value.text, section_id: sectionId.value }))
+		ok = await submit(() => talksApi.store({ text: form.value.text, link: form.value.link || null, section_id: sectionId.value }))
 	}
 	if (ok) {
 		router.push({ name: 'office.talks' })
@@ -70,9 +73,15 @@ function goBack() {
 
 		<!-- Editor -->
 		<Grid>
+
 			<Span class="col-span-8 col-start-2">
 				<Editor v-model="form.text" :error="get('text')" @focus="clear('text')" />
 			</Span>
+
+			<Span class="col-span-8 col-start-2">
+				<Input v-model="form.link" type="url" placeholder="Link" :error="get('link')" @focus="clear('link')" />
+			</Span>
+
 		</Grid>
 
 		<!-- Bottom bar -->

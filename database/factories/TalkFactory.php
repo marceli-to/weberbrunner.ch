@@ -16,6 +16,7 @@ class TalkFactory extends Factory
 	{
 		return [
 			'text' => '<p>' . fake()->sentence(6) . '</p>',
+			'link' => fake()->optional()->url(),
 			'publish' => true,
 		];
 	}
