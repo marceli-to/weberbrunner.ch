@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Actions\Award;
 
 use App\Models\Section;
-use Illuminate\View\View;
 
-class AwardPageController extends Controller
+class ListAction
 {
-	public function __invoke(): View
+	public function execute()
 	{
-		$sections = Section::query()
+		return Section::query()
 			->where('type', 'award')
 			->orderBy('sort_order')
 			->with(['awards' => fn ($q) => $q->published()->orderBy('sort_order')])
 			->get()
 			->filter(fn ($section) => $section->awards->isNotEmpty());
-
-		return view('pages.about.awards', compact('sections'));
 	}
 }

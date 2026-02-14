@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Actions\Talk;
 
 use App\Models\Section;
-use Illuminate\View\View;
 
-class TalkPageController extends Controller
+class ListAction
 {
-	public function __invoke(): View
+	public function execute()
 	{
-		$sections = Section::query()
+		return Section::query()
 			->where('type', 'talk')
 			->orderBy('sort_order')
 			->with(['talks' => fn ($q) => $q->published()->orderBy('sort_order')])
 			->get()
 			->filter(fn ($section) => $section->talks->isNotEmpty());
-
-		return view('pages.about.talks', compact('sections'));
 	}
 }

@@ -3,10 +3,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\AwardPageController;
-use App\Http\Controllers\JobPageController;
-use App\Http\Controllers\JuryPageController;
-use App\Http\Controllers\TalkPageController;
+use App\Http\Controllers\AwardController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\JuryController;
+use App\Http\Controllers\TalkController;
 use App\Http\Controllers\TeamController;
 
 Route::get('/img/{path}', [ImageController::class, 'show'])->where('path', '.*');
@@ -24,12 +24,12 @@ Route::prefix('buero')->name('page.about')->group(function () {
 	Route::view('/', 'pages.about.index');
 	Route::view('/team', 'pages.about.team')->name('.team');
 	Route::get('/team/{slug}', [TeamController::class, 'show'])->name('.team.show');
-	Route::get('/jobs', JobPageController::class)->name('.jobs');
+	Route::get('/jobs', JobController::class)->name('.jobs');
 	Route::view('/kontakt', 'pages.about.contact')->name('.contact');
 	Route::view('/netzwerk', 'pages.about.network')->name('.network');
-	Route::get('/vortraege', TalkPageController::class)->name('.talks');
-	Route::get('/jury', JuryPageController::class)->name('.jury');
-	Route::get('/auszeichnungen', AwardPageController::class)->name('.awards');
+	Route::get('/vortraege', TalkController::class)->name('.talks');
+	Route::get('/jury', JuryController::class)->name('.jury');
+	Route::get('/auszeichnungen', AwardController::class)->name('.awards');
 });
 
 // Legal
