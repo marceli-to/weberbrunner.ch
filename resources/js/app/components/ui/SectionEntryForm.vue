@@ -63,7 +63,7 @@ async function handleSubmit() {
 		: { text: form.value.text }
 	let ok
 	if (isEdit.value) {
-		ok = await submit(() => props.api.update(route.params.id, payload))
+		ok = await submit(() => props.api.update(route.params.id, { ...payload, section_id: sectionId.value }))
 	} else {
 		ok = await submit(() => props.api.store({ ...payload, section_id: sectionId.value }))
 	}
