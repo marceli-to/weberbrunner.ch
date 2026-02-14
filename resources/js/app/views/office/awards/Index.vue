@@ -166,7 +166,7 @@ onMounted(fetchAwards)
 								ghost-class="opacity-50"
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
-                :class="{ 'mb-20': group.awards.length }"
+								:class="{ 'mb-10': group.awards.length }"
 								@change="reorderAwards(group)">
 								<template #item="{ element: award }">
 									<Grid :cols="10">
@@ -190,6 +190,18 @@ onMounted(fetchAwards)
 									</Grid>
 								</template>
 							</draggable>
+
+							<Grid :cols="10" class="mb-10">
+								<Span class="col-span-8 col-start-2">
+									<Button class="px-20">
+										<template #icon-right>
+											<Plus class="w-10 h-10" />
+										</template>
+										Neuer Eintrag
+									</Button>
+								</Span>
+							</Grid>
+
 						</Span>
 
 					</Grid>
