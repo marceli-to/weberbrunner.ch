@@ -5,10 +5,11 @@ import awardsApi from '@/api/awards'
 import sectionsApi from '@/api/sections'
 import { useFormErrors } from '@/composables/useFormErrors'
 import PageTitle from '@/components/ui/PageTitle.vue'
+import FormContainer from '@/components/ui/form/FormContainer.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Button from '@/components/ui/form/Button.vue'
 import Editor from '@/components/ui/form/editor/Editor.vue'
+import ActionBar from '@/components/ui/form/ActionBar.vue'
 import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
@@ -53,35 +54,30 @@ function goBack() {
 </script>
 
 <template>
+	<FormContainer @submit="handleSubmit">
 
-	<!-- Header -->
-	<Grid class="mb-40">
-		<Span class="col-span-1 flex items-center justify-center">
-			<button @click="goBack">
-				<Arrow variant="left" class="w-25 cursor-pointer" />
-			</button>
-		</Span>
-		<Span class="col-span-8">
-			<PageTitle>Auszeichnungen / {{ sectionTitle }}</PageTitle>
-		</Span>
-	</Grid>
-
-	<!-- Editor -->
-	<Grid>
-		<Span class="col-span-8 col-start-2">
-			<Editor v-model="form.text" @focus="clear('text')" />
-			<p v-if="get('text')" class="text-sm text-red mt-4">{{ get('text') }}</p>
-		</Span>
-	</Grid>
-
-	<!-- Bottom bar -->
-	<div class="fixed bottom-0 left-0 right-0 bg-navy z-50">
-		<Grid>
-			<Span class="col-span-8 col-start-2 flex gap-20 py-16">
-				<Button @click="handleSubmit" class="flex-1 justify-center">Speichern</Button>
-				<Button variant="secondary" @click="goBack" class="flex-1 justify-center">Abbrechen</Button>
+		<!-- Header -->
+		<Grid class="mb-40">
+			<Span class="col-span-1 flex items-center justify-center">
+				<button @click="goBack">
+					<Arrow variant="left" class="w-25 cursor-pointer" />
+				</button>
+			</Span>
+			<Span class="col-span-8">
+				<PageTitle>Auszeichnungen / {{ sectionTitle }}</PageTitle>
 			</Span>
 		</Grid>
-	</div>
 
+		<!-- Editor -->
+		<Grid>
+			<Span class="col-span-8 col-start-2">
+				<Editor v-model="form.text" @focus="clear('text')" />
+				<p v-if="get('text')" class="text-sm text-red mt-4">{{ get('text') }}</p>
+			</Span>
+		</Grid>
+
+		<!-- Bottom bar -->
+		<ActionBar @cancel="goBack" />
+
+	</FormContainer>
 </template>

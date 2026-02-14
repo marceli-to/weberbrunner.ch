@@ -42,13 +42,13 @@ function closeLinkInput() {
 </script>
 
 <template>
-	<div class="relative border border-black bg-white px-20 py-2">
+	<div class="relative border border-black bg-white px-15 py-2">
 
 		<div class="flex items-center gap-8">
 
 			<button
 				type="button"
-				class="p-6 text-black"
+				class="p-5 text-black"
 				title="Bold"
 				@click="editor.chain().focus().toggleBold().run()">
 				<Bold class="w-9 h-10" />
@@ -56,7 +56,7 @@ function closeLinkInput() {
 
 			<button
 				type="button"
-				class="p-6 text-black"
+				class="p-5 text-black"
 				title="Underline"
 				@click="editor.chain().focus().toggleUnderline().run()">
 				<Underline class="w-8 h-12" />
@@ -64,7 +64,7 @@ function closeLinkInput() {
 
 			<button
 				type="button"
-				class="p-6 text-black"
+				class="p-5 text-black"
 				title="Link"
 				@click="openLinkInput">
 				<Link class="w-12 h-12" />

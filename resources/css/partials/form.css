@@ -50,6 +50,10 @@ select:-webkit-autofill:focus {
 	@apply bg-navy border-slate text-slate hover:border-white hover:text-white hover:bg-navy;
 }
 
+.form-button--ghost {
+	@apply bg-navy border-slate text-slate hover:bg-white hover:text-navy hover:border-white;
+}
+
 .form-button--danger {
 	@apply bg-red border-white text-white hover:bg-white hover:text-red hover:border-white;
 }
