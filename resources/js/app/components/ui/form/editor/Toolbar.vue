@@ -42,35 +42,32 @@ function closeLinkInput() {
 </script>
 
 <template>
-	<div class="relative border border-black border-b-0 bg-black">
+	<div class="relative border border-black bg-white px-20 py-2">
 
-		<div class="flex items-center gap-4">
+		<div class="flex items-center gap-8">
 
 			<button
 				type="button"
-				class="p-6 transition-colors"
-				:class="editor.isActive('bold') ? 'text-white bg-gray-dark' : 'text-silver hover:text-white'"
+				class="p-6 text-black"
 				title="Bold"
 				@click="editor.chain().focus().toggleBold().run()">
-				<Bold class="w-20 h-20" />
+				<Bold class="w-9 h-10" />
 			</button>
 
 			<button
 				type="button"
-				class="p-6 transition-colors"
-				:class="editor.isActive('underline') ? 'text-white bg-gray-dark' : 'text-silver hover:text-white'"
+				class="p-6 text-black"
 				title="Underline"
 				@click="editor.chain().focus().toggleUnderline().run()">
-				<Underline class="w-20 h-20" />
+				<Underline class="w-8 h-12" />
 			</button>
 
 			<button
 				type="button"
-				class="p-6 transition-colors"
-				:class="editor.isActive('link') ? 'text-white bg-gray-dark' : 'text-silver hover:text-white'"
+				class="p-6 text-black"
 				title="Link"
 				@click="openLinkInput">
-				<Link class="w-20 h-20" />
+				<Link class="w-12 h-12" />
 			</button>
 		</div>
 

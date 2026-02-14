@@ -1,9 +1,5 @@
 .editor .tiptap {
-	@apply border border-silver !border-t-0 p-8 text-sm leading-normal min-h-[200px] outline-none;
-}
-
-.editor .tiptap:focus {
-	@apply border-black;
+	@apply border border-black border-t-0 bg-white px-20 py-10 text-md font-semibold leading-normal min-h-[200px] outline-none;
 }
 
 .editor .tiptap p {

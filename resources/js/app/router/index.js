@@ -13,6 +13,7 @@ import OfficeNetwork from '@/views/office/network/Index.vue'
 import OfficeTalks from '@/views/office/talks/Index.vue'
 import OfficeJury from '@/views/office/jury/Index.vue'
 import OfficeAwards from '@/views/office/awards/Index.vue'
+import OfficeAwardsForm from '@/views/office/awards/Form.vue'
 import SettingsIndex from '@/views/settings/Index.vue'
 import ProfileIndex from '@/views/profile/Index.vue'
 
@@ -67,6 +68,18 @@ const routes = [
     path: '/dashboard/buero/auszeichnungen',
     name: 'office.awards',
     component: OfficeAwards,
+    meta: { title: 'Auszeichnungen' },
+  },
+  {
+    path: '/dashboard/buero/auszeichnungen/erstellen',
+    name: 'awards.create',
+    component: OfficeAwardsForm,
+    meta: { title: 'Auszeichnungen' },
+  },
+  {
+    path: '/dashboard/buero/auszeichnungen/:id/bearbeiten',
+    name: 'awards.edit',
+    component: OfficeAwardsForm,
     meta: { title: 'Auszeichnungen' },
   },
   {

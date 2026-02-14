@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import awardsApi from '@/api/awards'
 import sectionsApi from '@/api/sections'
 import { useCollapsed } from '@/composables/useCollapsed'
@@ -20,6 +21,7 @@ import Pencil from '@/components/icons/Pencil.vue'
 import Plus from '@/components/icons/Plus.vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 
+const router = useRouter()
 const groups = ref([])
 const { collapsed, toggle: toggleSection } = useCollapsed('awards')
 const title = ref('')
@@ -176,7 +178,7 @@ onMounted(fetchAwards)
 													{{ award.text_plain }}
 												</span>
 												<span class="flex gap-x-20">
-													<Pencil class="w-14 cursor-pointer" />
+													<Pencil class="w-14 cursor-pointer" @click="router.push({ name: 'awards.edit', params: { id: award.uuid } })" />
 													<Eye class="w-14 cursor-pointer" />
 												</span>
 											</div>
@@ -190,7 +192,7 @@ onMounted(fetchAwards)
 
 							<Grid :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
-									<Button class="px-20">
+									<Button class="px-20" @click="router.push({ name: 'awards.create', query: { section: group.section.uuid } })">
 										<template #icon-right>
 											<Plus class="w-10 h-10" />
 										</template>
