@@ -35,103 +35,103 @@ const routes = [
     path: '/dashboard/arbeiten',
     name: 'projects.index',
     component: ProjectsIndex,
-    meta: { title: 'Arbeiten' },
+    meta: { title: 'Arbeiten', navSection: 'main', navLabel: 'Arbeiten', navOrder: 10 },
   },
   {
     path: '/dashboard/buero/team',
     name: 'office.team',
     component: OfficeTeam,
-    meta: { title: 'Team' },
+    meta: { title: 'Team', navSection: 'office', navLabel: 'Team', navOrder: 10, navMain: { label: 'Büro', order: 20 } },
   },
   {
     path: '/dashboard/buero/jobs',
     name: 'office.jobs',
     component: OfficeJobs,
-    meta: { title: 'Jobs' },
+    meta: { title: 'Jobs', navSection: 'office', navLabel: 'Jobs', navOrder: 20 },
   },
   {
     path: '/dashboard/buero/netzwerk',
     name: 'office.network',
     component: OfficeNetwork,
-    meta: { title: 'Netzwerk' },
+    meta: { title: 'Netzwerk', navSection: 'office', navLabel: 'Netzwerk', navOrder: 30 },
   },
   {
     path: '/dashboard/buero/netzwerk/erstellen',
     name: 'network.create',
     component: OfficeNetworkForm,
-    meta: { title: 'Netzwerk' },
+    meta: { title: 'Netzwerk', navSection: 'office', navParent: 'office.network' },
   },
   {
     path: '/dashboard/buero/netzwerk/:id/bearbeiten',
     name: 'network.edit',
     component: OfficeNetworkForm,
-    meta: { title: 'Netzwerk' },
+    meta: { title: 'Netzwerk', navSection: 'office', navParent: 'office.network' },
   },
   {
     path: '/dashboard/buero/vortraege',
     name: 'office.talks',
     component: OfficeTalks,
-    meta: { title: 'Vorträge' },
+    meta: { title: 'Vorträge', navSection: 'office', navLabel: 'Vorträge', navOrder: 40 },
   },
   {
     path: '/dashboard/buero/vortraege/erstellen',
     name: 'talks.create',
     component: OfficeTalksForm,
-    meta: { title: 'Vorträge' },
+    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks' },
   },
   {
     path: '/dashboard/buero/vortraege/:id/bearbeiten',
     name: 'talks.edit',
     component: OfficeTalksForm,
-    meta: { title: 'Vorträge' },
+    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks' },
   },
   {
     path: '/dashboard/buero/jury',
     name: 'office.jury',
     component: OfficeJury,
-    meta: { title: 'Jury' },
+    meta: { title: 'Jury', navSection: 'office', navLabel: 'Jury', navOrder: 50 },
   },
   {
     path: '/dashboard/buero/jury/erstellen',
     name: 'jury.create',
     component: OfficeJuryForm,
-    meta: { title: 'Jury' },
+    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury' },
   },
   {
     path: '/dashboard/buero/jury/:id/bearbeiten',
     name: 'jury.edit',
     component: OfficeJuryForm,
-    meta: { title: 'Jury' },
+    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury' },
   },
   {
     path: '/dashboard/buero/auszeichnungen',
     name: 'office.awards',
     component: OfficeAwards,
-    meta: { title: 'Auszeichnungen' },
+    meta: { title: 'Auszeichnungen', navSection: 'office', navLabel: 'Auszeichnungen', navOrder: 60 },
   },
   {
     path: '/dashboard/buero/auszeichnungen/erstellen',
     name: 'awards.create',
     component: OfficeAwardsForm,
-    meta: { title: 'Auszeichnungen' },
+    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards' },
   },
   {
     path: '/dashboard/buero/auszeichnungen/:id/bearbeiten',
     name: 'awards.edit',
     component: OfficeAwardsForm,
-    meta: { title: 'Auszeichnungen' },
+    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards' },
   },
   {
     path: '/dashboard/voreinstellungen',
     name: 'settings.index',
     component: SettingsIndex,
-    meta: { title: 'Voreinstellungen' },
+    meta: { title: 'Voreinstellungen', navSection: 'main', navLabel: 'Voreinstellungen', navOrder: 30 },
   },
   {
     path: '/dashboard/profil',
     name: 'profile.index',
     component: ProfileIndex,
-    meta: { title: 'Profil' },
+    meta: { title: 'Profil', navSection: 'main', navLabel: 'Profil', navOrder: 40 },
   },
   {
     path: '/dashboard/blog',
@@ -159,9 +159,7 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title
-    ? `${to.meta.title} – DataHub`
-    : 'DataHub'
+  document.title = to.meta.title ? `${to.meta.title} – DataHub` : 'DataHub'
 })
 
 export default router
