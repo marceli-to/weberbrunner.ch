@@ -1,10 +1,17 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import api from '@/api/axios'
 import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
 const router = useRouter()
+
+function logout() {
+	api.post('/logout', {}, { baseURL: '/' }).then(() => {
+		window.location.href = '/login'
+	})
+}
 
 const allRoutes = computed(() => router.getRoutes())
 
@@ -82,6 +89,10 @@ const isChildActive = (name) =>
 			</ul>
 
 		</nav>
+
+		<button @click="logout" class="fixed bottom-20 left-20 text-sm underline cursor-pointer">
+			Logout
+		</button>
 
 	</aside>
 </template>

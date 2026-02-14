@@ -1,19 +1,9 @@
 <script setup>
-import axios from 'axios'
 import LogoMark from '@/components/icons/LogoMark.vue'
 import Avatar from '@/components/icons/Avatar.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
-
-function logout() {
-	const token = document.querySelector('meta[name="csrf-token"]')?.content
-	axios.post('/logout', {}, {
-		headers: { 'X-CSRF-TOKEN': token }
-	}).then(() => {
-		window.location.href = '/login'
-	})
-}
 </script>
 
 <template>
@@ -42,8 +32,5 @@ function logout() {
 			</div>
 
 		</div>
-		<button @click="logout" class="fixed bottom-20 left-20 text-sm underline cursor-pointer">
-			Logout
-		</button>
 	</header>
 </template>

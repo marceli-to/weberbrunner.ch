@@ -16,10 +16,6 @@ class Seed extends Command
 
 	public function handle(): void
 	{
-		if (!$this->confirm('This will delete all data. Continue?')) {
-			return;
-		}
-
 		$this->info('Running fresh migrations...');
 		$this->call('migrate:fresh');
 

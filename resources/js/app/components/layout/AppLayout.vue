@@ -10,8 +10,9 @@ const { state: confirmState, onConfirm, onCancel } = useConfirm()
 </script>
 
 <template>
-	<GridOverlay />
-  
+	
+  <GridOverlay />
+
 	<div class="min-h-screen flex flex-col">
     
 		<AppHeader />
