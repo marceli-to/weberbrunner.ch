@@ -6,10 +6,8 @@ use App\Models\Award;
 
 class ToggleAction
 {
-	public function execute(Award $award): Award
+	public function execute(Award $award): void
 	{
 		$award->update(['publish' => !$award->publish]);
-
-		return $award;
 	}
 }
