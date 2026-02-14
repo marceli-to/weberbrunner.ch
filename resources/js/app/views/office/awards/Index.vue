@@ -1,7 +1,8 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import awardsApi from '@/api/awards'
 import sectionsApi from '@/api/sections'
+import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
 import { useFormErrors } from '@/composables/useFormErrors'
 import { useLightbox } from '@/composables/useLightbox'
@@ -20,7 +21,7 @@ import Plus from '@/components/icons/Plus.vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 
 const groups = ref([])
-const collapsed = reactive(new Set())
+const { collapsed, toggle: toggleSection } = useCollapsed('awards')
 const title = ref('')
 const { confirm } = useConfirm()
 const { get, clear, submit } = useFormErrors()
@@ -70,10 +71,6 @@ async function deleteAward(award) {
 		await awardsApi.destroy(award.uuid)
 		await fetchAwards()
 	}
-}
-
-function toggleSection(uuid) {
-	collapsed.has(uuid) ? collapsed.delete(uuid) : collapsed.add(uuid)
 }
 
 async function reorderSections() {
