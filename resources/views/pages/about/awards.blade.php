@@ -9,10 +9,7 @@
 				</x-headings.section>
 				<div class="flex flex-col gap-y-8 md:gap-y-16">
 					@foreach($section->awards as $award)
-						<x-cards.award
-							:projectTitle="$award->project?->title"
-							:projectSlug="$award->project?->slug"
-						>
+						<x-cards.award>
 							{!! $award->text !!}
 						</x-cards.award>
 					@endforeach

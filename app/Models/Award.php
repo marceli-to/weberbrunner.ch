@@ -19,7 +19,6 @@ class Award extends Model
 	protected $fillable = [
 		'text',
 		'section_id',
-		'project_id',
 		'publish',
 		'sort_order',
 	];
@@ -31,11 +30,6 @@ class Award extends Model
 	public function section(): BelongsTo
 	{
 		return $this->belongsTo(Section::class);
-	}
-
-	public function project(): BelongsTo
-	{
-		return $this->belongsTo(Project::class);
 	}
 
 	public function getActivitylogOptions(): LogOptions

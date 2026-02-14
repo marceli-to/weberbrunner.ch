@@ -12,7 +12,7 @@ class AwardPageController extends Controller
 		$sections = Section::query()
 			->where('type', 'award')
 			->orderBy('sort_order')
-			->with(['awards' => fn ($q) => $q->published()->with('project')->orderBy('sort_order')])
+			->with(['awards' => fn ($q) => $q->published()->orderBy('sort_order')])
 			->get()
 			->filter(fn ($section) => $section->awards->isNotEmpty());
 

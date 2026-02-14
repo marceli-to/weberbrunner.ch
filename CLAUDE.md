@@ -21,7 +21,7 @@ Laravel 12 headless CMS with Vue 3 (Inertia) dashboard. API-only backend, Blade 
 ```
 Location ──hasMany──> Project, TeamMember, Job
 Project  ──belongsTo──> Location
-         ──hasMany──> ProjectAttribute, Award
+         ──hasMany──> ProjectAttribute
          ──morphMany──> Media
          ──belongsToMany──> Category, Status (pivot tables)
 TeamMember ──belongsTo──> Location
@@ -32,7 +32,7 @@ NetworkEntry ──morphMany──> Media
 Section(type=award) ──hasMany──> Award
 Section(type=jury)  ──hasMany──> Jury
 Section(type=talk)  ──hasMany──> Talk
-Award ──belongsTo──> Section, Project
+Award ──belongsTo──> Section
 Jury  ──belongsTo──> Section
 Talk  ──belongsTo──> Section
 ```

@@ -25,7 +25,7 @@ class AwardController extends Controller
 		$sections = Section::query()
 			->where('type', 'award')
 			->orderBy('sort_order')
-			->with(['awards' => fn ($q) => $q->with('project')->orderBy('sort_order')])
+			->with(['awards' => fn ($q) => $q->orderBy('sort_order')])
 			->get();
 
 		$grouped = $sections->map(fn ($section) => [
@@ -42,14 +42,14 @@ class AwardController extends Controller
 
 		$award = (new StoreAwardAction)->execute($request->validated());
 
-		return new AwardResource($award->load('section', 'project'));
+		return new AwardResource($award->load('section'));
 	}
 
 	public function show(Award $award)
 	{
 		$this->authorize('view', $award);
 
-		$award->load('section', 'project');
+		$award->load('section');
 
 		return new AwardResource($award);
 	}
@@ -60,7 +60,7 @@ class AwardController extends Controller
 
 		$award = (new UpdateAwardAction)->execute($award, $request->validated());
 
-		return new AwardResource($award->load('section', 'project'));
+		return new AwardResource($award->load('section'));
 	}
 
 	public function toggle(Award $award)
@@ -88,7 +88,7 @@ class AwardController extends Controller
 
 		$award->restore();
 
-		return new AwardResource($award->load('section', 'project'));
+		return new AwardResource($award->load('section'));
 	}
 
 	public function reorder(ReorderAwardRequest $request)

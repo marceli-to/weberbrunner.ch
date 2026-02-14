@@ -17,7 +17,6 @@ class AwardResource extends JsonResource
 			'section' => new SectionResource($this->whenLoaded('section')),
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
-			'project' => new ProjectResource($this->whenLoaded('project')),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 			'can' => [

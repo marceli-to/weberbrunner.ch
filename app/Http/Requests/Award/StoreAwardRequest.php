@@ -24,7 +24,6 @@ class StoreAwardRequest extends FormRequest
 		return [
 			'text' => 'required|string',
 			'section_id' => 'required|exists:sections,id',
-			'project_id' => 'nullable|exists:projects,id',
 			'publish' => 'boolean',
 		];
 	}
@@ -35,7 +34,6 @@ class StoreAwardRequest extends FormRequest
 			'text.required' => 'Bitte Text eingeben',
 			'section_id.required' => 'Bitte überprüfe die Sektion',
 			'section_id.exists' => 'Bitte überprüfe die Sektion',
-			'project_id.exists' => 'Bitte überprüfe das Projekt',
 		];
 	}
 }

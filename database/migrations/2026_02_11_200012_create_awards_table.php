@@ -12,7 +12,6 @@ return new class extends Migration
 			$table->id();
 			$table->uuid('uuid')->unique();
 			$table->foreignId('section_id')->nullable()->constrained()->nullOnDelete();
-			$table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
 			$table->text('text')->nullable();
 			$table->boolean('publish')->default(true);
 			$table->integer('sort_order')->default(0);

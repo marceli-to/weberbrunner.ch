@@ -172,7 +172,6 @@ erDiagram
         int section_id FK
         string title
         string description
-        int project_id FK
         string link
         boolean publish
         int sort_order
@@ -233,8 +232,6 @@ erDiagram
     PROJECT ||--o{ CATEGORY_PROJECT : has
     PROJECT ||--o{ PROJECT_STATUS : has
     PROJECT ||--o{ MEDIA : "morph"
-    PROJECT ||--o{ AWARD : has
-
     CATEGORY ||--o{ CATEGORY_PROJECT : has
     STATUS ||--o{ PROJECT_STATUS : has
 
