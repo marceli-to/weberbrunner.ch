@@ -1,5 +1,5 @@
 .editor .tiptap {
-	@apply border border-black border-t-0 bg-white px-20 py-10 text-md font-semibold leading-normal min-h-[200px] outline-none;
+	@apply border-thin border-solid border-black border-t-0 bg-white px-20 py-10 text-md font-semibold leading-normal min-h-[200px] outline-none;
 }
 
 .editor .tiptap p {
