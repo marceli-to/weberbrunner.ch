@@ -11,10 +11,8 @@ return new class extends Migration
 		Schema::create('network_entries', function (Blueprint $table) {
 			$table->id();
 			$table->uuid('uuid')->unique();
-			$table->string('title');
-			$table->string('description')->nullable();
-			$table->string('category')->nullable();
-			$table->string('link')->nullable();
+			$table->text('text')->nullable();
+			$table->foreignId('section_id')->nullable()->constrained('sections');
 			$table->boolean('publish')->default(true);
 			$table->integer('sort_order')->default(0);
 			$table->timestamps();
