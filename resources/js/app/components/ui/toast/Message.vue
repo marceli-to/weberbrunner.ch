@@ -18,7 +18,7 @@ const colors = {
 
 <template>
 	<div
-		class="flex items-center justify-between gap-x-15 text-white text-sm py-6 pl-8 pr-20 cursor-pointer"
+		class="flex items-center justify-between min-h-30 text-white text-md font-semibold pl-10 pr-10 cursor-pointer"
 		:class="colors[toast.type]"
     @click="$emit('close')">
 		<span>
