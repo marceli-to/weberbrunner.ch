@@ -12,33 +12,28 @@ class StoreNetworkEntryRequest extends FormRequest
 		return $this->user()->can('create', NetworkEntry::class);
 	}
 
+	protected function prepareForValidation(): void
+	{
+		if (trim(strip_tags($this->text ?? '')) === '') {
+			$this->merge(['text' => null]);
+		}
+	}
+
 	public function rules(): array
 	{
 		return [
-			'title' => 'required|string|max:255',
-			'description' => 'nullable|string|max:255',
-			'category' => 'nullable|string|max:255',
-			'link' => 'nullable|url|max:255',
+			'text' => 'required|string',
+			'section_id' => 'required|exists:sections,id',
 			'publish' => 'boolean',
-			'media' => 'nullable|array',
-			'media.*.uuid' => 'required|string',
-			'media.*.file' => 'required|string',
-			'media.*.original_name' => 'required|string',
-			'media.*.mime_type' => 'required|string',
-			'media.*.size' => 'required|integer',
-			'media.*.width' => 'nullable|integer',
-			'media.*.height' => 'nullable|integer',
-			'media.*.alt' => 'nullable|string|max:255',
-			'media.*.caption' => 'nullable|string|max:255',
 		];
 	}
 
 	public function messages(): array
 	{
 		return [
-			'title.required' => 'Bitte überprüfe den Titel',
-			'title.max' => 'Bitte überprüfe den Titel',
-			'link.url' => 'Bitte überprüfe den Link',
+			'text.required' => 'Bitte Text eingeben',
+			'section_id.required' => 'Bitte überprüfe die Sektion',
+			'section_id.exists' => 'Bitte überprüfe die Sektion',
 		];
 	}
 }

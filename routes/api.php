@@ -155,6 +155,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{talk}', 'show');
 				Route::put('/{talk}', 'update');
+				Route::patch('/{talk}/toggle', 'toggle');
 				Route::delete('/{talk}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
@@ -182,6 +183,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{jury}', 'show');
 				Route::put('/{jury}', 'update');
+				Route::patch('/{jury}/toggle', 'toggle');
 				Route::delete('/{jury}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
@@ -208,6 +210,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{networkEntry}', 'show');
 				Route::put('/{networkEntry}', 'update');
+				Route::patch('/{networkEntry}/toggle', 'toggle');
 				Route::delete('/{networkEntry}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});

@@ -10,8 +10,11 @@ import ProjectsIndex from '@/views/projects/Index.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
 import OfficeNetwork from '@/views/office/network/Index.vue'
+import OfficeNetworkForm from '@/views/office/network/Form.vue'
 import OfficeTalks from '@/views/office/talks/Index.vue'
+import OfficeTalksForm from '@/views/office/talks/Form.vue'
 import OfficeJury from '@/views/office/jury/Index.vue'
+import OfficeJuryForm from '@/views/office/jury/Form.vue'
 import OfficeAwards from '@/views/office/awards/Index.vue'
 import OfficeAwardsForm from '@/views/office/awards/Form.vue'
 import SettingsIndex from '@/views/settings/Index.vue'
@@ -53,15 +56,51 @@ const routes = [
     meta: { title: 'Netzwerk' },
   },
   {
+    path: '/dashboard/buero/netzwerk/erstellen',
+    name: 'network.create',
+    component: OfficeNetworkForm,
+    meta: { title: 'Netzwerk' },
+  },
+  {
+    path: '/dashboard/buero/netzwerk/:id/bearbeiten',
+    name: 'network.edit',
+    component: OfficeNetworkForm,
+    meta: { title: 'Netzwerk' },
+  },
+  {
     path: '/dashboard/buero/vortraege',
     name: 'office.talks',
     component: OfficeTalks,
     meta: { title: 'Vorträge' },
   },
   {
+    path: '/dashboard/buero/vortraege/erstellen',
+    name: 'talks.create',
+    component: OfficeTalksForm,
+    meta: { title: 'Vorträge' },
+  },
+  {
+    path: '/dashboard/buero/vortraege/:id/bearbeiten',
+    name: 'talks.edit',
+    component: OfficeTalksForm,
+    meta: { title: 'Vorträge' },
+  },
+  {
     path: '/dashboard/buero/jury',
     name: 'office.jury',
     component: OfficeJury,
+    meta: { title: 'Jury' },
+  },
+  {
+    path: '/dashboard/buero/jury/erstellen',
+    name: 'jury.create',
+    component: OfficeJuryForm,
+    meta: { title: 'Jury' },
+  },
+  {
+    path: '/dashboard/buero/jury/:id/bearbeiten',
+    name: 'jury.edit',
+    component: OfficeJuryForm,
     meta: { title: 'Jury' },
   },
   {

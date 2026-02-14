@@ -12,13 +12,11 @@ class NetworkEntryResource extends JsonResource
 		return [
 			'id' => $this->id,
 			'uuid' => $this->uuid,
-			'title' => $this->title,
-			'description' => $this->description,
-			'category' => $this->category,
-			'link' => $this->link,
+			'text' => $this->text,
+			'text_plain' => strip_tags($this->text),
+			'section' => new SectionResource($this->whenLoaded('section')),
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
-			'media' => MediaResource::collection($this->whenLoaded('media')),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 			'can' => [

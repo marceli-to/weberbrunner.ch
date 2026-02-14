@@ -36,6 +36,11 @@ class Section extends Model
 		return $this->hasMany(Talk::class);
 	}
 
+	public function networkEntries(): HasMany
+	{
+		return $this->hasMany(NetworkEntry::class);
+	}
+
 	public function getActivitylogOptions(): LogOptions
 	{
 		return LogOptions::defaults()

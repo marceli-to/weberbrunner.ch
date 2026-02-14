@@ -4,10 +4,10 @@ namespace App\Actions\NetworkEntry;
 
 use App\Models\NetworkEntry;
 
-class DeleteAction
+class ToggleAction
 {
 	public function execute(NetworkEntry $entry): void
 	{
-		$entry->delete();
+		$entry->update(['publish' => !$entry->publish]);
 	}
 }

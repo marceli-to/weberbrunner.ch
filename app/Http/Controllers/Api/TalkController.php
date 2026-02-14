@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Talk\DeleteAction as DeleteTalkAction;
+use App\Actions\Talk\ToggleAction as ToggleTalkAction;
 use App\Actions\Talk\ReorderAction as ReorderTalkAction;
 use App\Actions\Talk\StoreAction as StoreTalkAction;
 use App\Actions\Talk\UpdateAction as UpdateTalkAction;
@@ -11,7 +12,9 @@ use App\Http\Requests\Talk\StoreTalkRequest;
 use App\Http\Requests\Talk\ReorderTalkRequest;
 use App\Http\Requests\Talk\UpdateTalkRequest;
 use App\Http\Resources\TalkResource;
+use App\Http\Resources\SectionResource;
 use App\Models\Talk;
+use App\Models\Section;
 
 class TalkController extends Controller
 {
@@ -19,14 +22,18 @@ class TalkController extends Controller
 	{
 		$this->authorize('viewAny', Talk::class);
 
-		$talks = Talk::with('section')
-			->leftJoin('sections', 'talks.section_id', '=', 'sections.id')
-			->orderBy('sections.sort_order')
-			->orderBy('talks.sort_order')
-			->select('talks.*')
+		$sections = Section::query()
+			->where('type', 'talk')
+			->orderBy('sort_order')
+			->with(['talks' => fn ($q) => $q->orderBy('sort_order')])
 			->get();
 
-		return TalkResource::collection($talks);
+		$grouped = $sections->map(fn ($section) => [
+			'section' => new SectionResource($section),
+			'entries' => TalkResource::collection($section->talks),
+		]);
+
+		return response()->json(['data' => $grouped]);
 	}
 
 	public function store(StoreTalkRequest $request)
@@ -52,6 +59,15 @@ class TalkController extends Controller
 		$talk = (new UpdateTalkAction)->execute($talk, $request->validated());
 
 		return new TalkResource($talk->load('section'));
+	}
+
+	public function toggle(Talk $talk)
+	{
+		$this->authorize('update', $talk);
+
+		(new ToggleTalkAction)->execute($talk);
+
+		return response()->json(null, 204);
 	}
 
 	public function destroy(Talk $talk)
