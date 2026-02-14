@@ -228,6 +228,11 @@ Route::prefix('dashboard')
 				Route::patch('/{uuid}/restore', 'restore');
 			});
 
+		// Current user
+		Route::get('/me', function () {
+			return new \App\Http\Resources\UserResource(auth()->user());
+		});
+
 		// Activity Log (admin only)
 		Route::get('/activity', [ActivityController::class, 'index']);
 

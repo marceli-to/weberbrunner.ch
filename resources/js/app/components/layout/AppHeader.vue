@@ -1,8 +1,10 @@
 <script setup>
 import axios from 'axios'
 import LogoMark from '@/components/icons/LogoMark.vue'
-import LogoWBA from '@/components/icons/LogoWBA.vue'
-import LogoWBPA from '@/components/icons/LogoWBPA.vue'
+import Avatar from '@/components/icons/Avatar.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 function logout() {
 	const token = document.querySelector('meta[name="csrf-token"]')?.content
@@ -30,16 +32,12 @@ function logout() {
 						DataHub
 					</h1>
 
-					<!-- this will be visible only on / route in dashboard -->
-					<div class="flex items-start gap-x-40">
-						<LogoWBA class="w-full h-auto max-w-150" />
-						<LogoWBPA class="w-full h-auto max-w-150" />
+					<div v-if="authStore.user" class="flex items-center gap-x-15">
+						<span class="text-lg font-semibold text-black leading-none">
+              {{ authStore.user.firstname }} {{ authStore.user.name }}
+            </span>
+						<Avatar class="w-24 h-24" />
 					</div>
-					<!-- // this will be visible only on / route in dashboard -->
-
-					<!-- here will be other parts depending on the current route in dashboard -->
-
-					<!-- // here will be other parts depending on the current route in dashboard -->
 				</div>
 			</div>
 
