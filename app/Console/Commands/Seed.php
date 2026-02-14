@@ -28,6 +28,9 @@ class Seed extends Command
 		$user->role = 'admin';
 		$user->save();
 
+		$this->info('Seeding locations...');
+		$this->call('app:seed-locations');
+
 		$this->info('Seeding projects...');
 		$this->call('app:seed-projects');
 
@@ -36,6 +39,9 @@ class Seed extends Command
 
 		$this->info('Seeding team members...');
 		$this->call('app:seed-team');
+
+		$this->info('Seeding jobs...');
+		$this->call('app:seed-jobs');
 
 		$this->info('Seeding office data...');
 		$this->call('app:seed-office-data');

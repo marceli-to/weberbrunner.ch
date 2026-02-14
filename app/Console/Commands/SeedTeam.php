@@ -12,7 +12,7 @@ class SeedTeam extends Command
 {
 	protected $signature = 'app:seed-team';
 
-	protected $description = 'Seed locations and team members with media';
+	protected $description = 'Seed team members with media';
 
 	private array $members = [
 		['firstname' => 'Anna', 'name' => 'Müller', 'title' => 'M. Sc. Arch ETH', 'since' => 2018, 'email' => 'anna.mueller@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-1.jpg'],
@@ -72,15 +72,9 @@ class SeedTeam extends Command
 		'Mitarbeit im Büro EM2N, Zürich | Schwerpunkt Wettbewerbe',
 	];
 
-	private array $locations = [
-		'zuerich' => 'Zürich',
-		'berlin' => 'Berlin',
-	];
-
 	public function handle(): void
 	{
-		$this->info('Seeding locations...');
-		$locations = $this->seedLocations();
+		$locations = Location::all()->keyBy('slug');
 
 		$this->info('Seeding team members...');
 		$this->seedMembers($locations);
@@ -88,19 +82,7 @@ class SeedTeam extends Command
 		$this->info("Done! Created " . count($this->members) . " team members.");
 	}
 
-	private function seedLocations(): array
-	{
-		$result = [];
-		foreach ($this->locations as $slug => $title) {
-			$result[$slug] = Location::firstOrCreate(
-				['slug' => $slug],
-				['title' => $title]
-			);
-		}
-		return $result;
-	}
-
-	private function seedMembers(array $locations): void
+	private function seedMembers($locations): void
 	{
 		$disk = Storage::disk('public');
 
