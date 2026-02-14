@@ -8,13 +8,9 @@ import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Button from '@/components/ui/form/Button.vue'
-import Burger from '@/components/icons/Burger.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
-import Cross from '@/components/icons/Cross.vue'
-import Eye from '@/components/icons/Eye.vue'
-import Pencil from '@/components/icons/Pencil.vue'
-import Plus from '@/components/icons/Plus.vue'
+import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
+import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 
 const router = useRouter()
 const groups = ref([])
@@ -95,38 +91,17 @@ onMounted(fetchJobs)
 								:class="{ 'mb-10': group.jobs.length }"
 								@change="reorderJobs(group)">
 								<template #item="{ element: job }">
-									<Grid :cols="10">
-										<Span class="col-span-1 flex items-center justify-end">
-											<Burger variant="sm" class="w-18 h-10 cursor-grab job-drag-handle" />
-										</Span>
-										<Span class="col-span-8">
-											<div class="bg-white font-semibold min-h-30 border border-black flex justify-between items-center px-20 select-none" :class="{ 'opacity-50': !job.publish }">
-												<span>
-													{{ job.title }}
-												</span>
-												<span class="flex gap-x-20">
-													<Pencil class="w-14 cursor-pointer" @click="router.push({ name: 'jobs.edit', params: { id: job.uuid } })" />
-													<Eye :variant="job.publish ? 'visible' : 'hidden'" class="w-14 cursor-pointer" @click="togglePublish(job)" />
-												</span>
-											</div>
-										</Span>
-										<Span class="col-span-1 flex items-center justify-start">
-											<Cross class="w-10 cursor-pointer" @click="deleteJob(job)" />
-										</Span>
-									</Grid>
+									<DraggableEntryRow
+										:label="job.title"
+										:publish="job.publish"
+										drag-handle-class="job-drag-handle"
+										@edit="router.push({ name: 'jobs.edit', params: { id: job.uuid } })"
+										@toggle-publish="togglePublish(job)"
+										@delete="deleteJob(job)" />
 								</template>
 							</draggable>
 
-							<Grid :cols="10" class="mb-10">
-								<Span class="col-span-8 col-start-2">
-									<Button class="px-20" @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })">
-										<template #icon-right>
-											<Plus class="w-10 h-10" />
-										</template>
-										Neuer Eintrag
-									</Button>
-								</Span>
-							</Grid>
+							<NewEntryButton @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })" />
 
 						</Span>
 

@@ -30,7 +30,7 @@ class AwardController extends Controller
 
 		$grouped = $sections->map(fn ($section) => [
 			'section' => new SectionResource($section),
-			'awards' => AwardResource::collection($section->awards),
+			'entries' => AwardResource::collection($section->awards),
 		]);
 
 		return response()->json(['data' => $grouped]);
