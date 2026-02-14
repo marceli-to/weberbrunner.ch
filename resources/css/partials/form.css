@@ -36,6 +36,11 @@ select:-webkit-autofill:focus {
 	@apply bg-red border-red text-white placeholder:text-white;
 }
 
+.editor.has-error > div,
+.editor.has-error .tiptap {
+	@apply !border-red;
+}
+
 /* Buttons */
 .form-button {
 	@apply cursor-pointer flex items-center gap-x-10 font-semibold text-md text-gray min-h-30 border-thin border-gray bg-white w-full;

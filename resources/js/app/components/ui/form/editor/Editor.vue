@@ -7,9 +7,10 @@ import Toolbar from './Toolbar.vue'
 
 const props = defineProps({
 	modelValue: { type: String, default: '' },
+	error: { type: String, default: null },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'focus'])
 
 const editor = useEditor({
 	content: props.modelValue,
@@ -28,6 +29,9 @@ const editor = useEditor({
 	onUpdate({ editor }) {
 		emit('update:modelValue', editor.getHTML())
 	},
+	onFocus() {
+		emit('focus')
+	},
 })
 
 watch(() => props.modelValue, (value) => {
@@ -38,7 +42,7 @@ watch(() => props.modelValue, (value) => {
 </script>
 
 <template>
-	<div class="editor">
+	<div class="editor" :class="{ 'has-error': error }">
 		<Toolbar v-if="editor" :editor="editor" />
 		<EditorContent :editor="editor" />
 	</div>

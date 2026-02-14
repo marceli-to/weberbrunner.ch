@@ -14,7 +14,7 @@ import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
 const router = useRouter()
-const { get, clear, submit } = useFormErrors()
+const { get, clear, submit } = useFormErrors({ toast: true })
 
 const isEdit = computed(() => !!route.params.id)
 const sectionTitle = ref('')
@@ -71,8 +71,7 @@ function goBack() {
 		<!-- Editor -->
 		<Grid>
 			<Span class="col-span-8 col-start-2">
-				<Editor v-model="form.text" @focus="clear('text')" />
-				<p v-if="get('text')" class="text-sm text-red mt-4">{{ get('text') }}</p>
+				<Editor v-model="form.text" :error="get('text')" @focus="clear('text')" />
 			</Span>
 		</Grid>
 
