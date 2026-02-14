@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
 		Gate::policy(\App\Models\Post::class, \App\Policies\PostPolicy::class);
 		Gate::policy(\App\Models\Section::class, \App\Policies\SectionPolicy::class);
 		Gate::policy(\App\Models\Media::class, \App\Policies\MediaPolicy::class);
+
+		Blade::directive('ogImage', function (string $expression) {
+			return "<?php \$__env->startSection('og_image', \App\Http\Controllers\ImageController::ogImageUrl({$expression})); ?>";
+		});
 	}
 }

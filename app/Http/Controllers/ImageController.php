@@ -52,4 +52,9 @@ class ImageController extends Controller
 
 		return '/img/' . $path . '?' . http_build_query($params);
 	}
+
+	public static function ogImageUrl(string $path): string
+	{
+		return url(static::signUrl($path, ['w' => 1200, 'h' => 630, 'fit' => 'crop', 'fm' => 'jpg']));
+	}
 }

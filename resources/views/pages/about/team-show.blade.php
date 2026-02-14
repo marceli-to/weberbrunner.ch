@@ -1,5 +1,8 @@
 @section('meta_title', $member->firstname . ' ' . $member->name . ' – Team')
-@section('meta_description', '')
+@section('meta_description', trim(collect([$member->firstname . ' ' . $member->name, $member->title, $member->since ? 'Mitarbeit seit ' . $member->since : null])->filter()->implode(', ')))
+@if($member->image?->file)
+	@ogImage($member->image->file)
+@endif
 
 <x-layout.inner
   title="Team"
