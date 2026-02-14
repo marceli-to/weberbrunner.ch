@@ -17,7 +17,22 @@
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
       "Bash(composer require:*)",
-      "Bash(php:*)"
+      "Bash(php:*)",
+      "Bash(git push:*)",
+      "Bash(node -e:*)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch status)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch diff --stat)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch log --oneline -5)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch add app/Actions/Media/ app/Actions/Post/ app/Console/Commands/CleanupDeferredMedia.php app/Http/Controllers/Api/MediaController.php app/Http/Controllers/Api/PostController.php app/Http/Requests/Media/ app/Http/Requests/Post/StorePostRequest.php app/Http/Requests/Post/UpdatePostRequest.php app/Http/Resources/MediaResource.php app/Http/Resources/PostResource.php app/Models/Media.php app/Models/Post.php database/migrations/2026_02_10_000001_add_uuid_and_metadata_to_media_table.php package.json package-lock.json public/build/ resources/css/ resources/js/ routes/api.php)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch commit -m \"$\\(cat <<''EOF''\nAdd media system with deferred temp upload flow\n\nUploads always go to temp/ first, then get moved to uploads/ and\nattached as media records when the parent entity is saved. This\nallows image uploads on create forms before the entity exists.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch add app/Http/Controllers/ImageController.php app/Http/Controllers/LandingController.php app/Http/Controllers/ProjectController.php app/Http/Controllers/TeamController.php)",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch commit -m \"$\\(cat <<''EOF''\nFix indentation to tabs in frontend controllers\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch push)",
+      "Bash(git mv:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm audit fix:*)",
+      "Bash(grep:*)",
+      "Bash(npx vite build:*)"
     ]
   }
 }
