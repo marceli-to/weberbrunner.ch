@@ -1,24 +1,18 @@
 @section('meta_title', 'Jobs – Büro')
 @section('meta_description', '')
 <x-layout.inner title="Jobs">
-  <div class="flex flex-col gap-y-24 md:gap-y-40 lg:gap-56">
-    <div>
-      <x-headings.section class="mb-8 md:mb-16 lg:mb-20">
-        Zürich
-      </x-headings.section>
-      
-      <x-cards.job title="Architekt:in" email="bewerbungen@weberbrunner.ch">
-        <p>Für die Mitarbeit an interessanten Wettbewerben und Projekten suchen wir ab sofort oder nach Vereinbarung motivierte Praktikant:innen. Voraussetzung sind zwei Jahre Studium oder Bachelorabschluss (immatrikuliert), gute Computerkenntnisse in 2D / 3D bevorzugt in Revit, Rhino und Affinity Suite, Praktikumsdauer mindestens sechs Monate.</p>
-      </x-cards.job>
-    </div>
-    <div>
-      <x-headings.section class="mb-8 md:mb-16 lg:mb-20">
-        Berlin
-      </x-headings.section>
-      
-      <x-cards.job title="Praktikant:in" email="wbp-architektur.de">
-        <p>Für die Mitarbeit an interessanten Wettbewerben und Projekten suchen wir ab sofort oder nach Vereinbarung motivierte Praktikant:innen. Voraussetzung sind zwei Jahre Studium oder Bachelorabschluss (immatrikuliert), gute Computerkenntnisse in 2D / 3D bevorzugt in Revit, Rhino und Affinity Suite, Praktikumsdauer mindestens sechs Monate.</p>
-      </x-cards.job>
-    </div>
-  </div>
+	<div class="flex flex-col gap-y-24 md:gap-y-40 lg:gap-56">
+		@foreach($locations as $location)
+			<div>
+				<x-headings.section class="mb-8 md:mb-16 lg:mb-20">
+					{{ $location->title }}
+				</x-headings.section>
+				@foreach($location->jobs as $job)
+					<x-cards.job :title="$job->title" :email="$job->contact_email">
+						{!! $job->description !!}
+					</x-cards.job>
+				@endforeach
+			</div>
+		@endforeach
+	</div>
 </x-layout.inner>
