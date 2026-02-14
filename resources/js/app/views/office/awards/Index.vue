@@ -75,6 +75,11 @@ async function deleteAward(award) {
 	}
 }
 
+async function togglePublish(award) {
+	award.publish = !award.publish
+	await awardsApi.toggle(award.uuid)
+}
+
 async function reorderSections() {
 	const items = groups.value.map((g, i) => ({
 		id: g.section.id,
@@ -173,13 +178,13 @@ onMounted(fetchAwards)
 											<Burger variant="sm" class="w-18 h-10 cursor-grab award-drag-handle" />
 										</Span>
 										<Span class="col-span-8">
-											<div class="bg-white font-semibold min-h-30 border border-black flex justify-between items-center px-20">
+											<div class="bg-white font-semibold min-h-30 border border-black flex justify-between items-center px-20 select-none" :class="{ 'opacity-50': !award.publish }">
 												<span>
 													{{ award.text_plain }}
 												</span>
 												<span class="flex gap-x-20">
 													<Pencil class="w-14 cursor-pointer" @click="router.push({ name: 'awards.edit', params: { id: award.uuid } })" />
-													<Eye class="w-14 cursor-pointer" />
+													<Eye :variant="award.publish ? 'visible' : 'hidden'" class="w-14 cursor-pointer" @click="togglePublish(award)" />
 												</span>
 											</div>
 										</Span>

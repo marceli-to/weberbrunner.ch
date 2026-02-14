@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Award\DeleteAction as DeleteAwardAction;
+use App\Actions\Award\ToggleAction as ToggleAwardAction;
 use App\Actions\Award\ReorderAction as ReorderAwardAction;
 use App\Actions\Award\StoreAction as StoreAwardAction;
 use App\Actions\Award\UpdateAction as UpdateAwardAction;
@@ -60,6 +61,15 @@ class AwardController extends Controller
 		$award = (new UpdateAwardAction)->execute($award, $request->validated());
 
 		return new AwardResource($award->load('section', 'project'));
+	}
+
+	public function toggle(Award $award)
+	{
+		$this->authorize('update', $award);
+
+		(new ToggleAwardAction)->execute($award);
+
+		return response()->json(null, 204);
 	}
 
 	public function destroy(Award $award)

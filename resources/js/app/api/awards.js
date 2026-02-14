@@ -5,6 +5,7 @@ export default {
 	show: (id) => api.get(`/awards/${id}`),
 	store: (data) => api.post('/awards', data),
 	update: (id, data) => api.put(`/awards/${id}`, data),
+	toggle: (id) => api.patch(`/awards/${id}/toggle`),
 	destroy: (id) => api.delete(`/awards/${id}`),
 	reorder: (items) => api.patch('/awards/reorder', { items }),
 }

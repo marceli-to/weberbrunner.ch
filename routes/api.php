@@ -168,6 +168,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{award}', 'show');
 				Route::put('/{award}', 'update');
+				Route::patch('/{award}/toggle', 'toggle');
 				Route::delete('/{award}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
