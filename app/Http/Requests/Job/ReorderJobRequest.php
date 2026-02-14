@@ -18,6 +18,7 @@ class ReorderJobRequest extends FormRequest
 			'items' => 'required|array',
 			'items.*.id' => 'required|integer|exists:job_listings,id',
 			'items.*.sort_order' => 'required|integer',
+			'items.*.location_id' => 'sometimes|integer|exists:locations,id',
 		];
 	}
 }

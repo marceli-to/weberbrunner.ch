@@ -9,6 +9,7 @@ import BlogForm from '@/views/blog/Form.vue'
 import ProjectsIndex from '@/views/projects/Index.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
+import OfficeJobsForm from '@/views/office/jobs/Form.vue'
 import OfficeNetwork from '@/views/office/network/Index.vue'
 import OfficeNetworkForm from '@/views/office/network/Form.vue'
 import OfficeTalks from '@/views/office/talks/Index.vue'
@@ -48,6 +49,18 @@ const routes = [
     name: 'office.jobs',
     component: OfficeJobs,
     meta: { title: 'Jobs', navSection: 'office', navLabel: 'Jobs', navOrder: 20 },
+  },
+  {
+    path: '/dashboard/buero/jobs/erstellen',
+    name: 'jobs.create',
+    component: OfficeJobsForm,
+    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs' },
+  },
+  {
+    path: '/dashboard/buero/jobs/:id/bearbeiten',
+    name: 'jobs.edit',
+    component: OfficeJobsForm,
+    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs' },
   },
   {
     path: '/dashboard/buero/netzwerk',

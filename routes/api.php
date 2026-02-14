@@ -142,6 +142,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{job}', 'show');
 				Route::put('/{job}', 'update');
+				Route::patch('/{job}/toggle', 'toggle');
 				Route::delete('/{job}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});

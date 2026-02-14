@@ -14,7 +14,7 @@ import Span from '@/components/ui/grid/Span.vue'
 import Button from '@/components/ui/form/Button.vue'
 import Input from '@/components/ui/form/Input.vue'
 import Burger from '@/components/icons/Burger.vue'
-import Chevron from '@/components/icons/Chevron.vue'
+import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import Cross from '@/components/icons/Cross.vue'
 import Eye from '@/components/icons/Eye.vue'
 import Pencil from '@/components/icons/Pencil.vue'
@@ -146,14 +146,10 @@ onMounted(fetchEntries)
 						</Span>
 
 						<Span class="col-span-8">
-							<div
-                class="bg-white text-lg font-semibold min-h-50 flex justify-between items-center px-20 cursor-pointer select-none"
-                @click="toggleSection(group.section.uuid)">
-								<span>
-									{{ group.section.title }}
-								</span>
-								<Chevron :variant="collapsed.has(group.section.uuid) ? 'down' : 'up'" size="lg" class="w-20" />
-							</div>
+							<CollapsibleHeader
+								:title="group.section.title"
+								:collapsed="collapsed.has(group.section.uuid)"
+								@toggle="toggleSection(group.section.uuid)" />
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">

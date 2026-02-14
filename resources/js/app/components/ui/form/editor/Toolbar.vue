@@ -42,7 +42,7 @@ function closeLinkInput() {
 </script>
 
 <template>
-	<div class="relative border-thin border-solid border-black bg-white px-15 py-2">
+	<div class="relative border-thin border-solid border-black bg-white px-15 min-h-30 flex items-center">
 
 		<div class="flex items-center gap-8">
 

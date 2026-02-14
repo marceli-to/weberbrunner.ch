@@ -9,7 +9,11 @@ class ReorderAction
 	public function execute(array $items): void
 	{
 		foreach ($items as $item) {
-			Job::where('id', $item['id'])->update(['sort_order' => $item['sort_order']]);
+			$data = ['sort_order' => $item['sort_order']];
+			if (isset($item['location_id'])) {
+				$data['location_id'] = $item['location_id'];
+			}
+			Job::where('id', $item['id'])->update($data);
 		}
 	}
 }

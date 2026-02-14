@@ -7,12 +7,15 @@ it('requires authentication', function () {
 	$this->getJson('/api/dashboard/jobs')->assertUnauthorized();
 });
 
-it('lists jobs', function () {
+it('lists jobs grouped by location', function () {
 	asAdmin();
-	Job::factory()->count(3)->create();
-	$this->getJson('/api/dashboard/jobs')
-		->assertOk()
-		->assertJsonCount(3, 'data');
+	$location = Location::factory()->create();
+	Job::factory()->count(3)->create(['location_id' => $location->id]);
+	$response = $this->getJson('/api/dashboard/jobs')
+		->assertOk();
+	$groups = $response->json('data');
+	$locationGroup = collect($groups)->firstWhere('location.id', $location->id);
+	expect($locationGroup['jobs'])->toHaveCount(3);
 });
 
 it('creates a job', function () {
