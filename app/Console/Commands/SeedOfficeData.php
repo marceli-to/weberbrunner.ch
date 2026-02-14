@@ -24,33 +24,33 @@ class SeedOfficeData extends Command
 	{
 		$data = [
 			'2023' => [
-				'<p>Auszeichnung «best architects 24», Sanierung, Um- und Anbau, Haus B4, Zürich</p>',
+				'<p><strong>Auszeichnung «best architects 24»</strong> Sanierung, Um- und Anbau, Haus B4, Zürich</p>',
 			],
 			'2021' => [
-				'<p>Lobende Erwähnung – Hindernisfrei Architektur, Die Schweizer Fachstelle «40 Jahre Engagement für eine bessere Gesellschaft»</p>',
-				'<p>WIA – Ausstellung Women in Architecture, Berlin</p>',
+				'<p><strong>Lobende Erwähnung – Hindernisfrei Architektur</strong> – Die Schweizer Fachstelle «40 Jahre Engagement für eine bessere Gesellschaft»</p>',
+				'<p><strong>WIA – Ausstellung Women in Architecture</strong>, Berlin</p>',
 			],
 			'2020' => [
-				'<p>AW20 Architekturpreis Region Winterthur, für Wohnüberbauung Hagmannareal, Winterthur</p>',
-				'<p>Auszeichnung «best architects 21», Loft Windisch</p>',
+				'<p><strong>AW20 Architekturpreis Region Winterthur</strong> für Wohnüberbauung Hagmannareal, Winterthur</p>',
+				'<p><strong>Auszeichnung «best architects 21»</strong> Loft Windisch</p>',
 			],
 			'2019' => [
-				'<p>Architekturpreis Kanton Zürich Auszeichnung 19</p>',
+				'<p><strong>Architekturpreis Kanton Zürich Auszeichnung 19</strong></p>',
 			],
 			'2018' => [
-				'<p>Nominierung ARC-Award 2018, der Wohnüberbauung Hagmannareal, Winterthur</p>',
-				'<p>Auszeichnung Gold «best architects 19», für Wohnüberbauung Hagmannareal, Winterthur</p>',
+				'<p><strong>Nominierung ARC-Award 2018</strong> der Wohnüberbauung Hagmannareal, Winterthur</p>',
+				'<p><strong>Auszeichnung Gold «best architects 19»</strong> für Wohnüberbauung Hagmannareal, Winterthur</p>',
 			],
 			'2015' => [
-				'<p>Auszeichnung «best architects 16», für Mehrfamilienhaus Im Amt, Gutenswil</p>',
-				'<p>Auszeichnung «best architects 16», für Sportzentrum Eselriet, Effretikon</p>',
+				'<p><strong>Auszeichnung «best architects 16»</strong> für Mehrfamilienhaus Im Amt, Gutenswil</p>',
+				'<p><strong>Auszeichnung «best architects 16»</strong> für Sportzentrum Eselriet, Effretikon</p>',
 			],
 			'2008' => [
-				'<p>Auszeichnung «best architects 09», für Sporthalle Hardau, Zürich</p>',
-				'<p>Europäischer Spengler-Metall Architekturpreis, für Sporthalle Hardau, Zürich</p>',
+				'<p><strong>Auszeichnung «best architects 09»</strong> für Sporthalle Hardau, Zürich</p>',
+				'<p><strong>Europäischer Spengler-Metall Architekturpreis</strong> für Sporthalle Hardau, Zürich</p>',
 			],
 			'2003' => [
-				'<p>Denkmalschutzpreis «Wohnen unter Dächern», für Wohnhaus Schaufelberger</p>',
+				'<p><strong>Denkmalschutzpreis «Wohnen unter Dächern»</strong> für Wohnhaus Schaufelberger</p>',
 			],
 		];
 
@@ -141,33 +141,33 @@ class SeedOfficeData extends Command
 	{
 		$data = [
 			'2025' => [
-				'<p>Sind Architekt:innen nur die Petersilie am Fisch der Immobilienwirtschaft? Podcast-Festival Kontxtr, Basel (Elise Pischetsrieder)</p>',
-				'<p>Ökobilanzierung in der Praxis, Vorstellung Leitfaden, Umweltministerium Hessen, Architekten- und Stadtplanerkammer Hessen, Wiesbaden (Elise Pischetsrieder)</p>',
-				'<p>Zukunftsfähige Baukultur, Vortrag, Holzbau-Fachkongress am Bodensee im Rahmen der Holzbau Offensive Baden-Württemberg (Elise Pischetsrieder)</p>',
-				'<p>Ressourcenwende in der Architektur – mit neuen Strategien planen, Archikon Stuttgart (Elise Pischetsrieder)</p>',
-				'<p>Bauen mit Holz: Klimafreundlich, bezahlbar und zukunftsfähig, Diskussionsbeitrag, Holzbau Symposium BMWK (Elise Pischetsrieder)</p>',
-				'<p>Baukulturinitiative Dachkult, Impulsbeitrag, in der Reihe RoofTop Talks (Elise Pischetsrieder)</p>',
-				'<p>Schnittstelle Planen und Bauen neu denken, Moderation, AKB (Elise Pischetsrieder)</p>',
-				'<p>Wege zum ökologischen Planen und Bauen in die Zukunft, Impulsbeitrag, Klimafrühstück Wien (Elise Pischetsrieder)</p>',
-				'<p>Gastkritikerin im Masterkolloquium TU Berlin, Lehrstuhl für Bauökonomie Prof. Kristin Wellner, Dekanin der Fakultät VI Planen Bauen Umwelt (Elise Pischetsrieder)</p>',
-				'<p>Holzbau und klimagerechtes bauen skalieren, Vorlesung, IU Darmstadt</p>',
+				['text' => '<p><strong>«Sind Architekt:innen nur die Petersilie am Fisch der Immobilienwirtschaft?»</strong> Podcast-Festival Kontxtr, Basel (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Ökobilanzierung in der Praxis»</strong> Vorstellung Leitfaden, Umweltministerium Hessen, Architekten- und Stadtplanerkammer Hessen, Wiesbaden (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Zukunftsfähige Baukultur»</strong> Vortrag, Holzbau-Fachkongress am Bodensee im Rahmen der Holzbau Offensive Baden-Württemberg (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Ressourcenwende in der Architektur – mit neuen Strategien planen»</strong> Archikon Stuttgart (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Bauen mit Holz: Klimafreundlich, bezahlbar und zukunftsfähig»</strong> Diskussionsbeitrag, Holzbau Symposium BMWK (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Baukulturinitiative Dachkult»</strong> Impulsbeitrag, in der Reihe RoofTop Talks (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Schnittstelle Planen und Bauen neu denken»</strong> Moderation, AKB (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Wege zum ökologischen Planen und Bauen in die Zukunft»</strong> Impulsbeitrag, Klimafrühstück Wien (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Gastkritikerin im Masterkolloquium TU Berlin»</strong> Lehrstuhl für Bauökonomie Prof. Kristin Wellner, Dekanin der Fakultät VI Planen Bauen Umwelt (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Holzbau und klimagerechtes bauen skalieren»</strong> Vorlesung, IU Darmstadt</p>'],
 			],
 			'2024' => [
-				'<p>Von der Neustadt aus Holz zum zementfreien Haus – wie die Lebenszyklusanalyse das Planen und Bauen verändert, Architect at Work, Frankfurt am Main (Elise Pischetsrieder)</p>',
-				'<p>GWP-Kennwerte in der Praxis – Der BKI-Konstruktionsatlas als Planungswerkzeug, Webinar des BKI (Elise Pischetsrieder)</p>',
-				'<p>KI im Bau und in der Bildungsinfrastruktur, SCHULBAU Messe Berlin (Elise Pischetsrieder)</p>',
-				'<p>Ästhetik &amp; ökologisch nachhaltige Gebäudegestaltung – Konflikt oder positive kreative Herausforderung? Architekturgalerie AEDES für SenUMVK (Elise Pischetsrieder)</p>',
-				'<p>Klimafestival Preisverleihung Architektur Award 2024, Moderation (Elise Pischetsrieder)</p>',
-				'<p>Optionen für zirkuläres und klimagerechtes Bauen im Forschungsbau, Helmholtz Kompetenznetzwerk Klimagerecht Bauen (Elise Pischetsrieder)</p>',
-				'<p>Holz – Die Währung CO2 im Wohnungsbau, ELEMENTE materialForum Berlin (Elise Pischetsrieder)</p>',
-				'<p>Gestalt und Gemeinschaft, Grundlagen zukunftsfähiger Konstruktionen mit ganzheitlicher Materialwahl, Vorlesung, Studentischer Entwurfswettbewerb Joanes Preis (Elise Pischetsrieder, Roger Weber)</p>',
-				'<p>Haltung zeigen, Bayerischer Fachtag AKB, München (Elise Pischetsrieder)</p>',
-				'<p>Wohnprojektetag NRW 2024, Gelsenkirchen (Elise Pischetsrieder)</p>',
-				'<p>Datenbank zirkulär, Workshop, Bundesstiftung Bauakademie (Elise Pischetsrieder)</p>',
-				'<p>Führung Wohnungsbau Bahrfeldtstraße, Tag der Architektur (Elise Pischetsrieder)</p>',
-				'<p>Digitale Instrumente: Zirkularität in der Ökobilanzierung, Vorstellung Leitfaden im Kammerforum zirkuläres Bauen der AKB (Elise Pischetsrieder)</p>',
-				'<p>Sanierung einer alten Baumschule in Gransee, Gastkritik TU-Seminar, organisiert vom Fachgebiet Architects for Future Gastprofessorin Elisabeth Broermann und Adrian Nägel (Marie Heyer, Elise Pischetsrieder)</p>',
-				'<p>Die Währung CO2e im Bauen: Ökobilanzierung im Entwurf, Veranstaltung des BDA Mittelhessen (Elise Pischetsrieder)</p>',
+				['text' => '<p><strong>«Von der Neustadt aus Holz zum zementfreien Haus – wie die Lebenszyklusanalyse das Planen und Bauen verändert»</strong> Architect at Work, Frankfurt am Main (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«GWP-Kennwerte in der Praxis – Der BKI-Konstruktionsatlas als Planungswerkzeug»</strong> Webinar des BKI (Elise Pischetsrieder)</p>', 'link' => '#'],
+				['text' => '<p><strong>«KI im Bau und in der Bildungsinfrastruktur»</strong> SCHULBAU Messe Berlin (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Ästhetik &amp; ökologisch nachhaltige Gebäudegestaltung – Konflikt oder positive kreative Herausforderung?»</strong> Architekturgalerie AEDES für SenUMVK (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Klimafestival Preisverleihung Architektur Award 2024»</strong> Moderation (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Optionen für zirkuläres und klimagerechtes Bauen im Forschungsbau»</strong> Helmholtz Kompetenznetzwerk Klimagerecht Bauen (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Holz – Die Währung CO2 im Wohnungsbau»</strong> ELEMENTE materialForum Berlin (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Gestalt und Gemeinschaft, Grundlagen zukunftsfähiger Konstruktionen mit ganzheitlicher Materialwahl»</strong> Vorlesung, Studentischer Entwurfswettbewerb Joanes Preis (Elise Pischetsrieder, Roger Weber)</p>'],
+				['text' => '<p><strong>«Haltung zeigen»</strong> Bayerischer Fachtag AKB, München (Elise Pischetsrieder)</p>', 'link' => '#'],
+				['text' => '<p><strong>«Wohnprojektetag NRW 2024»</strong> Gelsenkirchen (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Datenbank zirkulär»</strong> Workshop, Bundesstiftung Bauakademie (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Führung Wohnungsbau Bahrfeldtstraße»</strong> Tag der Architektur (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Digitale Instrumente: Zirkularität in der Ökobilanzierung»</strong> Vorstellung Leitfaden im Kammerforum zirkuläres Bauen der AKB (Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Sanierung einer alten Baumschule in Gransee»</strong> Gastkritik TU-Seminar, organisiert vom Fachgebiet Architects for Future Gastprofessorin Elisabeth Broermann und Adrian Nägel (Marie Heyer, Elise Pischetsrieder)</p>'],
+				['text' => '<p><strong>«Die Währung CO2e im Bauen: Ökobilanzierung im Entwurf»</strong> Veranstaltung des BDA Mittelhessen (Elise Pischetsrieder)</p>'],
 			],
 		];
 
@@ -180,9 +180,10 @@ class SeedOfficeData extends Command
 			]);
 
 			$itemOrder = 0;
-			foreach ($entries as $text) {
+			foreach ($entries as $entry) {
 				$section->talks()->create([
-					'text' => $text,
+					'text' => $entry['text'],
+					'link' => $entry['link'] ?? null,
 					'publish' => true,
 					'sort_order' => $itemOrder++,
 				]);
