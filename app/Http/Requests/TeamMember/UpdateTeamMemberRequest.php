@@ -17,7 +17,7 @@ class UpdateTeamMemberRequest extends FormRequest
 		return [
 			'firstname' => 'required|string|max:255',
 			'name' => 'required|string|max:255',
-			'email' => 'nullable|email|max:255',
+			'email' => 'required|email|max:255',
 			'title' => 'nullable|string|max:255',
 			'since' => 'nullable|integer|min:1900|max:2100',
 			'location_id' => 'nullable|exists:locations,id',
@@ -42,6 +42,7 @@ class UpdateTeamMemberRequest extends FormRequest
 			'firstname.max' => 'Bitte überprüfe den Vornamen',
 			'name.required' => 'Bitte überprüfe den Namen',
 			'name.max' => 'Bitte überprüfe den Namen',
+			'email.required' => 'Bitte überprüfe die E-Mail-Adresse',
 			'email.email' => 'Bitte überprüfe die E-Mail-Adresse',
 			'email.max' => 'Bitte überprüfe die E-Mail-Adresse',
 			'since.integer' => 'Bitte überprüfe das Jahr',

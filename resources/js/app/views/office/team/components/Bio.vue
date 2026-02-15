@@ -17,6 +17,7 @@ const emit = defineEmits(['updated'])
 const { get, clear, submit } = useFormErrors()
 const editing = ref(false)
 const bioForms = ref([])
+const failedIndex = ref(null)
 
 function startEditing() {
 	bioForms.value = props.member.bios.map(bio => ({
@@ -30,17 +31,21 @@ function startEditing() {
 
 function cancelEditing() {
 	editing.value = false
+	failedIndex.value = null
 	clear()
 }
 
 async function save() {
+	failedIndex.value = null
 	let allOk = true
-	for (const bio of bioForms.value) {
+	for (let i = 0; i < bioForms.value.length; i++) {
+		const bio = bioForms.value[i]
 		const ok = await submit(() => teamApi.bios.update(props.member.uuid, bio.uuid, {
 			period: bio.period,
 			description: bio.description,
 		}))
 		if (!ok) {
+			failedIndex.value = i
 			allOk = false
 			break
 		}
@@ -88,10 +93,10 @@ async function save() {
 		<div v-for="(bio, i) in bioForms" :key="bio.uuid" class="mb-10">
 			<Grid :cols="6" class="px-20 text-md">
 				<Span class="col-span-2">
-					<Input v-model="bio.period" />
+					<Input v-model="bio.period" :error="i === failedIndex ? get('period') : null" @focus="clear('period')" />
 				</Span>
 				<Span class="col-span-4 pb-3">
-					<Input v-model="bio.description" />
+					<Input v-model="bio.description" :error="i === failedIndex ? get('description') : null" @focus="clear('description')" />
 				</Span>
 			</Grid>
 		</div>
