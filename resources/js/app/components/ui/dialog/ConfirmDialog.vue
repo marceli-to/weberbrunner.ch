@@ -16,13 +16,13 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 const variants = {
 	default: {
-		span: 'bg-navy border border-navy',
+		span: 'bg-navy border-thin border-navy',
 		message: 'text-white',
 		cancel: 'secondary',
 		confirm: 'primary',
 	},
 	danger: {
-		span: 'bg-red border border-red',
+		span: 'bg-red border-thin border-red',
 		message: 'text-white',
 		cancel: 'danger-outline',
 		confirm: 'danger',

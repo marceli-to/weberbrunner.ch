@@ -30,6 +30,9 @@
   --color-crimson: #820000;
   --color-bronze: #8c6900;
 
+  /* Border width */
+  --border-thin: 0.03125rem;
+
   /* Font sizes */
   --text-sm: 0.75rem; /* 12px */
   --text-md: 1rem; /* 16px */
@@ -39,27 +42,27 @@
 
 /* Border width utilities (0.5px) */
 @utility border-thin {
-	border-width: 0.03125rem;
+	border-width: var(--border-thin);
 }
 @utility border-t-thin {
-	border-top-width: 0.03125rem;
+	border-top-width: var(--border-thin);
 }
 @utility border-r-thin {
-	border-right-width: 0.03125rem;
+	border-right-width: var(--border-thin);
 }
 @utility border-b-thin {
-	border-bottom-width: 0.03125rem;
+	border-bottom-width: var(--border-thin);
 }
 @utility border-l-thin {
-	border-left-width: 0.03125rem;
+	border-left-width: var(--border-thin);
 }
 @utility border-x-thin {
-	border-left-width: 0.03125rem;
-	border-right-width: 0.03125rem;
+	border-left-width: var(--border-thin);
+	border-right-width: var(--border-thin);
 }
 @utility border-y-thin {
-	border-top-width: 0.03125rem;
-	border-bottom-width: 0.03125rem;
+	border-top-width: var(--border-thin);
+	border-bottom-width: var(--border-thin);
 }
 
 /* Debug for grids */

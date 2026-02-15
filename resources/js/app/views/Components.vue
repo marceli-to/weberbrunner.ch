@@ -86,7 +86,7 @@ const spacings = [
           <div v-for="color in colors" :key="color.name" class="flex flex-col">
             <div
               class="w-full h-auto aspect-square"
-              :class="[color.bg, color.border ? 'border border-silver' : '']"
+              :class="[color.bg, color.border ? 'border-thin border-silver' : '']"
             ></div>
             <span class="mt-8 text-sm font-semibold text-black">{{ color.name }}</span>
             <span class="text-sm text-gray">{{ color.hex }}</span>
@@ -357,7 +357,7 @@ const spacings = [
           <div class="w-full h-20"></div>
           <div class="min-h-80 grid grid-cols-12">
 
-            <div class="col-span-2 pl-20 border-r border-black">
+            <div class="col-span-2 pl-20 border-r-thin border-black">
 
               <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-25 h-25 -mt-5">
                 <path d="M21.2305 19.77V0H41.0005C40.8405 10.85 32.0805 19.61 21.2305 19.77Z" fill="currentColor"/>
@@ -402,7 +402,7 @@ const spacings = [
         </header>
 
         <div class="bg-snow grid grid-cols-12">
-          <sidebar class="col-span-2 bg-snow pl-20 border-r border-black min-h-[150vh]">
+          <sidebar class="col-span-2 bg-snow pl-20 border-r-thin border-black min-h-[150vh]">
 
           </sidebar>
           <main class="col-span-10 bg-snow min-h-[150vh]">

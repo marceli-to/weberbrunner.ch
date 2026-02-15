@@ -46,7 +46,7 @@ function handleSave() {
 				<img
 					:src="media.thumbnail_url"
 					:alt="media.alt || ''"
-					class="w-80 h-80 object-cover border border-silver flex-none"
+					class="w-80 h-80 object-cover border-thin border-silver flex-none"
 				/>
 				<div class="text-xs text-gray leading-relaxed">
 					<div>{{ media.original_name }}</div>
@@ -59,7 +59,7 @@ function handleSave() {
 				<input
 					v-model="form.alt"
 					type="text"
-					class="w-full border border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
+					class="w-full border-thin border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
 				/>
 			</div>
 
@@ -68,7 +68,7 @@ function handleSave() {
 				<input
 					v-model="form.caption"
 					type="text"
-					class="w-full border border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
+					class="w-full border-thin border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
 				/>
 			</div>
 
@@ -82,7 +82,7 @@ function handleSave() {
 				</button>
 				<button
 					type="button"
-					class="border border-black text-black text-sm font-semibold px-16 py-8"
+					class="border-thin border-black text-black text-sm font-semibold px-16 py-8"
 					@click="emit('close')"
 				>
 					Abbrechen

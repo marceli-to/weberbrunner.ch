@@ -52,7 +52,7 @@ async function handleDelete(post) {
 
       <table v-else class="w-full text-sm">
         <thead>
-          <tr class="border-b border-silver text-left">
+          <tr class="border-b-thin border-silver text-left">
             <th></th>
             <th class="py-8 font-semibold text-gray">Title</th>
             <th class="py-8 font-semibold text-gray w-80">Status</th>
@@ -70,7 +70,7 @@ async function handleDelete(post) {
           @end="store.reorder"
         >
           <template #item="{ element: post }">
-            <tr class="border-b border-silver">
+            <tr class="border-b-thin border-silver">
               <td class="py-12 w-24">
                 <Burger class="w-14 cursor-grab drag-handle" />
               </td>

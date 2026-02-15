@@ -26,7 +26,7 @@ const dragItems = computed({
 		animation="150"
 	>
 		<template #item="{ element }">
-			<div class="relative group border border-silver" :class="{ 'border-black': element.is_teaser }">
+			<div class="relative group border-thin border-silver" :class="{ 'border-black': element.is_teaser }">
 				<img
 					:src="element.thumbnail_url"
 					:alt="element.alt || ''"

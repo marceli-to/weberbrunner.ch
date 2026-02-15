@@ -93,14 +93,14 @@ function remove() {
 		<div class="flex gap-4 mb-16">
 			<button
 				type="button"
-				class="px-10 py-4 text-xs font-semibold border"
+				class="px-10 py-4 text-xs font-semibold border-thin"
 				:class="mode === 'projekt' ? 'bg-black text-white border-black' : 'bg-white text-black border-silver hover:border-black'"
 				@click="mode = 'projekt'; newTab = false">
 				Projekt
 			</button>
 			<button
 				type="button"
-				class="px-10 py-4 text-xs font-semibold border"
+				class="px-10 py-4 text-xs font-semibold border-thin"
 				:class="mode === 'extern' ? 'bg-black text-white border-black' : 'bg-white text-black border-silver hover:border-black'"
 				@click="mode = 'extern'; newTab = true">
 				Extern

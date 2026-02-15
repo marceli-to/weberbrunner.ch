@@ -23,9 +23,9 @@
 }
 
 .media-uploader__btn {
-	@apply border border-silver px-16 py-8 text-sm text-gray hover:border-black hover:text-black cursor-pointer;
+	@apply border-thin border-silver px-16 py-8 text-sm text-gray hover:border-black hover:text-black cursor-pointer;
 }
 
 .media-uploader .uppy-StatusBar {
-	@apply rounded-none border border-silver border-t-0;
+	@apply rounded-none border-thin border-silver border-t-0;
 }

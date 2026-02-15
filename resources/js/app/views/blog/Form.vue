@@ -113,7 +113,7 @@ function onSetTeaser(media) {
 				<input
 					v-model="form.title"
 					type="text"
-					class="w-full border border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
+					class="w-full border-thin border-silver px-8 py-8 text-sm text-black focus:outline-none focus:border-black"
 				/>
 				<p v-if="store.errors.title" class="text-sm text-red mt-4">
 					{{ store.errors.title[0] }}
@@ -162,7 +162,7 @@ function onSetTeaser(media) {
 				</button>
 				<button
 					type="button"
-					class="border border-black text-black text-sm font-semibold px-16 py-8"
+					class="border-thin border-black text-black text-sm font-semibold px-16 py-8"
 					@click="router.push({ name: 'blog.index' })"
 				>
 					Cancel

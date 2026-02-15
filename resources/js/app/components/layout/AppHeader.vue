@@ -11,7 +11,7 @@ const authStore = useAuthStore()
 		<div class="w-full h-20"></div>
 		<div class="min-h-80 grid grid-cols-12 gap-x-20">
 
-			<div class="col-span-2 pl-20 border-r border-black">
+			<div class="col-span-2 pl-20 border-r-thin border-black">
 				<LogoMark class="w-25 h-25 -mt-5" />
 			</div>
 
