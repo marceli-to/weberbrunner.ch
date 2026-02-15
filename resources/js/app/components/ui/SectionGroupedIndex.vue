@@ -35,22 +35,22 @@ const { collapsed, toggle: toggleSection } = useCollapsed(props.collapsedKey)
 const { confirm } = useConfirm()
 const lightbox = ref(null)
 
-async function fetchEntries() {
+async function fetch() {
 	const { data } = await props.api.index()
 	groups.value = data.data
 }
 
-async function onSectionStored() {
-	await fetchEntries()
+async function onGroupStored() {
+	await fetch()
 	groups.value.unshift(groups.value.pop())
-	await reorderSections()
+	await reorderGroups()
 }
 
-function storeSectionFn(title) {
+function storeGroupFn(title) {
 	return sectionsApi.store({ title, type: props.sectionType })
 }
 
-async function deleteSection(group) {
+async function destroySection(group) {
 	const count = group.entries.length
 	const message = count
 		? `Möchtest Du die Kategorie «${group.section.title}» wirklich löschen? Alle ${count} Einträge werden ebenfalls gelöscht.`
@@ -62,11 +62,11 @@ async function deleteSection(group) {
 	})
 	if (ok) {
 		await sectionsApi.destroy(group.section.uuid)
-		await fetchEntries()
+		await fetch()
 	}
 }
 
-async function deleteEntry(entry) {
+async function destroy(entry) {
 	const ok = await confirm({
 		message: 'Möchtest Du diesen Eintrag wirklich löschen?',
 		confirmLabel: 'Löschen',
@@ -74,16 +74,16 @@ async function deleteEntry(entry) {
 	})
 	if (ok) {
 		await props.api.destroy(entry.uuid)
-		await fetchEntries()
+		await fetch()
 	}
 }
 
-async function togglePublish(entry) {
+async function toggle(entry) {
 	entry.publish = !entry.publish
 	await props.api.toggle(entry.uuid)
 }
 
-async function reorderSections() {
+async function reorderGroups() {
 	const items = groups.value.map((g, i) => ({
 		id: g.section.id,
 		sort_order: i,
@@ -91,7 +91,7 @@ async function reorderSections() {
 	await sectionsApi.reorder(items)
 }
 
-async function reorderEntries(group) {
+async function reorder(group) {
 	const items = group.entries.map((e, i) => ({
 		id: e.id,
 		sort_order: i,
@@ -100,7 +100,7 @@ async function reorderEntries(group) {
 	await props.api.reorder(items)
 }
 
-onMounted(fetchEntries)
+onMounted(fetch)
 </script>
 
 <template>
@@ -135,7 +135,7 @@ onMounted(fetchEntries)
 			ghost-class="opacity-50"
 			animation="150"
 			class="col-span-10 flex flex-col gap-20"
-			@end="reorderSections">
+			@end="reorderGroups">
 
 			<template #item="{ element: group }">
 
@@ -156,7 +156,7 @@ onMounted(fetchEntries)
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
-							<Cross class="w-10 cursor-pointer" @click="deleteSection(group)" />
+							<Cross class="w-10 cursor-pointer" @click="destroySection(group)" />
 						</Span>
 
 						<!-- Entries -->
@@ -170,15 +170,15 @@ onMounted(fetchEntries)
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
 								:class="{ 'mb-10': group.entries.length }"
-								@change="reorderEntries(group)">
+								@change="reorder(group)">
 								<template #item="{ element: entry }">
 									<DraggableEntryRow
 										:label="entry[labelField]"
 										:publish="entry.publish"
 										drag-handle-class="entry-drag-handle"
 										@edit="router.push({ name: `${routePrefix}.edit`, params: { id: entry.uuid } })"
-										@toggle-publish="togglePublish(entry)"
-										@delete="deleteEntry(entry)" />
+										@toggle-publish="toggle(entry)"
+										@delete="destroy(entry)" />
 								</template>
 							</draggable>
 
@@ -197,6 +197,6 @@ onMounted(fetchEntries)
 	</Grid>
 
 	<!-- Lightbox -->
-	<CreateSectionLightbox ref="lightbox" :store-fn="storeSectionFn" @stored="onSectionStored" />
+	<CreateSectionLightbox ref="lightbox" :store-fn="storeGroupFn" @stored="onGroupStored" />
 
 </template>

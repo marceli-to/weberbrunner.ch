@@ -17,12 +17,12 @@ const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('jobs')
 const { confirm } = useConfirm()
 
-async function fetchJobs() {
+async function fetch() {
 	const { data } = await jobsApi.index()
 	groups.value = data.data
 }
 
-async function deleteJob(job) {
+async function destroy(job) {
 	const ok = await confirm({
 		message: 'Möchtest Du diesen Eintrag wirklich löschen?',
 		confirmLabel: 'Löschen',
@@ -30,16 +30,16 @@ async function deleteJob(job) {
 	})
 	if (ok) {
 		await jobsApi.destroy(job.uuid)
-		await fetchJobs()
+		await fetch()
 	}
 }
 
-async function togglePublish(job) {
+async function toggle(job) {
 	job.publish = !job.publish
 	await jobsApi.toggle(job.uuid)
 }
 
-async function reorderJobs(group) {
+async function reorder(group) {
 	const items = group.jobs.map((j, i) => ({
 		id: j.id,
 		sort_order: i,
@@ -48,7 +48,7 @@ async function reorderJobs(group) {
 	await jobsApi.reorder(items)
 }
 
-onMounted(fetchJobs)
+onMounted(fetch)
 </script>
 
 <template>
@@ -89,15 +89,15 @@ onMounted(fetchJobs)
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
 								:class="{ 'mb-10': group.jobs.length }"
-								@change="reorderJobs(group)">
+								@change="reorder(group)">
 								<template #item="{ element: job }">
 									<DraggableEntryRow
 										:label="job.title"
 										:publish="job.publish"
 										drag-handle-class="job-drag-handle"
 										@edit="router.push({ name: 'jobs.edit', params: { id: job.uuid } })"
-										@toggle-publish="togglePublish(job)"
-										@delete="deleteJob(job)" />
+										@toggle-publish="toggle(job)"
+										@delete="destroy(job)" />
 								</template>
 							</draggable>
 

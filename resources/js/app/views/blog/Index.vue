@@ -13,7 +13,7 @@ const toast = useToast()
 const { confirm } = useConfirm()
 
 onMounted(() => {
-	store.fetchPosts()
+	store.fetchAll()
 })
 
 async function handleDelete(post) {
@@ -23,7 +23,7 @@ async function handleDelete(post) {
 		variant: 'danger',
 	})
 	if (!ok) return
-	await store.deletePost(post.id)
+	await store.destroy(post.id)
 	toast.success('Post deleted')
 }
 </script>
@@ -67,7 +67,7 @@ async function handleDelete(post) {
           handle=".drag-handle"
           ghost-class="bg-snow"
           drag-class="bg-white"
-          @end="store.reorderPosts"
+          @end="store.reorder"
         >
           <template #item="{ element: post }">
             <tr class="border-b border-silver">

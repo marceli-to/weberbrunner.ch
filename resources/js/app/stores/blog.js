@@ -10,7 +10,7 @@ export const useBlogStore = defineStore('blog', {
 	}),
 
 	actions: {
-		async fetchPosts() {
+		async fetchAll() {
 			this.loading = true
 			try {
 				const { data } = await blogApi.index()
@@ -20,7 +20,7 @@ export const useBlogStore = defineStore('blog', {
 			}
 		},
 
-		async fetchPost(id) {
+		async fetchOne(id) {
 			this.loading = true
 			try {
 				const { data } = await blogApi.show(id)
@@ -30,7 +30,7 @@ export const useBlogStore = defineStore('blog', {
 			}
 		},
 
-		async savePost(form, id = null, media = []) {
+		async save(form, id = null, media = []) {
 			this.errors = {}
 			try {
 				const payload = { ...form }
@@ -51,12 +51,12 @@ export const useBlogStore = defineStore('blog', {
 			}
 		},
 
-		async deletePost(id) {
+		async destroy(id) {
 			await blogApi.destroy(id)
 			this.posts = this.posts.filter(p => p.id !== id)
 		},
 
-		async reorderPosts() {
+		async reorder() {
 			const items = this.posts.map((post, index) => ({
 				id: post.id,
 				sort_order: index,

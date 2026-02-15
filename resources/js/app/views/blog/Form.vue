@@ -29,7 +29,7 @@ const form = ref({
 onMounted(async () => {
 	mediaStore.setItems([])
 	if (isEdit.value) {
-		await store.fetchPost(route.params.id)
+		await store.fetchOne(route.params.id)
 		if (store.current) {
 			form.value.title = store.current.title
 			form.value.content = store.current.content || ''
@@ -52,7 +52,7 @@ async function handleSubmit() {
 		caption: item.caption || null,
 	}))
 
-	const success = await store.savePost(form.value, isEdit.value ? route.params.id : null, tempMedia)
+	const success = await store.save(form.value, isEdit.value ? route.params.id : null, tempMedia)
 	if (success) {
 		toast.success(isEdit.value ? 'Post updated' : 'Post created')
 		router.push({ name: 'blog.index' })

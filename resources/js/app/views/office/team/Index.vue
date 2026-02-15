@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted } from 'vue'
-import { useTeamStore } from '@/stores/team'
+import { ref, onMounted } from 'vue'
+import teamApi from '@/api/team'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -8,11 +8,14 @@ import ListTable from '@/components/ui/list/ListTable.vue'
 import ListTableRow from '@/components/ui/list/ListTableRow.vue'
 import ListTableCell from '@/components/ui/list/ListTableCell.vue'
 
-const teamStore = useTeamStore()
+const members = ref([])
 
-onMounted(() => {
-	teamStore.fetchMembers()
-})
+async function fetch() {
+	const { data } = await teamApi.index()
+	members.value = data.data
+}
+
+onMounted(fetch)
 </script>
 
 <template>
@@ -35,7 +38,7 @@ onMounted(() => {
 				</ListTableRow>
 
 				<!-- Entries -->
-				<ListTableRow v-for="member in teamStore.members" :key="member.uuid">
+				<ListTableRow v-for="member in members" :key="member.uuid">
 					<ListTableCell :span="2" first>{{ member.name }}</ListTableCell>
 					<ListTableCell :span="2">{{ member.firstname }}</ListTableCell>
 					<ListTableCell :span="3">{{ member.title }}</ListTableCell>
