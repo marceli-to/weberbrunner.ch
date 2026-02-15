@@ -120,6 +120,7 @@ Route::prefix('dashboard')
 				Route::put('/{teamMember}', 'update');
 				Route::delete('/{teamMember}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
+				Route::post('/{teamMember}/media', 'attachMedia');
 			});
 
 		// Team Member Bios (nested under team members)

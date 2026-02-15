@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Actions\TeamMember\DeleteAction as DeleteTeamMemberAction;
 use App\Actions\TeamMember\ListAction as ListTeamMemberAction;
 use App\Actions\TeamMember\ReorderAction as ReorderTeamMemberAction;
 use App\Actions\TeamMember\StoreAction as StoreTeamMemberAction;
 use App\Actions\TeamMember\UpdateAction as UpdateTeamMemberAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Media\AttachMediaRequest;
 use App\Http\Requests\TeamMember\StoreTeamMemberRequest;
 use App\Http\Requests\TeamMember\ReorderTeamMemberRequest;
 use App\Http\Requests\TeamMember\UpdateTeamMemberRequest;
@@ -67,6 +69,13 @@ class TeamMemberController extends Controller
 		$member->restore();
 
 		return new TeamMemberResource($member->load(['bios', 'media', 'location']));
+	}
+
+	public function attachMedia(AttachMediaRequest $request, TeamMember $teamMember)
+	{
+		(new AttachMediaAction)->execute($request->validated('media'), $teamMember);
+
+		return new TeamMemberResource($teamMember->load(['bios', 'media', 'location']));
 	}
 
 	public function reorder(ReorderTeamMemberRequest $request)

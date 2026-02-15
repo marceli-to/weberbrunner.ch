@@ -36,6 +36,11 @@ class TeamMember extends Model
 		'since' => 'integer',
 	];
 
+	public function getFullnameAttribute(): string
+	{
+		return trim("{$this->firstname} {$this->name}");
+	}
+
 	public function bios(): HasMany
 	{
 		return $this->hasMany(TeamMemberBio::class)->orderBy('sort_order');

@@ -58,6 +58,7 @@ async function save() {
 </script>
 
 <template>
+
 	<!-- Display mode -->
 	<div v-if="!editing" class="bg-white pb-20">
 		<Grid :cols="6" class="px-20">
@@ -108,4 +109,5 @@ async function save() {
 			</Span>
 		</Grid>
 	</form>
+  
 </template>

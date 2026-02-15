@@ -7,6 +7,7 @@ export default {
 	update: (id, data) => api.put(`/team/${id}`, data),
 	destroy: (id) => api.delete(`/team/${id}`),
 	reorder: (items) => api.patch('/team/reorder', { items }),
+	attachMedia: (id, media) => api.post(`/team/${id}/media`, { media }),
 	bios: {
 		index: (teamId) => api.get(`/team/${teamId}/cv`),
 		store: (teamId, data) => api.post(`/team/${teamId}/cv`, data),

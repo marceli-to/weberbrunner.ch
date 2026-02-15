@@ -15,13 +15,13 @@ const props = defineProps({
 			span,
 			first ? 'pl-20' : '',
 			last ? 'pr-20' : '',
-			header ? 'pt-20' : 'pt-6 group-hover:text-white',
+			header ? 'pt-20' : 'group-hover:text-white',
 		]">
 
 		<span
 			class="block w-full border-b border-b-thin"
 			:class="[
-				header ? 'pb-20' : 'pb-6 border-b-gray group-hover:border-b-navy',
+				header ? 'pb-20' : 'min-h-30 flex items-center border-b-gray group-hover:border-b-navy',
 			]">
 			<slot />
 		</span>
