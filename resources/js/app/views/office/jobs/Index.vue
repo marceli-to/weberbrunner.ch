@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import jobsApi from '@/api/jobs'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
 import draggable from 'vuedraggable'
@@ -13,6 +14,7 @@ import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 
 const router = useRouter()
+const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('jobs')
 const { confirm } = useConfirm()
@@ -48,7 +50,7 @@ async function reorder(group) {
 	await jobsApi.reorder(items)
 }
 
-onMounted(fetch)
+load(fetch)
 </script>
 
 <template>

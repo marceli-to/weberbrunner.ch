@@ -1,14 +1,19 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
-authStore.fetchUser()
+const appReady = ref(false)
+
+authStore.fetchUser().then(() => {
+	appReady.value = true
+})
 </script>
 
 <template>
-	<AppLayout>
+	<AppLayout v-if="appReady">
 		<RouterView />
 	</AppLayout>
 </template>

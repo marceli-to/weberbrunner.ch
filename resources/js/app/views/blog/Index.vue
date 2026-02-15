@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBlogStore } from '@/stores/blog'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
 import Burger from '@/components/icons/Burger.vue'
@@ -9,12 +9,11 @@ import draggable from 'vuedraggable'
 
 const router = useRouter()
 const store = useBlogStore()
+const { load } = usePageLoader()
 const toast = useToast()
 const { confirm } = useConfirm()
 
-onMounted(() => {
-	store.fetchAll()
-})
+load(() => store.fetchAll())
 
 async function handleDelete(post) {
 	const ok = await confirm({
@@ -42,11 +41,7 @@ async function handleDelete(post) {
         </button>
       </div>
 
-      <div v-if="store.loading" class="text-sm text-gray">
-        Loading...
-      </div>
-
-      <div v-else-if="store.posts.length === 0" class="text-sm text-gray">
+      <div v-if="store.posts.length === 0" class="text-sm text-gray">
         No posts yet.
       </div>
 

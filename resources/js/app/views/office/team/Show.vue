@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import teamApi from '@/api/team'
+import { usePageLoader } from '@/composables/usePageLoader'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -12,6 +13,7 @@ import Bio from './components/Bio.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { load } = usePageLoader()
 const member = ref(null)
 
 async function fetch() {
@@ -23,38 +25,34 @@ function goBack() {
 	router.push({ name: 'office.team' })
 }
 
-onMounted(fetch)
+load(fetch)
 </script>
 
 <template>
-	<template v-if="member">
+	<!-- Header -->
+	<Grid class="mb-20">
+		<Span class="col-span-1 flex items-center justify-center">
+			<button type="button" @click="goBack">
+				<Arrow variant="left" class="w-25 cursor-pointer" />
+			</button>
+		</Span>
+		<Span class="col-span-8">
+			<PageTitle>
+				{{ member?.fullname }}
+			</PageTitle>
+		</Span>
+	</Grid>
 
-		<!-- Header -->
-		<Grid class="mb-20">
-			<Span class="col-span-1 flex items-center justify-center">
-				<button type="button" @click="goBack">
-					<Arrow variant="left" class="w-25 cursor-pointer" />
-				</button>
-			</Span>
-			<Span class="col-span-8">
-				<PageTitle>
-					{{ member.fullname }}
-				</PageTitle>
-			</Span>
-		</Grid>
+	<!-- Content -->
+	<Grid v-if="member" class="mb-20">
 
-		<!-- Content -->
-		<Grid class="mb-20">
+		<Span class="col-span-2 col-start-2">
+			<TeamImage :member="member" @updated="fetch" />
+		</Span>
 
-			<Span class="col-span-2 col-start-2">
-				<TeamImage :member="member" @updated="fetch" />
-			</Span>
-
-			<Span class="col-span-6 flex flex-col gap-20">
-				<Profile :member="member" @updated="fetch" />
-				<Bio :member="member" @updated="fetch" />
-			</Span>
-		</Grid>
-
-	</template>
+		<Span class="col-span-6 flex flex-col gap-20">
+			<Profile :member="member" @updated="fetch" />
+			<Bio :member="member" @updated="fetch" />
+		</Span>
+	</Grid>
 </template>

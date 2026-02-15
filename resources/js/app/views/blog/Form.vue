@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useBlogStore } from '@/stores/blog'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useMediaStore } from '@/stores/media'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
@@ -17,6 +18,7 @@ const mediaStore = useMediaStore()
 const toast = useToast()
 const { confirm } = useConfirm()
 
+const { load } = usePageLoader()
 const isEdit = computed(() => !!route.params.id)
 const editingMedia = ref(null)
 
@@ -26,7 +28,7 @@ const form = ref({
 	publish: false,
 })
 
-onMounted(async () => {
+load(async () => {
 	mediaStore.setItems([])
 	if (isEdit.value) {
 		await store.fetchOne(route.params.id)
@@ -103,11 +105,7 @@ function onSetTeaser(media) {
 			</h2>
 		</div>
 
-		<div v-if="store.loading" class="col-span-9 text-sm text-gray">
-			Loading...
-		</div>
-
-		<form v-else class="col-span-9" @submit.prevent="handleSubmit">
+		<form class="col-span-9" @submit.prevent="handleSubmit">
 			<div class="mb-16">
 				<label class="block text-sm font-semibold text-black mb-4">Title</label>
 				<input

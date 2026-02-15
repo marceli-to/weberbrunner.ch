@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import sectionsApi from '@/api/sections'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useFormErrors } from '@/composables/useFormErrors'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FormContainer from '@/components/ui/form/FormContainer.vue'
@@ -27,6 +28,7 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
+const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 
 const isEdit = computed(() => !!route.params.id)
@@ -43,7 +45,7 @@ function populateExtra(data) {
 	}
 }
 
-onMounted(async () => {
+load(async () => {
 	if (isEdit.value) {
 		const { data } = await props.api.show(route.params.id)
 		form.value.text = data.data.text || ''

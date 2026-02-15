@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import sectionsApi from '@/api/sections'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
 import draggable from 'vuedraggable'
@@ -30,6 +31,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleSection } = useCollapsed(props.collapsedKey)
 const { confirm } = useConfirm()
@@ -100,7 +102,7 @@ async function reorder(group) {
 	await props.api.reorder(items)
 }
 
-onMounted(fetch)
+load(fetch)
 </script>
 
 <template>

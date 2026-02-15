@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import jobsApi from '@/api/jobs'
 import locationsApi from '@/api/locations'
+import { usePageLoader } from '@/composables/usePageLoader'
 import { useFormErrors } from '@/composables/useFormErrors'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FormContainer from '@/components/ui/form/FormContainer.vue'
@@ -15,6 +16,7 @@ import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 
 const isEdit = computed(() => !!route.params.id)
@@ -26,7 +28,7 @@ const form = ref({
 	contact_email: '',
 })
 
-onMounted(async () => {
+load(async () => {
 	if (isEdit.value) {
 		const { data } = await jobsApi.show(route.params.id)
 		form.value.title = data.data.title || ''
