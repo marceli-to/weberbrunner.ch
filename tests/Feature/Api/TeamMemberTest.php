@@ -20,6 +20,7 @@ it('creates a team member', function () {
 	$this->postJson('/api/dashboard/team', [
 		'firstname' => 'Max',
 		'name' => 'Muster',
+		'email' => 'max@example.com',
 	])
 		->assertCreated()
 		->assertJsonPath('data.firstname', 'Max')
@@ -30,7 +31,7 @@ it('validates required fields', function () {
 	asAdmin();
 	$this->postJson('/api/dashboard/team', [])
 		->assertUnprocessable()
-		->assertJsonValidationErrors(['firstname', 'name']);
+		->assertJsonValidationErrors(['firstname', 'name', 'email']);
 });
 
 it('creates a team member with location', function () {
@@ -39,6 +40,7 @@ it('creates a team member with location', function () {
 	$this->postJson('/api/dashboard/team', [
 		'firstname' => 'Anna',
 		'name' => 'Schmidt',
+		'email' => 'anna@example.com',
 		'location_id' => $location->id,
 	])
 		->assertCreated();
@@ -57,6 +59,7 @@ it('updates a team member', function () {
 	$this->putJson("/api/dashboard/team/{$member->uuid}", [
 		'firstname' => 'Updated',
 		'name' => 'Name',
+		'email' => 'updated@example.com',
 	])
 		->assertOk()
 		->assertJsonPath('data.firstname', 'Updated');

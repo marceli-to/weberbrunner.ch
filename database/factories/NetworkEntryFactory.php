@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\NetworkEntry;
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,10 +16,8 @@ class NetworkEntryFactory extends Factory
 	public function definition(): array
 	{
 		return [
-			'title' => fake()->company(),
-			'description' => fake()->optional()->sentence(),
-			'category' => fake()->optional()->word(),
-			'link' => fake()->optional()->url(),
+			'text' => '<p>' . fake()->sentence(6) . '</p>',
+			'section_id' => Section::factory()->state(['type' => 'network']),
 			'publish' => true,
 		];
 	}

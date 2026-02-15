@@ -7,31 +7,32 @@ it('requires authentication', function () {
 	$this->getJson('/api/dashboard/jury')->assertUnauthorized();
 });
 
-it('lists jury entries', function () {
+it('lists jury entries grouped by section', function () {
 	asAdmin();
 	$section = Section::factory()->create(['type' => 'jury']);
 	Jury::factory()->count(3)->create(['section_id' => $section->id]);
 	$this->getJson('/api/dashboard/jury')
 		->assertOk()
-		->assertJsonCount(3, 'data');
+		->assertJsonCount(1, 'data')
+		->assertJsonCount(3, 'data.0.entries');
 });
 
 it('creates a jury entry', function () {
 	asAdmin();
 	$section = Section::factory()->create(['type' => 'jury']);
 	$this->postJson('/api/dashboard/jury', [
-		'title' => 'Design Award Jury',
+		'text' => 'Design Award Jury',
 		'section_id' => $section->id,
 	])
 		->assertCreated()
-		->assertJsonPath('data.title', 'Design Award Jury');
+		->assertJsonPath('data.text', 'Design Award Jury');
 });
 
 it('validates required fields', function () {
 	asAdmin();
 	$this->postJson('/api/dashboard/jury', [])
 		->assertUnprocessable()
-		->assertJsonValidationErrors(['title', 'section_id']);
+		->assertJsonValidationErrors(['text', 'section_id']);
 });
 
 it('shows a jury entry', function () {
@@ -47,11 +48,11 @@ it('updates a jury entry', function () {
 	$section = Section::factory()->create(['type' => 'jury']);
 	$jury = Jury::factory()->create(['section_id' => $section->id]);
 	$this->putJson("/api/dashboard/jury/{$jury->uuid}", [
-		'title' => 'Updated Jury',
+		'text' => 'Updated Jury',
 		'section_id' => $section->id,
 	])
 		->assertOk()
-		->assertJsonPath('data.title', 'Updated Jury');
+		->assertJsonPath('data.text', 'Updated Jury');
 });
 
 it('deletes a jury entry', function () {

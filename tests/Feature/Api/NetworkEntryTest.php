@@ -1,31 +1,38 @@
 <?php
 
 use App\Models\NetworkEntry;
+use App\Models\Section;
 
 it('requires authentication', function () {
 	$this->getJson('/api/dashboard/network')->assertUnauthorized();
 });
 
-it('lists network entries', function () {
+it('lists network entries grouped by section', function () {
 	asAdmin();
-	NetworkEntry::factory()->count(3)->create();
+	$section = Section::factory()->create(['type' => 'network']);
+	NetworkEntry::factory()->count(3)->create(['section_id' => $section->id]);
 	$this->getJson('/api/dashboard/network')
 		->assertOk()
-		->assertJsonCount(3, 'data');
+		->assertJsonCount(1, 'data')
+		->assertJsonCount(3, 'data.0.entries');
 });
 
 it('creates a network entry', function () {
 	asAdmin();
-	$this->postJson('/api/dashboard/network', ['title' => 'Partner Co'])
+	$section = Section::factory()->create();
+	$this->postJson('/api/dashboard/network', [
+		'text' => 'Partner Co',
+		'section_id' => $section->id,
+	])
 		->assertCreated()
-		->assertJsonPath('data.title', 'Partner Co');
+		->assertJsonPath('data.text', 'Partner Co');
 });
 
-it('validates title is required', function () {
+it('validates text is required', function () {
 	asAdmin();
 	$this->postJson('/api/dashboard/network', [])
 		->assertUnprocessable()
-		->assertJsonValidationErrors('title');
+		->assertJsonValidationErrors('text');
 });
 
 it('shows a network entry', function () {
@@ -38,9 +45,12 @@ it('shows a network entry', function () {
 it('updates a network entry', function () {
 	asAdmin();
 	$entry = NetworkEntry::factory()->create();
-	$this->putJson("/api/dashboard/network/{$entry->uuid}", ['title' => 'Updated Partner'])
+	$this->putJson("/api/dashboard/network/{$entry->uuid}", [
+		'text' => 'Updated Partner',
+		'section_id' => $entry->section_id,
+	])
 		->assertOk()
-		->assertJsonPath('data.title', 'Updated Partner');
+		->assertJsonPath('data.text', 'Updated Partner');
 });
 
 it('deletes a network entry', function () {

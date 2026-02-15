@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Section;
 use App\Models\Talk;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,7 @@ class TalkFactory extends Factory
 		return [
 			'text' => '<p>' . fake()->sentence(6) . '</p>',
 			'link' => fake()->optional()->url(),
+			'section_id' => Section::factory()->state(['type' => 'talk']),
 			'publish' => true,
 		];
 	}

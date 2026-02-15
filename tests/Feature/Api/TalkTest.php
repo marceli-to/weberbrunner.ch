@@ -1,34 +1,38 @@
 <?php
 
+use App\Models\Section;
 use App\Models\Talk;
 
 it('requires authentication', function () {
 	$this->getJson('/api/dashboard/talks')->assertUnauthorized();
 });
 
-it('lists talks', function () {
+it('lists talks grouped by section', function () {
 	asAdmin();
-	Talk::factory()->count(3)->create();
+	$section = Section::factory()->create(['type' => 'talk']);
+	Talk::factory()->count(3)->create(['section_id' => $section->id]);
 	$this->getJson('/api/dashboard/talks')
 		->assertOk()
-		->assertJsonCount(3, 'data');
+		->assertJsonCount(1, 'data')
+		->assertJsonCount(3, 'data.0.entries');
 });
 
 it('creates a talk', function () {
 	asAdmin();
+	$section = Section::factory()->create(['type' => 'talk']);
 	$this->postJson('/api/dashboard/talks', [
-		'title' => 'My Talk',
-		'date' => '2026-03-15',
+		'text' => 'My Talk',
+		'section_id' => $section->id,
 	])
 		->assertCreated()
-		->assertJsonPath('data.title', 'My Talk');
+		->assertJsonPath('data.text', 'My Talk');
 });
 
 it('validates required fields', function () {
 	asAdmin();
 	$this->postJson('/api/dashboard/talks', [])
 		->assertUnprocessable()
-		->assertJsonValidationErrors(['title', 'date']);
+		->assertJsonValidationErrors(['text', 'section_id']);
 });
 
 it('shows a talk', function () {
@@ -42,11 +46,11 @@ it('updates a talk', function () {
 	asAdmin();
 	$talk = Talk::factory()->create();
 	$this->putJson("/api/dashboard/talks/{$talk->uuid}", [
-		'title' => 'Updated Talk',
-		'date' => '2026-06-01',
+		'text' => 'Updated Talk',
+		'section_id' => $talk->section_id,
 	])
 		->assertOk()
-		->assertJsonPath('data.title', 'Updated Talk');
+		->assertJsonPath('data.text', 'Updated Talk');
 });
 
 it('deletes a talk', function () {
