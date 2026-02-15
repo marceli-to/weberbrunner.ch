@@ -13,6 +13,7 @@ defineEmits(['update:modelValue'])
 	<select
 		:value="modelValue"
 		:disabled="disabled"
+		class="form-input form-input--sm form-select"
 		:class="{ 'has-error': error }"
 		@change="$emit('update:modelValue', $event.target.value)"
 	>

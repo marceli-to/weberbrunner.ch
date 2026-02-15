@@ -32,7 +32,8 @@
       "Bash(npm uninstall:*)",
       "Bash(npm audit fix:*)",
       "Bash(grep:*)",
-      "Bash(npx vite build:*)"
+      "Bash(npx vite build:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

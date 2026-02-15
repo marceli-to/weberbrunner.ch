@@ -54,7 +54,7 @@ const isChildActive = (name) =>
 </script>
 
 <template>
-	<aside class="col-span-2 pl-20 border-r-thin border-black">
+	<aside class="col-span-2 pl-20 border-r border-black">
 
 		<nav class="pt-30 sticky top-100">
 

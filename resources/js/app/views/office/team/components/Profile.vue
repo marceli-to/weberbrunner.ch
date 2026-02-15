@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import teamApi from '@/api/team'
+import locationsApi from '@/api/locations'
 import { useFormErrors } from '@/composables/useFormErrors'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import PencilCircle from '@/components/icons/PencilCircle.vue'
 import Input from '@/components/ui/form/Input.vue'
+import Select from '@/components/ui/form/Select.vue'
 import Button from '@/components/ui/form/Button.vue'
 
 const props = defineProps({
@@ -17,6 +19,16 @@ const emit = defineEmits(['updated'])
 const { get, clear, submit } = useFormErrors()
 const editing = ref(false)
 const form = ref({})
+const locations = ref([])
+
+const locationOptions = computed(() =>
+	locations.value.map(loc => ({ value: loc.id, label: loc.title }))
+)
+
+onMounted(async () => {
+	const { data } = await locationsApi.index()
+	locations.value = data.data
+})
 
 function startEditing() {
 	form.value = {
@@ -97,7 +109,14 @@ async function save() {
 			<Grid :cols="6" class="px-20 text-md">
 				<Span class="col-span-2 font-semibold flex items-center">{{ row.label }}</Span>
 				<Span class="col-span-4">
-					<Input v-model="form[row.field]" :error="get(row.field)" @focus="clear(row.field)" />
+					<Select
+						v-if="row.field === 'location_id'"
+						v-model="form[row.field]"
+						:options="locationOptions"
+						:error="get(row.field)"
+						@focus="clear(row.field)"
+					/>
+					<Input v-else v-model="form[row.field]" :error="get(row.field)" @focus="clear(row.field)" />
 				</Span>
 			</Grid>
 		</div>
