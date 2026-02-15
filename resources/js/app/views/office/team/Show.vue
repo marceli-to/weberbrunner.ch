@@ -22,23 +22,43 @@ function goBack() {
 </script>
 
 <template>
-	<Grid class="mb-10" v-if="member">
+  <template v-if="member">
 
-		<!-- Header -->
-		<Span class="col-span-1 flex items-center justify-center">
-			<button type="button" @click="goBack">
-				<Arrow variant="left" class="w-25 cursor-pointer" />
-			</button>
-		</Span>
-		<Span class="col-span-8">
-			<PageTitle>{{ member.firstname }} {{ member.name }}</PageTitle>
-		</Span>
+    <!-- Header -->
+    <Grid class="mb-20">
 
-		<!-- Details -->
-		<Span class="col-span-8 col-start-2">
-			<p v-if="member.title">{{ member.title }}</p>
-			<p v-if="member.location?.title">{{ member.location.title }}</p>
-		</Span>
+      <Span class="col-span-1 flex items-center justify-center">
+        <button type="button" @click="goBack">
+          <Arrow variant="left" class="w-25 cursor-pointer" />
+        </button>
+      </Span>
+      <Span class="col-span-8">
+        <PageTitle>{{ member.firstname }} {{ member.name }}</PageTitle>
+      </Span>
 
-	</Grid>
+    </Grid>
+
+    <!-- Details -->
+    <Grid>
+      <Span class="col-span-2 col-start-2">
+        [Image]
+      </Span>
+      <Span class="col-span-6 flex flex-col gap-20">
+
+        <div class="bg-white p-20">
+          <p>{{ member.firstname }} {{ member.name }}</p>
+          <p>{{ member.title }}</p>
+          <p>{{ member.location?.title }}</p>
+        </div>
+
+        <div class="bg-white p-20">
+          <p>{{ member.firstname }} {{ member.name }}</p>
+          <p>{{ member.title }}</p>
+          <p>{{ member.location?.title }}</p>
+        </div>
+
+      </Span>
+    </Grid>
+
+  </template>
 </template>
