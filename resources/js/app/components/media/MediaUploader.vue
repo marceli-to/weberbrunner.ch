@@ -1,20 +1,79 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Uppy from '@uppy/core'
-import DragDrop from '@uppy/drag-drop'
 import StatusBar from '@uppy/status-bar'
 import XHRUpload from '@uppy/xhr-upload'
 import German from '@uppy/locales/lib/de_DE'
 
+import PlusCircle from '@/components/icons/PlusCircle.vue'
+
 import '@uppy/core/css/style.min.css'
-import '@uppy/drag-drop/css/style.min.css'
 import '@uppy/status-bar/css/style.min.css'
 
-const emit = defineEmits(['uploaded'])
+const props = defineProps({
+	showButtons: { type: Boolean, default: false },
+})
 
-const dragDropRef = ref(null)
+const emit = defineEmits(['uploaded', 'save', 'cancel'])
+
+const dropZoneRef = ref(null)
 const statusBarRef = ref(null)
+const fileInputRef = ref(null)
+const isDragging = ref(false)
+let dragCounter = 0
 let uppy = null
+
+function addFiles(files) {
+	for (const file of files) {
+		try {
+			uppy.addFile({
+				name: file.name,
+				type: file.type,
+				data: file,
+				source: 'custom-drop-zone',
+			})
+		} catch (err) {
+			// Uppy throws on duplicate/invalid files — ignore
+		}
+	}
+}
+
+function onDragEnter(e) {
+	e.preventDefault()
+	dragCounter++
+	isDragging.value = true
+}
+
+function onDragOver(e) {
+	e.preventDefault()
+}
+
+function onDragLeave() {
+	dragCounter--
+	if (dragCounter === 0) {
+		isDragging.value = false
+	}
+}
+
+function onDrop(e) {
+	e.preventDefault()
+	dragCounter = 0
+	isDragging.value = false
+	if (e.dataTransfer?.files?.length) {
+		addFiles(e.dataTransfer.files)
+	}
+}
+
+function onBrowse() {
+	fileInputRef.value?.click()
+}
+
+function onFileChange(e) {
+	if (e.target.files?.length) {
+		addFiles(e.target.files)
+		e.target.value = ''
+	}
+}
 
 onMounted(() => {
 	const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
@@ -26,10 +85,6 @@ onMounted(() => {
 			allowedFileTypes: ['.jpg', '.jpeg', '.png', '.webp', '.gif'],
 			maxFileSize: 51200 * 1024,
 		},
-	})
-
-	uppy.use(DragDrop, {
-		target: dragDropRef.value,
 	})
 
 	uppy.use(StatusBar, {
@@ -63,7 +118,35 @@ onBeforeUnmount(() => {
 
 <template>
 	<div class="media-uploader">
-		<div ref="dragDropRef"></div>
+		<div
+			ref="dropZoneRef"
+			class="media-uploader__dropzone"
+			:class="{ 'media-uploader__dropzone--dragging': isDragging }"
+			@dragenter="onDragEnter"
+			@dragover="onDragOver"
+			@dragleave="onDragLeave"
+			@drop="onDrop"
+			@click="onBrowse"
+		>
+			<div class="media-uploader__label">
+				<button type="button" class="media-uploader__browse" @click.stop="onBrowse">Drag-and-drop / Durchsuchen</button>
+			</div>
+			<div class="media-uploader__icon">
+				<PlusCircle class="w-25 h-auto" />
+			</div>
+			<input
+				ref="fileInputRef"
+				type="file"
+				multiple
+				accept=".jpg,.jpeg,.png,.webp,.gif"
+				class="hidden"
+				@change="onFileChange"
+			/>
+		</div>
 		<div ref="statusBarRef"></div>
+		<div v-if="showButtons" class="media-uploader__buttons">
+			<button type="button" class="media-uploader__btn" @click="$emit('save')">Speichern</button>
+			<button type="button" class="media-uploader__btn" @click="$emit('cancel')">Abbrechen</button>
+		</div>
 	</div>
 </template>

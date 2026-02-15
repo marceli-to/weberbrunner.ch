@@ -1,29 +1,29 @@
-.media-uploader .uppy-DragDrop-container {
-	@apply bg-snow border border-dashed border-silver rounded-none min-h-[120px];
+.media-uploader__dropzone {
+	@apply bg-white border-thin border-solid border-black min-h-[200px] cursor-pointer relative flex flex-col items-center justify-center;
 }
 
-.media-uploader .uppy-DragDrop-inner {
-	@apply p-8;
+.media-uploader__dropzone--dragging {
+	@apply bg-silver/30;
 }
 
-.media-uploader .uppy-DragDrop-inner svg {
-	@apply !hidden;
+.media-uploader__label {
+	@apply absolute top-12 left-12 text-sm text-gray;
 }
 
-.media-uploader .uppy-DragDrop-container:hover {
-	@apply border-black;
+.media-uploader__browse {
+	@apply text-black font-semibold cursor-pointer;
 }
 
-.media-uploader .uppy-DragDrop--isDraggingOver {
-	@apply border-black bg-silver/30;
+.media-uploader__icon {
+	@apply text-silver;
 }
 
-.media-uploader .uppy-DragDrop-label {
-	@apply text-sm text-gray;
+.media-uploader__buttons {
+	@apply grid grid-cols-2 gap-12 mt-12;
 }
 
-.media-uploader .uppy-DragDrop-browse {
-	@apply text-black font-semibold;
+.media-uploader__btn {
+	@apply border border-silver px-16 py-8 text-sm text-gray hover:border-black hover:text-black cursor-pointer;
 }
 
 .media-uploader .uppy-StatusBar {
