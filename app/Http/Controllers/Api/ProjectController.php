@@ -100,7 +100,7 @@ class ProjectController extends Controller
 
 	public function reorder(ReorderProjectRequest $request)
 	{
-		$this->authorize('update', Project::class);
+		$this->authorize('reorder', Project::class);
 
 		(new ReorderProjectAction)->execute($request->validated('items'));
 

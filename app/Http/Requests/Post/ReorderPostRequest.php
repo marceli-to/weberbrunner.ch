@@ -9,7 +9,7 @@ class ReorderPostRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Post::class);
+		return $this->user()->can('reorder', Post::class);
 	}
 
 	public function rules(): array

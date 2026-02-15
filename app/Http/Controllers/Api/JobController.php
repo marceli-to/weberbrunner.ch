@@ -89,7 +89,7 @@ class JobController extends Controller
 
 	public function reorder(ReorderJobRequest $request)
 	{
-		$this->authorize('update', Job::class);
+		$this->authorize('reorder', Job::class);
 
 		(new ReorderJobAction)->execute($request->validated('items'));
 

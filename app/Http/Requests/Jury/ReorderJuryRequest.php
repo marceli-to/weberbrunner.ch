@@ -9,7 +9,7 @@ class ReorderJuryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Jury::class);
+		return $this->user()->can('reorder', Jury::class);
 	}
 
 	public function rules(): array

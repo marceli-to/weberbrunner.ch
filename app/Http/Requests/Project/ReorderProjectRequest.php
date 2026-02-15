@@ -9,7 +9,7 @@ class ReorderProjectRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Project::class);
+		return $this->user()->can('reorder', Project::class);
 	}
 
 	public function rules(): array

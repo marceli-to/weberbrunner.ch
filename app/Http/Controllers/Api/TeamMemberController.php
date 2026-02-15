@@ -80,7 +80,7 @@ class TeamMemberController extends Controller
 
 	public function reorder(ReorderTeamMemberRequest $request)
 	{
-		$this->authorize('update', TeamMember::class);
+		$this->authorize('reorder', TeamMember::class);
 
 		(new ReorderTeamMemberAction)->execute($request->validated('items'));
 

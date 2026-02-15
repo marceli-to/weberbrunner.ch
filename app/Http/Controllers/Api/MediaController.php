@@ -45,7 +45,7 @@ class MediaController extends Controller
 
 	public function reorder(ReorderMediaRequest $request)
 	{
-		$this->authorize('update', Media::class);
+		$this->authorize('reorder', Media::class);
 
 		(new ReorderMediaAction)->execute($request->validated('items'));
 

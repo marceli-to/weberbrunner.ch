@@ -9,7 +9,7 @@ class ReorderStatusRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Status::class);
+		return $this->user()->can('reorder', Status::class);
 	}
 
 	public function rules(): array

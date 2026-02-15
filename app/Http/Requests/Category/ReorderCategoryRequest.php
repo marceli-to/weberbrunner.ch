@@ -9,7 +9,7 @@ class ReorderCategoryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Category::class);
+		return $this->user()->can('reorder', Category::class);
 	}
 
 	public function rules(): array

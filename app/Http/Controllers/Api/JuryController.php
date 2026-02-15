@@ -87,7 +87,7 @@ class JuryController extends Controller
 
 	public function reorder(ReorderJuryRequest $request)
 	{
-		$this->authorize('update', Jury::class);
+		$this->authorize('reorder', Jury::class);
 
 		(new ReorderJuryAction)->execute($request->validated('items'));
 

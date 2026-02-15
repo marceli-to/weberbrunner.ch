@@ -9,7 +9,7 @@ class ReorderNetworkEntryRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', NetworkEntry::class);
+		return $this->user()->can('reorder', NetworkEntry::class);
 	}
 
 	public function rules(): array

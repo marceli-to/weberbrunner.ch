@@ -70,7 +70,7 @@ class StatusController extends Controller
 
 	public function reorder(ReorderStatusRequest $request)
 	{
-		$this->authorize('update', Status::class);
+		$this->authorize('reorder', Status::class);
 
 		(new ReorderStatusAction)->execute($request->validated('items'));
 

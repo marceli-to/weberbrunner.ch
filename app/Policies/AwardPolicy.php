@@ -17,6 +17,11 @@ class AwardPolicy
 		return true;
 	}
 
+	public function reorder(User $user): bool
+	{
+		return $user->isAdmin() || $user->isEditor();
+	}
+
 	public function create(User $user): bool
 	{
 		return $user->isAdmin() || $user->isEditor();

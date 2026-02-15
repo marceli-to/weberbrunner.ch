@@ -9,7 +9,7 @@ class ReorderAwardRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Award::class);
+		return $this->user()->can('reorder', Award::class);
 	}
 
 	public function rules(): array

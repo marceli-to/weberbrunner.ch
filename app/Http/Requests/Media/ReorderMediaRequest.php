@@ -9,7 +9,7 @@ class ReorderMediaRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Media::class);
+		return $this->user()->can('reorder', Media::class);
 	}
 
 	public function rules(): array

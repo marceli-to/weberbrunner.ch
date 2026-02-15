@@ -9,7 +9,7 @@ class ReorderLocationRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Location::class);
+		return $this->user()->can('reorder', Location::class);
 	}
 
 	public function rules(): array

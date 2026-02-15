@@ -9,7 +9,7 @@ class ReorderJobRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Job::class);
+		return $this->user()->can('reorder', Job::class);
 	}
 
 	public function rules(): array

@@ -9,7 +9,7 @@ class ReorderTalkRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', Talk::class);
+		return $this->user()->can('reorder', Talk::class);
 	}
 
 	public function rules(): array

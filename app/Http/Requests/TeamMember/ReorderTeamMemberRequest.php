@@ -9,7 +9,7 @@ class ReorderTeamMemberRequest extends FormRequest
 {
 	public function authorize(): bool
 	{
-		return $this->user()->can('create', TeamMember::class);
+		return $this->user()->can('reorder', TeamMember::class);
 	}
 
 	public function rules(): array
