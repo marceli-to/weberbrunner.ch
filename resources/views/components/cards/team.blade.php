@@ -10,11 +10,13 @@
 
 <div class="flex flex-col p-20 pb-25">
   
-  <x-media.image 
-    :src="$image" 
-    :alt="$firstname . ' ' . $name" 
-    class="w-full aspect-3/4 object-cover max-w-[70%] mx-auto mb-20"
-  />
+  @if($image)
+    <x-media.image
+      :src="$image"
+      :alt="$firstname . ' ' . $name"
+      class="w-full aspect-3/4 object-cover max-w-[70%] mx-auto mb-20"
+    />
+  @endif
   
   <div class="font-semibold text-xs md:text-xxs lg:text-sm flex flex-col">
     <x-headings.h2>

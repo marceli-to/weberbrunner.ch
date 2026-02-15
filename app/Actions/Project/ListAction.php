@@ -7,9 +7,10 @@ use Illuminate\Support\Collection;
 
 class ListAction
 {
-	public function execute(): Collection
+	public function execute(bool $published = false): Collection
 	{
 		return Project::query()
+			->when($published, fn ($q) => $q->published())
 			->with(['media' => fn ($q) => $q->where('is_teaser', true)])
 			->latest()
 			->get()
