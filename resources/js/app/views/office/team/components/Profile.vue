@@ -50,10 +50,10 @@ async function save() {
 	<!-- Display mode -->
 	<div v-if="!editing" class="bg-white pb-20">
 		<Grid :cols="6" class="px-20">
-			<Span class="col-span-2 font-semibold text-md min-h-50 flex items-center border-b border-b-thin">
+			<Span class="col-span-2 font-semibold text-md min-h-50 flex items-center border-b-thin">
 				Steckbrief Website
 			</Span>
-			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b border-b-thin">
+			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
 				<button type="button" @click="startEditing" class="cursor-pointer">
 					<PencilCircle class="w-25" />
 				</button>
@@ -68,8 +68,8 @@ async function save() {
 			{ label: 'E-Mail-Adresse', value: member.email },
 		]" :key="i">
 			<Grid :cols="6" class="px-20 min-h-30 text-md">
-				<Span class="col-span-2 font-semibold border-b border-b-gray flex items-center">{{ row.label }}</Span>
-				<Span class="col-span-4 border-b border-b-gray flex items-center">{{ row.value }}</Span>
+				<Span class="col-span-2 font-semibold border-b-thin border-b-gray flex items-center">{{ row.label }}</Span>
+				<Span class="col-span-4 border-b-thin border-b-gray flex items-center">{{ row.value }}</Span>
 			</Grid>
 		</div>
 	</div>
@@ -77,10 +77,10 @@ async function save() {
 	<!-- Edit mode -->
 	<form v-else @submit.prevent="save" class="bg-white pb-20">
 		<Grid :cols="6" class="px-20">
-			<Span class="col-span-2 font-semibold text-md text-gray min-h-50 flex items-center border-b border-b-thin border-b-white">
+			<Span class="col-span-2 font-semibold text-md text-gray min-h-50 flex items-center border-b-thin border-b-white">
 				Steckbrief Website
 			</Span>
-			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b border-b-thin border-b-white">
+			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin border-b-white">
 				<button type="button" @click="cancelEditing" class="cursor-pointer">
 					<PencilCircle class="w-25 text-gray" />
 				</button>

@@ -43,7 +43,7 @@ async function onDelete() {
 <template>
 
 	<template v-if="image">
-		<div class="bg-white border border-silver">
+		<div class="bg-white border-thin border-gray">
 			<div class="relative">
 				<button
 					type="button"
@@ -60,7 +60,7 @@ async function onDelete() {
 					/>
 				</div>
 			</div>
-			<div class="text-center py-3 text-sm border-t border-silver">
+			<div class="text-center py-5 px-20 text-sm border-t-thin border-t-gray overflow-hidden text-ellipsis whitespace-nowrap">
 				{{ image.original_name }}
 			</div>
 		</div>

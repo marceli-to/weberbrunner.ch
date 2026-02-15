@@ -19,7 +19,7 @@ const props = defineProps({
 		]">
 
 		<span
-			class="block w-full border-b border-b-thin"
+			class="block w-full border-b-thin"
 			:class="[
 				header ? 'pb-20' : 'min-h-30 flex items-center border-b-gray group-hover:border-b-navy',
 			]">
