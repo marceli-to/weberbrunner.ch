@@ -9,7 +9,7 @@ class JobController extends Controller
 {
 	public function __invoke(): View
 	{
-		$locations = (new ListAction)->execute();
+		$locations = (new ListAction)->execute(published: true);
 		return view('pages.about.jobs', compact('locations'));
 	}
 }

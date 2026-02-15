@@ -9,7 +9,7 @@ class LandingController extends Controller
 {
 	public function __invoke(): View
 	{
-		$projects = (new ListAction)->execute();
+		$projects = (new ListAction)->execute(published: true);
 
 		return view('pages.landing', [
 			'columns' => $this->splitIntoColumns($projects, 3),

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Job\DeleteAction as DeleteJobAction;
+use App\Actions\Job\ListAction as ListJobAction;
 use App\Actions\Job\ReorderAction as ReorderJobAction;
 use App\Actions\Job\StoreAction as StoreJobAction;
 use App\Actions\Job\ToggleAction as ToggleJobAction;
@@ -14,7 +15,6 @@ use App\Http\Requests\Job\UpdateJobRequest;
 use App\Http\Resources\JobResource;
 use App\Http\Resources\LocationResource;
 use App\Models\Job;
-use App\Models\Location;
 
 class JobController extends Controller
 {
@@ -22,10 +22,7 @@ class JobController extends Controller
 	{
 		$this->authorize('viewAny', Job::class);
 
-		$locations = Location::query()
-			->orderBy('sort_order')
-			->with(['jobs' => fn ($q) => $q->orderBy('sort_order')])
-			->get();
+		$locations = (new ListJobAction)->execute();
 
 		$grouped = $locations->map(fn ($location) => [
 			'location' => new LocationResource($location),

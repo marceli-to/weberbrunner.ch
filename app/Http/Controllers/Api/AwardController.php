@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Award\DeleteAction as DeleteAwardAction;
+use App\Actions\Award\ListAction as ListAwardAction;
 use App\Actions\Award\ToggleAction as ToggleAwardAction;
 use App\Actions\Award\ReorderAction as ReorderAwardAction;
 use App\Actions\Award\StoreAction as StoreAwardAction;
@@ -14,7 +15,6 @@ use App\Http\Requests\Award\UpdateAwardRequest;
 use App\Http\Resources\AwardResource;
 use App\Http\Resources\SectionResource;
 use App\Models\Award;
-use App\Models\Section;
 
 class AwardController extends Controller
 {
@@ -22,11 +22,7 @@ class AwardController extends Controller
 	{
 		$this->authorize('viewAny', Award::class);
 
-		$sections = Section::query()
-			->where('type', 'award')
-			->orderBy('sort_order')
-			->with(['awards' => fn ($q) => $q->orderBy('sort_order')])
-			->get();
+		$sections = (new ListAwardAction)->execute();
 
 		$grouped = $sections->map(fn ($section) => [
 			'section' => new SectionResource($section),

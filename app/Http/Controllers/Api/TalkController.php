@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Talk\DeleteAction as DeleteTalkAction;
+use App\Actions\Talk\ListAction as ListTalkAction;
 use App\Actions\Talk\ToggleAction as ToggleTalkAction;
 use App\Actions\Talk\ReorderAction as ReorderTalkAction;
 use App\Actions\Talk\StoreAction as StoreTalkAction;
@@ -14,7 +15,6 @@ use App\Http\Requests\Talk\UpdateTalkRequest;
 use App\Http\Resources\TalkResource;
 use App\Http\Resources\SectionResource;
 use App\Models\Talk;
-use App\Models\Section;
 
 class TalkController extends Controller
 {
@@ -22,11 +22,7 @@ class TalkController extends Controller
 	{
 		$this->authorize('viewAny', Talk::class);
 
-		$sections = Section::query()
-			->where('type', 'talk')
-			->orderBy('sort_order')
-			->with(['talks' => fn ($q) => $q->orderBy('sort_order')])
-			->get();
+		$sections = (new ListTalkAction)->execute();
 
 		$grouped = $sections->map(fn ($section) => [
 			'section' => new SectionResource($section),

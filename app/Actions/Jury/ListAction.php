@@ -6,13 +6,13 @@ use App\Models\Section;
 
 class ListAction
 {
-	public function execute()
+	public function execute(bool $published = false)
 	{
 		return Section::query()
 			->where('type', 'jury')
 			->orderBy('sort_order')
-			->with(['juries' => fn ($q) => $q->published()->orderBy('sort_order')])
+			->with(['juries' => fn ($q) => $q->when($published, fn ($q) => $q->published())->orderBy('sort_order')])
 			->get()
-			->filter(fn ($section) => $section->juries->isNotEmpty());
+			->when($published, fn ($sections) => $sections->filter(fn ($section) => $section->juries->isNotEmpty()));
 	}
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\NetworkEntry\DeleteAction as DeleteNetworkEntryAction;
+use App\Actions\NetworkEntry\ListAction as ListNetworkEntryAction;
 use App\Actions\NetworkEntry\ToggleAction as ToggleNetworkEntryAction;
 use App\Actions\NetworkEntry\ReorderAction as ReorderNetworkEntryAction;
 use App\Actions\NetworkEntry\StoreAction as StoreNetworkEntryAction;
@@ -14,7 +15,6 @@ use App\Http\Requests\NetworkEntry\UpdateNetworkEntryRequest;
 use App\Http\Resources\NetworkEntryResource;
 use App\Http\Resources\SectionResource;
 use App\Models\NetworkEntry;
-use App\Models\Section;
 
 class NetworkEntryController extends Controller
 {
@@ -22,11 +22,7 @@ class NetworkEntryController extends Controller
 	{
 		$this->authorize('viewAny', NetworkEntry::class);
 
-		$sections = Section::query()
-			->where('type', 'network')
-			->orderBy('sort_order')
-			->with(['networkEntries' => fn ($q) => $q->orderBy('sort_order')])
-			->get();
+		$sections = (new ListNetworkEntryAction)->execute();
 
 		$grouped = $sections->map(fn ($section) => [
 			'section' => new SectionResource($section),

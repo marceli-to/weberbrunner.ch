@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Jury\DeleteAction as DeleteJuryAction;
+use App\Actions\Jury\ListAction as ListJuryAction;
 use App\Actions\Jury\ToggleAction as ToggleJuryAction;
 use App\Actions\Jury\ReorderAction as ReorderJuryAction;
 use App\Actions\Jury\StoreAction as StoreJuryAction;
@@ -14,7 +15,6 @@ use App\Http\Requests\Jury\UpdateJuryRequest;
 use App\Http\Resources\JuryResource;
 use App\Http\Resources\SectionResource;
 use App\Models\Jury;
-use App\Models\Section;
 
 class JuryController extends Controller
 {
@@ -22,11 +22,7 @@ class JuryController extends Controller
 	{
 		$this->authorize('viewAny', Jury::class);
 
-		$sections = Section::query()
-			->where('type', 'jury')
-			->orderBy('sort_order')
-			->with(['juries' => fn ($q) => $q->orderBy('sort_order')])
-			->get();
+		$sections = (new ListJuryAction)->execute();
 
 		$grouped = $sections->map(fn ($section) => [
 			'section' => new SectionResource($section),
