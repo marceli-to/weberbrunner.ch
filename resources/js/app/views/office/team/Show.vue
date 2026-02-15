@@ -6,6 +6,7 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
+import TeamImage from './components/Image.vue'
 import Profile from './components/Profile.vue'
 import Bio from './components/Bio.vue'
 
@@ -46,7 +47,7 @@ onMounted(fetch)
 		<Grid class="mb-20">
 
 			<Span class="col-span-2 col-start-2">
-				[Image]
+				<TeamImage :member="member" @updated="fetch" />
 			</Span>
 
 			<Span class="col-span-6 flex flex-col gap-20">

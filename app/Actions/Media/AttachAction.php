@@ -25,7 +25,7 @@ class AttachAction
 			$maxSort++;
 			$parent->media()->create([
 				'uuid' => $item['uuid'],
-				'file' => $filename,
+				'file' => 'uploads/' . $filename,
 				'original_name' => $item['original_name'],
 				'mime_type' => $item['mime_type'],
 				'size' => $item['size'],

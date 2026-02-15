@@ -9,7 +9,7 @@ class DeleteAction
 {
 	public function execute(Media $media): void
 	{
-		Storage::disk('public')->delete('uploads/' . $media->file);
+		Storage::disk('public')->delete($media->file);
 
 		$media->delete();
 	}
