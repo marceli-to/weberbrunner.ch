@@ -93,7 +93,7 @@ class AwardController extends Controller
 
 	public function reorder(ReorderAwardRequest $request)
 	{
-		$this->authorize('create', Award::class);
+		$this->authorize('update', Award::class);
 
 		(new ReorderAwardAction)->execute($request->validated('items'));
 

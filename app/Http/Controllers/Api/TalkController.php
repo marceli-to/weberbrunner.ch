@@ -91,7 +91,7 @@ class TalkController extends Controller
 
 	public function reorder(ReorderTalkRequest $request)
 	{
-		$this->authorize('create', Talk::class);
+		$this->authorize('update', Talk::class);
 
 		(new ReorderTalkAction)->execute($request->validated('items'));
 

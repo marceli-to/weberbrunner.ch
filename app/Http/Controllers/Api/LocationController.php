@@ -70,7 +70,7 @@ class LocationController extends Controller
 
 	public function reorder(ReorderLocationRequest $request)
 	{
-		$this->authorize('create', Location::class);
+		$this->authorize('update', Location::class);
 
 		(new ReorderLocationAction)->execute($request->validated('items'));
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\TeamMember\DeleteAction as DeleteTeamMemberAction;
+use App\Actions\TeamMember\ListAction as ListTeamMemberAction;
 use App\Actions\TeamMember\ReorderAction as ReorderTeamMemberAction;
 use App\Actions\TeamMember\StoreAction as StoreTeamMemberAction;
 use App\Actions\TeamMember\UpdateAction as UpdateTeamMemberAction;
@@ -19,11 +20,7 @@ class TeamMemberController extends Controller
 	{
 		$this->authorize('viewAny', TeamMember::class);
 
-		$members = TeamMember::with(['bios', 'media', 'location'])
-			->orderBy('sort_order')
-			->get();
-
-		return TeamMemberResource::collection($members);
+		return TeamMemberResource::collection((new ListTeamMemberAction)->execute());
 	}
 
 	public function store(StoreTeamMemberRequest $request)
@@ -74,7 +71,7 @@ class TeamMemberController extends Controller
 
 	public function reorder(ReorderTeamMemberRequest $request)
 	{
-		$this->authorize('create', TeamMember::class);
+		$this->authorize('update', TeamMember::class);
 
 		(new ReorderTeamMemberAction)->execute($request->validated('items'));
 

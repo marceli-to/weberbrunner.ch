@@ -26,7 +26,7 @@ class PostController extends Controller
 
 	public function reorder(ReorderPostRequest $request)
 	{
-		$this->authorize('create', Post::class);
+		$this->authorize('update', Post::class);
 
 		(new ReorderPostAction)->execute($request->validated('items'));
 

@@ -75,7 +75,7 @@ class SectionController extends Controller
 
 	public function reorder(ReorderSectionRequest $request)
 	{
-		$this->authorize('create', Section::class);
+		$this->authorize('update', Section::class);
 
 		(new ReorderSectionAction)->execute($request->validated('items'));
 

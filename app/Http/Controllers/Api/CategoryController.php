@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
 	public function reorder(ReorderCategoryRequest $request)
 	{
-		$this->authorize('create', Category::class);
+		$this->authorize('update', Category::class);
 
 		(new ReorderCategoryAction)->execute($request->validated('items'));
 

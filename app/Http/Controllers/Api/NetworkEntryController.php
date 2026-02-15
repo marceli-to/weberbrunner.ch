@@ -93,7 +93,7 @@ class NetworkEntryController extends Controller
 
 	public function reorder(ReorderNetworkEntryRequest $request)
 	{
-		$this->authorize('create', NetworkEntry::class);
+		$this->authorize('update', NetworkEntry::class);
 
 		(new ReorderNetworkEntryAction)->execute($request->validated('items'));
 
