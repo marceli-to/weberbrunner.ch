@@ -69,7 +69,7 @@ function goBack() {
 		<!-- Header -->
 		<Grid class="mb-40">
 			<Span class="col-span-1 flex items-center justify-center">
-				<button @click="goBack">
+				<button type="button" @click="goBack">
 					<Arrow variant="left" class="w-25 cursor-pointer" />
 				</button>
 			</Span>
