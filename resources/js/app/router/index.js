@@ -8,6 +8,7 @@ import BlogForm from '@/views/blog/Form.vue'
 
 import ProjectsIndex from '@/views/projects/Index.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
+import OfficeTeamShow from '@/views/office/team/Show.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
 import OfficeJobsForm from '@/views/office/jobs/Form.vue'
 import OfficeNetwork from '@/views/office/network/Index.vue'
@@ -43,6 +44,12 @@ const routes = [
     name: 'office.team',
     component: OfficeTeam,
     meta: { title: 'Team', navSection: 'office', navLabel: 'Team', navOrder: 10, navMain: { label: 'Büro', order: 20 } },
+  },
+  {
+    path: '/dashboard/buero/team/:id',
+    name: 'team.show',
+    component: OfficeTeamShow,
+    meta: { title: 'Team', navSection: 'office', navParent: 'office.team' },
   },
   {
     path: '/dashboard/buero/jobs',

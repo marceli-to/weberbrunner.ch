@@ -38,7 +38,7 @@ onMounted(fetch)
 				</ListTableRow>
 
 				<!-- Entries -->
-				<ListTableRow v-for="member in members" :key="member.uuid">
+				<ListTableRow v-for="member in members" :key="member.uuid" :to="{ name: 'team.show', params: { id: member.uuid } }">
 					<ListTableCell span="col-span-2" first>{{ member.name }}</ListTableCell>
 					<ListTableCell span="col-span-2">{{ member.firstname }}</ListTableCell>
 					<ListTableCell span="col-span-3">{{ member.title }}</ListTableCell>
