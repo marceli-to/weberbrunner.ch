@@ -31,18 +31,18 @@ onMounted(fetch)
 
 				<!-- Header -->
 				<ListTableRow header>
-					<ListTableCell :span="2" first header>Nachname</ListTableCell>
-					<ListTableCell :span="2" header>Vorname</ListTableCell>
-					<ListTableCell :span="3" header>Ausbildung / Funktion</ListTableCell>
-					<ListTableCell :span="1" last header>Standort</ListTableCell>
+					<ListTableCell span="col-span-2" first header>Nachname</ListTableCell>
+					<ListTableCell span="col-span-2" header>Vorname</ListTableCell>
+					<ListTableCell span="col-span-3" header>Ausbildung / Funktion</ListTableCell>
+					<ListTableCell span="col-span-1" last header>Standort</ListTableCell>
 				</ListTableRow>
 
 				<!-- Entries -->
 				<ListTableRow v-for="member in members" :key="member.uuid">
-					<ListTableCell :span="2" first>{{ member.name }}</ListTableCell>
-					<ListTableCell :span="2">{{ member.firstname }}</ListTableCell>
-					<ListTableCell :span="3">{{ member.title }}</ListTableCell>
-					<ListTableCell :span="1" last>{{ member.location?.title }}</ListTableCell>
+					<ListTableCell span="col-span-2" first>{{ member.name }}</ListTableCell>
+					<ListTableCell span="col-span-2">{{ member.firstname }}</ListTableCell>
+					<ListTableCell span="col-span-3">{{ member.title }}</ListTableCell>
+					<ListTableCell span="col-span-1" last>{{ member.location?.title }}</ListTableCell>
 				</ListTableRow>
 
 			</ListTable>

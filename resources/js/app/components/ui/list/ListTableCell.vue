@@ -2,7 +2,7 @@
 import Span from '@/components/ui/grid/Span.vue'
 
 const props = defineProps({
-	span: { type: Number, default: 1 },
+	span: { type: String, default: 'col-span-1' },
 	first: { type: Boolean, default: false },
 	last: { type: Boolean, default: false },
 	header: { type: Boolean, default: false },
@@ -12,7 +12,7 @@ const props = defineProps({
 <template>
 	<Span
 		:class="[
-			`col-span-${span}`,
+			span,
 			first ? 'pl-20' : '',
 			last ? 'pr-20' : '',
 			header ? 'pt-20' : 'pt-6 group-hover:text-white',
