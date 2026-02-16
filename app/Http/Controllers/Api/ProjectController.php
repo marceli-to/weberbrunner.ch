@@ -20,7 +20,7 @@ class ProjectController extends Controller
 		$this->authorize('viewAny', Project::class);
 
 		$query = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
-			->orderBy('sort_order');
+			->orderBy('number');
 
 		if (request('search')) {
 			$query->where(function ($q) {
