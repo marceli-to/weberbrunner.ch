@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import teamApi from '@/api/team'
 import mediaApi from '@/api/media'
 import MediaUploader from '@/components/media/MediaUploader.vue'
-import Cross from '@/components/icons/Cross.vue'
+import MediaCard from '@/components/media/MediaCard.vue'
 import { useConfirm } from '@/composables/useConfirm'
 
 const props = defineProps({
@@ -43,27 +43,12 @@ async function onDelete() {
 <template>
 
 	<template v-if="image">
-		<div class="bg-white border-thin border-gray">
-			<div class="relative">
-				<button
-					type="button"
-					class="absolute top-20 right-20 cursor-pointer"
-					@click="onDelete"
-				>
-					<Cross class="w-12 h-auto" />
-				</button>
-				<div class="py-60">
-					<img
-						:src="image.preview_url"
-						:alt="image.alt || ''"
-						class="block w-full max-w-[60%] mx-auto"
-					/>
-				</div>
-			</div>
-			<div class="text-center py-5 px-20 text-sm border-t-thin border-t-gray overflow-hidden text-ellipsis whitespace-nowrap">
-				{{ image.original_name }}
-			</div>
-		</div>
+		<MediaCard
+			:item="image"
+			:deletable="true"
+			:show-filename="true"
+			@delete="onDelete"
+		/>
 	</template>
 
 	<template v-else>
