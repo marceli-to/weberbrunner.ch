@@ -15,7 +15,11 @@ class StoreAction
 		$statuses = $data['statuses'] ?? [];
 		unset($data['media'], $data['categories'], $data['statuses']);
 
-		$data['slug'] = Str::slug($data['title']);
+		$slugParts = [$data['title']];
+		if (!empty($data['city'])) {
+			$slugParts[] = $data['city'];
+		}
+		$data['slug'] = Str::slug(implode(' ', $slugParts));
 
 		$project = Project::create($data);
 

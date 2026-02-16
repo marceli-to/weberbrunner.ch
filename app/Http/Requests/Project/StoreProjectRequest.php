@@ -16,7 +16,9 @@ class StoreProjectRequest extends FormRequest
 	{
 		return [
 			'title' => 'required|string|max:255',
+			'number' => 'required|string|max:255',
 			'description' => 'nullable|string',
+			'city' => 'nullable|string|max:255',
 			'location_id' => 'nullable|exists:locations,id',
 			'publish' => 'boolean',
 			'categories' => 'nullable|array',

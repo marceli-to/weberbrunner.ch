@@ -40,9 +40,9 @@ load(fetch)
 
 				<!-- Entries -->
 				<ListTableRow v-for="project in projects" :key="project.uuid" :to="{ name: 'projects.show', params: { id: project.uuid } }">
-					<ListTableCell span="col-span-1" first>{{ project.sort_order }}</ListTableCell>
+					<ListTableCell span="col-span-1" first>{{ project.number }}</ListTableCell>
 					<ListTableCell span="col-span-5">{{ project.title }}</ListTableCell>
-					<ListTableCell span="col-span-2" last>{{ project.location?.title }}</ListTableCell>
+					<ListTableCell span="col-span-2" last>{{ project.city }}</ListTableCell>
 				</ListTableRow>
 
 			</ListTable>

@@ -35,7 +35,7 @@ load(fetch)
 		</Span>
 		<Span class="col-span-8">
 			<PageTitle>
-				{{ project?.title }}
+				{{ project?.full_title }}
 			</PageTitle>
 		</Span>
 	</Grid>

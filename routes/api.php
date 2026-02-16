@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\ProjectLinkController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\TalkController;
@@ -81,6 +82,17 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::put('/{attribute}', 'update');
 				Route::delete('/{attribute}', 'destroy');
+			});
+
+		// Project Links (nested under projects)
+		Route::controller(ProjectLinkController::class)
+			->prefix('projects/{project}/links')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::put('/{link}', 'update');
+				Route::delete('/{link}', 'destroy');
 			});
 
 		// Categories

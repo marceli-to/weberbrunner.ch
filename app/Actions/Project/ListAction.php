@@ -17,7 +17,7 @@ class ListAction
 			->map(function (Project $project) {
 				$media = $project->media->first();
 				return [
-					'title' => $project->title,
+					'title' => $project->full_title,
 					'slug' => $project->slug,
 					'image' => $media?->file ?? 'images/dummy-teaser-1.jpg',
 					'orientation' => $media?->orientation ?? 'unknown',

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasPublishScope;
 use App\Traits\HasUuid;
 use App\Traits\Sortable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,8 +22,10 @@ class Project extends Model
 
 	protected $fillable = [
 		'title',
+		'number',
 		'slug',
 		'description',
+		'city',
 		'location_id',
 		'publish',
 		'sort_order',
@@ -32,6 +35,13 @@ class Project extends Model
 		'publish' => 'boolean',
 	];
 
+	protected function fullTitle(): Attribute
+	{
+		return Attribute::make(
+			get: fn () => $this->city ? "{$this->title}, {$this->city}" : $this->title,
+		);
+	}
+
 	public function location(): BelongsTo
 	{
 		return $this->belongsTo(Location::class);
@@ -40,6 +50,11 @@ class Project extends Model
 	public function attributes(): HasMany
 	{
 		return $this->hasMany(ProjectAttribute::class)->orderBy('sort_order');
+	}
+
+	public function links(): HasMany
+	{
+		return $this->hasMany(ProjectLink::class)->orderBy('sort_order');
 	}
 
 	public function media(): MorphMany

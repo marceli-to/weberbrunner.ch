@@ -12,8 +12,10 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('title');
+            $table->string('number');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('city')->nullable();
             $table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();
             $table->boolean('publish')->default(false);
             $table->integer('sort_order')->default(0);

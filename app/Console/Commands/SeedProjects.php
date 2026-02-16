@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Category;
+use App\Models\Location;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Console\Command;
@@ -51,6 +52,17 @@ class SeedProjects extends Command
     private array $locations = [
         'zurich' => ['Zürich', 'Winterthur', 'Zürich-Affoltern', 'Windisch', 'Langenthal', 'Dietikon', 'Baden', 'Uster'],
         'berlin' => ['Berlin', 'Berlin-Mitte', 'Kreuzberg', 'Prenzlauer Berg', 'Friedrichshain', 'Charlottenburg'],
+    ];
+
+    private array $linkUrls = [
+        'https://competitions.espazium.ch/de/wettbewerbe/entscheide',
+        'https://www.swiss-architects.com/de/weberbrunner-architekten-zurich',
+        'https://afasiaarchzine.com/2024/03/weberbrunner/',
+        'https://www.archdaily.com/tag/weberbrunner',
+        'https://www.dezeen.com/tag/zurich/',
+        'https://www.baunetz.de/meldungen/',
+        'https://www.hochparterre.ch/nachrichten/architektur/',
+        'https://www.espazium.ch/de/aktuelles/architektur',
     ];
 
     private array $attributeLabels = [
@@ -121,20 +133,29 @@ class SeedProjects extends Command
     {
         $teaserImages = range(1, 13);
         $projectImages = range(1, 5);
+        $locations = Location::all();
+        $numberCounters = [];
+
+        foreach ($locations as $loc) {
+            $numberCounters[$loc->id] = $loc->slug === 'berlin' ? 1000 : 100;
+        }
 
         for ($i = 1; $i <= 50; $i++) {
             $title = $this->projectTitles[array_rand($this->projectTitles)];
-            $locationKey = array_rand($this->locations);
-            $locationName = $this->locations[$locationKey][array_rand($this->locations[$locationKey])];
-            $fullTitle = "{$title}, {$locationName}";
+            $location = $locations->random();
+            $cities = $this->locations[$location->slug] ?? $this->locations['zurich'];
+            $cityName = $cities[array_rand($cities)];
 
-            $slug = Str::slug($fullTitle) . '-' . $i;
+            $number = (string) $numberCounters[$location->id]++;
+            $slug = Str::slug($title . ' ' . $cityName) . '-' . $i;
 
             $project = Project::create([
-                'title' => $fullTitle,
+                'title' => $title,
+                'number' => $number,
                 'slug' => $slug,
                 'description' => $this->generateDescription(),
-                'location' => $locationKey,
+                'city' => $cityName,
+                'location_id' => $location->id,
                 'publish' => rand(0, 1) === 1,
             ]);
 
@@ -158,7 +179,7 @@ class SeedProjects extends Command
             $teaserNum = $teaserImages[array_rand($teaserImages)];
             $project->media()->create([
                 'file' => "images/dummy-teaser-{$teaserNum}.jpg",
-                'alt' => $fullTitle,
+                'alt' => $title,
                 'is_teaser' => true,
                 'sort_order' => 0,
             ]);
@@ -169,7 +190,7 @@ class SeedProjects extends Command
                 $imgNum = $projectImages[array_rand($projectImages)];
                 $project->media()->create([
                     'file' => "images/dummy-project-{$imgNum}.jpg",
-                    'alt' => "{$fullTitle} - Bild {$j}",
+                    'alt' => "{$title} - Bild {$j}",
                     'is_teaser' => false,
                     'sort_order' => $j,
                 ]);
@@ -189,7 +210,22 @@ class SeedProjects extends Command
             $statusKey = array_rand($statuses);
             $project->statuses()->attach($statuses[$statusKey]->id);
 
-            $this->line("  Created: {$fullTitle}");
+            // Add 0-3 links
+            $numLinks = rand(0, 3);
+            $selectedUrls = array_rand(array_flip($this->linkUrls), max(1, $numLinks));
+            if (!is_array($selectedUrls)) {
+                $selectedUrls = [$selectedUrls];
+            }
+            if ($numLinks > 0) {
+                foreach (array_slice($selectedUrls, 0, $numLinks) as $order => $url) {
+                    $project->links()->create([
+                        'url' => $url,
+                        'sort_order' => $order,
+                    ]);
+                }
+            }
+
+            $this->line("  Created: {$title}");
         }
     }
 

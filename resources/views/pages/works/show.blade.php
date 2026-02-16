@@ -1,9 +1,4 @@
 @php
-  // Split title into name and location if it contains a comma
-  $titleParts = explode(', ', $project->title, 2);
-  $projectName = $titleParts[0];
-  $projectLocation = $titleParts[1] ?? null;
-
   // Prepare slides from media (excluding teaser)
   $slides = $project->media->where('is_teaser', false)->map(fn($m) => ['src' => $m->file])->values();
 
@@ -17,13 +12,13 @@
   $header = $project->categories->first()?->title ?? 'weberbrunner architekten';
 @endphp
 
-@section('meta_title', $project->title)
+@section('meta_title', $project->full_title)
 @section('meta_description', Str::limit($project->description, 160))
 @if($project->teaser->first()?->file)
 	@ogImage($project->teaser->first()->file)
 @endif
 
-<x-layout.show :title="$projectName" :location="$projectLocation">
+<x-layout.show :title="$project->title" :location="$project->city">
 
   @if($slides->isNotEmpty())
     <x-media.slideshow class="mb-20 lg:mb-40">

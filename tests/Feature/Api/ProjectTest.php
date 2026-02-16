@@ -79,7 +79,7 @@ it('filters trashed projects', function () {
 
 it('creates a project', function () {
 	asAdmin();
-	$this->postJson('/api/dashboard/projects', ['title' => 'New Project'])
+	$this->postJson('/api/dashboard/projects', ['title' => 'New Project', 'number' => '101'])
 		->assertCreated()
 		->assertJsonPath('data.title', 'New Project')
 		->assertJsonPath('data.slug', 'new-project');
@@ -91,6 +91,7 @@ it('creates a project with categories and statuses', function () {
 	$status = Status::factory()->create();
 	$response = $this->postJson('/api/dashboard/projects', [
 		'title' => 'Full Project',
+		'number' => '102',
 		'categories' => [$category->id],
 		'statuses' => [$status->id],
 	]);
@@ -118,7 +119,7 @@ it('shows a project', function () {
 it('updates a project', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$this->putJson("/api/dashboard/projects/{$project->uuid}", ['title' => 'Updated'])
+	$this->putJson("/api/dashboard/projects/{$project->uuid}", ['title' => 'Updated', 'number' => $project->number])
 		->assertOk()
 		->assertJsonPath('data.title', 'Updated');
 });

@@ -113,7 +113,7 @@ class Works extends Component
 			->map(function (Project $project) {
 				$media = $project->media->first();
 				return [
-					'title' => $project->title,
+					'title' => $project->full_title,
 					'slug' => $project->slug,
 					'image' => $media?->file ?? 'images/dummy-teaser-1.jpg',
 					'orientation' => $media?->orientation ?? 'unknown',
@@ -146,6 +146,7 @@ class Works extends Component
 
 		$query->where(fn ($q) => $q
 			->where('title', 'LIKE', $likeTerm)
+			->orWhere('city', 'LIKE', $likeTerm)
 			->orWhere('description', 'LIKE', $likeTerm)
 		);
 
@@ -164,7 +165,7 @@ class Works extends Component
 		}
 
 		if (!empty($this->locations)) {
-			$query->whereNotIn('location', $this->locations);
+			$query->whereHas('location', fn ($q) => $q->whereNotIn('slug', $this->locations));
 		}
 
 		if ($this->publications) {

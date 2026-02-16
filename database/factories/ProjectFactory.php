@@ -15,11 +15,14 @@ class ProjectFactory extends Factory
 	public function definition(): array
 	{
 		$title = fake()->unique()->sentence(3);
+		$city = fake()->city();
 
 		return [
 			'title' => $title,
-			'slug' => \Illuminate\Support\Str::slug($title),
+			'number' => (string) fake()->unique()->numberBetween(100, 9999),
+			'slug' => \Illuminate\Support\Str::slug($title . ' ' . $city),
 			'description' => fake()->paragraph(),
+			'city' => $city,
 			'publish' => fake()->boolean(),
 		];
 	}
