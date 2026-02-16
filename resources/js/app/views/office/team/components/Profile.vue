@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import teamApi from '@/api/team'
 import locationsApi from '@/api/locations'
 import { useFormErrors } from '@/composables/useFormErrors'
+import Card from '@/components/ui/Card.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import PencilCircle from '@/components/icons/PencilCircle.vue'
@@ -59,74 +60,80 @@ async function save() {
 
 <template>
 
-	<!-- Display mode -->
-	<div v-if="!editing" class="bg-white pb-20">
-		<Grid :cols="6" class="px-20">
-			<Span class="col-span-2 font-semibold text-md min-h-50 flex items-center border-b-thin">
-				Steckbrief Website
-			</Span>
-			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-				<button type="button" @click="startEditing" class="cursor-pointer">
-					<PencilCircle class="w-25" />
-				</button>
-			</Span>
-		</Grid>
-		<div v-for="(row, i) in [
-			{ label: 'Nachname', value: member.name },
-			{ label: 'Vorname', value: member.firstname },
-			{ label: 'Ausbildung / Funktion', value: member.title },
-			{ label: 'Standort', value: member.location?.title },
-			{ label: 'Mitarbeit seit', value: member.since },
-			{ label: 'E-Mail-Adresse', value: member.email },
-		]" :key="i">
-			<Grid :cols="6" class="px-20 min-h-30 text-md">
-				<Span class="col-span-2 font-semibold border-b-thin border-b-gray flex items-center">{{ row.label }}</Span>
-				<Span class="col-span-4 border-b-thin border-b-gray flex items-center">{{ row.value }}</Span>
-			</Grid>
-		</div>
-	</div>
+	<Card has-header>
 
-	<!-- Edit mode -->
-	<form v-else @submit.prevent="save" class="bg-white pb-20">
-		<Grid :cols="6" class="px-20">
-			<Span class="col-span-2 font-semibold text-md text-gray min-h-50 flex items-center border-b-thin border-b-white">
-				Steckbrief Website
-			</Span>
-			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin border-b-white">
-				<button type="button" @click="cancelEditing" class="cursor-pointer">
-					<PencilCircle class="w-25 text-gray" />
-				</button>
-			</Span>
-		</Grid>
-		<div v-for="(row, i) in [
-			{ label: 'Nachname', field: 'name' },
-			{ label: 'Vorname', field: 'firstname' },
-			{ label: 'Ausbildung / Funktion', field: 'title' },
-			{ label: 'Standort', field: 'location_id' },
-			{ label: 'Mitarbeit seit', field: 'since' },
-			{ label: 'E-Mail-Adresse', field: 'email' },
-		]" :key="i" class="mb-10">
-			<Grid :cols="6" class="px-20 text-md">
-				<Span class="col-span-2 font-semibold flex items-center">{{ row.label }}</Span>
-				<Span class="col-span-4">
-					<Select
-						v-if="row.field === 'location_id'"
-						v-model="form[row.field]"
-						:options="locationOptions"
-						:error="get(row.field)"
-						@focus="clear(row.field)"
-					/>
-					<Input v-else v-model="form[row.field]" :error="get(row.field)" @focus="clear(row.field)" />
+		<!-- Display mode -->
+		<template v-if="!editing">
+			<Grid :cols="6">
+				<Span class="col-span-2 font-semibold text-md min-h-50 flex items-center border-b-thin">
+					Steckbrief Website
+				</Span>
+				<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
+					<button type="button" @click="startEditing" class="cursor-pointer">
+						<PencilCircle class="w-25" />
+					</button>
 				</Span>
 			</Grid>
-		</div>
-		<Grid :cols="6" class="px-20 pt-20">
-			<Span class="col-span-2" />
-			<Span class="col-span-4 flex flex-col gap-10">
-				<Button type="submit" class="px-10">Speichern</Button>
-				<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
-			</Span>
-		</Grid>
-	</form>
-  
+			<div v-for="(row, i) in [
+				{ label: 'Nachname', value: member.name },
+				{ label: 'Vorname', value: member.firstname },
+				{ label: 'Ausbildung / Funktion', value: member.title },
+				{ label: 'Standort', value: member.location?.title },
+				{ label: 'Mitarbeit seit', value: member.since },
+				{ label: 'E-Mail-Adresse', value: member.email },
+			]" :key="i">
+				<Grid :cols="6" class="min-h-30 text-md">
+					<Span class="col-span-2 font-semibold border-b-thin border-b-gray flex items-center">{{ row.label }}</Span>
+					<Span class="col-span-4 border-b-thin border-b-gray flex items-center">{{ row.value }}</Span>
+				</Grid>
+			</div>
+		</template>
+
+		<!-- Edit mode -->
+		<template v-else>
+			<form @submit.prevent="save">
+				<Grid :cols="6">
+					<Span class="col-span-2 font-semibold text-md text-gray min-h-50 flex items-center border-b-thin border-b-white">
+						Steckbrief Website
+					</Span>
+					<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin border-b-white">
+						<button type="button" @click="cancelEditing" class="cursor-pointer">
+							<PencilCircle class="w-25 text-gray" />
+						</button>
+					</Span>
+				</Grid>
+				<div v-for="(row, i) in [
+					{ label: 'Nachname', field: 'name' },
+					{ label: 'Vorname', field: 'firstname' },
+					{ label: 'Ausbildung / Funktion', field: 'title' },
+					{ label: 'Standort', field: 'location_id' },
+					{ label: 'Mitarbeit seit', field: 'since' },
+					{ label: 'E-Mail-Adresse', field: 'email' },
+				]" :key="i" class="mb-10">
+					<Grid :cols="6" class="text-md">
+						<Span class="col-span-2 font-semibold flex items-center">{{ row.label }}</Span>
+						<Span class="col-span-4">
+							<Select
+								v-if="row.field === 'location_id'"
+								v-model="form[row.field]"
+								:options="locationOptions"
+								:error="get(row.field)"
+								@focus="clear(row.field)"
+							/>
+							<Input v-else v-model="form[row.field]" :error="get(row.field)" @focus="clear(row.field)" />
+						</Span>
+					</Grid>
+				</div>
+				<Grid :cols="6" class="pt-20">
+					<Span class="col-span-2" />
+					<Span class="col-span-4 flex flex-col gap-10">
+						<Button type="submit" class="px-10">Speichern</Button>
+						<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
+					</Span>
+				</Grid>
+			</form>
+		</template>
+
+	</Card>
+
 </template>
