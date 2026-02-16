@@ -21,7 +21,7 @@ defineEmits(['edit', 'toggle-publish', 'delete'])
 			<Burger variant="sm" class="w-18 h-10 cursor-grab" :class="dragHandleClass" />
 		</Span>
 		<Span class="col-span-8">
-			<div class="bg-white font-semibold min-h-30 border-thin border-black flex justify-between items-center px-20 select-none" :class="{ 'opacity-50': !publish }">
+			<div class="bg-white font-semibold text-md min-h-30 border-thin border-black flex justify-between items-center px-20 select-none" :class="{ 'opacity-50': !publish }">
 				<span>{{ label }}</span>
 				<span class="flex gap-x-20">
 					<Pencil class="w-14 cursor-pointer" @click="$emit('edit')" />
