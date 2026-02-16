@@ -30,14 +30,26 @@ erDiagram
         int id PK
         uuid uuid UK
         string title
+        string number
         string slug UK
         text description
+        string city
         int location_id FK
         boolean publish
         int sort_order
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
+    }
+
+    PROJECT_LINK {
+        int id PK
+        uuid uuid UK
+        int project_id FK
+        string url
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
     }
 
     PROJECT_ATTRIBUTE {
@@ -228,6 +240,7 @@ erDiagram
     LOCATION ||--o{ TEAM_MEMBER : has
     LOCATION ||--o{ JOB : has
 
+    PROJECT ||--o{ PROJECT_LINK : has
     PROJECT ||--|{ PROJECT_ATTRIBUTE : has
     PROJECT ||--o{ CATEGORY_PROJECT : has
     PROJECT ||--o{ PROJECT_STATUS : has
