@@ -7,6 +7,7 @@ import BlogForm from '@/views/blog/Form.vue'
 // -- demo
 
 import ProjectsIndex from '@/views/projects/Index.vue'
+import ProjectsShow from '@/views/projects/Show.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
 import OfficeTeamShow from '@/views/office/team/Show.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
@@ -38,6 +39,12 @@ const routes = [
     name: 'projects.index',
     component: ProjectsIndex,
     meta: { title: 'Arbeiten', navSection: 'main', navLabel: 'Arbeiten', navOrder: 10 },
+  },
+  {
+    path: '/dashboard/arbeiten/:id',
+    name: 'projects.show',
+    component: ProjectsShow,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {
     path: '/dashboard/buero/team',
