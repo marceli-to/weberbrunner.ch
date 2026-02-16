@@ -47,7 +47,7 @@ const isSectionActive = (section) =>
 	route.meta.navSection === section
 
 const isItemActive = (item) =>
-	item.children ? isSectionActive(item.children) : route.name === item.name
+	item.children ? isSectionActive(item.children) : route.name === item.name || route.meta.navParent === item.name
 
 const isChildActive = (name) =>
 	route.name === name || route.meta.navParent === name
