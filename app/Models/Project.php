@@ -32,6 +32,7 @@ class Project extends Model
 	];
 
 	protected $casts = [
+		'number' => 'integer',
 		'publish' => 'boolean',
 	];
 

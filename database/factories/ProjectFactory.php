@@ -19,7 +19,7 @@ class ProjectFactory extends Factory
 
 		return [
 			'title' => $title,
-			'number' => (string) fake()->unique()->numberBetween(100, 9999),
+			'number' => fake()->unique()->numberBetween(100, 9999),
 			'slug' => \Illuminate\Support\Str::slug($title . ' ' . $city),
 			'description' => fake()->paragraph(),
 			'city' => $city,
