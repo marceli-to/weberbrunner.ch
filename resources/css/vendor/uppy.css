@@ -11,7 +11,7 @@
 }
 
 .media-uploader__browse {
-	@apply text-black font-semibold cursor-pointer;
+	@apply text-silver font-semibold cursor-pointer;
 }
 
 .media-uploader__icon {

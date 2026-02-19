@@ -169,10 +169,6 @@ async function handleSubmit() {
 						<MediaUploader @uploaded="onUploaded" />
 					</div>
 
-					<div class="grid grid-cols-2 gap-20 pt-20">
-						<Button type="submit" class="text-center">Speichern</Button>
-						<Button type="button" class="text-center" @click="goBack">Abbrechen</Button>
-					</div>
 				</Card>
 			</Span>
 		</Grid>
