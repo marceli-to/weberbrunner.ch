@@ -2,8 +2,15 @@
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Button from '@/components/ui/form/Button.vue'
+import { useToast } from '@/composables/useToast'
 
 const model = defineModel({ type: Boolean, default: false })
+const toast = useToast()
+
+function toggle(value) {
+	model.value = value
+	toast.success(value ? 'Publiziert' : 'Nicht publiziert')
+}
 </script>
 
 <template>
@@ -12,7 +19,7 @@ const model = defineModel({ type: Boolean, default: false })
 			<Button
 				:variant="model ? 'toggle-active' : 'toggle'"
 				class="justify-center"
-				@click="model = true">
+				@click="toggle(true)">
 				Publiziert
 			</Button>
 		</Span>
@@ -20,7 +27,7 @@ const model = defineModel({ type: Boolean, default: false })
 			<Button
 				:variant="!model ? 'toggle-active' : 'toggle'"
 				class="justify-center"
-				@click="model = false">
+				@click="toggle(false)">
 				Nicht publiziert
 			</Button>
 		</Span>

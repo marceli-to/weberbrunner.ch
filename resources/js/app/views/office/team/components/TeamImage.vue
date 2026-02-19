@@ -47,6 +47,7 @@ async function onDelete() {
 			:item="image"
 			:deletable="true"
 			:show-filename="true"
+			:compact="true"
 			@delete="onDelete"
 		/>
 	</template>
