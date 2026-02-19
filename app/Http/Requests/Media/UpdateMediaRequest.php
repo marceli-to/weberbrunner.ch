@@ -17,6 +17,7 @@ class UpdateMediaRequest extends FormRequest
 		return [
 			'alt' => 'nullable|string|max:255',
 			'caption' => 'nullable|string|max:255',
+			'credits' => 'nullable|string|max:255',
 		];
 	}
 
