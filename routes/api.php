@@ -60,6 +60,8 @@ Route::prefix('dashboard')
 				Route::patch('/{uuid}/restore', 'restore');
 				Route::post('/{project}/media', 'attachMedia');
 				Route::patch('/{project}/toggle', 'toggle');
+				Route::patch('/{project}/categories', 'syncCategories');
+				Route::patch('/{project}/statuses', 'syncStatuses');
 			});
 
 		// Project Attributes (nested under projects)

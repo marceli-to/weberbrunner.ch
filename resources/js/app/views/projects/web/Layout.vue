@@ -18,8 +18,10 @@ function goBack() {
 
 <template>
 
+	<template v-if="project">
+
 	<!-- NavBar -->
-	<Grid v-if="project" class="mb-40">
+	<Grid class="mb-40">
 		<Span class="col-span-8 col-start-2">
 			<WebNavBar />
 		</Span>
@@ -36,10 +38,12 @@ function goBack() {
 
 		<Span class="col-span-8">
 			<PageTitle>
-				{{ project?.full_title }}
+				{{ project.full_title }}
 			</PageTitle>
 		</Span>
 
 	</Grid>
+
+	</template>
 
 </template>

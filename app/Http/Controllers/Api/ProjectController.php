@@ -108,6 +108,24 @@ class ProjectController extends Controller
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
 	}
 
+	public function syncCategories(Project $project)
+	{
+		$this->authorize('update', $project);
+
+		$project->categories()->sync(request('categories', []));
+
+		return response()->json(null, 204);
+	}
+
+	public function syncStatuses(Project $project)
+	{
+		$this->authorize('update', $project);
+
+		$project->statuses()->sync(request('statuses', []));
+
+		return response()->json(null, 204);
+	}
+
 	public function toggle(Project $project)
 	{
 		$this->authorize('update', $project);

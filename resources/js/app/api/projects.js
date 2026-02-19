@@ -1,4 +1,4 @@
-import api from './axios'
+import api from '@/api/axios'
 
 export default {
 	index: () => api.get('/projects'),
@@ -9,4 +9,6 @@ export default {
 	reorder: (items) => api.patch('/projects/reorder', { items }),
 	attachMedia: (id, media) => api.post(`/projects/${id}/media`, { media }),
 	toggle: (id) => api.patch(`/projects/${id}/toggle`),
+	syncCategories: (id, categories) => api.patch(`/projects/${id}/categories`, { categories }),
+	syncStatuses: (id, statuses) => api.patch(`/projects/${id}/statuses`, { statuses }),
 }
