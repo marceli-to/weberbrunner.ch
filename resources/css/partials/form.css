@@ -38,6 +38,10 @@ select:-webkit-autofill:focus {
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.98999 7.06L0 1.06L1.06 0L5.98999 4.94L10.93 0L12 1.06L5.98999 7.06Z' fill='black'/%3E%3C/svg%3E");
 }
 
+.form-input:disabled {
+	@apply text-gray;
+}
+
 .form-input.has-error {
 	@apply bg-red border-red text-white placeholder:text-white;
 }
