@@ -10,7 +10,6 @@ use App\Models\Jury;
 use App\Models\Location;
 use App\Models\Media;
 use App\Models\NetworkEntry;
-use App\Models\Post;
 use App\Models\Project;
 use App\Models\Section;
 use App\Models\Status;
@@ -24,7 +23,6 @@ use App\Policies\JuryPolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\MediaPolicy;
 use App\Policies\NetworkEntryPolicy;
-use App\Policies\PostPolicy;
 use App\Policies\ProjectPolicy;
 use App\Policies\SectionPolicy;
 use App\Policies\StatusPolicy;
@@ -55,7 +53,6 @@ class AppServiceProvider extends ServiceProvider
 		Gate::policy(Jury::class, JuryPolicy::class);
 		Gate::policy(NetworkEntry::class, NetworkEntryPolicy::class);
 		Gate::policy(User::class, UserPolicy::class);
-		Gate::policy(Post::class, PostPolicy::class);
 		Gate::policy(Section::class, SectionPolicy::class);
 		Gate::policy(Media::class, MediaPolicy::class);
 

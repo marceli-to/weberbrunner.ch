@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\JuryController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\NetworkEntryController;
-use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectLinkController;
@@ -23,18 +22,6 @@ use App\Http\Controllers\Api\ActivityController;
 Route::prefix('dashboard')
 	->middleware(['web', 'auth'])
 	->group(function () {
-
-		// Blog
-		Route::controller(PostController::class)
-			->prefix('blog')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::get('/{post}', 'show');
-				Route::put('/{post}', 'update');
-				Route::delete('/{post}', 'destroy');
-			});
 
 		// Media
 		Route::controller(MediaController::class)
