@@ -9,8 +9,12 @@ use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\ProjectAttributeController;
+use App\Http\Controllers\Api\ProjectCategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectLinkController;
+use App\Http\Controllers\Api\ProjectMediaController;
+use App\Http\Controllers\Api\ProjectMetaController;
+use App\Http\Controllers\Api\ProjectStatusController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\TalkController;
@@ -59,10 +63,35 @@ Route::prefix('dashboard')
 				Route::put('/{project}', 'update');
 				Route::delete('/{project}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
-				Route::post('/{project}/media', 'attachMedia');
 				Route::patch('/{project}/toggle', 'toggle');
-				Route::patch('/{project}/categories', 'syncCategories');
-				Route::patch('/{project}/statuses', 'syncStatuses');
+			});
+
+		// Project Media
+		Route::controller(ProjectMediaController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::post('/media', 'attach');
+			});
+
+		// Project Meta
+		Route::controller(ProjectMetaController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::patch('/meta-description', 'update');
+			});
+
+		// Project Categories
+		Route::controller(ProjectCategoryController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::patch('/categories', 'sync');
+			});
+
+		// Project Statuses
+		Route::controller(ProjectStatusController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::patch('/statuses', 'sync');
 			});
 
 		// Project Attributes (nested under projects)

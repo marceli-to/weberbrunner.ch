@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 import { useFormErrors } from '@/composables/useFormErrors'
+import { useToast } from '@/composables/useToast'
 import projectsApi from '@/api/projects'
 import mediaApi from '@/api/media'
 
@@ -16,13 +17,17 @@ export function useProjectMeta() {
 	})
 
 	const { submit } = useFormErrors()
+	const toast = useToast()
 	const ogImage = computed(() => project.value?.media?.find(m => m.is_og) || null)
 
 	async function saveDescription() {
-		const ok = await submit(() => projectsApi.update(route.params.id, {
+		const ok = await submit(() => projectsApi.updateMetaDescription(route.params.id, {
 			meta_description: project.value.meta_description,
 		}))
-		if (ok) await fetch()
+		if (ok) {
+			await fetch()
+			toast.success('Gespeichert')
+		}
 	}
 
 	async function saveOgImage() {

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Actions\Project\DeleteAction as DeleteProjectAction;
-use App\Actions\Project\ToggleAction as ToggleProjectAction;
 use App\Actions\Project\ReorderAction as ReorderProjectAction;
 use App\Actions\Project\StoreAction as StoreProjectAction;
+use App\Actions\Project\ToggleAction as ToggleProjectAction;
 use App\Actions\Project\UpdateAction as UpdateProjectAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\AttachMediaRequest;
-use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\ReorderProjectRequest;
+use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
@@ -22,37 +20,11 @@ class ProjectController extends Controller
 	{
 		$this->authorize('viewAny', Project::class);
 
-		$query = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
-			->orderBy('number');
+		$projects = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
+			->orderBy('number')
+			->get();
 
-		if (request('search')) {
-			$query->where(function ($q) {
-				$q->where('title', 'like', '%' . request('search') . '%')
-					->orWhere('description', 'like', '%' . request('search') . '%');
-			});
-		}
-
-		if (request('category')) {
-			$query->whereHas('categories', fn ($q) => $q->where('categories.id', request('category')));
-		}
-
-		if (request('status')) {
-			$query->whereHas('statuses', fn ($q) => $q->where('statuses.id', request('status')));
-		}
-
-		if (request('location')) {
-			$query->where('location_id', request('location'));
-		}
-
-		if (request()->has('publish')) {
-			$query->where('publish', request()->boolean('publish'));
-		}
-
-		if (request()->boolean('trashed')) {
-			$query->onlyTrashed();
-		}
-
-		return ProjectResource::collection($query->get());
+		return ProjectResource::collection($projects);
 	}
 
 	public function store(StoreProjectRequest $request)
@@ -99,31 +71,6 @@ class ProjectController extends Controller
 		$project->restore();
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
-	}
-
-	public function attachMedia(AttachMediaRequest $request, Project $project)
-	{
-		(new AttachMediaAction)->execute($request->validated('media'), $project);
-
-		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
-	}
-
-	public function syncCategories(Project $project)
-	{
-		$this->authorize('update', $project);
-
-		$project->categories()->sync(request('categories', []));
-
-		return response()->json(null, 204);
-	}
-
-	public function syncStatuses(Project $project)
-	{
-		$this->authorize('update', $project);
-
-		$project->statuses()->sync(request('statuses', []));
-
-		return response()->json(null, 204);
 	}
 
 	public function toggle(Project $project)
