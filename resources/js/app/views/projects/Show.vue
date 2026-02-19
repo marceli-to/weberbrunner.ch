@@ -7,7 +7,14 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
+import NavBar from '@/components/ui/nav-bar/NavBar.vue'
+import NavBarButton from '@/components/ui/nav-bar/NavBarButton.vue'
+import Window from '@/components/icons/Window.vue'
+import Download from '@/components/icons/Download.vue'
+import List from '@/components/icons/List.vue'
+import Eye from '@/components/icons/Eye.vue'
 import ProjectImages from './components/ProjectImages.vue'
+import ProjectMasterData from './components/ProjectMasterData.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -27,24 +34,68 @@ load(fetch)
 </script>
 
 <template>
+
+	<!-- NavBar -->
+	<Grid v-if="project" class="mb-40">
+		<Span class="col-span-8 col-start-2">
+			<NavBar>
+				<NavBarButton>
+					<template #icon>
+            <Window class="w-14 h-auto" />
+          </template>
+					Website-Editor
+				</NavBarButton>
+				<NavBarButton>
+					<template #icon>
+            <Download class="w-14 h-auto" />
+          </template>
+					Rohdaten (ZIP)
+				</NavBarButton>
+				<NavBarButton>
+					<template #icon>
+            <List class="w-14 h-auto" />
+          </template>
+					Referenzblatt (PDF)
+				</NavBarButton>
+				<NavBarButton>
+					<template #icon>
+            <Eye class="w-14 h-auto" />
+          </template>
+					Publiziert (Website)
+				</NavBarButton>
+			</NavBar>
+		</Span>
+	</Grid>
+
 	<!-- Header -->
 	<Grid class="mb-20">
+
 		<Span class="col-span-1 flex items-center justify-center">
 			<button type="button" @click="goBack">
 				<Arrow variant="left" class="w-25 cursor-pointer" />
 			</button>
 		</Span>
+
 		<Span class="col-span-8">
 			<PageTitle>
 				{{ project?.full_title }}
 			</PageTitle>
 		</Span>
+
 	</Grid>
+
 
 	<!-- Content -->
 	<Grid v-if="project" class="mb-20">
+
+		<Span class="col-span-8 col-start-2">
+			<ProjectMasterData :project="project" />
+		</Span>
+
 		<Span class="col-span-8 col-start-2">
 			<ProjectImages :project="project" @updated="fetch" />
 		</Span>
+
 	</Grid>
+  
 </template>
