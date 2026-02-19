@@ -90,10 +90,10 @@ function handleSave() {
 		<!-- Actions -->
     <Grid :cols="8" class="gap-y-10 px-20">
       <Span class="col-span-6 col-start-3">
-        <Button type="button" @click="handleSave">Speichern</Button>
+        <Button type="button" @click="handleSave" class="px-10">Speichern</Button>
       </Span>
       <Span class="col-span-6 col-start-3">
-        <Button type="button" @click="emit('close')">Abbrechen</Button>
+        <Button type="button" @click="emit('close')" class="px-10">Abbrechen</Button>
       </Span>
     </Grid>
 
