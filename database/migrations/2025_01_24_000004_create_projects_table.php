@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('title');
             $table->integer('number');
             $table->string('slug')->unique();
+            $table->text('short_description')->nullable();
             $table->text('description')->nullable();
             $table->string('city')->nullable();
             $table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();

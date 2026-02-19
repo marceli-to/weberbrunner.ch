@@ -154,6 +154,7 @@ class SeedProjects extends Command
                 'title' => $title,
                 'number' => $number,
                 'slug' => $slug,
+                'short_description' => $this->generateShortDescription(),
                 'description' => $this->generateDescription(),
                 'city' => $cityName,
                 'location_id' => $location->id,
@@ -218,6 +219,19 @@ class SeedProjects extends Command
 
             $this->line("  Created: {$title}");
         }
+    }
+
+    private function generateShortDescription(): string
+    {
+        $descriptions = [
+            'Neubau einer Wohnüberbauung mit gemeinschaftlichem Aussenraum.',
+            'Sanierung und Erweiterung eines denkmalgeschützten Gebäudes.',
+            'Nachhaltige Holzbauweise mit Minergie-P-ECO-Standard.',
+            'Städtebaulicher Wettbewerbsbeitrag für ein neues Quartierzentrum.',
+            'Umnutzung eines Industrieareals zu Wohn- und Gewerbeflächen.',
+        ];
+
+        return $descriptions[array_rand($descriptions)];
     }
 
     private function generateDescription(): string

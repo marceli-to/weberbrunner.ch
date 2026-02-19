@@ -4,6 +4,10 @@ import Styleguide from '@/views/dev/Styleguide.vue'
 import ProjectsIndex from '@/views/projects/Index.vue'
 import ProjectsShow from '@/views/projects/Show.vue'
 import ProjectImagesEdit from '@/views/projects/Images.vue'
+import ProjectsLayout from '@/views/projects/web/Layout.vue'
+import ProjectsMasterData from '@/views/projects/web/MasterData.vue'
+import ProjectsTeaserImage from '@/views/projects/web/TeaserImage.vue'
+import ProjectsSettings from '@/views/projects/web/Settings.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
 import OfficeTeamShow from '@/views/office/team/Show.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
@@ -40,6 +44,30 @@ const routes = [
     path: '/dashboard/arbeiten/:id',
     name: 'projects.show',
     component: ProjectsShow,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+  {
+    path: '/dashboard/arbeiten/:id/web',
+    name: 'projects.layout',
+    component: ProjectsLayout,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+{
+    path: '/dashboard/arbeiten/:id/web/metadaten',
+    name: 'projects.metadata',
+    component: ProjectsMasterData,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+  {
+    path: '/dashboard/arbeiten/:id/web/teaserbild',
+    name: 'projects.teaser_image',
+    component: ProjectsTeaserImage,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+  {
+    path: '/dashboard/arbeiten/:id/web/einstellungen',
+    name: 'projects.settings',
+    component: ProjectsSettings,
     meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {

@@ -70,7 +70,7 @@ select:-webkit-autofill:focus {
 }
 
 .form-button--active {
-	@apply bg-navy border-navy text-white hover:bg-navy hover:text-slate hover:border-navy;
+	@apply bg-navy border-navy text-white;
 }
 
 .form-button--muted {

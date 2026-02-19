@@ -21,6 +21,7 @@ class ProjectFactory extends Factory
 			'title' => $title,
 			'number' => fake()->unique()->numberBetween(100, 9999),
 			'slug' => \Illuminate\Support\Str::slug($title . ' ' . $city),
+			'short_description' => fake()->sentence(),
 			'description' => fake()->paragraph(),
 			'city' => $city,
 			'publish' => fake()->boolean(),

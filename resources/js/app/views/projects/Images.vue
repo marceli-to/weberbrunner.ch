@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import draggable from 'vuedraggable'
 import projectsApi from '@/api/projects'
-import { usePageLoader } from '@/composables/usePageLoader'
+import { useProject } from '@/composables/useProject'
 import { useMediaStore } from '@/stores/media'
 import { useConfirm } from '@/composables/useConfirm'
 import { useToast } from '@/composables/useToast'
@@ -13,40 +13,28 @@ import Span from '@/components/ui/grid/Span.vue'
 import SectionTitle from '@/components/ui/SectionTitle.vue'
 import Arrow from '@/components/icons/Arrow.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
-import NavBar from '@/components/ui/nav-bar/NavBar.vue'
-import NavBarButton from '@/components/ui/nav-bar/NavBarButton.vue'
-import Window from '@/components/icons/Window.vue'
-import Download from '@/components/icons/Download.vue'
-import List from '@/components/icons/List.vue'
-import Eye from '@/components/icons/Eye.vue'
+import ProjectNavBar from './components/navbar/Project.vue'
 import FormContainer from '@/components/ui/form/FormContainer.vue'
 import ActionBar from '@/components/ui/form/ActionBar.vue'
-import Button from '@/components/ui/form/Button.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
 import MediaEditModal from '@/components/media/MediaEditModal.vue'
 
 const route = useRoute()
 const router = useRouter()
-const { load } = usePageLoader()
 const mediaStore = useMediaStore()
 const { confirm } = useConfirm()
 const toast = useToast()
 
-const project = ref(null)
+const { project, fetch } = useProject((data) => {
+	mediaStore.setItems(data.media || [])
+})
+
 const editingMedia = ref(null)
 
 const dragItems = computed({
 	get: () => mediaStore.items,
 	set: (value) => mediaStore.reorder(value),
 })
-
-async function fetch() {
-	const { data } = await projectsApi.show(route.params.id)
-	project.value = data.data
-	mediaStore.setItems(data.data.media || [])
-}
-
-load(fetch)
 
 function goBack() {
 	router.push({ name: 'projects.show', params: { id: route.params.id } })
@@ -100,32 +88,7 @@ async function handleSubmit() {
 	<!-- NavBar -->
 	<Grid v-if="project" class="mb-40">
 		<Span class="col-span-8 col-start-2">
-			<NavBar>
-				<NavBarButton>
-					<template #icon>
-						<Window class="w-14 h-auto" />
-					</template>
-					Web
-				</NavBarButton>
-				<NavBarButton>
-					<template #icon>
-						<Download class="w-14 h-auto" />
-					</template>
-					Rohdaten (ZIP)
-				</NavBarButton>
-				<NavBarButton>
-					<template #icon>
-						<List class="w-14 h-auto" />
-					</template>
-					Referenzblatt (PDF)
-				</NavBarButton>
-				<NavBarButton>
-					<template #icon>
-						<Eye class="w-14 h-auto" />
-					</template>
-					Publiziert (Website)
-				</NavBarButton>
-			</NavBar>
+			<ProjectNavBar />
 		</Span>
 	</Grid>
 

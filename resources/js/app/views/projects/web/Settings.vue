@@ -1,19 +1,18 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
-import ProjectNavBar from './components/navbar/Project.vue'
-import ProjectImages from './components/Images.vue'
-import ProjectMasterData from './components/MasterData.vue'
+import WebNavBar from '@/views/projects/components/navbar/Web.vue'
 
+const route = useRoute()
 const router = useRouter()
-const { project, fetch } = useProject()
+const { project } = useProject()
 
 function goBack() {
-	router.push({ name: 'projects.index' })
+	router.push({ name: 'projects.show', params: { id: route.params.id } })
 }
 </script>
 
@@ -22,7 +21,7 @@ function goBack() {
 	<!-- NavBar -->
 	<Grid v-if="project" class="mb-40">
 		<Span class="col-span-8 col-start-2">
-			<ProjectNavBar />
+			<WebNavBar />
 		</Span>
 	</Grid>
 
@@ -43,18 +42,4 @@ function goBack() {
 
 	</Grid>
 
-
-	<!-- Content -->
-	<Grid v-if="project" class="mb-20">
-
-		<Span class="col-span-8 col-start-2">
-			<ProjectMasterData :project="project" />
-		</Span>
-
-		<Span class="col-span-8 col-start-2">
-			<ProjectImages :project="project" @updated="fetch" />
-		</Span>
-
-	</Grid>
-  
 </template>

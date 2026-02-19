@@ -24,6 +24,7 @@ class Project extends Model
 		'title',
 		'number',
 		'slug',
+		'short_description',
 		'description',
 		'city',
 		'location_id',
