@@ -156,7 +156,8 @@ async function handleSubmit() {
 							:draggable="true"
 							:deletable="true"
 							:show-filename="true"
-							@delete="onDelete" />
+							@delete="onDelete"
+              :variant="'dark'" />
 					</template>
 				</draggable>
 
