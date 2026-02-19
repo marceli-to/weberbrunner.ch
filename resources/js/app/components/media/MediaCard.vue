@@ -7,13 +7,14 @@ defineProps({
 	deletable: { type: Boolean, default: false },
 	draggable: { type: Boolean, default: false },
 	showFilename: { type: Boolean, default: false },
+	variant: { type: String, default: 'light' },
 })
 
 defineEmits(['delete'])
 </script>
 
 <template>
-	<div class="border-thin border-silver bg-white">
+	<div class="border-thin bg-white" :class="variant === 'dark' ? 'border-black' : 'border-silver'">
 
 		<div class="relative px-40 py-60 flex items-center justify-center aspect-square">
 
@@ -36,7 +37,7 @@ defineEmits(['delete'])
 
 		</div>
 
-		<div v-if="showFilename" class="text-center py-5 px-20 text-sm border-t-thin border-t-silver overflow-hidden text-ellipsis whitespace-nowrap">
+		<div v-if="showFilename" class="text-center py-5 px-20 text-sm border-t-thin overflow-hidden text-ellipsis whitespace-nowrap" :class="variant === 'dark' ? 'border-t-black' : 'border-t-silver'">
 			{{ item.original_name }}
 		</div>
     
