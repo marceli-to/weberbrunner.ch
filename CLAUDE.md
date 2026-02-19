@@ -27,7 +27,6 @@ Project  ──belongsTo──> Location
 TeamMember ──belongsTo──> Location
            ──hasMany──> TeamMemberBio
            ──morphMany──> Media
-Post ──morphMany──> Media
 NetworkEntry ──morphMany──> Media
 Section(type=award) ──hasMany──> Award
 Section(type=jury)  ──hasMany──> Jury
@@ -103,7 +102,7 @@ Special:
 
 ### Polymorphic Media
 
-Media attaches to models via `mediable` morph. Morph targets: Project, Post, TeamMember, NetworkEntry. Each parent has `media()` (all) and `teaser()` (is_teaser=true) relationships.
+Media attaches to models via `mediable` morph. Morph targets: Project, TeamMember, NetworkEntry. Each parent has `media()` (all) and `teaser()` (is_teaser=true) relationships.
 
 ### Section Grouping
 
@@ -111,7 +110,7 @@ Awards, Jury, and Talks are grouped by Section records scoped via `type` column 
 
 ### Soft Deletes
 
-All models except Post, Media, ProjectAttribute, TeamMemberBio.
+All models except Media, ProjectAttribute, TeamMemberBio.
 
 ### Activity Logging
 
