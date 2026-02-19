@@ -7,9 +7,9 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
-import TeamImage from './components/TeamImage.vue'
-import TeamProfile from './components/TeamProfile.vue'
-import TeamBio from './components/TeamBio.vue'
+import TeamImage from '@/views/office/team/components/TeamImage.vue'
+import TeamProfile from '@/views/office/team/components/TeamProfile.vue'
+import TeamBio from '@/views/office/team/components/TeamBio.vue'
 
 const route = useRoute()
 const router = useRouter()

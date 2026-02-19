@@ -3,7 +3,7 @@ import { watch } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
-import Toolbar from './Toolbar.vue'
+import Toolbar from '@/components/ui/form/editor/Toolbar.vue'
 
 const props = defineProps({
 	modelValue: { type: String, default: '' },

@@ -5,9 +5,9 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
-import ProjectNavBar from './components/navbar/Project.vue'
-import ProjectImages from './components/Images.vue'
-import ProjectMasterData from './components/MasterData.vue'
+import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
+import ProjectImages from '@/views/projects/components/Images.vue'
+import ProjectMasterData from '@/views/projects/components/MasterData.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()

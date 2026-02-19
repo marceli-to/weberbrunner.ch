@@ -1,4 +1,4 @@
-import api from './axios'
+import api from '@/api/axios'
 
 export default {
 	upload: (data) => api.post('/media/upload', data, {

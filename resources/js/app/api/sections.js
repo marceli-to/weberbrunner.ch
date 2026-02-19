@@ -1,4 +1,4 @@
-import api from './axios'
+import api from '@/api/axios'
 
 export default {
 	index: (params) => api.get('/sections', { params }),

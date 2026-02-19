@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Bold from '@/components/icons/Bold.vue'
 import Underline from '@/components/icons/Underline.vue'
 import Link from '@/components/icons/Link.vue'
-import LinkDialog from './LinkDialog.vue'
+import LinkDialog from '@/components/ui/form/editor/LinkDialog.vue'
 
 const props = defineProps({
 	editor: { type: Object, required: true },
