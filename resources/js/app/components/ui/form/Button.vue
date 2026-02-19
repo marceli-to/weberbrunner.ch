@@ -13,6 +13,8 @@ const variantClasses = {
 	primary: 'form-button--primary',
 	secondary: 'form-button--secondary',
 	ghost: 'form-button--ghost',
+	toggle: 'form-button--toggle',
+	'toggle-active': 'form-button--toggle-active',
 	danger: 'form-button--danger',
 	'danger-outline': 'form-button--danger-outline',
 }

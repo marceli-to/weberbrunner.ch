@@ -8,4 +8,5 @@ export default {
 	destroy: (id) => api.delete(`/projects/${id}`),
 	reorder: (items) => api.patch('/projects/reorder', { items }),
 	attachMedia: (id, media) => api.post(`/projects/${id}/media`, { media }),
+	toggle: (id) => api.patch(`/projects/${id}/toggle`),
 }

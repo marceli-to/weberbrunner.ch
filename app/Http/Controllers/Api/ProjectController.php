@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Actions\Project\DeleteAction as DeleteProjectAction;
+use App\Actions\Project\ToggleAction as ToggleProjectAction;
 use App\Actions\Project\ReorderAction as ReorderProjectAction;
 use App\Actions\Project\StoreAction as StoreProjectAction;
 use App\Actions\Project\UpdateAction as UpdateProjectAction;
@@ -105,6 +106,15 @@ class ProjectController extends Controller
 		(new AttachMediaAction)->execute($request->validated('media'), $project);
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+	}
+
+	public function toggle(Project $project)
+	{
+		$this->authorize('update', $project);
+
+		(new ToggleProjectAction)->execute($project);
+
+		return response()->json(null, 204);
 	}
 
 	public function reorder(ReorderProjectRequest $request)
