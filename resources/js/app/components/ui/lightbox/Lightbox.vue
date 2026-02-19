@@ -45,12 +45,12 @@ function onBackdropClick(e) {
 
 		<Grid :cols="12">
 
-			<Span class="col-start-4 col-span-8 -mx-20 bg-white border-thin border-black p-20">
+			<Span class="col-start-4 col-span-8 -mx-20 bg-white border-thin border-black py-20">
 
 				<!-- Header -->
 				<div
 					v-if="title || $slots.header || closeable"
-					class="flex items-start justify-between mb-20">
+					class="flex items-start justify-between mb-20 px-20">
 
 					<slot name="header">
 						<h2 v-if="title" class="text-sm font-semibold text-black">{{ title }}</h2>
@@ -71,7 +71,7 @@ function onBackdropClick(e) {
 				<slot />
 
 				<!-- Footer -->
-				<div v-if="$slots.footer" class="mt-24">
+				<div v-if="$slots.footer" class="mt-24 px-20">
 					<slot name="footer" />
 				</div>
 

@@ -56,7 +56,7 @@ function handleSave() {
 		</div>
 
 		<!-- Form fields -->
-		<Grid :cols="8" class="gap-y-10 my-40">
+		<Grid :cols="8" class="gap-y-10 my-40 px-20">
 			<Span class="col-span-2 flex items-center">
 				<label class="text-sm font-semibold text-black">Dateiname</label>
 			</Span>
@@ -87,7 +87,7 @@ function handleSave() {
 		</Grid>
 
 		<!-- Actions -->
-    <Grid :cols="8" class="gap-y-10">
+    <Grid :cols="8" class="gap-y-10 px-20">
       <Span class="col-span-6 col-start-3">
         <Button type="button" @click="handleSave">Speichern</Button>
       </Span>

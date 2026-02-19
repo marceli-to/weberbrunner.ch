@@ -32,7 +32,7 @@ defineExpose({ open })
 
 <template>
 	<Lightbox :open="show" title="Neue Kategorie" @close="close" :closeable="false">
-		<form @submit.prevent="store">
+		<form @submit.prevent="store" class="px-20">
 			<Input v-model="title" :error="get('title')" placeholder="Bezeichnung" class="form-input form-input--lg" @focus="clear('title')" />
 			<div class="flex gap-20 mt-24">
 				<Button type="submit" class="flex justify-center">Speichern</Button>
