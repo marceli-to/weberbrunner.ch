@@ -118,6 +118,9 @@ onBeforeUnmount(() => {
 
 <template>
 	<div class="media-uploader">
+		<div class="media-uploader__label">
+			<button type="button" class="media-uploader__browse" @click="onBrowse">Drag-and-drop / Durchsuchen</button>
+		</div>
 		<div
 			ref="dropZoneRef"
 			class="media-uploader__dropzone"
@@ -128,9 +131,6 @@ onBeforeUnmount(() => {
 			@drop="onDrop"
 			@click="onBrowse"
 		>
-			<div class="media-uploader__label">
-				<button type="button" class="media-uploader__browse" @click.stop="onBrowse">Drag-and-drop / Durchsuchen</button>
-			</div>
 			<div class="media-uploader__icon">
 				<PlusCircle class="w-25 h-auto" />
 			</div>
