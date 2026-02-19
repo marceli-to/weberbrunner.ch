@@ -24,6 +24,7 @@ class MediaResource extends JsonResource
 			'height' => $this->height,
 			'orientation' => $this->orientation,
 			'is_teaser' => $this->is_teaser,
+			'is_og' => $this->is_og,
 			'sort_order' => $this->sort_order,
 			'thumbnail_url' => ImageController::signUrl($this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
 			'preview_url' => ImageController::signUrl($this->file, ['w' => 800, 'fit' => 'max']),

@@ -5,7 +5,7 @@ import ProjectsIndex from '@/views/projects/Index.vue'
 import ProjectsShow from '@/views/projects/Show.vue'
 import ProjectImagesEdit from '@/views/projects/Images.vue'
 import ProjectsLayout from '@/views/projects/web/Layout.vue'
-import ProjectsMasterData from '@/views/projects/web/MasterData.vue'
+import ProjectsMetaData from '@/views/projects/web/MetaData.vue'
 import ProjectsTeaserImage from '@/views/projects/web/TeaserImage.vue'
 import ProjectsSettings from '@/views/projects/web/Settings.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
@@ -55,7 +55,7 @@ const routes = [
 {
     path: '/dashboard/arbeiten/:id/web/metadaten',
     name: 'projects.metadata',
-    component: ProjectsMasterData,
+    component: ProjectsMetaData,
     meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {

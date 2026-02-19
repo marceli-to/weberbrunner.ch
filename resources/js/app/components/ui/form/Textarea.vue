@@ -14,6 +14,7 @@ defineEmits(['update:modelValue'])
 		:value="modelValue"
 		:placeholder="error || placeholder"
 		:disabled="disabled"
+		class="form-textarea"
 		:class="{ 'has-error': error }"
 		@input="$emit('update:modelValue', $event.target.value)"
 	/>

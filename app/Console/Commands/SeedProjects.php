@@ -156,6 +156,7 @@ class SeedProjects extends Command
                 'slug' => $slug,
                 'short_description' => $this->generateShortDescription(),
                 'description' => $this->generateDescription(),
+                'meta_description' => $this->generateMetaDescription(),
                 'city' => $cityName,
                 'location_id' => $location->id,
                 'publish' => rand(0, 1) === 1,
@@ -180,6 +181,10 @@ class SeedProjects extends Command
             // Add teaser image
             $teaserNum = $teaserImages[array_rand($teaserImages)];
             $this->attachImage($project, "dummy-teaser-{$teaserNum}.jpg", $title, 0, true);
+
+            // Add OG image
+            $ogNum = $teaserImages[array_rand($teaserImages)];
+            $this->attachImage($project, "dummy-teaser-{$ogNum}.jpg", $title, 0, false, true);
 
             // Add 3-8 project images
             $numImages = rand(3, 8);
@@ -234,6 +239,22 @@ class SeedProjects extends Command
         return $descriptions[array_rand($descriptions)];
     }
 
+    private function generateMetaDescription(): string
+    {
+        $descriptions = [
+            'Neubau einer nachhaltigen Wohnüberbauung mit innovativer Holzbauweise und gemeinschaftlichem Aussenraum.',
+            'Sanierung und Erweiterung eines denkmalgeschützten Gebäudes im Herzen der Stadt.',
+            'Wettbewerbsbeitrag für ein zukunftsweisendes Quartierzentrum mit Minergie-P-ECO-Standard.',
+            'Umnutzung eines Industrieareals zu einem lebendigen Wohn- und Gewerbequartier.',
+            'Zeitgenössische Architektur im Dialog mit dem historischen Kontext und nachhaltiger Bauweise.',
+            'Ressourcenschonender Neubau mit flexiblen Wohnkonzepten und gemeinschaftlicher Infrastruktur.',
+            'Städtebauliche Neuinterpretation mit Fokus auf Nachhaltigkeit und soziale Durchmischung.',
+            'Architektonisch anspruchsvoller Bau mit ökologischem Energiekonzept und hoher Wohnqualität.',
+        ];
+
+        return $descriptions[array_rand($descriptions)];
+    }
+
     private function generateDescription(): string
     {
         $paragraphs = [
@@ -247,7 +268,7 @@ class SeedProjects extends Command
         return $paragraphs[array_rand($paragraphs)];
     }
 
-    private function attachImage(Project $project, string $sourceFile, string $alt, int $sortOrder, bool $isTeaser): void
+    private function attachImage(Project $project, string $sourceFile, string $alt, int $sortOrder, bool $isTeaser, bool $isOg = false): void
     {
         $disk = Storage::disk('public');
         $sourcePath = "images/{$sourceFile}";
@@ -274,6 +295,7 @@ class SeedProjects extends Command
             'height' => $dimensions[1] ?? null,
             'alt' => $alt,
             'is_teaser' => $isTeaser,
+            'is_og' => $isOg,
             'sort_order' => $sortOrder,
         ]);
     }

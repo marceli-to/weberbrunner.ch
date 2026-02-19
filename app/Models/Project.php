@@ -26,6 +26,7 @@ class Project extends Model
 		'slug',
 		'short_description',
 		'description',
+		'meta_description',
 		'city',
 		'location_id',
 		'publish',

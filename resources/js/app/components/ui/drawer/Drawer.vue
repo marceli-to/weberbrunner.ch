@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue'
 import Cross from '@/components/icons/Cross.vue'
+import Grid from '@/components/ui/grid/Grid.vue'
+import Span from '@/components/ui/grid/Span.vue'
 
 const props = defineProps({
 	open: { type: Boolean, default: false },
@@ -35,28 +37,27 @@ function onBackdropClick(e) {
 <template>
 	<dialog
 		ref="dialogRef"
-		class="p-0 m-0 ml-auto h-full max-h-full bg-transparent border-none shadow-none backdrop:bg-white/60 backdrop:select-none"
+		class="p-0 m-0 ml-auto h-full max-h-full w-full max-w-full bg-transparent border-none shadow-none backdrop:bg-white/60 backdrop:select-none"
 		@close="onClose"
 		@click="onBackdropClick">
 
-		<div
-			class="h-full w-[50vw] bg-navy overflow-y-auto">
+		<Grid :cols="12" class="h-full overflow-y-auto">
 
-			<!-- Close button -->
-			<button
-				v-if="closeable"
-				type="button"
-				class="mt-20 ml-20 w-14 h-14 flex items-center justify-center text-white cursor-pointer"
-				@click="onClose">
-				<Cross class="w-14 h-14" />
-			</button>
+			<Span class="col-start-7 col-span-6 h-full bg-navy overflow-y-auto relative pb-20">
 
-			<!-- Content -->
-			<div class="p-20">
-				<slot />
-			</div>
+				<!-- Close button -->
+				<button
+					v-if="closeable"
+					type="button"
+					class="absolute top-20 left-20 w-14 h-14 flex items-center justify-center text-white cursor-pointer"
+					@click="onClose">
+					<Cross class="w-14 h-14" />
+				</button>
 
-		</div>
+        <slot />
+				
+			</Span>
+		</Grid>
 
 	</dialog>
 </template>
