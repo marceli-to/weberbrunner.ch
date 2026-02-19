@@ -7,6 +7,7 @@ import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
 import Checkbox from '@/components/ui/form/Checkbox.vue'
 import Card from '@/components/ui/Card.vue'
+import CardRow from '@/components/ui/CardRow.vue'
 import WebNavBar from '@/views/projects/components/navbar/Web.vue'
 import PublishToggle from '@/components/ui/form/PublishToggle.vue'
 
@@ -69,36 +70,34 @@ function goBack() {
 		<!-- Statuses -->
 		<Span class="col-span-4 col-start-2">
 			<Card has-header>
-				<div class="font-semibold text-md min-h-50 flex items-center border-b-thin">
+				<CardRow header>
 					Status (Website)
-				</div>
-				<div
+				</CardRow>
+				<CardRow
 					v-for="status in statuses"
-					:key="status.id"
-					class="min-h-30 text-md flex items-center border-b-thin border-b-gray">
+					:key="status.id">
 					<Checkbox
 						:model-value="isStatusSelected(status.id)"
 						:label="status.title"
 						@update:model-value="toggleStatus(status.id)" />
-				</div>
+				</CardRow>
 			</Card>
 		</Span>
 
 		<!-- Categories -->
 		<Span class="col-span-4">
 			<Card has-header>
-				<div class="font-semibold text-md min-h-50 flex items-center border-b-thin">
+				<CardRow header>
 					Kategorie
-				</div>
-				<div
+				</CardRow>
+				<CardRow
 					v-for="category in categories"
-					:key="category.id"
-					class="min-h-30 text-md flex items-center border-b-thin border-b-gray">
+					:key="category.id">
 					<Checkbox
 						:model-value="isCategorySelected(category.id)"
 						:label="category.title"
 						@update:model-value="toggleCategory(category.id)" />
-				</div>
+				</CardRow>
 			</Card>
 		</Span>
 
