@@ -13,8 +13,8 @@ import Window from '@/components/icons/Window.vue'
 import Download from '@/components/icons/Download.vue'
 import List from '@/components/icons/List.vue'
 import Eye from '@/components/icons/Eye.vue'
-import ProjectImages from './components/ProjectImages.vue'
-import ProjectMasterData from './components/ProjectMasterData.vue'
+import ProjectImages from './components/Images.vue'
+import ProjectMasterData from './components/MasterData.vue'
 
 const route = useRoute()
 const router = useRouter()

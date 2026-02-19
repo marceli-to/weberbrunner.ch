@@ -1,14 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// demo
 import Styleguide from '@/views/dev/Styleguide.vue'
-import BlogIndex from '@/views/blog/Index.vue'
-import BlogForm from '@/views/blog/Form.vue'
-// -- demo
-
 import ProjectsIndex from '@/views/projects/Index.vue'
 import ProjectsShow from '@/views/projects/Show.vue'
-import ProjectImagesEdit from '@/views/projects/ProjectImagesEdit.vue'
+import ProjectImagesEdit from '@/views/projects/Images.vue'
 import OfficeTeam from '@/views/office/team/Index.vue'
 import OfficeTeamShow from '@/views/office/team/Show.vue'
 import OfficeJobs from '@/views/office/jobs/Index.vue'
@@ -166,24 +161,6 @@ const routes = [
     name: 'profile.index',
     component: ProfileIndex,
     meta: { title: 'Profil', navSection: 'main', navLabel: 'Profil', navOrder: 40 },
-  },
-  {
-    path: '/dashboard/blog',
-    name: 'blog.index',
-    component: BlogIndex,
-    meta: { title: 'Blog' },
-  },
-  {
-    path: '/dashboard/blog/create',
-    name: 'blog.create',
-    component: BlogForm,
-    meta: { title: 'Blog' },
-  },
-  {
-    path: '/dashboard/blog/:id/edit',
-    name: 'blog.edit',
-    component: BlogForm,
-    meta: { title: 'Blog' },
   },
 ]
 
