@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Media;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class Seed extends Command
 {
@@ -43,25 +41,6 @@ class Seed extends Command
 		$this->info('Seeding office data...');
 		$this->call('app:seed-office-data');
 
-		$this->info('Updating media dimensions...');
-		$this->updateMediaDimensions();
-
 		$this->info('Done!');
-	}
-
-	private function updateMediaDimensions(): void
-	{
-		$media = Media::all();
-
-		foreach ($media as $item) {
-			$path = Storage::disk('public')->path($item->file);
-
-			if (file_exists($path) && $size = @getimagesize($path)) {
-				$item->update([
-					'width' => $size[0],
-					'height' => $size[1],
-				]);
-			}
-		}
 	}
 }
