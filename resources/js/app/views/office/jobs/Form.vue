@@ -12,7 +12,7 @@ import Span from '@/components/ui/grid/Span.vue'
 import Editor from '@/components/ui/form/editor/Editor.vue'
 import Input from '@/components/ui/form/Input.vue'
 import ActionBar from '@/components/ui/form/ActionBar.vue'
-import Arrow from '@/components/icons/Arrow.vue'
+import BackButton from '@/components/ui/BackButton.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -71,9 +71,7 @@ function goBack() {
 		<!-- Header -->
 		<Grid class="mb-40">
 			<Span class="col-span-1 flex items-center justify-center">
-				<button type="button" @click="goBack">
-					<Arrow variant="left" class="w-25 cursor-pointer" />
-				</button>
+				<BackButton @click="goBack" />
 			</Span>
 			<Span class="col-span-8">
 				<PageTitle>Jobs / {{ locationTitle }}</PageTitle>

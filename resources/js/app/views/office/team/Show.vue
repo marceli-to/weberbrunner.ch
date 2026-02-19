@@ -6,7 +6,7 @@ import { usePageLoader } from '@/composables/usePageLoader'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Arrow from '@/components/icons/Arrow.vue'
+import BackButton from '@/components/ui/BackButton.vue'
 import TeamImage from '@/views/office/team/components/TeamImage.vue'
 import TeamProfile from '@/views/office/team/components/TeamProfile.vue'
 import TeamBio from '@/views/office/team/components/TeamBio.vue'
@@ -32,9 +32,7 @@ load(fetch)
 	<!-- Header -->
 	<Grid class="mb-20">
 		<Span class="col-span-1 flex items-center justify-center">
-			<button type="button" @click="goBack">
-				<Arrow variant="left" class="w-25 cursor-pointer" />
-			</button>
+			<BackButton @click="goBack" />
 		</Span>
 		<Span class="col-span-8">
 			<PageTitle>

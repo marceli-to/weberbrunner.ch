@@ -4,7 +4,7 @@ import { useProject } from '@/composables/useProject'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Arrow from '@/components/icons/Arrow.vue'
+import BackButton from '@/components/ui/BackButton.vue'
 import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
 import ProjectImages from '@/views/projects/components/Images.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
@@ -30,9 +30,7 @@ function goBack() {
 	<Grid class="mb-20">
 
 		<Span class="col-span-1 flex items-center justify-center">
-			<button type="button" @click="goBack">
-				<Arrow variant="left" class="w-25 cursor-pointer" />
-			</button>
+			<BackButton @click="goBack" />
 		</Span>
 
 		<Span class="col-span-8">
