@@ -1,4 +1,9 @@
 <script setup>
+import { ref } from 'vue'
+import Drawer from '@/components/ui/drawer/Drawer.vue'
+
+const drawerOpen = ref(false)
+
 // Simple icons
 import Avatar from '@/components/icons/Avatar.vue'
 import Burger from '@/components/icons/Burger.vue'
@@ -335,7 +340,22 @@ const spacings = [
       <section class="mb-64">
         <h2 class="text-md font-semibold text-black mb-16">UI Elements</h2>
         <div class="space-y-24">
-          <p class="text-sm text-gray">UI elements (dialogs, toasts, tables) will be defined here</p>
+
+          <!-- Drawer -->
+          <div>
+            <h3 class="text-sm font-semibold text-gray mb-12">Drawer</h3>
+            <button
+              type="button"
+              class="text-sm text-navy border-thin border-navy px-12 py-6 cursor-pointer"
+              @click="drawerOpen = true">
+              Open Drawer
+            </button>
+          </div>
+
+          <Drawer :open="drawerOpen" @close="drawerOpen = false">
+            <p class="text-sm text-gray">Drawer content goes here</p>
+          </Drawer>
+
         </div>
       </section>
 

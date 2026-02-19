@@ -71,6 +71,7 @@ Route::prefix('dashboard')
 				Route::put('/{project}', 'update');
 				Route::delete('/{project}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
+				Route::post('/{project}/media', 'attachMedia');
 			});
 
 		// Project Attributes (nested under projects)

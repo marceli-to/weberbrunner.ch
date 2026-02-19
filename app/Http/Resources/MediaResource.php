@@ -19,6 +19,7 @@ class MediaResource extends JsonResource
 			'size' => $this->size,
 			'alt' => $this->alt,
 			'caption' => $this->caption,
+			'credits' => $this->credits,
 			'width' => $this->width,
 			'height' => $this->height,
 			'orientation' => $this->orientation,

@@ -7,6 +7,7 @@ use App\Models\Location;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SeedProjects extends Command
@@ -177,23 +178,13 @@ class SeedProjects extends Command
 
             // Add teaser image
             $teaserNum = $teaserImages[array_rand($teaserImages)];
-            $project->media()->create([
-                'file' => "images/dummy-teaser-{$teaserNum}.jpg",
-                'alt' => $title,
-                'is_teaser' => true,
-                'sort_order' => 0,
-            ]);
+            $this->attachImage($project, "dummy-teaser-{$teaserNum}.jpg", $title, 0, true);
 
             // Add 3-8 project images
             $numImages = rand(3, 8);
             for ($j = 1; $j <= $numImages; $j++) {
                 $imgNum = $projectImages[array_rand($projectImages)];
-                $project->media()->create([
-                    'file' => "images/dummy-project-{$imgNum}.jpg",
-                    'alt' => "{$title} - Bild {$j}",
-                    'is_teaser' => false,
-                    'sort_order' => $j,
-                ]);
+                $this->attachImage($project, "dummy-project-{$imgNum}.jpg", "{$title} - Bild {$j}", $j, false);
             }
 
             // Attach 1-3 categories
@@ -240,5 +231,36 @@ class SeedProjects extends Command
         ];
 
         return $paragraphs[array_rand($paragraphs)];
+    }
+
+    private function attachImage(Project $project, string $sourceFile, string $alt, int $sortOrder, bool $isTeaser): void
+    {
+        $disk = Storage::disk('public');
+        $sourcePath = "images/{$sourceFile}";
+
+        if (!$disk->exists($sourcePath)) {
+            $this->warn("  Missing: {$sourcePath}");
+            return;
+        }
+
+        $filename = Str::slug(pathinfo($sourceFile, PATHINFO_FILENAME))
+            . '-' . Str::random(6) . '.jpg';
+
+        $disk->copy($sourcePath, "uploads/{$filename}");
+
+        $fullPath = $disk->path("uploads/{$filename}");
+        $dimensions = @getimagesize($fullPath);
+
+        $project->media()->create([
+            'file' => "uploads/{$filename}",
+            'original_name' => $sourceFile,
+            'mime_type' => 'image/jpeg',
+            'size' => $disk->size("uploads/{$filename}"),
+            'width' => $dimensions[0] ?? null,
+            'height' => $dimensions[1] ?? null,
+            'alt' => $alt,
+            'is_teaser' => $isTeaser,
+            'sort_order' => $sortOrder,
+        ]);
     }
 }

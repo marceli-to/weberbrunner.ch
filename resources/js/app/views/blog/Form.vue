@@ -52,6 +52,7 @@ async function handleSubmit() {
 		height: item.height,
 		alt: item.alt || null,
 		caption: item.caption || null,
+		credits: item.credits || null,
 	}))
 
 	const success = await store.save(form.value, isEdit.value ? route.params.id : null, tempMedia)

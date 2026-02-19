@@ -43,7 +43,7 @@ load(fetch)
 					<template #icon>
             <Window class="w-14 h-auto" />
           </template>
-					Website-Editor
+					Web
 				</NavBarButton>
 				<NavBarButton>
 					<template #icon>

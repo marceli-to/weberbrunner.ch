@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('size')->nullable();
             $table->string('alt')->nullable();
             $table->string('caption')->nullable();
+            $table->string('credits')->nullable();
             $table->unsignedInteger('width')->nullable();
             $table->unsignedInteger('height')->nullable();
             $table->boolean('is_teaser')->default(false);

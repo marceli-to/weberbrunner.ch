@@ -15,7 +15,7 @@ class SeedTeam extends Command
 	protected $description = 'Seed team members with media';
 
 	private array $members = [
-		['firstname' => 'Anna', 'name' => 'Müller', 'title' => 'M. Sc. Arch ETH', 'since' => 2018, 'email' => 'anna.mueller@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-1.jpg'],
+		['firstname' => 'Anna', 'name' => 'Müller', 'title' => 'M. Sc. Arch ETH', 'since' => 2018, 'email' => 'anna.mueller@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-2.jpg'],
 		['firstname' => 'Boris', 'name' => 'Brunner', 'title' => 'dipl. Arch. FH / BSA / SIA', 'since' => 2015, 'email' => 'boris.brunner@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-2.jpg'],
 		['firstname' => 'Carla', 'name' => 'Schneider', 'title' => 'M. Sc. Arch TU Zürich', 'since' => 2020, 'email' => 'carla.schneider@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-3.jpg'],
 		['firstname' => 'Daniel', 'name' => 'Weber', 'title' => 'B. Sc. Architektur ZHAW', 'since' => 2021, 'email' => 'daniel.weber@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-4.jpg'],
@@ -25,15 +25,15 @@ class SeedTeam extends Command
 		['firstname' => 'Hans', 'name' => 'Zimmermann', 'title' => 'B. Sc. Architektur FHNW', 'since' => 2020, 'email' => 'hans.zimmermann@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-8.jpg'],
 		['firstname' => 'Irene', 'name' => 'Schmid', 'title' => 'M. Sc. Arch ETH', 'since' => 2016, 'email' => 'irene.schmid@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-9.jpg'],
 		['firstname' => 'Jonas', 'name' => 'Meier', 'title' => 'Lernender', 'since' => 2024, 'email' => 'jonas.meier@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-10.jpg'],
-		['firstname' => 'Kathrin', 'name' => 'Gerber', 'title' => 'M. Sc. Arch TU München', 'since' => 2019, 'email' => 'kathrin.gerber@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-11.jpg'],
+		['firstname' => 'Kathrin', 'name' => 'Gerber', 'title' => 'M. Sc. Arch TU München', 'since' => 2019, 'email' => 'kathrin.gerber@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-12.jpg'],
 		['firstname' => 'Lukas', 'name' => 'Huber', 'title' => 'dipl. Arch. FH / SIA', 'since' => 2018, 'email' => 'lukas.huber@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-12.jpg'],
 		['firstname' => 'Maria', 'name' => 'Steiner', 'title' => 'M. Sc. Arch ETH', 'since' => 2021, 'email' => 'maria.steiner@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-13.jpg'],
-		['firstname' => 'Niklaus', 'name' => 'Baumann', 'title' => 'B. Sc. Architektur HSR', 'since' => 2023, 'email' => 'niklaus.baumann@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-14.jpg'],
+		['firstname' => 'Niklaus', 'name' => 'Baumann', 'title' => 'B. Sc. Architektur HSR', 'since' => 2023, 'email' => 'niklaus.baumann@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-15.jpg'],
 		['firstname' => 'Olivia', 'name' => 'Graf', 'title' => 'M. Sc. Arch TU Berlin', 'since' => 2020, 'email' => 'olivia.graf@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-15.jpg'],
 		['firstname' => 'Patrick', 'name' => 'Frei', 'title' => 'dipl. Arch. FH', 'since' => 2017, 'email' => 'patrick.frei@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-16.jpg'],
 		['firstname' => 'Rahel', 'name' => 'Widmer', 'title' => 'M. Sc. Arch ETH', 'since' => 2019, 'email' => 'rahel.widmer@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-17.jpg'],
 		['firstname' => 'Stefan', 'name' => 'Moser', 'title' => 'M. Sc. Arch TU Darmstadt', 'since' => 2022, 'email' => 'stefan.moser@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-18.jpg'],
-		['firstname' => 'Tamara', 'name' => 'Bühler', 'title' => 'B. Sc. Architektur ZHAW', 'since' => 2021, 'email' => 'tamara.buehler@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-19.jpg'],
+		['firstname' => 'Tamara', 'name' => 'Bühler', 'title' => 'B. Sc. Architektur ZHAW', 'since' => 2021, 'email' => 'tamara.buehler@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-20.jpg'],
 		['firstname' => 'Urs', 'name' => 'Roth', 'title' => 'dipl. Arch. FH / BSA', 'since' => 2014, 'email' => 'urs.roth@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-20.jpg'],
 		['firstname' => 'Vera', 'name' => 'Künzler', 'title' => 'M. Sc. Arch ETH', 'since' => 2020, 'email' => 'vera.kuenzler@weberbrunner.ch', 'location' => 'berlin', 'image' => 'images/dummy-team-21.jpg'],
 		['firstname' => 'Werner', 'name' => 'Sutter', 'title' => 'M. Sc. Arch TU Graz', 'since' => 2018, 'email' => 'werner.sutter@weberbrunner.ch', 'location' => 'zuerich', 'image' => 'images/dummy-team-22.jpg'],
@@ -101,21 +101,30 @@ class SeedTeam extends Command
 				'sort_order' => $order,
 			]);
 
-			$imagePath = $data['image'];
-			$fullPath = $disk->path($imagePath);
-			$dimensions = file_exists($fullPath) ? @getimagesize($fullPath) : false;
+			$sourcePath = $data['image'];
+			$sourceFile = basename($sourcePath);
 
-			$member->media()->create([
-				'file' => $imagePath,
-				'original_name' => basename($imagePath),
-				'mime_type' => 'image/jpeg',
-				'size' => file_exists($fullPath) ? filesize($fullPath) : null,
-				'alt' => $data['firstname'] . ' ' . $data['name'],
-				'is_teaser' => true,
-				'sort_order' => 0,
-				'width' => $dimensions ? $dimensions[0] : null,
-				'height' => $dimensions ? $dimensions[1] : null,
-			]);
+			if ($disk->exists($sourcePath)) {
+				$filename = Str::slug(pathinfo($sourceFile, PATHINFO_FILENAME))
+					. '-' . Str::random(6) . '.jpg';
+
+				$disk->copy($sourcePath, "uploads/{$filename}");
+
+				$fullPath = $disk->path("uploads/{$filename}");
+				$dimensions = @getimagesize($fullPath);
+
+				$member->media()->create([
+					'file' => "uploads/{$filename}",
+					'original_name' => $sourceFile,
+					'mime_type' => 'image/jpeg',
+					'size' => $disk->size("uploads/{$filename}"),
+					'alt' => $data['firstname'] . ' ' . $data['name'],
+					'is_teaser' => true,
+					'sort_order' => 0,
+					'width' => $dimensions[0] ?? null,
+					'height' => $dimensions[1] ?? null,
+				]);
+			}
 
 			$this->seedBios($member);
 

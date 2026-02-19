@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Actions\Project\DeleteAction as DeleteProjectAction;
 use App\Actions\Project\ReorderAction as ReorderProjectAction;
 use App\Actions\Project\StoreAction as StoreProjectAction;
 use App\Actions\Project\UpdateAction as UpdateProjectAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Media\AttachMediaRequest;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\ReorderProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
@@ -94,6 +96,13 @@ class ProjectController extends Controller
 		$this->authorize('restore', $project);
 
 		$project->restore();
+
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+	}
+
+	public function attachMedia(AttachMediaRequest $request, Project $project)
+	{
+		(new AttachMediaAction)->execute($request->validated('media'), $project);
 
 		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
 	}

@@ -21,6 +21,7 @@ class Media extends Model
 		'size',
 		'alt',
 		'caption',
+		'credits',
 		'width',
 		'height',
 		'is_teaser',

@@ -7,4 +7,5 @@ export default {
 	update: (id, data) => api.put(`/projects/${id}`, data),
 	destroy: (id) => api.delete(`/projects/${id}`),
 	reorder: (items) => api.patch('/projects/reorder', { items }),
+	attachMedia: (id, media) => api.post(`/projects/${id}/media`, { media }),
 }

@@ -106,7 +106,7 @@ class SeedPosts extends Command
 		$dimensions = @getimagesize($fullPath);
 
 		$post->media()->create([
-			'file' => $filename,
+			'file' => "uploads/{$filename}",
 			'original_name' => "dummy-project-{$sourceNum}.jpg",
 			'mime_type' => 'image/jpeg',
 			'size' => Storage::disk('public')->size("uploads/{$filename}"),
