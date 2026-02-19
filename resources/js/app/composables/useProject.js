@@ -3,18 +3,42 @@ import { useRoute } from 'vue-router'
 import projectsApi from '@/api/projects'
 import { usePageLoader } from '@/composables/usePageLoader'
 
-export function useProject(onFetched) {
-	const route = useRoute()
-	const { load } = usePageLoader()
-	const project = ref(null)
+let shared = { id: null, project: null }
 
-	async function fetch() {
-		const { data } = await projectsApi.show(route.params.id)
-		project.value = data.data
-		if (onFetched) onFetched(data.data)
+export function useProject(onFetched, { skipFetch = false } = {}) {
+	const route = useRoute()
+	const id = route.params.id
+
+	if (shared.id === id && shared.project) {
+		const project = shared.project
+		if (!skipFetch) {
+			const { load } = usePageLoader()
+			load(async () => {
+				const { data } = await projectsApi.show(id)
+				project.value = data.data
+				if (onFetched) onFetched(data.data)
+			})
+		} else if (onFetched && project.value) {
+			onFetched(project.value)
+		}
+		return { project, fetch: () => refetch(id, project, onFetched) }
 	}
 
-	load(fetch)
+	const project = ref(null)
+	shared = { id, project }
 
-	return { project, fetch }
+	const { load } = usePageLoader()
+	load(async () => {
+		const { data } = await projectsApi.show(id)
+		project.value = data.data
+		if (onFetched) onFetched(data.data)
+	})
+
+	return { project, fetch: () => refetch(id, project, onFetched) }
+}
+
+async function refetch(id, project, onFetched) {
+	const { data } = await projectsApi.show(id)
+	project.value = data.data
+	if (onFetched) onFetched(data.data)
 }

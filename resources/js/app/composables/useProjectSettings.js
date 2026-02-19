@@ -6,6 +6,7 @@ import categoriesApi from '@/api/categories'
 import { useProject } from '@/composables/useProject'
 import { useToast } from '@/composables/useToast'
 
+
 export function useProjectSettings() {
 	const route = useRoute()
 	const toast = useToast()
@@ -13,14 +14,18 @@ export function useProjectSettings() {
 	const statuses = ref([])
 	const categories = ref([])
 
-	const { project, fetch } = useProject(async (data) => {
+	const { project } = useProject(null, { skipFetch: true })
+
+	async function loadOptions() {
 		const [statusesRes, categoriesRes] = await Promise.all([
 			statusesApi.index(),
 			categoriesApi.index(),
 		])
 		statuses.value = statusesRes.data.data
 		categories.value = categoriesRes.data.data
-	})
+	}
+
+	loadOptions()
 
 	function isStatusSelected(id) {
 		return project.value?.statuses?.some(s => s.id === id) || false

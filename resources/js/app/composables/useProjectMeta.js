@@ -14,7 +14,7 @@ export function useProjectMeta() {
 	const { project, fetch } = useProject((data) => {
 		const ogMedia = data.media?.find(m => m.is_og)
 		selectedOgImage.value = ogMedia?.uuid || null
-	})
+	}, { skipFetch: true })
 
 	const { submit } = useFormErrors()
 	const toast = useToast()

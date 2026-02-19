@@ -9,7 +9,7 @@ import WebNavBar from '@/views/projects/components/navbar/Web.vue'
 
 const route = useRoute()
 const router = useRouter()
-const { project } = useProject()
+const { project } = useProject(null, { skipFetch: true })
 
 function goBack() {
 	router.push({ name: 'projects.show', params: { id: route.params.id } })
