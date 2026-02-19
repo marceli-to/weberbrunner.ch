@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import Label from '@/components/ui/form/Label.vue'
 import Input from '@/components/ui/form/Input.vue'
 import Button from '@/components/ui/form/Button.vue'
 
@@ -58,28 +59,28 @@ function handleSave() {
 		<!-- Form fields -->
 		<Grid :cols="8" class="gap-y-10 my-40 px-20">
 			<Span class="col-span-2 flex items-center">
-				<label class="text-sm font-semibold text-black">Dateiname</label>
+				<Label>Dateiname</Label>
 			</Span>
 			<Span class="col-span-6">
 				<Input v-model="form.original_name" disabled />
 			</Span>
 
 			<Span class="col-span-2 flex items-center">
-				<label class="text-sm font-semibold text-black">Bildlegende</label>
+				<Label>Bildlegende</Label>
 			</Span>
 			<Span class="col-span-6">
 				<Input v-model="form.caption" />
 			</Span>
 
 			<Span class="col-span-2 flex items-center">
-				<label class="text-sm font-semibold text-black">Alt-Text</label>
+				<Label>Alt-Text</Label>
 			</Span>
 			<Span class="col-span-6">
 				<Input v-model="form.alt" />
 			</Span>
 
 			<Span class="col-span-2 flex items-center">
-				<label class="text-sm font-semibold text-black">Credit</label>
+				<Label>Credit</Label>
 			</Span>
 			<Span class="col-span-6">
 				<Input v-model="form.credits" />
