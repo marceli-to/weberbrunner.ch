@@ -37,7 +37,7 @@ const emit = defineEmits(['close'])
 		<slot />
 
 		<!-- Footer -->
-		<div v-if="$slots.footer" class="mt-24">
+		<div v-if="$slots.footer" class="mt-20">
 			<slot name="footer" />
 		</div>
 

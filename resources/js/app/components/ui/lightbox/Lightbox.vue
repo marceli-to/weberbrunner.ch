@@ -71,7 +71,7 @@ function onBackdropClick(e) {
 				<slot />
 
 				<!-- Footer -->
-				<div v-if="$slots.footer" class="mt-24 px-20">
+				<div v-if="$slots.footer" class="mt-20 px-20">
 					<slot name="footer" />
 				</div>
 

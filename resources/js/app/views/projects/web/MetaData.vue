@@ -71,7 +71,7 @@ function goBack() {
         <Card>
           <form @submit.prevent="saveDescription">
             <Textarea v-model="project.meta_description" />
-            <div class="flex gap-20 mt-24">
+            <div class="flex gap-20 mt-10">
               <Button type="submit" class="flex justify-center">Speichern</Button>
             </div>
           </form>
