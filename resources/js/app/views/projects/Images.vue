@@ -10,7 +10,7 @@ import { useToast } from '@/composables/useToast'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Card from '@/components/ui/Card.vue'
+import SectionTitle from '@/components/ui/SectionTitle.vue'
 import Arrow from '@/components/icons/Arrow.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import NavBar from '@/components/ui/nav-bar/NavBar.vue'
@@ -139,37 +139,31 @@ async function handleSubmit() {
 	<FormContainer v-if="project" @submit="handleSubmit">
 		<Grid class="mb-20">
 			<Span class="col-span-8 col-start-2">
-				<Card has-header>
-					<Grid :cols="6">
-						<Span class="col-span-8 font-semibold text-md min-h-50 flex items-center border-b-thin">
-							<span>Bilder</span>
-						</Span>
-					</Grid>
+				<SectionTitle>Bilder</SectionTitle>
 
-					<draggable
-						v-if="mediaStore.items.length"
-						v-model="dragItems"
-						item-key="uuid"
-						handle=".drag-handle"
-						class="grid grid-cols-2 lg:grid-cols-4 gap-20 pt-20"
-						ghost-class="opacity-30"
-						animation="150"
-					>
-						<template #item="{ element }">
-							<MediaCard
-								:item="element"
-								:draggable="true"
-								:deletable="true"
-								:show-filename="true"
-								@delete="onDelete" />
-						</template>
-					</draggable>
+				<draggable
+					v-if="mediaStore.items.length"
+					v-model="dragItems"
+					item-key="uuid"
+					handle=".drag-handle"
+					class="grid grid-cols-2 lg:grid-cols-4 gap-20 pt-20"
+					ghost-class="opacity-30"
+					animation="150"
+				>
+					<template #item="{ element }">
+						<MediaCard
+							:item="element"
+							:draggable="true"
+							:deletable="true"
+							:show-filename="true"
+							@delete="onDelete" />
+					</template>
+				</draggable>
 
-					<div class="pt-20">
-						<MediaUploader @uploaded="onUploaded" />
-					</div>
+				<div class="pt-20">
+					<MediaUploader @uploaded="onUploaded" />
+				</div>
 
-				</Card>
 			</Span>
 		</Grid>
 
