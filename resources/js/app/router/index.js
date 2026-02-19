@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // demo
-import Components from '@/views/Components.vue'
+import Styleguide from '@/views/dev/Styleguide.vue'
 import BlogIndex from '@/views/blog/Index.vue'
 import BlogForm from '@/views/blog/Form.vue'
 // -- demo
@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/dashboard/components',
     name: 'components',
-    component: Components,
+    component: Styleguide,
     meta: { title: 'Components' },
   },
   {

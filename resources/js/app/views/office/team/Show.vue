@@ -7,9 +7,9 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
-import TeamImage from './components/Image.vue'
-import Profile from './components/Profile.vue'
-import Bio from './components/Bio.vue'
+import TeamImage from './components/TeamImage.vue'
+import TeamProfile from './components/TeamProfile.vue'
+import TeamBio from './components/TeamBio.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -51,8 +51,8 @@ load(fetch)
 		</Span>
 
 		<Span class="col-span-6 flex flex-col gap-20">
-			<Profile :member="member" @updated="fetch" />
-			<Bio :member="member" @updated="fetch" />
+			<TeamProfile :member="member" @updated="fetch" />
+			<TeamBio :member="member" @updated="fetch" />
 		</Span>
 	</Grid>
 </template>

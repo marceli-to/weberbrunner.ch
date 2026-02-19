@@ -7,7 +7,7 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Arrow from '@/components/icons/Arrow.vue'
-import Images from './components/Images.vue'
+import ProjectImages from './components/ProjectImages.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -44,7 +44,7 @@ load(fetch)
 	<!-- Content -->
 	<Grid v-if="project" class="mb-20">
 		<Span class="col-span-8 col-start-2">
-			<Images :project="project" @updated="fetch" />
+			<ProjectImages :project="project" @updated="fetch" />
 		</Span>
 	</Grid>
 </template>
