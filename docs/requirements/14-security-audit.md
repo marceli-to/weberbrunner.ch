@@ -88,7 +88,7 @@ Login throttle is 60 seconds after 5 failed attempts. Consider increasing to 300
 - Upload and delete media
 - View the complete activity log
 
-**Affected controllers (all 16):**
+**Affected controllers (all 15):**
 
 | Controller | Methods without authorization |
 |------------|------------------------------|
@@ -103,7 +103,6 @@ Login throttle is 60 seconds after 5 failed attempts. Consider increasing to 300
 | AwardController | index, store, show, update, destroy, restore, reorder |
 | JuryController | index, store, show, update, destroy, restore, reorder |
 | NetworkEntryController | index, store, show, update, destroy, restore, reorder |
-| PostController | index, store, show, update, destroy, reorder |
 | MediaController | upload, update, destroy, reorder, teaser |
 | ProjectAttributeController | index, store, update, destroy, reorder |
 | UserController | index, store, show, update, destroy, restore |
@@ -226,10 +225,6 @@ $query->where('title', 'like', '%' . request('search') . '%')
 - **0 instances** of `v-html` across 97 Vue components
 - All output uses safe `{{ }}` Blade escaping or Vue's auto-escaped `{{ }}`
 
-#### NOTE: TipTap rich text editor
-
-The blog form uses TipTap for rich text editing. TipTap output is HTML stored in the `content` field. When this content is rendered on the public site, it must be sanitized. Verify the rendering path does not use `{!! !!}` or `v-html` with unsanitized content.
-
 ### Cross-Site Request Forgery (CSRF)
 
 - [x] Verify CSRF middleware on web routes
@@ -252,17 +247,7 @@ API routes use `['web', 'auth']` middleware, which includes Laravel's `ValidateC
 
 #### HIGH: Reorder endpoints have NO validation
 
-13 out of 14 reorder controller methods pass `request('items')` directly to action classes without any validation:
-
-```php
-// Example: PostController::reorder()
-public function reorder()
-{
-	(new ReorderPostAction)->execute(request('items'));
-}
-```
-
-Only `MediaController::reorder()` uses a Form Request (`ReorderMediaRequest`), but even that lacks range validation on `sort_order`.
+12 out of 13 reorder controller methods pass `request('items')` directly to action classes without any validation. Only `MediaController::reorder()` uses a Form Request (`ReorderMediaRequest`), but even that lacks range validation on `sort_order`.
 
 **Vulnerabilities:**
 - No UUID validation — arbitrary IDs could be submitted
@@ -286,7 +271,6 @@ public function rules(): array
 
 Several Form Requests accept `nullable|string` without max length:
 - `StoreProjectRequest` / `UpdateProjectRequest`: `description` field
-- `StorePostRequest` / `UpdatePostRequest`: `content` field
 
 **Fix:** Add `max:65000` (or appropriate limit) to prevent oversized payloads.
 
@@ -614,7 +598,7 @@ These items require server-level verification:
 
 ### Reorder Endpoints
 
-- **No validation:** 13 of 14 reorder endpoints accept raw `request('items')` without validation (HIGH — see Section 3)
+- **No validation:** 12 of 13 reorder endpoints accept raw `request('items')` without validation (HIGH — see Section 3)
 - **No ownership checks:** Items from any entity could be reordered
 - **No range validation:** sort_order accepts any integer value
 
@@ -626,14 +610,14 @@ These items require server-level verification:
 
 | # | Severity | Area | Finding |
 |---|----------|------|---------|
-| 1 | CRITICAL | Authorization | Policies never enforced — all 16 controllers lack authorization |
+| 1 | CRITICAL | Authorization | Policies never enforced — all 15 controllers lack authorization |
 | 2 | CRITICAL | Authorization | `role` in User `$fillable` — any user can escalate to admin |
 | 3 | CRITICAL | File Upload | Glide has no URL signing — path traversal + DoS risk |
 | 4 | CRITICAL | Headers | No security headers (CSP, X-Frame-Options, HSTS, etc.) |
 | 5 | CRITICAL | Infra | `APP_DEBUG=true` in production exposes sensitive data |
 | 6 | CRITICAL | Session | `SESSION_SECURE_COOKIE` not set — MITM risk |
 | 7 | HIGH | Authorization | All 30+ Form Requests return `authorize() => true` |
-| 8 | HIGH | Validation | 13 reorder endpoints have zero input validation |
+| 8 | HIGH | Validation | 12 reorder endpoints have zero input validation |
 | 9 | HIGH | File Upload | No server-side MIME content verification |
 | 10 | HIGH | Headers | CORS allows all origins/methods/headers |
 | 11 | HIGH | Infra | No HTTPS enforcement |
@@ -666,7 +650,7 @@ These items require server-level verification:
 
 ### Phase 1 — CRITICAL (fix before any production use)
 
-1. **Add authorization to all 16 API controllers** — add `$this->authorize()` calls using existing policies
+1. **Add authorization to all 15 API controllers** — add `$this->authorize()` calls using existing policies
 2. **Remove `role` from User `$fillable`** — prevent privilege escalation
 3. **Add Glide URL signing** — prevent path traversal and parameter tampering
 4. **Create SecurityHeaders middleware** — CSP, X-Frame-Options, HSTS, etc.
@@ -674,7 +658,7 @@ These items require server-level verification:
 
 ### Phase 2 — HIGH (fix before production launch)
 
-6. **Add Form Request validation to all 13 reorder endpoints**
+6. **Add Form Request validation to all 12 reorder endpoints**
 7. **Implement Form Request authorize() methods** — use policies as second layer
 8. **Restrict CORS to application domain**
 9. **Enforce HTTPS** — redirect middleware or .htaccess rule

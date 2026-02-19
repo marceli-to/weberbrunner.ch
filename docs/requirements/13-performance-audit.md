@@ -23,7 +23,7 @@ Full performance audit for the weberbrunner.ch application. Covers backend (Lara
 
 #### CRITICAL: Missing composite indexes on polymorphic columns
 
-The `media` table uses `morphs('mediable')` which creates `mediable_type` and `mediable_id` columns but **no composite index**. Every polymorphic query (loading media for projects, posts, team members, network entries) does a full table scan.
+The `media` table uses `morphs('mediable')` which creates `mediable_type` and `mediable_id` columns but **no composite index**. Every polymorphic query (loading media for projects, team members, network entries) does a full table scan.
 
 Similarly, the `activity_log` table is missing composite indexes on:
 - `subject_type` + `subject_id`
@@ -38,17 +38,17 @@ All 11 soft-deletable tables lack an index on `deleted_at`. Since every query on
 
 #### HIGH: Missing indexes on `sort_order` columns
 
-14 tables have a `sort_order` column used in `ORDER BY` clauses, but none are indexed:
+13 tables have a `sort_order` column used in `ORDER BY` clauses, but none are indexed:
 
-- `categories`, `statuses`, `projects`, `project_attributes`, `media`, `posts`
+- `categories`, `statuses`, `projects`, `project_attributes`, `media`
 - `locations`, `team_members`, `team_member_bios`, `job_listings`
 - `talks`, `awards`, `juries`, `network_entries`
 
 #### HIGH: Missing indexes on `publish` columns
 
-8 tables have a `publish` boolean used for filtering, unindexed:
+7 tables have a `publish` boolean used for filtering, unindexed:
 
-- `projects`, `posts`, `team_members`, `job_listings`
+- `projects`, `team_members`, `job_listings`
 - `talks`, `awards`, `juries`, `network_entries`
 
 #### MEDIUM: Missing index on `users.role`
@@ -92,7 +92,7 @@ public function up(): void
 	// HIGH: sort_order indexes
 	$sortables = [
 		'categories', 'statuses', 'projects', 'project_attributes',
-		'media', 'posts', 'locations', 'team_members', 'team_member_bios',
+		'media', 'locations', 'team_members', 'team_member_bios',
 		'job_listings', 'talks', 'awards', 'juries', 'network_entries',
 	];
 	foreach ($sortables as $t) {
@@ -101,7 +101,7 @@ public function up(): void
 
 	// HIGH: publish indexes
 	$publishables = [
-		'projects', 'posts', 'team_members', 'job_listings',
+		'projects', 'team_members', 'job_listings',
 		'talks', 'awards', 'juries', 'network_entries',
 	];
 	foreach ($publishables as $t) {
@@ -125,14 +125,6 @@ public function up(): void
 - [x] Review action classes for redundant queries
 
 ### Findings
-
-#### CRITICAL: PostController missing eager loading
-
-`PostController@index` loads posts without eager-loading the `media` relationship. The `PostResource` uses `$this->whenLoaded('media')`, so when media is not eager-loaded, it's silently skipped — but `PostController@update` returns a `PostResource` without loading media either, causing inconsistent responses.
-
-**Files to fix:**
-- `app/Http/Controllers/Api/PostController.php` — `index()`: add `->with('media')`
-- `app/Http/Controllers/Api/PostController.php` — `update()`: add `->load('media')` after action
 
 #### HIGH: No pagination on Projects and Users
 
@@ -269,18 +261,16 @@ All dashboard routes use **static imports**:
 
 ```javascript
 // Current: resources/js/app/router/index.js
-import BlogForm from '@/views/blog/Form.vue'
-import BlogIndex from '@/views/blog/Index.vue'
-import Components from '@/views/Components.vue'
+import ProjectsIndex from '@/views/projects/Index.vue'
+import ProjectsShow from '@/views/projects/Show.vue'
 ```
 
-This means TipTap (~120 KB), Uppy (~80 KB), and vuedraggable are bundled into a single JS file and loaded on **every** dashboard page, even when not needed.
+This means Uppy (~80 KB) and vuedraggable are bundled into a single JS file and loaded on **every** dashboard page, even when not needed.
 
 **Fix — convert to lazy loading:**
 ```javascript
-const BlogForm = () => import('@/views/blog/Form.vue')
-const BlogIndex = () => import('@/views/blog/Index.vue')
-const Components = () => import('@/views/Components.vue')
+const ProjectsIndex = () => import('@/views/projects/Index.vue')
+const ProjectsShow = () => import('@/views/projects/Show.vue')
 ```
 
 **Estimated savings:** 35-45% reduction in initial bundle size (~150-200 KB less on first load).
@@ -315,7 +305,6 @@ Tailwind 4 content sources are properly configured for purging unused classes:
 | Package | Size (approx.) | Used on |
 |---------|---------------|---------|
 | Vue 3 | ~35 KB | All dashboard |
-| TipTap (4 packages) | ~120 KB | Blog form only |
 | Uppy (5 packages) | ~80 KB | Media upload only |
 | Swiper | ~60 KB | Public site only |
 | Vue Router | ~15 KB | All dashboard |
@@ -424,20 +413,19 @@ php artisan event:cache     # Cache event/listener mapping
 | 3 | CRITICAL | Frontend | No route-level code splitting — TipTap + Uppy in main bundle |
 | 4 | CRITICAL | Infra | `APP_DEBUG=true` in production |
 | 5 | HIGH | Database | Missing indexes on `deleted_at` (11 tables) |
-| 6 | HIGH | Database | Missing indexes on `sort_order` (14 tables) |
-| 7 | HIGH | Database | Missing indexes on `publish` (8 tables) |
-| 8 | HIGH | Backend | PostController missing eager loading on `media` |
-| 9 | HIGH | Backend | No pagination on ProjectController and UserController |
-| 10 | HIGH | Backend | Cache, session, queue all using database driver |
-| 11 | HIGH | Frontend | Vendor CSS (Uppy, TipTap) loaded unconditionally |
-| 12 | HIGH | Infra | `LOG_LEVEL=debug` in production |
-| 13 | MEDIUM | Database | Missing index on `users.role` |
-| 14 | MEDIUM | Backend | No data caching for lookup tables |
-| 15 | MEDIUM | Backend | No orphaned temp file cleanup |
-| 16 | MEDIUM | Backend | No image optimization on upload |
-| 17 | MEDIUM | Frontend | 30 icon components statically imported |
-| 18 | LOW | Backend | AwardResource deep nesting (Project with 5 relations) |
-| 19 | LOW | Backend | Per-resource policy checks in API resources |
+| 6 | HIGH | Database | Missing indexes on `sort_order` (13 tables) |
+| 7 | HIGH | Database | Missing indexes on `publish` (7 tables) |
+| 8 | HIGH | Backend | No pagination on ProjectController and UserController |
+| 9 | HIGH | Backend | Cache, session, queue all using database driver |
+| 10 | HIGH | Frontend | Vendor CSS (Uppy, TipTap) loaded unconditionally |
+| 11 | HIGH | Infra | `LOG_LEVEL=debug` in production |
+| 12 | MEDIUM | Database | Missing index on `users.role` |
+| 13 | MEDIUM | Backend | No data caching for lookup tables |
+| 14 | MEDIUM | Backend | No orphaned temp file cleanup |
+| 15 | MEDIUM | Backend | No image optimization on upload |
+| 16 | MEDIUM | Frontend | 30 icon components statically imported |
+| 17 | LOW | Backend | AwardResource deep nesting (Project with 5 relations) |
+| 18 | LOW | Backend | Per-resource policy checks in API resources |
 
 ### What's Working Well
 
@@ -455,15 +443,14 @@ php artisan event:cache     # Cache event/listener mapping
 ## Priority Implementation Order
 
 1. **Database indexes migration** — single migration, biggest impact, zero risk
-2. **PostController eager loading fix** — 2 lines of code
-3. **ProjectController + UserController pagination** — 2 lines of code
-4. **Route-level code splitting** — convert static imports to lazy imports in router
-5. **Move vendor CSS into lazy-loaded components** — remove from global app.css
-6. **Production .env configuration** — Redis for cache/session/queue, debug off
-7. **Artisan cache commands in deploy script** — config:cache, route:cache, view:cache
-8. **Lookup table caching** — Cache::remember for locations, categories, statuses
-9. **Temp file cleanup command** — scheduled artisan command
-10. **Lighthouse audit** — manual, after above fixes are deployed
+2. **ProjectController + UserController pagination** — 2 lines of code
+3. **Route-level code splitting** — convert static imports to lazy imports in router
+4. **Move vendor CSS into lazy-loaded components** — remove from global app.css
+5. **Production .env configuration** — Redis for cache/session/queue, debug off
+6. **Artisan cache commands in deploy script** — config:cache, route:cache, view:cache
+7. **Lookup table caching** — Cache::remember for locations, categories, statuses
+8. **Temp file cleanup command** — scheduled artisan command
+9. **Lighthouse audit** — manual, after above fixes are deployed
 
 ---
 
