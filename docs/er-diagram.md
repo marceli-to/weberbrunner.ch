@@ -114,17 +114,6 @@ erDiagram
         timestamp updated_at
     }
 
-    POST {
-        int id PK
-        string title
-        string slug UK
-        text content
-        boolean publish
-        int sort_order
-        timestamp created_at
-        timestamp updated_at
-    }
-
     TEAM_MEMBER {
         int id PK
         uuid uuid UK
@@ -247,8 +236,6 @@ erDiagram
     PROJECT ||--o{ MEDIA : "morph"
     CATEGORY ||--o{ CATEGORY_PROJECT : has
     STATUS ||--o{ PROJECT_STATUS : has
-
-    POST ||--o{ MEDIA : "morph"
 
     TEAM_MEMBER ||--o{ TEAM_MEMBER_BIO : has
     TEAM_MEMBER ||--o{ MEDIA : "morph"
