@@ -9,29 +9,35 @@ defineProps({
 	showFilename: { type: Boolean, default: false },
 	editable: { type: Boolean, default: false },
 	variant: { type: String, default: 'light' },
+	compact: { type: Boolean, default: false },
 })
 
 defineEmits(['delete', 'edit'])
 </script>
 
 <template>
-	<div class="border-thin bg-white" :class="variant === 'dark' ? 'border-black' : 'border-silver'">
+	<div 
+    class="border-thin bg-white" 
+    :class="variant === 'dark' ? 'border-black' : 'border-silver'">
 
-		<div class="relative px-40 py-60 flex items-center justify-center aspect-square">
+		<div class="relative aspect-square overflow-hidden">
 
-      <template v-if="draggable || deletable">
-        <div class="absolute top-20 left-20 right-20 flex items-center justify-between">
-          <button v-if="draggable" type="button" class="drag-handle cursor-grab">
-            <Burger variant="sm" class="w-18 h-auto" />
-          </button>
-          <span v-else />
-          <button v-if="deletable" type="button" class="cursor-pointer" @click="$emit('delete', item)">
-            <Cross class="w-12 h-auto" />
-          </button>
-        </div>
-      </template>
+			<template v-if="draggable || deletable">
+				<div class="absolute z-10 top-20 left-20 right-20 flex items-center justify-between">
+					<button v-if="draggable" type="button" class="drag-handle cursor-grab">
+						<Burger variant="sm" class="w-18 h-auto" />
+					</button>
+					<span v-else />
+					<button v-if="deletable" type="button" class="cursor-pointer" @click="$emit('delete', item)">
+						<Cross class="w-12 h-auto" />
+					</button>
+				</div>
+			</template>
 
-			<figure :class="{ 'cursor-pointer': editable }" @click="editable && $emit('edit', item)">
+			<figure 
+        class="m-0 w-full h-full flex items-center justify-center" 
+        :class="[compact ? 'px-20 py-30' : 'px-30 py-60', editable ? 'cursor-pointer' : '']" 
+        @click="editable && $emit('edit', item)">
 				<img
 					:src="item.preview_url"
 					:alt="item.alt || ''"
