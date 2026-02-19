@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjectMeta } from '@/composables/useProjectMeta'
+import { useCollapsed } from '@/composables/useCollapsed'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -11,7 +12,7 @@ import Card from '@/components/ui/Card.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import Drawer from '@/components/ui/drawer/Drawer.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
-import PlusCircle from '@/components/icons/PlusCircle.vue'
+import AddButton from '@/components/media/AddButton.vue'
 import Textarea from '@/components/ui/form/Textarea.vue'
 import RadioIcon from '@/components/icons/Radio.vue'
 import Button from '@/components/ui/form/Button.vue'
@@ -22,9 +23,8 @@ const {
 	project, ogImage, selectedOgImage, ogDrawerOpen,
 	saveDescription, saveOgImage, removeOgImage,
 } = useProjectMeta()
-const collapsedMeta = ref(false)
-const collapsedOg = ref(false)
-const ogDrawerView = ref('list')
+const { collapsed, toggle } = useCollapsed('project-meta')
+const drawerView = ref('list')
 
 function goBack() {
 	router.push({ name: 'projects.show', params: { id: route.params.id } })
@@ -57,17 +57,17 @@ function goBack() {
 
     </Grid>
 
-    <!-- Content -->
+    <!-- Meta Description -->
     <Grid class="mb-20">
 
       <Span class="col-span-8 col-start-2">
         <CollapsibleHeader
           :title="'Meta Description'"
-          :collapsed="collapsedMeta"
-          @toggle="collapsedMeta = !collapsedMeta" />
+          :collapsed="collapsed.has('meta')"
+          @toggle="toggle('meta')" />
       </Span>
 
-      <Span v-show="!collapsedMeta" class="col-span-8 col-start-2">
+      <Span v-show="!collapsed.has('meta')" class="col-span-8 col-start-2">
         <Card>
           <form @submit.prevent="saveDescription">
             <Textarea v-model="project.meta_description" />
@@ -80,44 +80,36 @@ function goBack() {
 
     </Grid>
 
+    <!-- Open Graph Image -->
     <Grid class="mb-20">
 
       <Span class="col-span-8 col-start-2">
         <CollapsibleHeader
           :title="'Open Graph Image'"
-          :collapsed="collapsedOg"
-          @toggle="collapsedOg = !collapsedOg" />
+          :collapsed="collapsed.has('og')"
+          @toggle="toggle('og')" />
       </Span>
 
-      <Span v-show="!collapsedOg" class="col-span-2 col-start-2">
+      <Span v-show="!collapsed.has('og')" class="col-span-2 col-start-2">
         <div v-if="ogImage">
           <MediaCard :item="ogImage" deletable editable @delete="removeOgImage" @edit="ogDrawerOpen = true" />
         </div>
-        <button
-          v-else
-          type="button"
-          class="border-thin border-silver bg-white flex justify-center p-10 w-full aspect-square cursor-pointer relative"
-          @click="ogDrawerOpen = true">
-          <span class="font-semibold block">Hinzufügen</span>
-          <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <PlusCircle class="w-25" />
-          </span>
-        </button>
+        <AddButton v-else @click="ogDrawerOpen = true" />
       </Span>
 
     </Grid>
 
-    <Drawer :open="ogDrawerOpen" @close="ogDrawerOpen = false">
-
-      <Grid :cols="6" class="mt-140">
-        <Span class="col-span-4 col-start-2 flex flex-col gap-y-10">
-          <Button :variant="ogDrawerView === 'list' ? 'primary' : 'ghost'" class="px-10" @click="ogDrawerView = 'list'">Text / Bilder</Button>
-          <Button :variant="ogDrawerView === 'grid' ? 'primary' : 'ghost'" class="px-10" @click="ogDrawerView = 'grid'">Bilder</Button>
-        </Span>
-      </Grid>
+    <Drawer
+      :open="ogDrawerOpen"
+      :views="[{ label: 'Text / Bilder', value: 'list' }, { label: 'Bilder', value: 'grid' }]"
+      v-model:view="drawerView"
+      submit-label="Übernehmen"
+      cancel-label="Abbrechen"
+      @close="ogDrawerOpen = false"
+      @submit="saveOgImage">
 
       <!-- List view -->
-      <Grid v-if="ogDrawerView === 'list'" :cols="6" class="mt-40">
+      <Grid v-if="drawerView === 'list'" :cols="6" class="mt-40">
         <Span class="col-span-4 col-start-2" v-for="item in project.media" :key="item.uuid">
           <Grid :cols="4">
             <Span class="col-span-3">
@@ -139,7 +131,7 @@ function goBack() {
       </Grid>
 
       <!-- Grid view -->
-      <Grid v-if="ogDrawerView === 'grid'" :cols="12" class="mt-40">
+      <Grid v-if="drawerView === 'grid'" :cols="12" class="mt-40">
         <Span class="col-span-8 col-start-3">
           <Grid :cols="3">
             <button
@@ -160,15 +152,7 @@ function goBack() {
         </Span>
       </Grid>
 
-      <Grid :cols="6" class="mt-40">
-        <Span class="col-span-4 col-start-2 flex flex-col gap-y-10">
-          <Button variant="ghost" class="px-10" @click="saveOgImage">Übernehmen</Button>
-          <Button variant="ghost" class="px-10" @click="ogDrawerOpen = false">Abbrechen</Button>
-        </Span>
-      </Grid>
-
     </Drawer>
-
 
 	</template>
 
