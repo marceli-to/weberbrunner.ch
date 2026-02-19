@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-	<Card has-header>
+	<Card header>
 		<Grid :cols="6">
 			<Span class="col-span-2 font-semibold text-md min-h-50 flex items-center border-b-thin">
 				Stammdaten

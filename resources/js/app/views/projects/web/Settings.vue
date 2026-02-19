@@ -69,9 +69,9 @@ function goBack() {
 
 		<!-- Statuses -->
 		<Span class="col-span-4 col-start-2">
-			<Card has-header>
+			<Card header>
 				<CardRow header>
-					Status (Website)
+					Status
 				</CardRow>
 				<CardRow
 					v-for="status in statuses"
@@ -86,7 +86,7 @@ function goBack() {
 
 		<!-- Categories -->
 		<Span class="col-span-4">
-			<Card has-header>
+			<Card header>
 				<CardRow header>
 					Kategorie
 				</CardRow>

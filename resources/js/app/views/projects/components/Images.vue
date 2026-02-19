@@ -18,7 +18,7 @@ function editImages() {
 </script>
 
 <template>
-	<Card has-header>
+	<Card header>
 		<Grid :cols="6">
 			<Span class="col-span-8 font-semibold text-md min-h-50 flex items-center justify-between border-b-thin">
 				<span>Bilder</span>

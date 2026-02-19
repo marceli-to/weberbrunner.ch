@@ -60,7 +60,7 @@ async function save() {
 
 <template>
 
-	<Card has-header>
+	<Card header>
 
 		<!-- Display mode -->
 		<template v-if="!editing">
