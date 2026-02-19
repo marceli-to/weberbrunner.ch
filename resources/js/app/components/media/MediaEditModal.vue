@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
+import Grid from '@/components/ui/grid/Grid.vue'
+import Span from '@/components/ui/grid/Span.vue'
 import Input from '@/components/ui/form/Input.vue'
 import Button from '@/components/ui/form/Button.vue'
 
@@ -44,35 +46,55 @@ function handleSave() {
 	<Lightbox :open="open" closeable @close="emit('close')">
 
 		<!-- Image preview -->
-		<div class="flex items-center justify-center mb-20">
+		<div class="flex items-center justify-center pt-20 py-60 border-b-thin border-black">
 			<img
 				v-if="media"
 				:src="media.preview_url"
 				:alt="media.alt || ''"
-				class="max-h-[60vh] max-w-full object-contain"
+				class="max-h-[30vh] max-w-full object-contain"
 			/>
 		</div>
 
 		<!-- Form fields -->
-		<div class="grid grid-cols-[auto_1fr] gap-x-20 gap-y-12 items-center mb-20">
-			<label class="text-sm font-semibold text-black">Dateiname</label>
-			<Input v-model="form.original_name" disabled />
+		<Grid :cols="8" class="gap-y-10 my-40">
+			<Span class="col-span-2 flex items-center">
+				<label class="text-sm font-semibold text-black">Dateiname</label>
+			</Span>
+			<Span class="col-span-6">
+				<Input v-model="form.original_name" disabled />
+			</Span>
 
-			<label class="text-sm font-semibold text-black">Bildlegende</label>
-			<Input v-model="form.caption" />
+			<Span class="col-span-2 flex items-center">
+				<label class="text-sm font-semibold text-black">Bildlegende</label>
+			</Span>
+			<Span class="col-span-6">
+				<Input v-model="form.caption" />
+			</Span>
 
-			<label class="text-sm font-semibold text-black">Alt-Text</label>
-			<Input v-model="form.alt" />
+			<Span class="col-span-2 flex items-center">
+				<label class="text-sm font-semibold text-black">Alt-Text</label>
+			</Span>
+			<Span class="col-span-6">
+				<Input v-model="form.alt" />
+			</Span>
 
-			<label class="text-sm font-semibold text-black">Credit</label>
-			<Input v-model="form.credits" />
-		</div>
+			<Span class="col-span-2 flex items-center">
+				<label class="text-sm font-semibold text-black">Credit</label>
+			</Span>
+			<Span class="col-span-6">
+				<Input v-model="form.credits" />
+			</Span>
+		</Grid>
 
 		<!-- Actions -->
-		<div class="grid grid-cols-2 gap-20">
-			<Button type="button" @click="handleSave">Speichern</Button>
-			<Button type="button" @click="emit('close')">Abbrechen</Button>
-		</div>
+    <Grid :cols="8" class="gap-y-10">
+      <Span class="col-span-6 col-start-3">
+        <Button type="button" @click="handleSave">Speichern</Button>
+      </Span>
+      <Span class="col-span-6 col-start-3">
+        <Button type="button" @click="emit('close')">Abbrechen</Button>
+      </Span>
+    </Grid>
 
 	</Lightbox>
 </template>

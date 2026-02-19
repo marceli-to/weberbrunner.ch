@@ -23,6 +23,7 @@ import FormContainer from '@/components/ui/form/FormContainer.vue'
 import ActionBar from '@/components/ui/form/ActionBar.vue'
 import Button from '@/components/ui/form/Button.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
+import MediaEditModal from '@/components/media/MediaEditModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -32,6 +33,7 @@ const { confirm } = useConfirm()
 const toast = useToast()
 
 const project = ref(null)
+const editingMedia = ref(null)
 
 const dragItems = computed({
 	get: () => mediaStore.items,
@@ -62,6 +64,12 @@ async function onDelete(item) {
 	})
 	if (!ok) return
 	await mediaStore.deleteItem(item.uuid)
+}
+
+async function onEditSave({ uuid, data }) {
+	await mediaStore.updateItem(uuid, data)
+	editingMedia.value = null
+	toast.success('Bild gespeichert')
 }
 
 async function handleSubmit() {
@@ -155,9 +163,11 @@ async function handleSubmit() {
 							:item="element"
 							:draggable="true"
 							:deletable="true"
+							:editable="true"
 							:show-filename="true"
+							variant="dark"
 							@delete="onDelete"
-              :variant="'dark'" />
+							@edit="editingMedia = $event" />
 					</template>
 				</draggable>
 
@@ -170,5 +180,10 @@ async function handleSubmit() {
 
 		<ActionBar @cancel="goBack" />
 	</FormContainer>
+
+	<MediaEditModal
+		:media="editingMedia"
+		@save="onEditSave"
+		@close="editingMedia = null" />
 
 </template>

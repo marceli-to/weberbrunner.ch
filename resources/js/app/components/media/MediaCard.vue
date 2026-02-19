@@ -7,10 +7,11 @@ defineProps({
 	deletable: { type: Boolean, default: false },
 	draggable: { type: Boolean, default: false },
 	showFilename: { type: Boolean, default: false },
+	editable: { type: Boolean, default: false },
 	variant: { type: String, default: 'light' },
 })
 
-defineEmits(['delete'])
+defineEmits(['delete', 'edit'])
 </script>
 
 <template>
@@ -30,14 +31,19 @@ defineEmits(['delete'])
         </div>
       </template>
 
-			<img
-				:src="item.preview_url"
-				:alt="item.alt || ''"
-				class="block max-w-full max-h-full object-contain" />
-
+			<figure :class="{ 'cursor-pointer': editable }" @click="editable && $emit('edit', item)">
+				<img
+					:src="item.preview_url"
+					:alt="item.alt || ''"
+					class="block max-w-full max-h-full object-contain" />
+			</figure>
 		</div>
 
-		<div v-if="showFilename" class="text-center py-5 px-20 text-sm border-t-thin overflow-hidden text-ellipsis whitespace-nowrap" :class="variant === 'dark' ? 'border-t-black' : 'border-t-silver'">
+		<div
+			v-if="showFilename"
+			class="text-center py-5 px-20 text-sm border-t-thin overflow-hidden text-ellipsis whitespace-nowrap"
+			:class="[variant === 'dark' ? 'border-t-black' : 'border-t-silver', editable ? 'cursor-pointer' : '']"
+			@click="editable && $emit('edit', item)">
 			{{ item.original_name }}
 		</div>
     
