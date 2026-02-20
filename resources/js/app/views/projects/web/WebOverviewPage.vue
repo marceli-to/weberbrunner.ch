@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import draggable from 'vuedraggable'
-import { useRouter, useRoute } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
@@ -12,13 +11,10 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
-import PencilCircle from '@/components/icons/PencilCircle.vue'
 import ProjectBlocks from '@/views/projects/components/blocks/ProjectBlocks.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 
-const route = useRoute()
-const router = useRouter()
 const { project, fetch } = useProject()
 const { collapsed, toggle } = useCollapsed('web-layout')
 const { confirm } = useConfirm()
@@ -72,9 +68,6 @@ async function reorderSliderImages() {
 	await fetch()
 }
 
-function editText() {
-	router.push({ name: 'projects.text.edit', params: { id: route.params.id } })
-}
 </script>
 
 <template>
@@ -130,10 +123,6 @@ function editText() {
 					<div v-show="!collapsed.has('description')" class="bg-white px-20 pb-20">
 
 						<div class="text-md font-semibold max-w-4xl py-10" v-html="project.description" />
-
-						<button class="mt-10" @click="editText">
-							<PencilCircle />
-						</button>
 
 					</div>
 
