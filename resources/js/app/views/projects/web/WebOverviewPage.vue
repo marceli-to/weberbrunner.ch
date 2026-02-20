@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import draggable from 'vuedraggable'
 import { useProject } from '@/composables/useProject'
 import { useCollapsed } from '@/composables/useCollapsed'
-import { useConfirm } from '@/composables/useConfirm'
 import projectBlocksApi from '@/api/projectBlocks'
 import mediaApi from '@/api/media'
 import WebLayout from '@/views/projects/components/WebLayout.vue'
@@ -20,7 +19,6 @@ import { useToast } from '@/composables/useToast'
 const { project, fetch } = useProject()
 const toast = useToast()
 const { collapsed, toggle } = useCollapsed('web-layout')
-const { confirm } = useConfirm()
 
 const editingMedia = ref(null)
 const sliderDrawerOpen = ref(false)
@@ -49,12 +47,6 @@ async function onSliderSubmit() {
 }
 
 async function removeSliderImage(item) {
-	const ok = await confirm({
-		message: 'Möchtest Du dieses Bild wirklich entfernen?',
-		confirmLabel: 'Entfernen',
-		variant: 'danger',
-	})
-	if (!ok) return
 	await projectBlocksApi.detachMedia(project.value.uuid, fixedSliderBlock.value.uuid, item.uuid)
 	await fetch()
 }

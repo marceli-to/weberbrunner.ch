@@ -107,12 +107,6 @@ async function selectMedia(block, mediaUuids) {
 }
 
 async function removeMedia(block, mediaUuid) {
-	const ok = await confirm({
-		message: 'Möchtest Du dieses Bild wirklich entfernen?',
-		confirmLabel: 'Entfernen',
-		variant: 'danger',
-	})
-	if (!ok) return
 	await projectBlocksApi.detachMedia(props.project.uuid, block.uuid, mediaUuid)
 	emit('updated')
 }
