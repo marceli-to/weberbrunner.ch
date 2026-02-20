@@ -12,9 +12,9 @@ const router = useRouter()
 
 const items = [
 	{ label: 'Web', name: 'projects.layout', icon: Window },
-	{ label: 'Rohdaten (ZIP)', name: null, icon: Download },
-	{ label: 'Referenzblatt (PDF)', name: null, icon: List },
-	{ label: 'Publiziert (Website)', name: null, icon: Eye },
+	{ label: 'Rohdaten', name: null, icon: Download },
+	{ label: 'Referenzblatt', name: null, icon: List },
+	{ label: 'Publiziert', name: null, icon: Eye },
 ]
 
 function navigate(name) {

@@ -31,7 +31,8 @@ function editImages() {
 			<MediaCard
 				v-for="item in project.media"
 				:key="item.uuid"
-				:item="item" />
+				:item="item"
+        compact />
 		</div>
 	</Card>
 </template>

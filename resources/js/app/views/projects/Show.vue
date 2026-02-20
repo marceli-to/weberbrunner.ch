@@ -6,7 +6,7 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BackButton from '@/components/ui/BackButton.vue'
 import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
-import ProjectImages from '@/views/projects/components/Images.vue'
+import ProjectImages from '@/views/projects/components/ImageGrid.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
 
 const router = useRouter()
