@@ -6,6 +6,7 @@ use App\Actions\Media\DeleteAction as DeleteMediaAction;
 use App\Actions\Media\ReorderAction as ReorderMediaAction;
 use App\Actions\Media\SetOgAction;
 use App\Actions\Media\SetTeaserAction;
+use App\Actions\Media\TogglePublishAction;
 use App\Actions\Media\UpdateAction as UpdateMediaAction;
 use App\Actions\Media\UploadAction as UploadMediaAction;
 use App\Http\Controllers\Controller;
@@ -67,6 +68,15 @@ class MediaController extends Controller
 		$this->authorize('update', $media);
 
 		$media = (new SetOgAction)->execute($media);
+
+		return new MediaResource($media);
+	}
+
+	public function togglePublish(Media $media)
+	{
+		$this->authorize('update', $media);
+
+		$media = (new TogglePublishAction)->execute($media);
 
 		return new MediaResource($media);
 	}

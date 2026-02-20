@@ -58,6 +58,11 @@ async function removeSliderImage(item) {
 	await fetch()
 }
 
+async function toggleSliderPublish(item) {
+	await mediaApi.togglePublish(item.uuid)
+	await fetch()
+}
+
 async function reorderSliderImages() {
 	const items = sliderImages.value.map((m, index) => ({
 		uuid: m.uuid,
@@ -95,7 +100,7 @@ function editText() {
 							animation="150"
 							@end="reorderSliderImages">
 							<template #item="{ element }">
-								<MediaCard :item="element" draggable deletable @delete="removeSliderImage" />
+								<MediaCard :item="element" draggable publishable deletable @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" />
 							</template>
 							<template #footer>
 								<AddButton @click="sliderDrawerOpen = true" />
@@ -125,6 +130,10 @@ function editText() {
 					<div v-show="!collapsed.has('description')" class="bg-white px-20 pb-20">
 
 						<div class="text-md font-semibold max-w-4xl py-10" v-html="project.description" />
+
+						<button class="mt-10" @click="editText">
+							<PencilCircle />
+						</button>
 
 					</div>
 

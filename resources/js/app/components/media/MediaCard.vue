@@ -1,33 +1,38 @@
 <script setup>
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
+import Eye from '@/components/icons/Eye.vue'
 
 defineProps({
 	item: { type: Object, required: true },
 	deletable: { type: Boolean, default: false },
 	draggable: { type: Boolean, default: false },
+	publishable: { type: Boolean, default: false },
 	showFilename: { type: Boolean, default: false },
 	editable: { type: Boolean, default: false },
 	variant: { type: String, default: 'light' },
 	compact: { type: Boolean, default: false },
 })
 
-defineEmits(['delete', 'edit'])
+defineEmits(['delete', 'edit', 'toggle-publish'])
 </script>
 
 <template>
-	<div 
-    class="border-thin bg-white" 
-    :class="variant === 'dark' ? 'border-black' : 'border-silver'">
+	<div
+    class="border-thin bg-white"
+    :class="[variant === 'dark' ? 'border-black' : 'border-silver', publishable && !item.is_published ? 'opacity-60' : '']">
 
 		<div class="relative aspect-square overflow-hidden">
 
-			<template v-if="draggable || deletable">
+			<template v-if="draggable || publishable || deletable">
 				<div class="absolute z-10 top-20 left-20 right-20 flex items-center justify-between">
 					<button v-if="draggable" type="button" class="drag-handle cursor-grab">
 						<Burger variant="sm" class="w-18 h-auto" />
 					</button>
 					<span v-else />
+					<button v-if="publishable" type="button" class="cursor-pointer" @click="$emit('toggle-publish', item)">
+						<Eye :variant="item.is_published ? 'visible' : 'hidden'" class="w-16 h-auto" />
+					</button>
 					<button v-if="deletable" type="button" class="cursor-pointer" @click="$emit('delete', item)">
 						<Cross class="w-12 h-auto" />
 					</button>
