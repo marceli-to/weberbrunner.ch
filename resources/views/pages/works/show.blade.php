@@ -22,7 +22,11 @@
 	@ogImage($project->teaser->first()->file)
 @endif
 
+
 <x-layout.show :title="$project->title" :location="$project->city">
+  @if ($isPreview)
+    <div class="bg-[#dc0000] text-white px-8 py-4 text-sm font-semibold text-center fixed top-20 right-20">Vorschau</div>
+  @endif
 
   @if($slides->isNotEmpty())
     <x-media.slideshow class="mb-20 lg:mb-40">

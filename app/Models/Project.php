@@ -60,6 +60,11 @@ class Project extends Model
 		return $this->hasMany(ProjectLink::class)->orderBy('sort_order');
 	}
 
+	public function blocks(): HasMany
+	{
+		return $this->hasMany(ProjectBlock::class)->orderBy('sort_order');
+	}
+
 	public function media(): MorphMany
 	{
 		return $this->morphMany(Media::class, 'mediable')->orderBy('sort_order');

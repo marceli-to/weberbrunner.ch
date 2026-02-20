@@ -60,7 +60,7 @@ async function saveShortDescription() {
 			<BackButton @click="goBack" />
 		</Span>
 		<Span class="col-span-8">
-			<PageTitle>
+			<PageTitle :slug="project?.slug">
 				{{ project?.full_title }}
 			</PageTitle>
 		</Span>

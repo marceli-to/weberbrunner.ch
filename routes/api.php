@@ -11,6 +11,9 @@ use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectCategoryController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\ProjectBlockController;
+use App\Http\Controllers\Api\ProjectBlockLinkController;
+use App\Http\Controllers\Api\ProjectBlockMediaController;
 use App\Http\Controllers\Api\ProjectLinkController;
 use App\Http\Controllers\Api\ProjectMediaController;
 use App\Http\Controllers\Api\ProjectMetaController;
@@ -118,6 +121,35 @@ Route::prefix('dashboard')
 			->prefix('projects/{project}/links')
 			->group(function () {
 				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::put('/{link}', 'update');
+				Route::delete('/{link}', 'destroy');
+			});
+
+		// Project Blocks (nested under projects)
+		Route::controller(ProjectBlockController::class)
+			->prefix('projects/{project}/blocks')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::put('/{block}', 'update');
+				Route::delete('/{block}', 'destroy');
+			});
+
+		// Project Block Media
+		Route::controller(ProjectBlockMediaController::class)
+			->prefix('projects/{project}/blocks/{block}')
+			->group(function () {
+				Route::post('/media/select', 'select');
+				Route::delete('/media/{media}', 'detach');
+			});
+
+		// Project Block Links (nested under blocks)
+		Route::controller(ProjectBlockLinkController::class)
+			->prefix('projects/{project}/blocks/{block}/links')
+			->group(function () {
 				Route::post('/', 'store');
 				Route::patch('/reorder', 'reorder');
 				Route::put('/{link}', 'update');

@@ -20,7 +20,7 @@ class ProjectController extends Controller
 	{
 		$this->authorize('viewAny', Project::class);
 
-		$projects = Project::with(['attributes', 'media', 'categories', 'statuses', 'location'])
+		$projects = Project::with(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject'])
 			->orderBy('number')
 			->get();
 
@@ -33,14 +33,14 @@ class ProjectController extends Controller
 
 		$project = (new StoreProjectAction)->execute($request->validated());
 
-		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']));
 	}
 
 	public function show(Project $project)
 	{
 		$this->authorize('view', $project);
 
-		$project->load(['attributes', 'media', 'categories', 'statuses', 'location']);
+		$project->load(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']);
 
 		return new ProjectResource($project);
 	}
@@ -51,7 +51,7 @@ class ProjectController extends Controller
 
 		$project = (new UpdateProjectAction)->execute($project, $request->validated());
 
-		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']));
 	}
 
 	public function destroy(Project $project)
@@ -70,7 +70,7 @@ class ProjectController extends Controller
 
 		$project->restore();
 
-		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location']));
+		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']));
 	}
 
 	public function toggle(Project $project)

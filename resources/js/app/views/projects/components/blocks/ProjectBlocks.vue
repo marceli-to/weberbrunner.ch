@@ -1,0 +1,193 @@
+<script setup>
+import { ref, computed, watch } from 'vue'
+import draggable from 'vuedraggable'
+import projectBlocksApi from '@/api/projectBlocks'
+import projectsApi from '@/api/projects'
+import mediaApi from '@/api/media'
+import { useToast } from '@/composables/useToast'
+import { useConfirm } from '@/composables/useConfirm'
+import Grid from '@/components/ui/grid/Grid.vue'
+import Span from '@/components/ui/grid/Span.vue'
+import BlockCard from '@/views/projects/components/blocks/BlockCard.vue'
+import BlockAddMenu from '@/views/projects/components/blocks/BlockAddMenu.vue'
+import BlockTextForm from '@/views/projects/components/blocks/BlockTextForm.vue'
+import BlockImageForm from '@/views/projects/components/blocks/BlockImageForm.vue'
+import BlockSliderForm from '@/views/projects/components/blocks/BlockSliderForm.vue'
+import BlockLinksForm from '@/views/projects/components/blocks/BlockLinksForm.vue'
+
+const props = defineProps({
+	project: { type: Object, required: true },
+})
+
+const emit = defineEmits(['updated'])
+
+const toast = useToast()
+const { confirm } = useConfirm()
+const allProjects = ref([])
+
+const blocks = ref([])
+watch(() => props.project.blocks, (val) => {
+	blocks.value = val || []
+}, { immediate: true })
+const projectMedia = computed(() => props.project.media || [])
+
+async function loadProjects() {
+	if (allProjects.value.length) return
+	const { data } = await projectsApi.index()
+	allProjects.value = data.data
+}
+
+async function addBlock(type) {
+	await projectBlocksApi.store(props.project.uuid, { type })
+	emit('updated')
+	toast.success('Block hinzugefügt')
+	if (type === 'links') {
+		loadProjects()
+	}
+}
+
+async function updateBlock(block, data) {
+	await projectBlocksApi.update(props.project.uuid, block.uuid, data)
+	emit('updated')
+	toast.success('Block gespeichert')
+}
+
+async function deleteBlock(block) {
+	const ok = await confirm({
+		message: 'Möchtest Du diesen Block wirklich löschen?',
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (!ok) return
+	await projectBlocksApi.destroy(props.project.uuid, block.uuid)
+	emit('updated')
+	toast.success('Block gelöscht')
+}
+
+async function reorderBlocks() {
+	const items = blocks.value.map((block, index) => ({
+		id: block.id,
+		sort_order: index,
+	}))
+	await projectBlocksApi.reorder(props.project.uuid, items)
+	emit('updated')
+}
+
+async function selectMedia(block, mediaUuids) {
+	await projectBlocksApi.selectMedia(props.project.uuid, block.uuid, mediaUuids)
+	emit('updated')
+	toast.success('Bild hinzugefügt')
+}
+
+async function removeMedia(block, mediaUuid) {
+	const ok = await confirm({
+		message: 'Möchtest Du dieses Bild wirklich entfernen?',
+		confirmLabel: 'Entfernen',
+		variant: 'danger',
+	})
+	if (!ok) return
+	await projectBlocksApi.detachMedia(props.project.uuid, block.uuid, mediaUuid)
+	emit('updated')
+}
+
+async function reorderMedia(block, items) {
+	await mediaApi.reorder(items)
+	emit('updated')
+}
+
+async function addLink(block) {
+	await loadProjects()
+	await projectBlocksApi.storeLink(props.project.uuid, block.uuid, {
+		link_type: 'external',
+	})
+	emit('updated')
+}
+
+async function saveLink(block, linkUuid, data) {
+	await projectBlocksApi.updateLink(props.project.uuid, block.uuid, linkUuid, data)
+	emit('updated')
+	toast.success('Link gespeichert')
+}
+
+async function deleteLink(block, linkUuid) {
+	const ok = await confirm({
+		message: 'Möchtest Du diesen Link wirklich löschen?',
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (!ok) return
+	await projectBlocksApi.destroyLink(props.project.uuid, block.uuid, linkUuid)
+	emit('updated')
+}
+
+async function reorderLinks(block, items) {
+	await projectBlocksApi.reorderLinks(props.project.uuid, block.uuid, items)
+	emit('updated')
+}
+</script>
+
+<template>
+	<Grid>
+    
+		<!-- Dynamic blocks -->
+		<draggable
+			v-if="blocks.length"
+			v-model="blocks"
+			item-key="uuid"
+			handle=".drag-handle"
+			ghost-class="opacity-50"
+			animation="150"
+			class="col-span-10 flex flex-col gap-20"
+			@end="reorderBlocks">
+
+			<template #item="{ element }">
+
+				<BlockCard :block="element" @delete="deleteBlock(element)">
+
+					<BlockTextForm
+						v-if="element.type === 'text'"
+						:block="element"
+						@save="(data) => updateBlock(element, data)" />
+
+					<BlockImageForm
+						v-if="element.type === 'image'"
+						:block="element"
+						:project-media="projectMedia"
+						@save="(data) => updateBlock(element, data)"
+						@select-media="(uuids) => selectMedia(element, uuids)"
+						@remove-media="(uuid) => removeMedia(element, uuid)" />
+
+					<BlockSliderForm
+						v-if="element.type === 'slider'"
+						:block="element"
+						:project-media="projectMedia"
+						@save="(data) => updateBlock(element, data)"
+						@select-media="(uuids) => selectMedia(element, uuids)"
+						@remove-media="(uuid) => removeMedia(element, uuid)"
+						@reorder-media="(items) => reorderMedia(element, items)" />
+
+					<BlockLinksForm
+						v-if="element.type === 'links'"
+						:block="element"
+						:projects="allProjects"
+						@save="(data) => updateBlock(element, data)"
+						@add-link="addLink(element)"
+						@save-link="(linkUuid, data) => saveLink(element, linkUuid, data)"
+						@delete-link="(linkUuid) => deleteLink(element, linkUuid)"
+						@reorder-links="(items) => reorderLinks(element, items)" />
+
+				</BlockCard>
+
+			</template>
+
+		</draggable>
+
+	</Grid>
+
+	<!-- Block type picker -->
+	<Grid class="mt-40">
+    <Span class="col-span-8 col-start-2">
+		  <BlockAddMenu @select="addBlock" />
+    </Span>
+  </Grid>
+</template>

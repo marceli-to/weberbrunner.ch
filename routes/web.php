@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectPreviewController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JuryController;
@@ -12,6 +13,10 @@ use App\Http\Controllers\TeamController;
 Route::get('/img/{path}', [ImageController::class, 'show'])->where('path', '.*');
 
 Route::get('/', LandingController::class)->name('page.landing');
+
+Route::prefix('vorschau')->name('page.preview')->group(function () {
+	Route::get('/{slug}', [ProjectPreviewController::class, 'show'])->name('.show');
+});
 
 // Works
 Route::prefix('arbeiten')->name('page.works')->group(function () {

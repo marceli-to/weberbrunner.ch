@@ -35,7 +35,7 @@ function goBack() {
 		</Span>
 
 		<Span class="col-span-8">
-			<PageTitle>
+			<PageTitle :slug="project?.slug">
 				{{ project?.full_title }}
 			</PageTitle>
 		</Span>
@@ -56,7 +56,7 @@ function goBack() {
 
 		<Span class="col-span-8 col-start-2">
 			<ProjectMasterData :project="project" />
-    </Span>
+		</Span>
 
 	</Grid>
   
