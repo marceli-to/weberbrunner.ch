@@ -41,7 +41,7 @@ function closeDialog() {
 }
 
 function buildPayload() {
-	const data = formRef.value.getFormData()
+	const data = formRef.value?.getFormData()
 	return {
 		title: data.title,
 		link_type: data.mode,
@@ -51,7 +51,7 @@ function buildPayload() {
 }
 
 function save() {
-	if (!formRef.value.validate()) return
+	if (!formRef.value?.validate()) return
 	const payload = buildPayload()
 	if (editingLink.value) {
 		emit('save-link', editingLink.value.uuid, payload)

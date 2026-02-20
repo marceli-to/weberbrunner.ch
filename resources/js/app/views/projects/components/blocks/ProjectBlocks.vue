@@ -2,7 +2,6 @@
 import { ref, computed, watch } from 'vue'
 import draggable from 'vuedraggable'
 import projectBlocksApi from '@/api/projectBlocks'
-import projectsApi from '@/api/projects'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
@@ -30,7 +29,6 @@ const emit = defineEmits(['updated'])
 const toast = useToast()
 const { confirm } = useConfirm()
 const { get, clear, submit } = useFormErrors()
-const allProjects = ref([])
 const editingMedia = ref(null)
 
 const blocks = ref([])
@@ -62,15 +60,6 @@ async function storeBlock() {
 	closeTitleLightbox()
 	emit('updated')
 	toast.success('Block hinzugefügt')
-	if (pendingType.value === 'links') {
-		loadProjects()
-	}
-}
-
-async function loadProjects() {
-	if (allProjects.value.length) return
-	const { data } = await projectsApi.index()
-	allProjects.value = data.data
 }
 
 async function updateBlock(block, data) {
