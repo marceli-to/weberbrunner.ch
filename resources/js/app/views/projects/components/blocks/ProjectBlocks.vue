@@ -27,7 +27,7 @@ const allProjects = ref([])
 
 const blocks = ref([])
 watch(() => props.project.blocks, (val) => {
-	blocks.value = val || []
+	blocks.value = (val || []).filter(b => b.type !== 'fixed-slider')
 }, { immediate: true })
 const projectMedia = computed(() => props.project.media || [])
 

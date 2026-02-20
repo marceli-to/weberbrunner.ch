@@ -14,7 +14,7 @@ class StoreProjectBlockRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'type' => 'required|string|in:text,slider,image,links',
+			'type' => 'required|string|in:text,slider,image,links,fixed-slider',
 			'title' => 'nullable|string|max:255',
 			'content' => 'nullable|string',
 		];
