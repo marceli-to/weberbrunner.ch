@@ -8,7 +8,7 @@ import BackButton from '@/components/ui/BackButton.vue'
 import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
 import ProjectImages from '@/views/projects/components/ImageGrid.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
-import ProjectText from '@/views/projects/components/Text.vue'
+import ProjectText from '@/views/projects/components/TextCards.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()
