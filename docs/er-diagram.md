@@ -225,6 +225,32 @@ erDiagram
         timestamp deleted_at
     }
 
+    PROJECT_BLOCK {
+        int id PK
+        uuid uuid UK
+        int project_id FK
+        string type
+        string title
+        text content
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PROJECT_BLOCK_LINK {
+        int id PK
+        uuid uuid UK
+        int project_block_id FK
+        string title
+        string url
+        string link_type
+        int linked_project_id FK
+        int sort_order
+        boolean publish
+        timestamp created_at
+        timestamp updated_at
+    }
+
     LOCATION ||--o{ PROJECT : has
     LOCATION ||--o{ TEAM_MEMBER : has
     LOCATION ||--o{ JOB : has
@@ -233,7 +259,12 @@ erDiagram
     PROJECT ||--|{ PROJECT_ATTRIBUTE : has
     PROJECT ||--o{ CATEGORY_PROJECT : has
     PROJECT ||--o{ PROJECT_STATUS : has
+    PROJECT ||--o{ PROJECT_BLOCK : has
     PROJECT ||--o{ MEDIA : "morph"
+
+    PROJECT_BLOCK ||--o{ PROJECT_BLOCK_LINK : has
+    PROJECT_BLOCK ||--o{ MEDIA : "morph"
+    PROJECT_BLOCK_LINK ||--o| PROJECT : "linked project"
     CATEGORY ||--o{ CATEGORY_PROJECT : has
     STATUS ||--o{ PROJECT_STATUS : has
 
