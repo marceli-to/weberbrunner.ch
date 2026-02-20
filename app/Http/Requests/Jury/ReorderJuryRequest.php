@@ -16,7 +16,7 @@ class ReorderJuryRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:juries,id',
+			'items.*.uuid' => 'required|string|exists:juries,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

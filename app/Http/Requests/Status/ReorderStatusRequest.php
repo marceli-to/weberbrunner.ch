@@ -16,7 +16,7 @@ class ReorderStatusRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:statuses,id',
+			'items.*.uuid' => 'required|string|exists:statuses,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

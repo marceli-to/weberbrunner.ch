@@ -16,7 +16,7 @@ class ReorderTalkRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:talks,id',
+			'items.*.uuid' => 'required|string|exists:talks,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

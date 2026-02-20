@@ -16,7 +16,7 @@ class ReorderJobRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:job_listings,id',
+			'items.*.uuid' => 'required|string|exists:job_listings,uuid',
 			'items.*.sort_order' => 'required|integer',
 			'items.*.location_id' => 'sometimes|integer|exists:locations,id',
 		];

@@ -13,7 +13,7 @@ class ReorderAction
 			if (isset($item['location_id'])) {
 				$data['location_id'] = $item['location_id'];
 			}
-			Job::where('id', $item['id'])->update($data);
+			Job::where('uuid', $item['uuid'])->update($data);
 		}
 	}
 }

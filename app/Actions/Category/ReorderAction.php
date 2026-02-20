@@ -9,7 +9,7 @@ class ReorderAction
 	public function execute(array $items): void
 	{
 		foreach ($items as $item) {
-			Category::where('id', $item['id'])->update(['sort_order' => $item['sort_order']]);
+			Category::where('uuid', $item['uuid'])->update(['sort_order' => $item['sort_order']]);
 		}
 	}
 }

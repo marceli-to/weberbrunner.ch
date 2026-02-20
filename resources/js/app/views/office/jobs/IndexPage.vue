@@ -43,7 +43,7 @@ async function toggle(job) {
 
 async function reorder(group) {
 	const items = group.jobs.map((j, i) => ({
-		id: j.id,
+		uuid: j.uuid,
 		sort_order: i,
 		location_id: group.location.id,
 	}))

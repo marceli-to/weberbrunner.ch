@@ -16,7 +16,7 @@ class ReorderTeamMemberRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:team_members,id',
+			'items.*.uuid' => 'required|string|exists:team_members,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

@@ -15,7 +15,7 @@ class ReorderProjectLinkRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:project_links,id',
+			'items.*.uuid' => 'required|string|exists:project_links,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

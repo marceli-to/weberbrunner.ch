@@ -16,7 +16,7 @@ class ReorderSectionRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:sections,id',
+			'items.*.uuid' => 'required|string|exists:sections,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

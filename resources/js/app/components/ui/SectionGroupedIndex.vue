@@ -87,7 +87,7 @@ async function toggle(entry) {
 
 async function reorderGroups() {
 	const items = groups.value.map((g, i) => ({
-		id: g.section.id,
+		uuid: g.section.uuid,
 		sort_order: i,
 	}))
 	await sectionsApi.reorder(items)
@@ -95,7 +95,7 @@ async function reorderGroups() {
 
 async function reorder(group) {
 	const items = group.entries.map((e, i) => ({
-		id: e.id,
+		uuid: e.uuid,
 		sort_order: i,
 		section_id: group.section.id,
 	}))

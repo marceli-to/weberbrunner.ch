@@ -16,7 +16,7 @@ class ReorderAwardRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:awards,id',
+			'items.*.uuid' => 'required|string|exists:awards,uuid',
 			'items.*.sort_order' => 'required|integer',
 			'items.*.section_id' => 'sometimes|integer|exists:sections,id',
 		];

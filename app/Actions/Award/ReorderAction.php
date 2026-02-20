@@ -13,7 +13,7 @@ class ReorderAction
 			if (isset($item['section_id'])) {
 				$update['section_id'] = $item['section_id'];
 			}
-			Award::where('id', $item['id'])->update($update);
+			Award::where('uuid', $item['uuid'])->update($update);
 		}
 	}
 }

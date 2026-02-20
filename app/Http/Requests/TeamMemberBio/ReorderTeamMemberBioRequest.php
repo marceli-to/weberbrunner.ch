@@ -16,7 +16,7 @@ class ReorderTeamMemberBioRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:team_member_bios,id',
+			'items.*.uuid' => 'required|string|exists:team_member_bios,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}
