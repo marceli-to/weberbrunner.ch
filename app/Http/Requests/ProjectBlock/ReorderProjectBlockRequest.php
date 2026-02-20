@@ -15,7 +15,7 @@ class ReorderProjectBlockRequest extends FormRequest
 	{
 		return [
 			'items' => 'required|array',
-			'items.*.id' => 'required|integer|exists:project_blocks,id',
+			'items.*.uuid' => 'required|string|exists:project_blocks,uuid',
 			'items.*.sort_order' => 'required|integer',
 		];
 	}

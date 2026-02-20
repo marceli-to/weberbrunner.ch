@@ -93,7 +93,7 @@ async function deleteBlock(block) {
 
 async function reorderBlocks() {
 	const items = blocks.value.map((block, index) => ({
-		id: block.id,
+		uuid: block.uuid,
 		sort_order: index,
 	}))
 	await projectBlocksApi.reorder(props.project.uuid, items)

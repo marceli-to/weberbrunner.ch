@@ -63,7 +63,7 @@ function save() {
 
 function onReorder() {
 	const items = links.value.map((link, index) => ({
-		id: link.id,
+		uuid: link.uuid,
 		sort_order: index,
 	}))
 	emit('reorder-links', items)
