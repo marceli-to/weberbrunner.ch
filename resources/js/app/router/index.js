@@ -4,6 +4,7 @@ import Styleguide from '@/views/dev/Styleguide.vue'
 import ProjectsIndex from '@/views/projects/Index.vue'
 import ProjectsShow from '@/views/projects/Show.vue'
 import ProjectImagesEdit from '@/views/projects/Images.vue'
+import ProjectTextEdit from '@/views/projects/Text.vue'
 import ProjectsLayout from '@/views/projects/web/Layout.vue'
 import ProjectsMetaData from '@/views/projects/web/MetaData.vue'
 import ProjectsTeaserImage from '@/views/projects/web/TeaserImage.vue'
@@ -74,6 +75,12 @@ const routes = [
     path: '/dashboard/arbeiten/:id/bilder',
     name: 'projects.images.edit',
     component: ProjectImagesEdit,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+  {
+    path: '/dashboard/arbeiten/:id/texte',
+    name: 'projects.text.edit',
+    component: ProjectTextEdit,
     meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {

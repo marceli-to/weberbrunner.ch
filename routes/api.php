@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectLinkController;
 use App\Http\Controllers\Api\ProjectMediaController;
 use App\Http\Controllers\Api\ProjectMetaController;
+use App\Http\Controllers\Api\ProjectTextController;
 use App\Http\Controllers\Api\ProjectStatusController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StatusController;
@@ -78,6 +79,13 @@ Route::prefix('dashboard')
 			->prefix('projects/{project}')
 			->group(function () {
 				Route::patch('/meta-description', 'update');
+			});
+
+		// Project Text
+		Route::controller(ProjectTextController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::patch('/text', 'update');
 			});
 
 		// Project Categories

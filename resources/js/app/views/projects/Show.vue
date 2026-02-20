@@ -8,6 +8,7 @@ import BackButton from '@/components/ui/BackButton.vue'
 import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
 import ProjectImages from '@/views/projects/components/ImageGrid.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
+import ProjectText from '@/views/projects/components/Text.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()
@@ -46,12 +47,16 @@ function goBack() {
 	<Grid v-if="project" class="mb-20">
 
 		<Span class="col-span-8 col-start-2">
-			<ProjectMasterData :project="project" />
-		</Span>
-
-		<Span class="col-span-8 col-start-2">
 			<ProjectImages :project="project" @updated="fetch" />
 		</Span>
+
+    <Span class="col-span-8 col-start-2">
+      <ProjectText :project="project" />
+    </Span>
+
+		<Span class="col-span-8 col-start-2">
+			<ProjectMasterData :project="project" />
+    </Span>
 
 	</Grid>
   
