@@ -9,6 +9,7 @@ import Cross from '@/components/icons/Cross.vue'
 const props = defineProps({
 	block: { type: Object, required: true },
 	initialOpen: { type: Boolean, default: false },
+	flush: { type: Boolean, default: false },
 })
 
 defineEmits(['delete'])
@@ -33,12 +34,15 @@ const collapsed = ref(!props.initialOpen)
 				:title="block.title || typeLabels[block.type]"
 				:collapsed="collapsed"
 				@toggle="collapsed = !collapsed" />
-			<div v-show="!collapsed" class="bg-white px-20 pb-20">
+			<div v-if="!flush" v-show="!collapsed" class="bg-white px-20 pb-20">
 				<slot />
 			</div>
 		</Span>
 		<Span class="col-span-1 flex items-start justify-start pt-20">
 			<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />
+		</Span>
+		<Span v-if="flush" v-show="!collapsed" class="col-span-10">
+			<slot />
 		</Span>
 	</Grid>
 </template>

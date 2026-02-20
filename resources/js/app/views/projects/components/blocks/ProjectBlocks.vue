@@ -134,11 +134,8 @@ async function reorderMedia(block, items) {
 	emit('updated')
 }
 
-async function addLink(block) {
-	await loadProjects()
-	await projectBlocksApi.storeLink(props.project.uuid, block.uuid, {
-		link_type: 'external',
-	})
+async function addLink(block, data) {
+	await projectBlocksApi.storeLink(props.project.uuid, block.uuid, data)
 	emit('updated')
 }
 
@@ -156,6 +153,11 @@ async function deleteLink(block, linkUuid) {
 	})
 	if (!ok) return
 	await projectBlocksApi.destroyLink(props.project.uuid, block.uuid, linkUuid)
+	emit('updated')
+}
+
+async function toggleLink(block, linkUuid) {
+	await projectBlocksApi.toggleLink(props.project.uuid, block.uuid, linkUuid)
 	emit('updated')
 }
 
@@ -181,7 +183,7 @@ async function reorderLinks(block, items) {
 
 			<template #item="{ element }">
 
-				<BlockCard :block="element" :initial-open="element.uuid === lastCreatedUuid" @delete="deleteBlock(element)">
+				<BlockCard :block="element" :initial-open="element.uuid === lastCreatedUuid" :flush="element.type === 'links'" @delete="deleteBlock(element)">
 
 					<BlockTextForm
 						v-if="element.type === 'text'"
@@ -210,9 +212,9 @@ async function reorderLinks(block, items) {
 					<BlockLinksForm
 						v-if="element.type === 'links'"
 						:block="element"
-						:projects="allProjects"
-						@add-link="addLink(element)"
+						@add-link="(data) => addLink(element, data)"
 						@save-link="(linkUuid, data) => saveLink(element, linkUuid, data)"
+						@toggle-link="(linkUuid) => toggleLink(element, linkUuid)"
 						@delete-link="(linkUuid) => deleteLink(element, linkUuid)"
 						@reorder-links="(items) => reorderLinks(element, items)" />
 

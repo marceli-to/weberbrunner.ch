@@ -17,6 +17,7 @@ class ProjectBlockLinkResource extends JsonResource
 			'link_type' => $this->link_type,
 			'linked_project_id' => $this->linked_project_id,
 			'linked_project' => new ProjectResource($this->whenLoaded('linkedProject')),
+			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,

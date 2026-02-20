@@ -154,6 +154,7 @@ Route::prefix('dashboard')
 				Route::post('/', 'store');
 				Route::patch('/reorder', 'reorder');
 				Route::put('/{link}', 'update');
+				Route::patch('/{link}/toggle', 'toggle');
 				Route::delete('/{link}', 'destroy');
 			});
 

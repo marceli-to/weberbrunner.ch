@@ -34,6 +34,7 @@ const sliderImages = computed(() =>
 	fixedSliderBlock.value?.media || []
 )
 
+
 async function onSliderSubmit() {
 	const projectUuid = project.value.uuid
 	let block = fixedSliderBlock.value
@@ -78,6 +79,7 @@ async function reorderSliderImages() {
 	await mediaApi.reorder(items)
 	await fetch()
 }
+
 
 </script>
 
@@ -151,6 +153,7 @@ async function reorderSliderImages() {
             [Stammdaten]
           </div>
 				</Span>
+
 
       </Grid>
 

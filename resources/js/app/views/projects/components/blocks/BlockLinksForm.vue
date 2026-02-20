@@ -1,21 +1,65 @@
 <script setup>
 import { ref, watch } from 'vue'
 import draggable from 'vuedraggable'
-import PlusCircle from '@/components/icons/PlusCircle.vue'
-import BlockLinkRow from '@/views/projects/components/blocks/BlockLinkRow.vue'
+import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
+import NewEntryButton from '@/components/ui/NewEntryButton.vue'
+import AppDialog from '@/components/ui/dialog/AppDialog.vue'
+import Button from '@/components/ui/form/Button.vue'
+import LinkFormFields from '@/components/ui/form/LinkFormFields.vue'
+import Grid from '@/components/ui/grid/Grid.vue'
+import Span from '@/components/ui/grid/Span.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
-	projects: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['save-link', 'delete-link', 'add-link', 'reorder-links'])
+const emit = defineEmits(['add-link', 'save-link', 'toggle-link', 'delete-link', 'reorder-links'])
 
 const links = ref([...(props.block.links || [])])
 
 watch(() => props.block.links, (val) => {
 	links.value = [...(val || [])]
 })
+
+const dialogOpen = ref(false)
+const editingLink = ref(null)
+const formRef = ref(null)
+
+function openCreate() {
+	editingLink.value = null
+	dialogOpen.value = true
+}
+
+function openEdit(link) {
+	editingLink.value = link
+	dialogOpen.value = true
+}
+
+function closeDialog() {
+	dialogOpen.value = false
+	editingLink.value = null
+}
+
+function buildPayload() {
+	const data = formRef.value.getFormData()
+	return {
+		title: data.title,
+		link_type: data.mode,
+		url: data.mode === 'external' ? data.url : null,
+		linked_project_id: data.mode === 'internal' && data.selectedProject ? data.selectedProject.id : null,
+	}
+}
+
+function save() {
+	if (!formRef.value.validate()) return
+	const payload = buildPayload()
+	if (editingLink.value) {
+		emit('save-link', editingLink.value.uuid, payload)
+	} else {
+		emit('add-link', payload)
+	}
+	closeDialog()
+}
 
 function onReorder() {
 	const items = links.value.map((link, index) => ({
@@ -24,36 +68,46 @@ function onReorder() {
 	}))
 	emit('reorder-links', items)
 }
-
 </script>
 
 <template>
-	<div class="flex flex-col gap-y-10 pt-10">
-		<draggable
-			v-if="links.length"
-			v-model="links"
-			item-key="uuid"
-			handle=".drag-handle"
-			ghost-class="opacity-30"
-			animation="150"
-			class="flex flex-col gap-y-10"
-			@end="onReorder">
-			<template #item="{ element }">
-				<BlockLinkRow
-					:link="element"
-					:projects="projects"
-					@save="(data) => $emit('save-link', element.uuid, data)"
-					@delete="$emit('delete-link', element.uuid)" />
-			</template>
-		</draggable>
+	<draggable
+		v-if="links.length"
+		v-model="links"
+		item-key="uuid"
+		handle=".link-drag-handle"
+		ghost-class="opacity-50"
+		animation="150"
+		class="flex flex-col gap-10"
+		:class="{ 'mb-10': links.length }"
+		@end="onReorder">
+		<template #item="{ element }">
+			<DraggableEntryRow
+				:label="element.title || element.url || '(kein Titel)'"
+				:publish="element.publish"
+				drag-handle-class="link-drag-handle"
+				@edit="openEdit(element)"
+				@toggle-publish="$emit('toggle-link', element.uuid)"
+				@delete="$emit('delete-link', element.uuid)" />
+		</template>
+	</draggable>
 
-		<button
-			type="button"
-			class="flex items-center gap-x-5 text-sm cursor-pointer pt-5"
-			@click="$emit('add-link')">
-			<PlusCircle class="w-18" />
-			<span>Link hinzufügen</span>
-		</button>
+	<NewEntryButton @click="openCreate" />
 
-	</div>
+	<AppDialog :open="dialogOpen" :title="editingLink ? 'Link bearbeiten' : 'Link'" @close="closeDialog">
+		<LinkFormFields
+			v-if="dialogOpen"
+			ref="formRef"
+			:mode="editingLink?.link_type || 'external'"
+			:url="editingLink?.url || ''"
+			:title="editingLink?.title || ''"
+			:selected-project-id="editingLink?.linked_project_id" />
+
+		<template #footer>
+			<Grid :cols="2">
+				<Span><Button class="justify-center" @click="save">Übernehmen</Button></Span>
+				<Span><Button class="justify-center" @click="closeDialog">Abbrechen</Button></Span>
+			</Grid>
+		</template>
+	</AppDialog>
 </template>

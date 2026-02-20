@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\ProjectBlockLink\DeleteAction as DeleteProjectBlockLinkAction;
+use App\Actions\ProjectBlockLink\ToggleAction as ToggleProjectBlockLinkAction;
 use App\Actions\ProjectBlockLink\ReorderAction as ReorderProjectBlockLinkAction;
 use App\Actions\ProjectBlockLink\StoreAction as StoreProjectBlockLinkAction;
 use App\Actions\ProjectBlockLink\UpdateAction as UpdateProjectBlockLinkAction;
@@ -40,6 +41,15 @@ class ProjectBlockLinkController extends Controller
 		$this->authorize('update', $project);
 
 		(new DeleteProjectBlockLinkAction)->execute($link);
+
+		return response()->json(null, 204);
+	}
+
+	public function toggle(Project $project, ProjectBlock $block, ProjectBlockLink $link)
+	{
+		$this->authorize('update', $project);
+
+		(new ToggleProjectBlockLinkAction)->execute($link);
 
 		return response()->json(null, 204);
 	}

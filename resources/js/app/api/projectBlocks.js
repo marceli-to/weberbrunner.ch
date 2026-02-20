@@ -10,6 +10,7 @@ export default {
 	detachMedia: (projectId, blockUuid, mediaUuid) => api.delete(`/projects/${projectId}/blocks/${blockUuid}/media/${mediaUuid}`),
 	storeLink: (projectId, blockUuid, data) => api.post(`/projects/${projectId}/blocks/${blockUuid}/links`, data),
 	updateLink: (projectId, blockUuid, linkUuid, data) => api.put(`/projects/${projectId}/blocks/${blockUuid}/links/${linkUuid}`, data),
+	toggleLink: (projectId, blockUuid, linkUuid) => api.patch(`/projects/${projectId}/blocks/${blockUuid}/links/${linkUuid}/toggle`),
 	destroyLink: (projectId, blockUuid, linkUuid) => api.delete(`/projects/${projectId}/blocks/${blockUuid}/links/${linkUuid}`),
 	reorderLinks: (projectId, blockUuid, items) => api.patch(`/projects/${projectId}/blocks/${blockUuid}/links/reorder`, { items }),
 }
