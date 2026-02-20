@@ -26,6 +26,22 @@ class Seed extends Command
 		$user->role = 'admin';
 		$user->save();
 
+		$user2 = User::create([
+			'name' => 'Benedikt Flüeler',
+			'email' => 'bf@wbg.ch',
+			'password' => Hash::make('wbpz-@Dm1-2026'),
+		]);
+		$user2->role = 'admin';
+		$user2->save();
+
+		$user3 = User::create([
+			'name' => 'Bettina Puorger',
+			'email' => 'bp@wbg.ch',
+			'password' => Hash::make('wbpz-@Dm1-2026'),
+		]);
+		$user3->role = 'admin';
+		$user3->save();    
+
 		$this->info('Seeding locations...');
 		$this->call('app:seed-locations');
 
