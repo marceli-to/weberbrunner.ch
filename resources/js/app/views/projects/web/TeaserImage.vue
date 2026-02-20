@@ -1,6 +1,6 @@
 <script setup>
 import { useProjectTeaser } from '@/composables/useProjectTeaser'
-import WebPageLayout from '@/views/projects/components/WebPageLayout.vue'
+import WebLayout from '@/views/projects/components/WebLayout.vue'
 import SectionTitle from '@/components/ui/SectionTitle.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'
@@ -15,7 +15,7 @@ const {
 </script>
 
 <template>
-	<WebPageLayout :project="project">
+	<WebLayout :project="project">
 
 		<!-- Teaser Image -->
 		<Grid class="mb-20">
@@ -37,5 +37,5 @@ const {
 			@close="teaserDrawerOpen = false"
 			@submit="saveTeaserImage" />
 
-	</WebPageLayout>
+	</WebLayout>
 </template>

@@ -1,10 +1,10 @@
 <script setup>
 import { useProject } from '@/composables/useProject'
-import WebPageLayout from '@/views/projects/components/WebPageLayout.vue'
+import WebLayout from '@/views/projects/components/WebLayout.vue'
 
 const { project } = useProject()
 </script>
 
 <template>
-	<WebPageLayout :project="project" />
+	<WebLayout :project="project" />
 </template>

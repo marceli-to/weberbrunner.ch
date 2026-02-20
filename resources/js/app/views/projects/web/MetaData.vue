@@ -1,7 +1,7 @@
 <script setup>
 import { useProjectMeta } from '@/composables/useProjectMeta'
 import { useCollapsed } from '@/composables/useCollapsed'
-import WebPageLayout from '@/views/projects/components/WebPageLayout.vue'
+import WebLayout from '@/views/projects/components/WebLayout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Card from '@/components/ui/Card.vue'
@@ -20,7 +20,7 @@ const { collapsed, toggle } = useCollapsed('project-meta')
 </script>
 
 <template>
-	<WebPageLayout :project="project">
+	<WebLayout :project="project">
 
 		<!-- Meta Description -->
 		<Grid class="mb-20">
@@ -65,5 +65,5 @@ const { collapsed, toggle } = useCollapsed('project-meta')
 			@close="ogDrawerOpen = false"
 			@submit="saveOgImage" />
 
-	</WebPageLayout>
+	</WebLayout>
 </template>

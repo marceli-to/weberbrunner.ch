@@ -1,6 +1,6 @@
 <script setup>
 import { useProjectSettings } from '@/composables/useProjectSettings'
-import WebPageLayout from '@/views/projects/components/WebPageLayout.vue'
+import WebLayout from '@/views/projects/components/WebLayout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Checkbox from '@/components/ui/form/Checkbox.vue'
@@ -21,7 +21,7 @@ const {
 </script>
 
 <template>
-	<WebPageLayout :project="project">
+	<WebLayout :project="project">
 
 		<!-- Publish -->
 		<Grid class="mb-20">
@@ -66,5 +66,5 @@ const {
 			</Span>
 		</Grid>
 
-	</WebPageLayout>
+	</WebLayout>
 </template>
