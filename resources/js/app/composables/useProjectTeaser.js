@@ -22,6 +22,7 @@ export function useProjectTeaser() {
 		await mediaApi.teaser(selectedTeaserImage.value)
 		await fetch()
 		teaserDrawerOpen.value = false
+		toast.success('Gespeichert')
 	}
 
 	async function removeTeaserImage() {

@@ -35,6 +35,7 @@ export function useProjectMeta() {
 		await mediaApi.og(selectedOgImage.value)
 		await fetch()
 		ogDrawerOpen.value = false
+		toast.success('Gespeichert')
 	}
 
 	async function removeOgImage() {
