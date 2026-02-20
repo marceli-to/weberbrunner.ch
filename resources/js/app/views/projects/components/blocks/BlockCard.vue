@@ -24,7 +24,7 @@ const collapsed = ref(true)
 
 <template>
 	<Grid :cols="10">
-		<Span class="col-span-1 flex items-center justify-end">
+		<Span class="col-span-1 flex items-start justify-end pt-20">
 			<Burger variant="sm" class="w-18 h-10 cursor-grab drag-handle" />
 		</Span>
 		<Span class="col-span-8">
@@ -36,7 +36,7 @@ const collapsed = ref(true)
 				<slot />
 			</div>
 		</Span>
-		<Span class="col-span-1 flex items-center justify-start">
+		<Span class="col-span-1 flex items-start justify-start pt-20">
 			<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />
 		</Span>
 	</Grid>

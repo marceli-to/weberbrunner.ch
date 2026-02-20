@@ -6,8 +6,13 @@ import projectsApi from '@/api/projects'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
+import { useFormErrors } from '@/composables/useFormErrors'
+import { useLightbox } from '@/composables/useLightbox'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
+import Button from '@/components/ui/form/Button.vue'
+import Input from '@/components/ui/form/Input.vue'
 import BlockCard from '@/views/projects/components/blocks/BlockCard.vue'
 import BlockAddMenu from '@/views/projects/components/blocks/BlockAddMenu.vue'
 import BlockTextForm from '@/views/projects/components/blocks/BlockTextForm.vue'
@@ -23,6 +28,7 @@ const emit = defineEmits(['updated'])
 
 const toast = useToast()
 const { confirm } = useConfirm()
+const { get, clear, submit } = useFormErrors()
 const allProjects = ref([])
 
 const blocks = ref([])
@@ -31,19 +37,35 @@ watch(() => props.project.blocks, (val) => {
 }, { immediate: true })
 const projectMedia = computed(() => props.project.media || [])
 
+const pendingType = ref(null)
+const blockTitle = ref('')
+const { show: showTitleLightbox, open: openTitleLightbox, close: closeTitleLightbox } = useLightbox(() => {
+	blockTitle.value = ''
+	clear()
+})
+
+function addBlock(type) {
+	pendingType.value = type
+	openTitleLightbox()
+}
+
+async function storeBlock() {
+	const ok = await submit(() =>
+		projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title: blockTitle.value })
+	)
+	if (!ok) return
+	closeTitleLightbox()
+	emit('updated')
+	toast.success('Block hinzugefügt')
+	if (pendingType.value === 'links') {
+		loadProjects()
+	}
+}
+
 async function loadProjects() {
 	if (allProjects.value.length) return
 	const { data } = await projectsApi.index()
 	allProjects.value = data.data
-}
-
-async function addBlock(type) {
-	await projectBlocksApi.store(props.project.uuid, { type })
-	emit('updated')
-	toast.success('Block hinzugefügt')
-	if (type === 'links') {
-		loadProjects()
-	}
 }
 
 async function updateBlock(block, data) {
@@ -153,7 +175,6 @@ async function reorderLinks(block, items) {
 						v-if="element.type === 'image'"
 						:block="element"
 						:project-media="projectMedia"
-						@save="(data) => updateBlock(element, data)"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)" />
 
@@ -161,7 +182,6 @@ async function reorderLinks(block, items) {
 						v-if="element.type === 'slider'"
 						:block="element"
 						:project-media="projectMedia"
-						@save="(data) => updateBlock(element, data)"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@reorder-media="(items) => reorderMedia(element, items)" />
@@ -170,7 +190,6 @@ async function reorderLinks(block, items) {
 						v-if="element.type === 'links'"
 						:block="element"
 						:projects="allProjects"
-						@save="(data) => updateBlock(element, data)"
 						@add-link="addLink(element)"
 						@save-link="(linkUuid, data) => saveLink(element, linkUuid, data)"
 						@delete-link="(linkUuid) => deleteLink(element, linkUuid)"
@@ -190,4 +209,15 @@ async function reorderLinks(block, items) {
 		  <BlockAddMenu @select="addBlock" />
     </Span>
   </Grid>
+
+	<!-- Title lightbox -->
+	<Lightbox :open="showTitleLightbox" title="Neuer Block" @close="closeTitleLightbox" :closeable="false">
+		<form @submit.prevent="storeBlock" class="px-20">
+			<Input v-model="blockTitle" :error="get('title')" placeholder="Titel" class="form-input form-input--lg" @focus="clear('title')" />
+			<div class="flex gap-20 mt-20">
+				<Button type="submit" class="flex justify-center">Speichern</Button>
+				<Button @click="closeTitleLightbox" class="flex justify-center">Abbrechen</Button>
+			</div>
+		</form>
+	</Lightbox>
 </template>

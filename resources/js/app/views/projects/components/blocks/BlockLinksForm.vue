@@ -1,8 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 import draggable from 'vuedraggable'
-import Input from '@/components/ui/form/Input.vue'
-import Button from '@/components/ui/form/Button.vue'
 import PlusCircle from '@/components/icons/PlusCircle.vue'
 import BlockLinkRow from '@/views/projects/components/blocks/BlockLinkRow.vue'
 
@@ -11,13 +9,7 @@ const props = defineProps({
 	projects: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['save', 'save-link', 'delete-link', 'add-link', 'reorder-links'])
-
-const title = ref(props.block.title || '')
-
-watch(() => props.block, (val) => {
-	title.value = val.title || ''
-})
+const emit = defineEmits(['save-link', 'delete-link', 'add-link', 'reorder-links'])
 
 const links = ref([...(props.block.links || [])])
 
@@ -33,17 +25,10 @@ function onReorder() {
 	emit('reorder-links', items)
 }
 
-function save() {
-	emit('save', { title: title.value })
-}
 </script>
 
 <template>
 	<div class="flex flex-col gap-y-10 pt-10">
-		<Input
-			v-model="title"
-			placeholder="Titel" />
-
 		<draggable
 			v-if="links.length"
 			v-model="links"
@@ -70,8 +55,5 @@ function save() {
 			<span>Link hinzufügen</span>
 		</button>
 
-		<div class="flex justify-end pt-5">
-			<Button variant="primary" @click="save">Speichern</Button>
-		</div>
 	</div>
 </template>

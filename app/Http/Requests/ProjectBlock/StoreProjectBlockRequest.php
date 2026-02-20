@@ -15,7 +15,9 @@ class StoreProjectBlockRequest extends FormRequest
 	{
 		return [
 			'type' => 'required|string|in:text,slider,image,links,fixed-slider',
-			'title' => 'nullable|string|max:255',
+			'title' => $this->input('type') === 'fixed-slider'
+				? 'nullable|string|max:255'
+				: 'required|string|max:255',
 			'content' => 'nullable|string',
 		];
 	}
@@ -25,6 +27,7 @@ class StoreProjectBlockRequest extends FormRequest
 		return [
 			'type.required' => 'Bitte einen Blocktyp angeben',
 			'type.in' => 'Ungültiger Blocktyp',
+			'title.required' => 'Bitte einen Titel angeben',
 			'title.max' => 'Bitte überprüfe den Titel',
 		];
 	}
