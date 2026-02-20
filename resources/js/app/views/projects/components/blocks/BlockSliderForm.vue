@@ -10,21 +10,12 @@ const props = defineProps({
 	projectMedia: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['select-media', 'remove-media', 'reorder-media'])
+const emit = defineEmits(['select-media', 'remove-media', 'reorder-media', 'toggle-publish'])
 
 const drawerOpen = ref(false)
 const selectedUuids = ref([])
 
-const images = computed({
-	get: () => props.block.media || [],
-	set: (value) => {
-		const items = value.map((item, index) => ({
-			id: item.id,
-			sort_order: index,
-		}))
-		emit('reorder-media', items)
-	},
-})
+const images = computed(() => props.block.media || [])
 
 function openDrawer() {
 	selectedUuids.value = []
@@ -38,29 +29,40 @@ function onDrawerSubmit() {
 	drawerOpen.value = false
 }
 
+function onReorder() {
+	const items = images.value.map((item, index) => ({
+		uuid: item.uuid,
+		sort_order: index,
+	}))
+	emit('reorder-media', items)
+}
 </script>
 
 <template>
-	<div class="flex flex-col gap-y-10 pt-10">
-		<div class="grid grid-cols-3 gap-10">
-			<draggable
-				v-if="images.length"
-				v-model="images"
-				item-key="uuid"
-				handle=".drag-handle"
-				class="col-span-3 grid grid-cols-3 gap-10"
-				ghost-class="opacity-30"
-				animation="150">
-				<template #item="{ element }">
-					<MediaCard
-						:item="element"
-						:draggable="true"
-						:deletable="true"
-						compact
-						variant="dark"
-						@delete="$emit('remove-media', element.uuid)" />
-				</template>
-			</draggable>
+	<div class="pt-10">
+		<draggable
+			v-if="images.length"
+			:list="images"
+			item-key="uuid"
+			handle=".drag-handle"
+			class="grid grid-cols-4 gap-20"
+			ghost-class="opacity-30"
+			animation="150"
+			@end="onReorder">
+			<template #item="{ element }">
+				<MediaCard
+					:item="element"
+					draggable
+					publishable
+					deletable
+					@delete="$emit('remove-media', element.uuid)"
+					@toggle-publish="$emit('toggle-publish', element)" />
+			</template>
+			<template #footer>
+				<AddButton @click="openDrawer" />
+			</template>
+		</draggable>
+		<div v-else class="grid grid-cols-4 gap-20">
 			<AddButton @click="openDrawer" />
 		</div>
 

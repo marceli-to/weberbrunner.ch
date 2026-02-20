@@ -3,14 +3,13 @@ import { ref, computed } from 'vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
-import Cross from '@/components/icons/Cross.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
 	projectMedia: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['select-media', 'remove-media'])
+const emit = defineEmits(['select-media', 'remove-media', 'toggle-publish'])
 
 const drawerOpen = ref(false)
 const selectedUuid = ref(null)
@@ -28,22 +27,19 @@ function onDrawerSubmit() {
 	}
 	drawerOpen.value = false
 }
-
 </script>
 
 <template>
-	<div class="flex flex-col gap-y-10 pt-10">
-		<div class="grid grid-cols-3 gap-10">
-			<div v-if="image" class="relative">
-				<MediaCard :item="image" compact />
-				<button
-					type="button"
-					class="absolute top-5 right-5 cursor-pointer"
-					@click="$emit('remove-media', image.uuid)">
-					<Cross class="w-10" />
-				</button>
-			</div>
-			<AddButton v-if="!image" @click="openDrawer" />
+	<div class="pt-10">
+		<div class="grid grid-cols-4 gap-20">
+			<MediaCard
+				v-if="image"
+				:item="image"
+				publishable
+				deletable
+				@delete="$emit('remove-media', image.uuid)"
+				@toggle-publish="$emit('toggle-publish', image)" />
+			<AddButton v-else @click="openDrawer" />
 		</div>
 
 		<MediaPickerDrawer

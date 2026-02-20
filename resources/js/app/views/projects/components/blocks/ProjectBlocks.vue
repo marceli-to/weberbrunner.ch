@@ -112,6 +112,11 @@ async function removeMedia(block, mediaUuid) {
 	emit('updated')
 }
 
+async function togglePublish(item) {
+	await mediaApi.togglePublish(item.uuid)
+	emit('updated')
+}
+
 async function reorderMedia(block, items) {
 	await mediaApi.reorder(items)
 	emit('updated')
@@ -176,7 +181,8 @@ async function reorderLinks(block, items) {
 						:block="element"
 						:project-media="projectMedia"
 						@select-media="(uuids) => selectMedia(element, uuids)"
-						@remove-media="(uuid) => removeMedia(element, uuid)" />
+						@remove-media="(uuid) => removeMedia(element, uuid)"
+						@toggle-publish="togglePublish" />
 
 					<BlockSliderForm
 						v-if="element.type === 'slider'"
@@ -184,7 +190,8 @@ async function reorderLinks(block, items) {
 						:project-media="projectMedia"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
-						@reorder-media="(items) => reorderMedia(element, items)" />
+						@reorder-media="(items) => reorderMedia(element, items)"
+						@toggle-publish="togglePublish" />
 
 					<BlockLinksForm
 						v-if="element.type === 'links'"
