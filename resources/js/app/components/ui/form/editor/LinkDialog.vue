@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import AppDialog from '@/components/ui/dialog/AppDialog.vue'
 import Button from '@/components/ui/form/Button.vue'
-import LinkFormFields from '@/components/ui/form/LinkFormFields.vue'
+import LinkDialogFields from '@/components/ui/form/LinkDialogFields.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 
@@ -75,7 +75,7 @@ function remove() {
 <template>
 	<AppDialog :open="open" title="Link" @close="emit('close')">
 
-		<LinkFormFields
+		<LinkDialogFields
 			ref="formRef"
 			:mode="initialMode"
 			:url="initialUrl"
