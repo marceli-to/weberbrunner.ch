@@ -19,6 +19,7 @@ class UpdateMediaRequest extends FormRequest
 			'caption' => 'nullable|string|max:255',
 			'credits' => 'nullable|string|max:255',
 			'is_og' => 'sometimes|boolean',
+			'is_teaser' => 'sometimes|boolean',
 		];
 	}
 
