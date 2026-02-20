@@ -44,6 +44,8 @@
 
                     <x-cards.team
                         :image="$member->image?->file"
+                        :width="$member->image?->width"
+                        :height="$member->image?->height"
                         :firstname="$member->firstname"
                         :name="$member->name"
                         :title="$member->title"

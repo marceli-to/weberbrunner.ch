@@ -18,6 +18,8 @@
         <x-media.image
           :src="$member->image?->file"
           :alt="$member->firstname . ' ' . $member->name"
+          :width="$member->image?->width"
+          :height="$member->image?->height"
           class="w-full aspect-3/4 object-cover max-w-[70%] md:max-w-none mx-auto"
         />
         <div class="md:mt-20 lg:mt-40 hidden md:block">

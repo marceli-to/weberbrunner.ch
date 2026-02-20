@@ -7,6 +7,8 @@
           <x-cards.project-teaser
             :title="$project['title']"
             :image="$project['image']"
+            :width="$project['width']"
+            :height="$project['height']"
             :orientation="$project['orientation']"
             :slug="$project['slug']"
             :class="$colIndex === 2 && $loop->last ? '!border-b-0 md:!border-b' : ''" />

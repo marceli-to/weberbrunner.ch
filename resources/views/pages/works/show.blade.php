@@ -1,6 +1,10 @@
 @php
   // Prepare slides from media (excluding teaser)
-  $slides = $project->media->where('is_teaser', false)->map(fn($m) => ['src' => $m->file])->values();
+  $slides = $project->media->where('is_teaser', false)->map(fn($m) => [
+    'src' => $m->file,
+    'width' => $m->width,
+    'height' => $m->height,
+  ])->values();
 
   // Prepare project info from attributes
   $projectInfo = $project->attributes->map(fn($attr) => [
@@ -36,6 +40,8 @@
           <x-media.image
             :src="$slide['src']"
             alt=""
+            :width="$slide['width']"
+            :height="$slide['height']"
             class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"
           />
         </div>
@@ -69,6 +75,8 @@
         <x-media.image
           :src="$slide['src']"
           alt=""
+          :width="$slide['width']"
+          :height="$slide['height']"
           class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"
         />
       </div>

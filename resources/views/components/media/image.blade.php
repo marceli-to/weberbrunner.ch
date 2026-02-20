@@ -14,6 +14,5 @@
 		@if($height) height="{{ $height }}" @endif
 		@if($class) class="{{ $class }}" @endif
 		loading="{{ $loading }}"
-		{{ $attributes }}
-	>
+		{{ $attributes }}	>
 </picture>

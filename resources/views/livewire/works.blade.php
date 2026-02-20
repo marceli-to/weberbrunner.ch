@@ -30,6 +30,8 @@
               wire:key="project-{{ $project['slug'] }}-2col"
               :title="$project['title']"
               :image="$project['image']"
+              :width="$project['width']"
+              :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
               variant="sm" />
@@ -47,6 +49,8 @@
               wire:key="project-{{ $project['slug'] }}-3col"
               :title="$project['title']"
               :image="$project['image']"
+              :width="$project['width']"
+              :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
               variant="sm" />
@@ -64,6 +68,8 @@
               wire:key="project-{{ $project['slug'] }}-4col"
               :title="$project['title']"
               :image="$project['image']"
+              :width="$project['width']"
+              :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
               variant="sm" />

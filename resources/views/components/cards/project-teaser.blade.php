@@ -1,6 +1,8 @@
 @props([
   'title' => null,
   'image' => null,
+  'width' => null,
+  'height' => null,
   'orientation' => null,
   'slug' => null,
   'class' => null,
@@ -18,7 +20,12 @@
   class="flex flex-col gap-y-10 border-b border-black {{ $wrapperClass }} {{ $class }} group">
 
   @if($image)
-    <x-media.image :src="$image" class="group-hover:opacity-90 transition-all {{ $imageClass }}" />
+    <x-media.image
+      :src="$image"
+      :width="$width"
+      :height="$height"
+      class="group-hover:opacity-90 transition-all {{ $imageClass }}"
+    />
   @endif
 
   <x-headings.h2 class="font-semibold leading-[1.25] group-hover:underline group-hover:underline-offset-4 group-hover:lg:underline-offset-4 group-hover:decoration-1 transition-all {{ $titleClass }}">

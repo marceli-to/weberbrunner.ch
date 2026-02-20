@@ -1,5 +1,7 @@
 @props([
   'image' => null,
+  'width' => null,
+  'height' => null,
   'firstname' => '',
   'name' => '',
   'title' => '',
@@ -14,6 +16,8 @@
     <x-media.image
       :src="$image"
       :alt="$firstname . ' ' . $name"
+      :width="$width"
+      :height="$height"
       class="w-full aspect-3/4 object-cover max-w-[70%] mx-auto mb-20"
     />
   @endif

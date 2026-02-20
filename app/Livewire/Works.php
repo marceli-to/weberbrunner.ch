@@ -116,6 +116,8 @@ class Works extends Component
 					'title' => $project->full_title,
 					'slug' => $project->slug,
 					'image' => $media?->file ?? 'images/dummy-teaser-1.jpg',
+					'width' => $media?->width,
+					'height' => $media?->height,
 					'orientation' => $media?->orientation ?? 'unknown',
 				];
 			});
