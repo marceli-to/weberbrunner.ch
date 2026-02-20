@@ -41,7 +41,7 @@ class ImageController extends Controller
 
 		return response($imageContent, 200)
 			->header('Content-Type', $mimeType)
-			->header('Cache-Control', 'max-age=31536000, public')
+			->header('Cache-Control', 'public, max-age=31536000, immutable')
 			->header('Expires', now()->addYear()->toRfc7231String());
 	}
 
