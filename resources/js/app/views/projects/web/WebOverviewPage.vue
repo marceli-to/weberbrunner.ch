@@ -110,7 +110,9 @@ async function reorderSliderImages() {
 								<AddButton @click="sliderDrawerOpen = true" />
 							</template>
 						</draggable>
-						<AddButton v-else @click="sliderDrawerOpen = true" />
+						<div v-else class="grid grid-cols-4 gap-20">
+							<AddButton @click="sliderDrawerOpen = true" />
+						</div>
 					</div>
 
 					<MediaPickerDrawer

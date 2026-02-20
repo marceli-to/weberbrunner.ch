@@ -38,6 +38,7 @@ watch(() => props.project.blocks, (val) => {
 	blocks.value = (val || []).filter(b => b.type !== 'fixed-slider')
 }, { immediate: true })
 const projectMedia = computed(() => props.project.media || [])
+const lastCreatedUuid = ref(null)
 
 const pendingType = ref(null)
 const blockTitle = ref('')
@@ -52,10 +53,12 @@ function addBlock(type) {
 }
 
 async function storeBlock() {
-	const ok = await submit(() =>
-		projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title: blockTitle.value })
-	)
+	let response
+	const ok = await submit(async () => {
+		response = await projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title: blockTitle.value })
+	})
 	if (!ok) return
+	lastCreatedUuid.value = response.data.data.uuid
 	closeTitleLightbox()
 	emit('updated')
 	toast.success('Block hinzugefügt')
@@ -178,7 +181,7 @@ async function reorderLinks(block, items) {
 
 			<template #item="{ element }">
 
-				<BlockCard :block="element" @delete="deleteBlock(element)">
+				<BlockCard :block="element" :initial-open="element.uuid === lastCreatedUuid" @delete="deleteBlock(element)">
 
 					<BlockTextForm
 						v-if="element.type === 'text'"

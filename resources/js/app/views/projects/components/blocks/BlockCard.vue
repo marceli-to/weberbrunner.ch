@@ -8,6 +8,7 @@ import Cross from '@/components/icons/Cross.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
+	initialOpen: { type: Boolean, default: false },
 })
 
 defineEmits(['delete'])
@@ -19,7 +20,7 @@ const typeLabels = {
 	links: 'Links',
 }
 
-const collapsed = ref(true)
+const collapsed = ref(!props.initialOpen)
 </script>
 
 <template>
