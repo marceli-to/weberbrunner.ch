@@ -87,8 +87,8 @@ it('reorders team members', function () {
 	$b = TeamMember::factory()->create();
 	$this->patchJson('/api/dashboard/team/reorder', [
 		'items' => [
-			['id' => $a->id, 'sort_order' => 2],
-			['id' => $b->id, 'sort_order' => 1],
+			['uuid' => $a->uuid, 'sort_order' => 2],
+			['uuid' => $b->uuid, 'sort_order' => 1],
 		],
 	])->assertNoContent();
 	expect($a->fresh()->sort_order)->toBe(2);
