@@ -10,7 +10,7 @@ const props = defineProps({
 	projectMedia: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['select-media', 'remove-media', 'reorder-media', 'toggle-publish'])
+const emit = defineEmits(['select-media', 'remove-media', 'reorder-media', 'toggle-publish', 'edit-media'])
 
 const drawerOpen = ref(false)
 const selectedUuids = ref([])
@@ -55,8 +55,11 @@ function onReorder() {
 					draggable
 					publishable
 					deletable
+					editable
+					show-filename
 					@delete="$emit('remove-media', element.uuid)"
-					@toggle-publish="$emit('toggle-publish', element)" />
+					@toggle-publish="$emit('toggle-publish', element)"
+					@edit="$emit('edit-media', $event)" />
 			</template>
 			<template #footer>
 				<AddButton @click="openDrawer" />

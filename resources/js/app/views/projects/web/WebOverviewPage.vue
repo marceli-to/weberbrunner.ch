@@ -14,11 +14,15 @@ import MediaCard from '@/components/media/MediaCard.vue'
 import ProjectBlocks from '@/views/projects/components/blocks/ProjectBlocks.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
+import MediaEditModal from '@/components/media/MediaEditModal.vue'
+import { useToast } from '@/composables/useToast'
 
 const { project, fetch } = useProject()
+const toast = useToast()
 const { collapsed, toggle } = useCollapsed('web-layout')
 const { confirm } = useConfirm()
 
+const editingMedia = ref(null)
 const sliderDrawerOpen = ref(false)
 const selectedSliderUuids = ref([])
 
@@ -59,6 +63,13 @@ async function toggleSliderPublish(item) {
 	await fetch()
 }
 
+async function onEditSave({ uuid, data }) {
+	await mediaApi.update(uuid, data)
+	editingMedia.value = null
+	toast.success('Bild gespeichert')
+	await fetch()
+}
+
 async function reorderSliderImages() {
 	const items = sliderImages.value.map((m, index) => ({
 		uuid: m.uuid,
@@ -93,7 +104,7 @@ async function reorderSliderImages() {
 							animation="150"
 							@end="reorderSliderImages">
 							<template #item="{ element }">
-								<MediaCard :item="element" draggable publishable deletable @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" />
+								<MediaCard :item="element" draggable publishable deletable editable show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
 							</template>
 							<template #footer>
 								<AddButton @click="sliderDrawerOpen = true" />
@@ -145,5 +156,11 @@ async function reorderSliderImages() {
 			<ProjectBlocks :project="project" @updated="fetch" />
 
 		</template>
+
+		<MediaEditModal
+			:media="editingMedia"
+			@save="onEditSave"
+			@close="editingMedia = null" />
+
 	</WebLayout>
 </template>

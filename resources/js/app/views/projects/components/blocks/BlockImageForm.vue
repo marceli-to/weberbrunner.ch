@@ -9,7 +9,7 @@ const props = defineProps({
 	projectMedia: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['select-media', 'remove-media', 'toggle-publish'])
+const emit = defineEmits(['select-media', 'remove-media', 'toggle-publish', 'edit-media'])
 
 const drawerOpen = ref(false)
 const selectedUuid = ref(null)
@@ -37,8 +37,11 @@ function onDrawerSubmit() {
 				:item="image"
 				publishable
 				deletable
+				editable
+				show-filename
 				@delete="$emit('remove-media', image.uuid)"
-				@toggle-publish="$emit('toggle-publish', image)" />
+				@toggle-publish="$emit('toggle-publish', image)"
+				@edit="$emit('edit-media', $event)" />
 			<AddButton v-else @click="openDrawer" />
 		</div>
 

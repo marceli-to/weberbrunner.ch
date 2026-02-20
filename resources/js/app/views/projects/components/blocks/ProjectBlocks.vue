@@ -19,6 +19,7 @@ import BlockTextForm from '@/views/projects/components/blocks/BlockTextForm.vue'
 import BlockImageForm from '@/views/projects/components/blocks/BlockImageForm.vue'
 import BlockSliderForm from '@/views/projects/components/blocks/BlockSliderForm.vue'
 import BlockLinksForm from '@/views/projects/components/blocks/BlockLinksForm.vue'
+import MediaEditModal from '@/components/media/MediaEditModal.vue'
 
 const props = defineProps({
 	project: { type: Object, required: true },
@@ -30,6 +31,7 @@ const toast = useToast()
 const { confirm } = useConfirm()
 const { get, clear, submit } = useFormErrors()
 const allProjects = ref([])
+const editingMedia = ref(null)
 
 const blocks = ref([])
 watch(() => props.project.blocks, (val) => {
@@ -112,6 +114,13 @@ async function removeMedia(block, mediaUuid) {
 	emit('updated')
 }
 
+async function onEditSave({ uuid, data }) {
+	await mediaApi.update(uuid, data)
+	editingMedia.value = null
+	toast.success('Bild gespeichert')
+	emit('updated')
+}
+
 async function togglePublish(item) {
 	await mediaApi.togglePublish(item.uuid)
 	emit('updated')
@@ -182,7 +191,8 @@ async function reorderLinks(block, items) {
 						:project-media="projectMedia"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
-						@toggle-publish="togglePublish" />
+						@toggle-publish="togglePublish"
+						@edit-media="editingMedia = $event" />
 
 					<BlockSliderForm
 						v-if="element.type === 'slider'"
@@ -191,7 +201,8 @@ async function reorderLinks(block, items) {
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@reorder-media="(items) => reorderMedia(element, items)"
-						@toggle-publish="togglePublish" />
+						@toggle-publish="togglePublish"
+						@edit-media="editingMedia = $event" />
 
 					<BlockLinksForm
 						v-if="element.type === 'links'"
@@ -216,6 +227,12 @@ async function reorderLinks(block, items) {
 		  <BlockAddMenu @select="addBlock" />
     </Span>
   </Grid>
+
+	<!-- Media edit lightbox -->
+	<MediaEditModal
+		:media="editingMedia"
+		@save="onEditSave"
+		@close="editingMedia = null" />
 
 	<!-- Title lightbox -->
 	<Lightbox :open="showTitleLightbox" title="Neuer Block" @close="closeTitleLightbox" :closeable="false">
