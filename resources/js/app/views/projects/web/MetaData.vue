@@ -124,7 +124,8 @@ function goBack() {
               <img
                 :src="item.thumbnail_url"
                 :alt="item.original_name"
-                class="w-full h-auto aspect-square object-cover bg-white" />
+                class="w-full h-auto aspect-square object-cover bg-white cursor-pointer"
+                @click="selectedOgImage = item.uuid" />
             </Span>
           </Grid>
         </Span>
