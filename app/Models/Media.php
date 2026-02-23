@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPublishScope;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Media extends Model
 {
-	use HasFactory, HasUuid, LogsActivity;
+	use HasFactory, HasPublishScope, HasUuid, LogsActivity;
 
 	protected $fillable = [
 		'uuid',
