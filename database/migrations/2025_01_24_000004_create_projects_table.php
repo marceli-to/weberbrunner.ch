@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
+            $table->text('meta_description')->nullable();
             $table->string('city')->nullable();
             $table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();
             $table->boolean('publish')->default(false);

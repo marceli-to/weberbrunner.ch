@@ -17,6 +17,7 @@ return new class extends Migration
 			$table->string('link_type')->default('external');
 			$table->foreignId('linked_project_id')->nullable()->constrained('projects')->nullOnDelete();
 			$table->integer('sort_order')->default(0);
+			$table->boolean('publish')->default(true);
 			$table->timestamps();
 		});
 	}
