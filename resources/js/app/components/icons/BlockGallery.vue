@@ -1,13 +1,7 @@
 <template>
-  <svg viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="50" height="40" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 0V40H50V0H0ZM48 38H2V2H48V38Z" fill="currentColor"/>
-    <path d="M29 9L19 25.66L15 19L6 34H44L29 9Z" fill="currentColor"/>
-    <path d="M10.5 11C11.8807 11 13 9.88071 13 8.5C13 7.11929 11.8807 6 10.5 6C9.11929 6 8 7.11929 8 8.5C8 9.88071 9.11929 11 10.5 11Z" fill="currentColor"/>
-    <path d="M62.5 0V40H112.5V0H62.5ZM110.5 38H64.5V2H110.5V38Z" fill="currentColor" fill-opacity="0.5"/>
-    <path d="M91.5 9L81.5 25.66L77.5 19L68.5 34H106.5L91.5 9Z" fill="currentColor" fill-opacity="0.5"/>
-    <path d="M73 11C74.3807 11 75.5 9.88071 75.5 8.5C75.5 7.11929 74.3807 6 73 6C71.6193 6 70.5 7.11929 70.5 8.5C70.5 9.88071 71.6193 11 73 11Z" fill="currentColor" fill-opacity="0.5"/>
-    <path d="M150 0H125V40H150V38H127V2H150V0Z" fill="currentColor" fill-opacity="0.5"/>
-    <path d="M135.5 11C136.881 11 138 9.88071 138 8.5C138 7.11929 136.881 6 135.5 6C134.119 6 133 7.11929 133 8.5C133 9.88071 134.119 11 135.5 11Z" fill="currentColor" fill-opacity="0.5"/>
-    <path d="M150 34V15.66L144 25.66L140 19L131 34H150Z" fill="currentColor" fill-opacity="0.5"/>
+    <path d="M38 14L36.59 15.42L40.18 19H29V21H40.18L36.59 24.59L38 26L44 20L38 14Z" fill="currentColor"/>
+    <path d="M12 14L13.42 15.42L9.83002 19H21V21H9.83002L13.42 24.59L12 26L6 20L12 14Z" fill="currentColor"/>
   </svg>
 </template>

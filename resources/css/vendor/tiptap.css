@@ -6,6 +6,11 @@
 	@apply mb-[0.5em];
 }
 
+.editor h2,
+.editor h3 {
+  @apply font-semibold mb-[0.5em];
+}
+
 .editor .tiptap ul {
 	@apply list-disc pl-[1.5em] mb-[0.5em];
 }

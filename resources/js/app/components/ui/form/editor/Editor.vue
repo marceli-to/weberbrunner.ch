@@ -16,7 +16,9 @@ const editor = useEditor({
 	content: props.modelValue,
 	extensions: [
 		StarterKit.configure({
-			heading: false,
+			heading: {
+				levels: [2, 3],
+			},
 			codeBlock: false,
 			blockquote: false,
 			code: false,

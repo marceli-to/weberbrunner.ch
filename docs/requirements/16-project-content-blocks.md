@@ -165,3 +165,7 @@ Add `<ProjectBlocks>` below existing `ProjectMasterData` in `ShowPage.vue`.
 6. Dashboard: Add blocks from ShowPage, verify inline editing
 7. Dashboard: Drag-reorder blocks, verify persistence
 8. Dashboard: Delete block, verify media files removed from disk
+
+## Open Questions / TODOs
+
+1. **Media deletion cascading to blocks:** If an image is deleted from the media table (e.g. via the global media manager), but is still referenced by a `slider` or `image` block — what should happen? Options: (a) prevent deletion if media is attached to a block, (b) allow deletion and let the block gracefully handle the missing image, (c) cascade-remove the block itself. Needs a decision before launch.
