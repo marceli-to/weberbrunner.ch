@@ -4,6 +4,7 @@
     'src' => $m->file,
     'width' => $m->width,
     'height' => $m->height,
+    'caption' => $m->caption,
   ])->values();
 
   // Prepare project info from attributes
@@ -29,7 +30,7 @@
   @endif
 
   @if($slides->isNotEmpty())
-    <x-media.slideshow class="mb-20 lg:mb-40">
+    <x-slideshow.wrapper class="mb-20 lg:mb-40">
 
       <x-slot:info>
         <x-work.info
@@ -40,18 +41,15 @@
       </x-slot:info>
 
       @foreach($slides as $slide)
-        <div class="swiper-slide !w-auto flex justify-center items-center">
-          <x-media.image
-            :src="$slide['src']"
-            alt=""
-            :width="$slide['width']"
-            :height="$slide['height']"
-            class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"
-          />
-        </div>
+        <x-slideshow.slide
+          :src="$slide['src']"
+          :width="$slide['width']"
+          :height="$slide['height']"
+          :caption="$slide['caption'] ?? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'"
+        />
       @endforeach
 
-    </x-media.slideshow>
+    </x-slideshow.wrapper>
   @endif
 
   @if($project->description)
@@ -70,22 +68,19 @@
   </div>
 
   <x-work.section title="Grundrisse" />
-  <x-media.slideshow class="mb-40 lg:mb-80">
+  <x-slideshow.wrapper class="mb-40 lg:mb-80">
     <x-slot:info>
       &nbsp;
     </x-slot:info>
     @foreach($slides->take(3) as $slide)
-      <div class="swiper-slide !w-auto flex justify-center items-center">
-        <x-media.image
-          :src="$slide['src']"
-          alt=""
-          :width="$slide['width']"
-          :height="$slide['height']"
-          class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"
-        />
-      </div>
+      <x-slideshow.slide
+        :src="$slide['src']"
+        :width="$slide['width']"
+        :height="$slide['height']"
+        :caption="$slide['caption'] ?? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'"
+      />
     @endforeach
-  </x-media.slideshow>
+  </x-slideshow.wrapper>
 
   <x-work.section title="Links" class="mb-40 lg:mb-80">
     <x-container.inner class="max-w-prose hyphens-auto">
