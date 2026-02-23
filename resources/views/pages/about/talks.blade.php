@@ -9,7 +9,7 @@
 				</x-headings.section>
 				<div class="flex flex-col gap-y-8 md:gap-y-16">
 					@foreach($section->talks as $talk)
-						<x-cards.talk :link="$talk->link">
+						<x-cards.talk>
 							{!! $talk->text !!}
 						</x-cards.talk>
 					@endforeach
