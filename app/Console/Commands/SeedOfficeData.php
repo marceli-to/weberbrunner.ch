@@ -374,7 +374,6 @@ class SeedOfficeData extends Command
 			foreach ($entries as $entry) {
 				$section->talks()->create([
 					'text' => $entry['text'],
-					'link' => $entry['link'] ?? null,
 					'publish' => true,
 					'sort_order' => $itemOrder++,
 				]);

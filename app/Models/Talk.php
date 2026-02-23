@@ -18,7 +18,6 @@ class Talk extends Model
 
 	protected $fillable = [
 		'text',
-		'link',
 		'section_id',
 		'publish',
 		'sort_order',

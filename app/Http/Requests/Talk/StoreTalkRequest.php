@@ -23,7 +23,6 @@ class StoreTalkRequest extends FormRequest
 	{
 		return [
 			'text' => 'required|string',
-			'link' => 'nullable|url',
 			'section_id' => 'required|exists:sections,id',
 			'publish' => 'boolean',
 		];
