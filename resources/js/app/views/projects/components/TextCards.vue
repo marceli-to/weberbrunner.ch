@@ -19,7 +19,7 @@ defineProps({
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>
-        <div class="font-semibold text-md pt-5 pb-20 flex-1 border-b-thin">
+        <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
           {{ project.description }}
         </div>
       </Card>
@@ -32,7 +32,7 @@ defineProps({
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>
-        <div class="font-semibold text-md pt-5 pb-20 flex-1 border-b-thin">
+        <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
           {{ project.short_description }}
         </div>
       </Card>
