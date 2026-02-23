@@ -11,7 +11,7 @@ const cols = inject('listTableCols', 8)
 </script>
 
 <template>
-	<RouterLink v-if="to && !header" :to="to" class="block text-md font-semibold">
+	<RouterLink v-if="to && !header" :to="to" class="block text-md">
 		<Grid
 			:cols="cols"
 			class="hover:bg-navy group">
@@ -21,7 +21,7 @@ const cols = inject('listTableCols', 8)
 	<Grid
 		v-else
 		:cols="cols"
-    class="text-sm font-semibold"
+    class="text-sm"
 		:class="header ? '' : 'hover:bg-navy group'">
 		<slot />
 	</Grid>

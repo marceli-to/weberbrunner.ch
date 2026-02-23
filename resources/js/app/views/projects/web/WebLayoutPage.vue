@@ -129,7 +129,7 @@ async function reorderSliderImages() {
 
 					<div v-show="!collapsed.has('description')" class="bg-white px-20 pb-20">
 
-						<div class="text-md font-semibold max-w-4xl py-10" v-html="project.description" />
+						<div class="text-md max-w-4xl py-10" v-html="project.description" />
 
 					</div>
 

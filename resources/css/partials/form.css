@@ -18,8 +18,7 @@ select:-webkit-autofill:focus {
 /* Text inputs & Textarea */
 .form-input,
 .form-textarea {
-	@apply bg-white font-semibold w-full border-thin border-solid border-black;
-	@apply placeholder:font-semibold placeholder:text-black;
+	@apply bg-white w-full border-thin border-solid border-black placeholder:text-black;
 	@apply focus:ring-0 focus:outline-none;
 }
 
@@ -34,8 +33,7 @@ select:-webkit-autofill:focus {
 }
 
 .form-textarea {
-	@apply text-md px-10 py-10 resize-y min-h-100;
-	@apply placeholder:text-md;
+	@apply text-md px-10 py-10 resize-y min-h-100 placeholder:text-md;
 }
 
 /* Select */
