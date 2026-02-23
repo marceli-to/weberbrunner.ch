@@ -8,7 +8,7 @@ class TogglePublishAction
 {
 	public function execute(Media $media): Media
 	{
-		$media->update(['is_published' => !$media->is_published]);
+		$media->update(['publish' => !$media->publish]);
 
 		return $media;
 	}

@@ -20,7 +20,7 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 <template>
 	<div
     class="border-thin bg-white"
-    :class="[variant === 'dark' ? 'border-black' : 'border-silver', publishable && !item.is_published ? 'opacity-60' : '']">
+    :class="[variant === 'dark' ? 'border-black' : 'border-silver', publishable && !item.publish ? 'opacity-60' : '']">
 
 		<div class="relative aspect-square overflow-hidden">
 
@@ -31,7 +31,7 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 					</button>
 					<span v-else />
 					<button v-if="publishable" type="button" class="cursor-pointer" @click="$emit('toggle-publish', item)">
-						<Eye :variant="item.is_published ? 'visible' : 'hidden'" class="w-16 h-auto" />
+						<Eye :variant="item.publish ? 'visible' : 'hidden'" class="w-16 h-auto" />
 					</button>
 					<button v-if="deletable" type="button" class="cursor-pointer" @click="$emit('delete', item)">
 						<Cross class="w-12 h-auto" />
