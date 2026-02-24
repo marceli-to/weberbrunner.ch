@@ -2,7 +2,7 @@
 	'info' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'swiper']) }} data-slideshow>
+<div {{ $attributes->merge(['class' => 'swiper']) }} data-slideshow x-data="{ captionOpen: true }">
 
 	<div class="swiper-wrapper relative">
 
