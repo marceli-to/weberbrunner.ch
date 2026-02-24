@@ -45,7 +45,7 @@
           :src="$slide['src']"
           :width="$slide['width']"
           :height="$slide['height']"
-          :caption="$slide['caption'] ?? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'"
+          :caption="$slide['caption']"
         />
       @endforeach
 
@@ -77,7 +77,7 @@
         :src="$slide['src']"
         :width="$slide['width']"
         :height="$slide['height']"
-        :caption="$slide['caption'] ?? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'"
+        :caption="$slide['caption']"
       />
     @endforeach
   </x-slideshow.wrapper>
