@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Location;
 use App\Models\Section;
 use Illuminate\Console\Command;
 
@@ -9,13 +10,14 @@ class SeedOfficeData extends Command
 {
 	protected $signature = 'app:seed-office-data';
 
-	protected $description = 'Seed awards, jury entries and talks with their sections';
+	protected $description = 'Seed awards, jury entries, talks and contacts';
 
 	public function handle(): void
 	{
 		$this->seedAwards();
 		$this->seedJuries();
 		$this->seedTalks();
+		$this->seedContacts();
 
 		$this->info('Office data seeded.');
 	}
@@ -378,6 +380,41 @@ class SeedOfficeData extends Command
 					'sort_order' => $itemOrder++,
 				]);
 			}
+		}
+	}
+
+	private function seedContacts(): void
+	{
+		$data = [
+			'zuerich' => [
+				'company_name' => 'weberbrunner architektur ag',
+				'address' => 'Binzstrasse 23, 8045 Zürich',
+				'phone' => '+41 44 405 20 80',
+				'email' => 'info@weberbrunner.ch',
+				'maps_url' => 'https://maps.google.ch',
+			],
+			'berlin' => [
+				'company_name' => "weberbrunner pischetsrieder architektur\nGesellschaft von Architekten mbH",
+				'address' => 'Zehdenicker Straße 21, 10119 Berlin',
+				'phone' => '+49 30 92 10 13 330',
+				'email' => 'info@wbp-architektur.de',
+				'maps_url' => null,
+			],
+		];
+
+		$sortOrder = 0;
+		foreach ($data as $locationSlug => $contact) {
+			$location = Location::where('slug', $locationSlug)->first();
+			if (!$location) {
+				$this->warn("Location '{$locationSlug}' not found, skipping.");
+				continue;
+			}
+
+			$location->contacts()->create([
+				...$contact,
+				'publish' => true,
+				'sort_order' => $sortOrder++,
+			]);
 		}
 	}
 }
