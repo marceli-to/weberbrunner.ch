@@ -36,6 +36,11 @@ class Location extends Model
 		return $this->hasMany(Job::class);
 	}
 
+	public function contacts(): HasMany
+	{
+		return $this->hasMany(Contact::class);
+	}
+
 	public function getActivitylogOptions(): LogOptions
 	{
 		return LogOptions::defaults()

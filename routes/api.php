@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AwardController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\JuryController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\NetworkEntryController;
@@ -221,6 +222,21 @@ Route::prefix('dashboard')
 				Route::patch('/{job}/toggle', 'toggle');
 				Route::delete('/{job}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Contacts
+		Route::controller(ContactController::class)
+			->prefix('contacts')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::get('/{contact}', 'show');
+				Route::put('/{contact}', 'update');
+				Route::patch('/{contact}/toggle', 'toggle');
+				Route::delete('/{contact}', 'destroy');
+				Route::patch('/{uuid}/restore', 'restore');
+				Route::post('/{contact}/media', 'attachMedia');
 			});
 
 		// Talks

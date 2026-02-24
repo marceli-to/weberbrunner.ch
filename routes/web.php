@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectPreviewController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JuryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TalkController;
 use App\Http\Controllers\TeamController;
 
@@ -30,7 +31,7 @@ Route::prefix('buero')->name('page.about')->group(function () {
 	Route::view('/team', 'pages.about.team')->name('.team');
 	Route::get('/team/{slug}', [TeamController::class, 'show'])->name('.team.show');
 	Route::get('/jobs', JobController::class)->name('.jobs');
-	Route::view('/kontakt', 'pages.about.contact')->name('.contact');
+	Route::get('/kontakt', ContactController::class)->name('.contact');
 	Route::view('/netzwerk', 'pages.about.network')->name('.network');
 	Route::get('/vortraege', TalkController::class)->name('.talks');
 	Route::get('/jury', JuryController::class)->name('.jury');

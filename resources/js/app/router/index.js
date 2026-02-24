@@ -11,6 +11,8 @@ import ProjectsTeaserImage from '@/views/projects/web/TeaserImagePage.vue'
 import ProjectsSettings from '@/views/projects/web/SettingsPage.vue'
 import OfficeTeam from '@/views/office/team/IndexPage.vue'
 import OfficeTeamShow from '@/views/office/team/DetailPage.vue'
+import OfficeContacts from '@/views/office/contacts/IndexPage.vue'
+import OfficeContactsForm from '@/views/office/contacts/FormPage.vue'
 import OfficeJobs from '@/views/office/jobs/IndexPage.vue'
 import OfficeJobsForm from '@/views/office/jobs/FormPage.vue'
 import OfficeNetwork from '@/views/office/network/IndexPage.vue'
@@ -94,6 +96,24 @@ const routes = [
     name: 'team.show',
     component: OfficeTeamShow,
     meta: { title: 'Team', navSection: 'office', navParent: 'office.team' },
+  },
+  {
+    path: '/dashboard/buero/kontakt',
+    name: 'office.contacts',
+    component: OfficeContacts,
+    meta: { title: 'Kontakt', navSection: 'office', navLabel: 'Kontakt', navOrder: 70 },
+  },
+  {
+    path: '/dashboard/buero/kontakt/erstellen',
+    name: 'contacts.create',
+    component: OfficeContactsForm,
+    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts' },
+  },
+  {
+    path: '/dashboard/buero/kontakt/:id/bearbeiten',
+    name: 'contacts.edit',
+    component: OfficeContactsForm,
+    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts' },
   },
   {
     path: '/dashboard/buero/jobs',

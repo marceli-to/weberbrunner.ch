@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Actions\Contact;
+
+use App\Models\Contact;
+
+class ReorderAction
+{
+	public function execute(array $items): void
+	{
+		foreach ($items as $item) {
+			$data = ['sort_order' => $item['sort_order']];
+			if (isset($item['location_id'])) {
+				$data['location_id'] = $item['location_id'];
+			}
+			Contact::where('uuid', $item['uuid'])->update($data);
+		}
+	}
+}
