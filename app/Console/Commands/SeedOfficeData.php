@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Location;
 use App\Models\Section;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class SeedOfficeData extends Command
 {
@@ -392,6 +393,7 @@ class SeedOfficeData extends Command
 				'phone' => '+41 44 405 20 80',
 				'email' => 'info@weberbrunner.ch',
 				'maps_url' => 'https://maps.google.ch',
+				'image' => 'images/dummy-location-zuerich.jpg',
 			],
 			'berlin' => [
 				'company_name' => "weberbrunner pischetsrieder architektur\nGesellschaft von Architekten mbH",
@@ -399,22 +401,45 @@ class SeedOfficeData extends Command
 				'phone' => '+49 30 92 10 13 330',
 				'email' => 'info@wbp-architektur.de',
 				'maps_url' => null,
+				'image' => 'images/dummy-location-berlin.jpg',
 			],
 		];
 
+		$disk = Storage::disk('public');
 		$sortOrder = 0;
-		foreach ($data as $locationSlug => $contact) {
+
+		foreach ($data as $locationSlug => $contactData) {
 			$location = Location::where('slug', $locationSlug)->first();
 			if (!$location) {
 				$this->warn("Location '{$locationSlug}' not found, skipping.");
 				continue;
 			}
 
-			$location->contacts()->create([
-				...$contact,
+			$imagePath = $contactData['image'];
+			unset($contactData['image']);
+
+			$contact = $location->contacts()->create([
+				...$contactData,
 				'publish' => true,
 				'sort_order' => $sortOrder++,
 			]);
+
+			if ($disk->exists($imagePath)) {
+				$fullPath = $disk->path($imagePath);
+				$dimensions = @getimagesize($fullPath);
+
+				$contact->media()->create([
+					'file' => $imagePath,
+					'original_name' => basename($imagePath),
+					'mime_type' => $dimensions['mime'] ?? 'image/jpeg',
+					'size' => $disk->size($imagePath),
+					'width' => $dimensions[0] ?? null,
+					'height' => $dimensions[1] ?? null,
+					'is_teaser' => false,
+					'publish' => true,
+					'sort_order' => 0,
+				]);
+			}
 		}
 	}
 }
