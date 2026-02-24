@@ -268,6 +268,24 @@ class SeedProjects extends Command
         return $paragraphs[array_rand($paragraphs)];
     }
 
+    private array $captions = [
+        'Visualisierung Aussenraum © weberbrunner architektur',
+        'Ansicht Südfassade mit vorgelagertem Gartenbereich',
+        'Blick in den gemeinschaftlichen Innenhof',
+        'Detailansicht Fassade mit Holzverkleidung',
+        'Grundriss Erdgeschoss mit Erschliessung',
+        'Schnitt durch das Hauptgebäude',
+        'Situationsplan mit Umgebungsgestaltung',
+        'Materialisierung Fassade: Holz und Sichtbeton',
+        'Vogelperspektive der Gesamtanlage',
+        'Modellaufnahme Wettbewerbsbeitrag',
+        'Innenraum Wohnung mit Blick nach Süden',
+        'Treppenhaus mit natürlicher Belichtung',
+        'Übergang Innen- und Aussenraum',
+        'Konstruktionsdetail Dachaufbau',
+        'Nachtansicht mit Beleuchtungskonzept',
+    ];
+
     private function attachImage(Project $project, string $sourceFile, string $alt, int $sortOrder, bool $isTeaser, bool $isOg = false): void
     {
         $disk = Storage::disk('public');
@@ -286,6 +304,8 @@ class SeedProjects extends Command
         $fullPath = $disk->path("uploads/{$filename}");
         $dimensions = @getimagesize($fullPath);
 
+        $caption = (!$isTeaser && !$isOg) ? $this->captions[array_rand($this->captions)] : null;
+
         $project->media()->create([
             'file' => "uploads/{$filename}",
             'original_name' => $sourceFile,
@@ -294,6 +314,7 @@ class SeedProjects extends Command
             'width' => $dimensions[0] ?? null,
             'height' => $dimensions[1] ?? null,
             'alt' => $alt,
+            'caption' => $caption,
             'is_teaser' => $isTeaser,
             'is_og' => $isOg,
             'sort_order' => $sortOrder,
