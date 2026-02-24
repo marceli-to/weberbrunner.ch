@@ -8,7 +8,7 @@
 <div class="swiper-slide !w-auto flex justify-center items-center relative">
 	<x-media.image
 		:src="$src"
-		alt=""
+		:alt="$caption ?? ''"
 		:width="$width"
 		:height="$height"
 		class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"

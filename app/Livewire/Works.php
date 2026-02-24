@@ -119,6 +119,7 @@ class Works extends Component
 					'width' => $media?->width,
 					'height' => $media?->height,
 					'orientation' => $media?->orientation ?? 'unknown',
+					'caption' => $media?->caption,
 				];
 			});
 	}

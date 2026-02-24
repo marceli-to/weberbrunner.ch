@@ -5,6 +5,7 @@
   'height' => null,
   'orientation' => null,
   'slug' => null,
+  'caption' => null,
   'class' => null,
   'variant' => 'default'
 ])
@@ -22,6 +23,7 @@
   @if($image)
     <x-media.image
       :src="$image"
+      :alt="$caption ?? ''"
       :width="$width"
       :height="$height"
       class="group-hover:opacity-90 transition-all {{ $imageClass }}"

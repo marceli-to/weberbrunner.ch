@@ -11,6 +11,7 @@
             :height="$project['height']"
             :orientation="$project['orientation']"
             :slug="$project['slug']"
+            :caption="$project['caption']"
             :class="$colIndex === 2 && $loop->last ? '!border-b-0 md:!border-b' : ''" />
         @endforeach
       </div>

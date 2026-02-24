@@ -34,6 +34,7 @@
               :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
+              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>
@@ -53,6 +54,7 @@
               :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
+              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>
@@ -72,6 +74,7 @@
               :height="$project['height']"
               :orientation="$project['orientation']"
               :slug="$project['slug']"
+              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>
