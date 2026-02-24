@@ -304,7 +304,7 @@ class SeedProjects extends Command
         $fullPath = $disk->path("uploads/{$filename}");
         $dimensions = @getimagesize($fullPath);
 
-        $caption = (!$isTeaser && !$isOg) ? $this->captions[array_rand($this->captions)] : null;
+        $caption = $this->captions[array_rand($this->captions)];
 
         $project->media()->create([
             'file' => "uploads/{$filename}",
