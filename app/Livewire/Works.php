@@ -125,7 +125,7 @@ class Works extends Component
 
 	protected function buildQuery(): Builder
 	{
-		$query = Project::query()
+		$query = Project::published()
 			->with(['media' => fn ($q) => $q->where('is_teaser', true)]);
 
 		$this->applySearch($query);
