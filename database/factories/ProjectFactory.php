@@ -18,6 +18,7 @@ class ProjectFactory extends Factory
 		$city = fake()->city();
 
 		return [
+			'priority' => fake()->randomElement(['low', 'medium', 'high']),
 			'title' => $title,
 			'number' => fake()->unique()->numberBetween(100, 9999),
 			'slug' => \Illuminate\Support\Str::slug($title . ' ' . $city),

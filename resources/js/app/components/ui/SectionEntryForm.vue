@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import sectionsApi from '@/api/sections'
 import { usePageLoader } from '@/composables/usePageLoader'
@@ -31,13 +31,14 @@ const router = useRouter()
 const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 
-const isEdit = computed(() => !!route.params.id)
+const isEdit = ref(!!route.params.id)
 const sectionTitle = ref('')
 const sectionId = ref(null)
 const form = ref({
 	text: '',
 	...props.extraFields,
 })
+const dirty = ref(false)
 
 function populateExtra(data) {
 	for (const key of Object.keys(props.extraFields)) {
@@ -57,6 +58,8 @@ load(async () => {
 		sectionTitle.value = data.data.title || ''
 		sectionId.value = data.data.id || null
 	}
+	await nextTick()
+	watch(form, () => { dirty.value = true }, { deep: true })
 })
 
 async function handleSubmit() {
@@ -103,7 +106,7 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar @cancel="goBack" />
+		<ActionBar v-show="dirty" @cancel="goBack" />
 
 	</FormContainer>
 </template>

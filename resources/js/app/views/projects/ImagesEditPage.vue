@@ -139,7 +139,7 @@ async function handleSubmit() {
 			</Span>
 		</Grid>
 
-		<ActionBar @cancel="goBack" />
+		<ActionBar v-show="mediaStore.tempItems.length" @cancel="goBack" />
 	</FormContainer>
 
 	<MediaEditModal

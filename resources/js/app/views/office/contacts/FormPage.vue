@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import contactsApi from '@/api/contacts'
 import locationsApi from '@/api/locations'
@@ -24,7 +24,7 @@ const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 const { confirm } = useConfirm()
 
-const isEdit = computed(() => !!route.params.id)
+const isEdit = ref(!!route.params.id)
 const locationTitle = ref('')
 const locationId = ref(null)
 const image = ref(null)
@@ -35,6 +35,7 @@ const form = ref({
 	email: '',
 	maps_url: '',
 })
+const dirty = ref(false)
 
 async function fetch() {
 	const { data } = await contactsApi.show(route.params.id)
@@ -56,6 +57,8 @@ load(async () => {
 		locationTitle.value = data.data.title || ''
 		locationId.value = data.data.id || null
 	}
+	await nextTick()
+	watch(form, () => { dirty.value = true }, { deep: true })
 })
 
 async function handleSubmit() {
@@ -162,7 +165,7 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar @cancel="goBack" />
+		<ActionBar v-show="dirty" @cancel="goBack" />
 
 	</FormContainer>
 </template>

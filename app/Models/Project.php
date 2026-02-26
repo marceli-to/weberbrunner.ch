@@ -21,6 +21,7 @@ class Project extends Model
 	use HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
+		'priority',
 		'title',
 		'number',
 		'slug',

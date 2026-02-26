@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import jobsApi from '@/api/jobs'
 import locationsApi from '@/api/locations'
@@ -19,7 +19,7 @@ const router = useRouter()
 const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 
-const isEdit = computed(() => !!route.params.id)
+const isEdit = ref(!!route.params.id)
 const locationTitle = ref('')
 const locationId = ref(null)
 const form = ref({
@@ -27,6 +27,7 @@ const form = ref({
 	description: '',
 	contact_email: '',
 })
+const dirty = ref(false)
 
 load(async () => {
 	if (isEdit.value) {
@@ -41,6 +42,8 @@ load(async () => {
 		locationTitle.value = data.data.title || ''
 		locationId.value = data.data.id || null
 	}
+	await nextTick()
+	watch(form, () => { dirty.value = true }, { deep: true })
 })
 
 async function handleSubmit() {
@@ -96,7 +99,7 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar @cancel="goBack" />
+		<ActionBar v-show="dirty" @cancel="goBack" />
 
 	</FormContainer>
 </template>

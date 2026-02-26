@@ -45,6 +45,12 @@ class Seed extends Command
 		$this->info('Seeding locations...');
 		$this->call('app:seed-locations');
 
+		$this->info('Seeding categories...');
+		$this->call('app:seed-categories');
+
+		$this->info('Seeding statuses...');
+		$this->call('app:seed-statuses');
+
 		$this->info('Seeding projects...');
 		$this->call('app:seed-projects');
 
