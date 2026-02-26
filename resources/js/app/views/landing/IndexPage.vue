@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import homepageApi from '@/api/homepage'
+import landingApi from '@/api/landing'
 import projectsApi from '@/api/projects'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useConfirm } from '@/composables/useConfirm'
@@ -37,11 +37,11 @@ const availableProjects = computed(() => {
 })
 
 async function fetch() {
-	const [homepageRes, projectsRes] = await Promise.all([
-		homepageApi.index(),
+	const [landingRes, projectsRes] = await Promise.all([
+		landingApi.index(),
 		projectsApi.index(),
 	])
-	columns.value = homepageRes.data.data
+	columns.value = landingRes.data.data
 	allProjects.value = projectsRes.data.data
 }
 
@@ -52,7 +52,7 @@ function openDrawer(col) {
 
 async function addProject(project) {
 	drawerOpen.value = false
-	const { data } = await homepageApi.store({
+	const { data } = await landingApi.store({
 		project_id: project.id,
 		column: drawerColumn.value,
 	})
@@ -67,7 +67,7 @@ async function removeItem(item, col) {
 	})
 	if (!ok) return
 
-	await homepageApi.destroy(item.uuid)
+	await landingApi.destroy(item.uuid)
 	columns.value[col] = columns.value[col].filter(i => i.uuid !== item.uuid)
 }
 
@@ -82,7 +82,7 @@ async function onDragEnd() {
 			})
 		})
 	}
-	await homepageApi.reorder(items)
+	await landingApi.reorder(items)
 }
 
 load(fetch)
@@ -106,16 +106,16 @@ load(fetch)
 
 					<draggable
 						v-model="columns[col]"
-						group="homepage"
+						group="landing"
 						item-key="uuid"
-						handle=".homepage-drag-handle"
+						handle=".landing-drag-handle"
 						ghost-class="opacity-50"
 						animation="150"
 						class="flex flex-col gap-10 min-h-40"
 						@end="onDragEnd">
 						<template #item="{ element: item }">
 							<div class="bg-white border-thin border-black flex items-center justify-between px-10 min-h-30 select-none gap-10">
-								<Burger variant="sm" class="w-18 h-10 cursor-grab homepage-drag-handle shrink-0" />
+								<Burger variant="sm" class="w-18 h-10 cursor-grab landing-drag-handle shrink-0" />
 								<span class="text-sm truncate flex-1">{{ item.project?.full_title || item.project?.title }}</span>
 								<Cross class="w-10 cursor-pointer shrink-0" @click="removeItem(item, col)" />
 							</div>
