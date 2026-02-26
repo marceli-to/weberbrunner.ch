@@ -12,7 +12,7 @@ import ListTableCell from '@/components/ui/list/ListTableCell.vue'
 
 const { load } = usePageLoader()
 const members = ref([])
-const { sorted, sortKey, sortDir, toggleSort } = useTableSort(members, 'name')
+const { sorted, sortKey, sortDir, toggleSort } = useTableSort(members, 'name', 'asc', 'team')
 
 async function fetch() {
 	const { data } = await teamApi.index()

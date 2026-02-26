@@ -12,7 +12,7 @@ import ListTableCell from '@/components/ui/list/ListTableCell.vue'
 
 const { load } = usePageLoader()
 const projects = ref([])
-const { sorted, sortKey, sortDir, toggleSort } = useTableSort(projects, 'priority')
+const { sorted, sortKey, sortDir, toggleSort } = useTableSort(projects, 'priority', 'asc', 'projects')
 
 async function fetch() {
 	const { data } = await projectsApi.index()
@@ -35,17 +35,17 @@ load(fetch)
 
 				<!-- Header -->
 				<ListTableRow header>
-					<ListTableCell span="col-span-2" first header sortable :sort-active="sortKey === 'priority'" :sort-dir="sortDir" @sort="toggleSort('priority')">Prio</ListTableCell>
+					<ListTableCell span="col-span-1" first header sortable :sort-active="sortKey === 'priority'" :sort-dir="sortDir" @sort="toggleSort('priority')">Prio</ListTableCell>
 					<ListTableCell span="col-span-2" header sortable :sort-active="sortKey === 'number'" :sort-dir="sortDir" @sort="toggleSort('number')">Nr.</ListTableCell>
-					<ListTableCell span="col-span-7" header sortable :sort-active="sortKey === 'title'" :sort-dir="sortDir" @sort="toggleSort('title')">Projektname</ListTableCell>
+					<ListTableCell span="col-span-8" header sortable :sort-active="sortKey === 'title'" :sort-dir="sortDir" @sort="toggleSort('title')">Projektname</ListTableCell>
 					<ListTableCell span="col-span-5" last header sortable :sort-active="sortKey === 'city'" :sort-dir="sortDir" @sort="toggleSort('city')">Ort</ListTableCell>
 				</ListTableRow>
 
 				<!-- Entries -->
 				<ListTableRow v-for="project in sorted" :key="project.uuid" :to="{ name: 'projects.show', params: { id: project.uuid } }">
-					<ListTableCell span="col-span-2" first>{{ project.priority }}</ListTableCell>
+					<ListTableCell span="col-span-1" first>{{ project.priority }}</ListTableCell>
 					<ListTableCell span="col-span-2">{{ project.number }}</ListTableCell>
-					<ListTableCell span="col-span-7">{{ project.title }}</ListTableCell>
+					<ListTableCell span="col-span-8">{{ project.title }}</ListTableCell>
 					<ListTableCell span="col-span-5" last>{{ project.city }}</ListTableCell>
 				</ListTableRow>
 

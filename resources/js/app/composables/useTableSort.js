@@ -1,8 +1,15 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
-export function useTableSort(items, defaultKey = null, defaultDir = 'asc') {
-	const sortKey = ref(defaultKey)
-	const sortDir = ref(defaultDir)
+export function useTableSort(items, defaultKey = null, defaultDir = 'asc', storageKey = null) {
+	const initial = loadFromStorage(storageKey)
+	const sortKey = ref(initial?.key ?? defaultKey)
+	const sortDir = ref(initial?.dir ?? defaultDir)
+
+	if (storageKey) {
+		watch([sortKey, sortDir], ([key, dir]) => {
+			localStorage.setItem(`tableSort:${storageKey}`, JSON.stringify({ key, dir }))
+		})
+	}
 
 	const sorted = computed(() => {
 		if (!sortKey.value) return items.value
@@ -38,4 +45,13 @@ export function useTableSort(items, defaultKey = null, defaultDir = 'asc') {
 	}
 
 	return { sorted, sortKey, sortDir, toggleSort }
+}
+
+function loadFromStorage(storageKey) {
+	if (!storageKey) return null
+	try {
+		return JSON.parse(localStorage.getItem(`tableSort:${storageKey}`))
+	} catch {
+		return null
+	}
 }
