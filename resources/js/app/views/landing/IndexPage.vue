@@ -9,10 +9,9 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Button from '@/components/ui/form/Button.vue'
-import Burger from '@/components/icons/Burger.vue'
-import Cross from '@/components/icons/Cross.vue'
 import Plus from '@/components/icons/Plus.vue'
 import Drawer from '@/components/ui/drawer/Drawer.vue'
+import LandingCard from '@/components/landing/LandingCard.vue'
 
 const { load } = usePageLoader()
 const { confirm } = useConfirm()
@@ -102,7 +101,9 @@ load(fetch)
 
 				<div v-for="col in [1, 2, 3]" :key="col" class="flex flex-col">
 
-					<div class="text-xs font-semibold mb-10">Spalte {{ col }}</div>
+					<div class="text-xs font-semibold mb-10">
+            Spalte {{ col }}
+          </div>
 
 					<draggable
 						v-model="columns[col]"
@@ -111,18 +112,16 @@ load(fetch)
 						handle=".landing-drag-handle"
 						ghost-class="opacity-50"
 						animation="150"
-						class="flex flex-col gap-10 min-h-40"
+						class="flex flex-col gap-20 min-h-40"
 						@end="onDragEnd">
 						<template #item="{ element: item }">
-							<div class="bg-white border-thin border-black flex items-center justify-between px-10 min-h-30 select-none gap-10">
-								<Burger variant="sm" class="w-18 h-10 cursor-grab landing-drag-handle shrink-0" />
-								<span class="text-sm truncate flex-1">{{ item.project?.full_title || item.project?.title }}</span>
-								<Cross class="w-10 cursor-pointer shrink-0" @click="removeItem(item, col)" />
-							</div>
+							<LandingCard :item="item" @delete="removeItem(item, col)" />
 						</template>
 					</draggable>
 
-					<Button class="px-10 mt-10" @click="openDrawer(col)">
+					<Button 
+            class="px-10 mt-10" 
+            @click="openDrawer(col)">
 						<template #icon-right>
 							<Plus class="w-10 h-10" />
 						</template>
