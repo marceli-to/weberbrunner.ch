@@ -172,15 +172,17 @@ class SeedProjects extends Command
 				$slug .= '-' . Str::random(4);
 			}
 
-			Project::create([
+			$project = Project::create([
 				'priority' => $priority,
 				'number' => $number,
 				'title' => $title,
 				'slug' => $slug,
 				'city' => $city,
 				'location_id' => $location->id,
-				'publish' => false,
+				'publish' => true,
 			]);
+
+			$this->attachPlaceholder($project);
 
 			$created++;
 			$this->line("  [{$number}] {$title}");
@@ -279,6 +281,36 @@ class SeedProjects extends Command
 		}
 
 		$this->info('Done! Created 50 dummy projects with attributes and media.');
+	}
+
+	private function attachPlaceholder(Project $project): void
+	{
+		$disk = Storage::disk('public');
+		$sourcePath = 'images/placeholder.png';
+
+		if (!$disk->exists($sourcePath)) {
+			$this->warn('  Missing: ' . $sourcePath);
+			return;
+		}
+
+		$filename = 'placeholder-' . Str::random(6) . '.png';
+		$disk->copy($sourcePath, "uploads/{$filename}");
+
+		$fullPath = $disk->path("uploads/{$filename}");
+		$dimensions = @getimagesize($fullPath);
+
+		$project->media()->create([
+			'file' => "uploads/{$filename}",
+			'original_name' => 'placeholder.png',
+			'mime_type' => 'image/png',
+			'size' => $disk->size("uploads/{$filename}"),
+			'width' => $dimensions[0] ?? null,
+			'height' => $dimensions[1] ?? null,
+			'alt' => $project->title,
+			'is_teaser' => true,
+			'is_og' => true,
+			'sort_order' => 0,
+		]);
 	}
 
 	private function attachImage(Project $project, string $sourceFile, string $alt, int $sortOrder, bool $isTeaser, bool $isOg = false): void
