@@ -24,8 +24,8 @@ import OfficeJury from '@/views/office/jury/IndexPage.vue'
 import OfficeJuryForm from '@/views/office/jury/FormPage.vue'
 import OfficeAwards from '@/views/office/awards/IndexPage.vue'
 import OfficeAwardsForm from '@/views/office/awards/FormPage.vue'
-import SettingsIndex from '@/views/settings/Index.vue'
-import ProfileIndex from '@/views/profile/Index.vue'
+import SettingsIndex from '@/views/settings/IndexPage.vue'
+import ProfileIndex from '@/views/profile/IndexPage.vue'
 
 const routes = [
   {

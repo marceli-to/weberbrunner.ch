@@ -184,7 +184,11 @@ load(fetch)
 								</template>
 							</draggable>
 
-							<NewEntryButton @click="router.push({ name: `${routePrefix}.create`, query: { section: group.section.uuid } })" />
+							<Grid :cols="10" class="mb-10">
+								<Span class="col-span-8 col-start-2">
+									<NewEntryButton @click="router.push({ name: `${routePrefix}.create`, query: { section: group.section.uuid } })" />
+								</Span>
+							</Grid>
 
 						</Span>
 

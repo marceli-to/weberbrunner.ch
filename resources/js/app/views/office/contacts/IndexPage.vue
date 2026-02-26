@@ -88,9 +88,11 @@ load(fetch)
 								</Span>
 							</Grid>
 
-							<NewEntryButton
-								v-if="!group.contacts.length"
-								@click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
+							<Grid v-if="!group.contacts.length" :cols="10" class="mb-10">
+								<Span class="col-span-8 col-start-2">
+									<NewEntryButton @click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
+								</Span>
+							</Grid>
 
 						</Span>
 
