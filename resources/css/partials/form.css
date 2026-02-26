@@ -63,6 +63,10 @@ select:-webkit-autofill:focus {
 	@apply hover:bg-navy hover:text-white hover:border-navy transition-colors duration-150;
 }
 
+.form-button:disabled {
+	@apply cursor-default opacity-40 pointer-events-none;
+}
+
 .form-button--primary {
 	@apply bg-navy border-white text-white hover:bg-white hover:text-navy hover:border-white;
 }

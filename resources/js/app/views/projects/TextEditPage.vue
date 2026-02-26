@@ -1,4 +1,5 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import projectsApi from '@/api/projects'
 import { useProject } from '@/composables/useProject'
@@ -19,8 +20,14 @@ const route = useRoute()
 const router = useRouter()
 const toast = useToast()
 const { submit } = useFormErrors()
-const { project, fetch } = useProject()
+const original = ref({ description: '', short_description: '' })
+const { project, fetch } = useProject((data) => {
+	original.value = { description: data.description ?? '', short_description: data.short_description ?? '' }
+})
 const { collapsed, toggle } = useCollapsed('project-text')
+
+const descriptionDirty = computed(() => project.value && project.value.description !== original.value.description)
+const shortDescriptionDirty = computed(() => project.value && project.value.short_description !== original.value.short_description)
 
 function goBack() {
 	router.push({ name: 'projects.show', params: { id: route.params.id } })
@@ -79,7 +86,7 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveDescription">
 					<Textarea v-model="project.description" />
 					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center">Speichern</Button>
+						<Button type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
 					</div>
 				</form>
 			</Card>
@@ -99,7 +106,7 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveShortDescription">
 					<Textarea v-model="project.short_description" />
 					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center">Speichern</Button>
+						<Button type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
 					</div>
 				</form>
 			</Card>
