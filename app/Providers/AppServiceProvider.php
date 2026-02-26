@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\ImageController;
 use App\Models\Award;
 use App\Models\Category;
+use App\Models\LandingItem;
 use App\Models\Job;
 use App\Models\Jury;
 use App\Models\Location;
@@ -18,6 +19,7 @@ use App\Models\TeamMember;
 use App\Models\User;
 use App\Policies\AwardPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\LandingItemPolicy;
 use App\Policies\JobPolicy;
 use App\Policies\JuryPolicy;
 use App\Policies\LocationPolicy;
@@ -55,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
 		Gate::policy(User::class, UserPolicy::class);
 		Gate::policy(Section::class, SectionPolicy::class);
 		Gate::policy(Media::class, MediaPolicy::class);
+		Gate::policy(LandingItem::class, LandingItemPolicy::class);
 
 		Blade::directive('ogImage', function (string $expression) {
 			return "<?php \$__env->startSection('og_image', \App\Http\Controllers\ImageController::ogImageUrl({$expression})); ?>";

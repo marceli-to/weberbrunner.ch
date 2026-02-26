@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* Safelist for dynamic grid components (Grid.vue, Span.vue) */
-@source inline("grid-cols-{1..12}");
-@source inline("col-span-{1..12}");
-@source inline("col-start-{1..12}");
+@source inline("grid-cols-{1..16}");
+@source inline("col-span-{1..16}");
+@source inline("col-start-{1..16}");
 
 @import "./partials/fonts.css";
 @import "./partials/spacing.css";

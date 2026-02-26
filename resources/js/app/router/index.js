@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Styleguide from '@/views/dev/Styleguide.vue'
+import HomepageIndex from '@/views/homepage/IndexPage.vue'
 import ProjectsIndex from '@/views/projects/IndexPage.vue'
 import ProjectsShow from '@/views/projects/ShowPage.vue'
 import ProjectImagesEdit from '@/views/projects/ImagesEditPage.vue'
@@ -36,6 +37,12 @@ const routes = [
     name: 'components',
     component: Styleguide,
     meta: { title: 'Components' },
+  },
+  {
+    path: '/dashboard/startseite',
+    name: 'homepage.index',
+    component: HomepageIndex,
+    meta: { title: 'Startseite', navSection: 'main', navLabel: 'Startseite', navOrder: 5 },
   },
   {
     path: '/dashboard/arbeiten',

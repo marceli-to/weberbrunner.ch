@@ -27,10 +27,21 @@ use App\Http\Controllers\Api\TeamMemberBioController;
 use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\LandingItemController;
 
 Route::prefix('dashboard')
 	->middleware(['web', 'auth'])
 	->group(function () {
+
+		// Homepage
+		Route::controller(LandingItemController::class)
+			->prefix('homepage')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::delete('/{landingItem}', 'destroy');
+			});
 
 		// Media
 		Route::controller(MediaController::class)
