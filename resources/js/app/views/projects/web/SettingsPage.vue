@@ -4,6 +4,7 @@ import WebLayout from '@/views/projects/components/WebLayout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Checkbox from '@/components/ui/form/Checkbox.vue'
+import Radio from '@/components/ui/form/Radio.vue'
 import Card from '@/components/ui/Card.vue'
 import CardRow from '@/components/ui/CardRow.vue'
 import PublishToggle from '@/components/ui/form/PublishToggle.vue'
@@ -12,10 +13,10 @@ const {
 	project,
 	statuses,
 	categories,
-	isStatusSelected,
+	selectedStatusId,
 	isCategorySelected,
 	togglePublish,
-	toggleStatus,
+	selectStatus,
 	toggleCategory,
 } = useProjectSettings()
 </script>
@@ -40,10 +41,12 @@ const {
 					<CardRow
 						v-for="status in statuses"
 						:key="status.id">
-						<Checkbox
-							:model-value="isStatusSelected(status.id)"
+						<Radio
+							:model-value="selectedStatusId()"
+							:value="status.id"
 							:label="status.title"
-							@update:model-value="toggleStatus(status.id)" />
+							name="status"
+							@update:model-value="selectStatus(status.id)" />
 					</CardRow>
 				</Card>
 			</Span>

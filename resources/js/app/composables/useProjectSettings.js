@@ -27,8 +27,8 @@ export function useProjectSettings() {
 
 	loadOptions()
 
-	function isStatusSelected(id) {
-		return project.value?.statuses?.some(s => s.id === id) || false
+	function selectedStatusId() {
+		return project.value?.statuses?.[0]?.id || null
 	}
 
 	function isCategorySelected(id) {
@@ -46,16 +46,12 @@ export function useProjectSettings() {
 		}
 	}
 
-	async function toggleStatus(id) {
+	async function selectStatus(id) {
 		const previous = [...project.value.statuses]
-		if (isStatusSelected(id)) {
-			project.value.statuses = project.value.statuses.filter(s => s.id !== id)
-		} else {
-			const status = statuses.value.find(s => s.id === id)
-			project.value.statuses = [...project.value.statuses, status]
-		}
+		const status = statuses.value.find(s => s.id === id)
+		project.value.statuses = [status]
 		try {
-			await projectsApi.syncStatuses(route.params.id, project.value.statuses.map(s => s.id))
+			await projectsApi.syncStatuses(route.params.id, [id])
 		} catch {
 			project.value.statuses = previous
 			toast.error('Fehler beim Speichern')
@@ -82,10 +78,10 @@ export function useProjectSettings() {
 		project,
 		statuses,
 		categories,
-		isStatusSelected,
+		selectedStatusId,
 		isCategorySelected,
 		togglePublish,
-		toggleStatus,
+		selectStatus,
 		toggleCategory,
 	}
 }
