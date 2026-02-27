@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Project\ListAction;
 use App\Models\LandingItem;
 use Illuminate\View\View;
 
@@ -25,8 +24,7 @@ class LandingController extends Controller
 			->get();
 
 		if ($items->isEmpty()) {
-			$projects = (new ListAction)->execute(published: true);
-			return $this->splitIntoColumns($projects, 3);
+			return [[], [], []];
 		}
 
 		$grouped = [0 => [], 1 => [], 2 => []];
@@ -59,16 +57,5 @@ class LandingController extends Controller
 			}
 		}
 		return $result;
-	}
-
-	protected function splitIntoColumns($items, int $count): array
-	{
-		$columns = array_fill(0, $count, []);
-
-		foreach ($items->values() as $index => $item) {
-			$columns[$index % $count][] = $item;
-		}
-
-		return $columns;
 	}
 }
