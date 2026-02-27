@@ -8,6 +8,7 @@ import Input from '@/components/ui/form/Input.vue'
 
 const props = defineProps({
 	storeFn: Function,
+	updateFn: Function,
 	lightboxTitle: {
 		type: String,
 		default: 'Neue Kategorie',
@@ -17,21 +18,37 @@ const props = defineProps({
 const emit = defineEmits(['stored'])
 
 const title = ref('')
+const editingItem = ref(null)
 const { get, clear, submit } = useFormErrors()
-const { show, open, close } = useLightbox(() => {
+const { show, open: openLightbox, close } = useLightbox(() => {
 	title.value = ''
+	editingItem.value = null
 	clear()
 })
 
+function open() {
+	editingItem.value = null
+	openLightbox()
+}
+
+function edit(item) {
+	openLightbox()
+	editingItem.value = item
+	title.value = item.title
+}
+
 async function store() {
-	const ok = await submit(() => props.storeFn(title.value))
+	const fn = editingItem.value && props.updateFn
+		? () => props.updateFn(editingItem.value.uuid, title.value)
+		: () => props.storeFn(title.value)
+	const ok = await submit(fn)
 	if (ok) {
 		close()
 		emit('stored')
 	}
 }
 
-defineExpose({ open })
+defineExpose({ open, edit })
 </script>
 
 <template>

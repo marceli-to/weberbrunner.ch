@@ -8,6 +8,10 @@ import EntryRow from '@/components/ui/EntryRow.vue'
 defineProps({
 	label: String,
 	publish: Boolean,
+	showPublish: {
+		type: Boolean,
+		default: true,
+	},
 	dragHandleClass: String,
 })
 
@@ -23,6 +27,7 @@ defineEmits(['edit', 'toggle-publish', 'delete'])
 			<EntryRow
 				:label="label"
 				:publish="publish"
+				:show-publish="showPublish"
 				@edit="$emit('edit')"
 				@toggle-publish="$emit('toggle-publish')" />
 		</Span>
