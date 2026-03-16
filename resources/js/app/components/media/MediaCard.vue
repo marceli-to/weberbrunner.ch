@@ -39,15 +39,19 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 				</div>
 			</template>
 
-			<figure 
-        class="m-0 w-full h-full flex items-center justify-center" 
-        :class="[compact ? 'px-20 py-30' : 'px-30 py-60', editable ? 'cursor-pointer' : '']" 
-        @click="editable && $emit('edit', item)">
-				<img
-					:src="item.preview_url"
-					:alt="item.alt || ''"
-					class="block max-w-full max-h-full object-contain" />
-			</figure>
+      <figure
+        class="m-0 w-full h-full grid place-items-center"
+        :class="[compact ? 'px-20 py-30' : 'px-30 py-60', editable ? 'cursor-pointer' : '']"
+        @click="editable && $emit('edit', item)"
+      >
+        <img
+          :src="item.preview_url"
+          :alt="item.alt || ''"
+          class="max-w-full max-h-full object-contain"
+        />
+      </figure>
+
+
 		</div>
 
 		<div

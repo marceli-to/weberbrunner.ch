@@ -106,6 +106,7 @@ load(fetch)
           </div>
 
 					<draggable
+						v-if="columns[col].length"
 						v-model="columns[col]"
 						group="landing"
 						item-key="uuid"
@@ -120,7 +121,7 @@ load(fetch)
 					</draggable>
 
 					<Button 
-            class="px-10 mt-10" 
+            class="px-10 mt-20"
             @click="openDrawer(col)">
 						<template #icon-right>
 							<Plus class="w-10 h-10" />
