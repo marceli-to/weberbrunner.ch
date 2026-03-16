@@ -38,7 +38,7 @@ const availableProjects = computed(() => {
 async function fetch() {
 	const [landingRes, projectsRes] = await Promise.all([
 		landingApi.index(),
-		projectsApi.index(),
+		projectsApi.published(),
 	])
 	columns.value = landingRes.data.data
 	allProjects.value = projectsRes.data.data
