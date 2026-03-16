@@ -50,7 +50,7 @@ async function loadProjects() {
 	if (projects.value.length) return
 	loading.value = true
 	try {
-		const { data } = await projectsApi.index()
+		const { data } = await projectsApi.published()
 		projects.value = data.data || data
 	} catch {
 		projects.value = []

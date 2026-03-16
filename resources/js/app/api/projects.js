@@ -2,6 +2,7 @@ import api from '@/api/axios'
 
 export default {
 	index: () => api.get('/projects'),
+	published: () => api.get('/projects/published'),
 	show: (id) => api.get(`/projects/${id}`),
 	store: (data) => api.post('/projects', data),
 	update: (id, data) => api.put(`/projects/${id}`, data),

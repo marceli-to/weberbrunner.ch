@@ -92,7 +92,13 @@ function onReorder() {
 		</template>
 	</draggable>
 
-	<NewEntryButton @click="openCreate" />
+  <Grid :cols="10" class="mb-10">
+    <Span class="col-span-8 col-start-2">
+      <NewEntryButton @click="openCreate" />
+    </Span>
+  </Grid>
+
+	
 
 	<AppDialog :open="dialogOpen" :title="editingLink ? 'Link bearbeiten' : 'Link'" @close="closeDialog">
 		<LinkDialogFields

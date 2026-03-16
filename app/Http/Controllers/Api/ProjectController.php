@@ -27,6 +27,15 @@ class ProjectController extends Controller
 		return ProjectResource::collection($projects);
 	}
 
+	public function published()
+	{
+		$this->authorize('viewAny', Project::class);
+
+		$projects = Project::published()->orderBy('title')->get();
+
+		return ProjectResource::collection($projects);
+	}
+
 	public function store(StoreProjectRequest $request)
 	{
 		$this->authorize('create', Project::class);

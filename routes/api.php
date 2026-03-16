@@ -74,6 +74,7 @@ Route::prefix('dashboard')
 			->prefix('projects')
 			->group(function () {
 				Route::get('/', 'index');
+				Route::get('/published', 'published');
 				Route::post('/', 'store');
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{project}', 'show');
