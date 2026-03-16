@@ -8,6 +8,7 @@ const props = defineProps({
 	open: { type: Boolean, default: false },
 	title: { type: String, default: null },
 	closeable: { type: Boolean, default: true },
+	closeOnBackdrop: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['close'])
@@ -29,7 +30,7 @@ function onClose() {
 }
 
 function onBackdropClick(e) {
-	if (e.target === dialogRef.value && props.closeable) {
+	if (e.target === dialogRef.value && props.closeOnBackdrop) {
 		onClose()
 	}
 }
