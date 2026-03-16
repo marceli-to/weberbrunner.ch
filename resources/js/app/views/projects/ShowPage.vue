@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 import PageTitle from '@/components/ui/PageTitle.vue'
@@ -9,9 +10,11 @@ import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
 import ProjectImages from '@/views/projects/components/ImageGrid.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
 import ProjectText from '@/views/projects/components/TextCards.vue'
+import EditProjectTitleLightbox from '@/views/projects/components/EditProjectTitleLightbox.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()
+const titleLightbox = ref(null)
 
 function goBack() {
 	router.push({ name: 'projects.index' })
@@ -35,7 +38,7 @@ function goBack() {
 		</Span>
 
 		<Span class="col-span-8">
-			<PageTitle :slug="project?.slug">
+			<PageTitle editable @edit="titleLightbox.open(project)">
 				{{ project?.full_title }}
 			</PageTitle>
 		</Span>
@@ -59,5 +62,7 @@ function goBack() {
 		</Span>
 
 	</Grid>
-  
+
+	<EditProjectTitleLightbox ref="titleLightbox" @saved="fetch" />
+
 </template>
