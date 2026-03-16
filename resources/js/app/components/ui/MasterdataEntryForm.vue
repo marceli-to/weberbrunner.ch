@@ -32,9 +32,8 @@ const lightboxTitle = computed(() =>
 )
 
 function open(masterdataGroupId) {
-	editingItem.value = null
-	groupId.value = masterdataGroupId
 	openLightbox()
+	groupId.value = masterdataGroupId
 }
 
 function edit(entry, masterdataGroupId) {
