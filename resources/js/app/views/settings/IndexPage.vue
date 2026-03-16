@@ -12,7 +12,7 @@ import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
-import CreateSectionLightbox from '@/components/ui/CreateSectionLightbox.vue'
+import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
 
 const { load } = usePageLoader()
 const statuses = ref([])
@@ -178,16 +178,18 @@ load(fetch)
 
 	</Grid>
 
-	<CreateSectionLightbox
+	<SectionTitleForm
 		ref="statusLightbox"
-		lightbox-title="Status"
+		label="Status"
+		create-label="Neuer Status"
 		:store-fn="statusesApi.store"
 		:update-fn="statusesApi.update"
 		@stored="fetch" />
 
-	<CreateSectionLightbox
+	<SectionTitleForm
 		ref="categoryLightbox"
-		lightbox-title="Kategorie"
+		label="Kategorie"
+		create-label="Neue Kategorie"
 		:store-fn="categoriesApi.store"
 		:update-fn="categoriesApi.update"
 		@stored="fetch" />

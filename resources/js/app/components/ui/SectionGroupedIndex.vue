@@ -16,7 +16,7 @@ import Cross from '@/components/icons/Cross.vue'
 import Plus from '@/components/icons/Plus.vue'
 import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
-import CreateSectionLightbox from '@/components/ui/CreateSectionLightbox.vue'
+import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
 
 const props = defineProps({
 	pageTitle: String,
@@ -50,6 +50,10 @@ async function onGroupStored() {
 
 function storeGroupFn(title) {
 	return sectionsApi.store({ title, type: props.sectionType })
+}
+
+function updateGroupFn(uuid, title) {
+	return sectionsApi.update(uuid, { title })
 }
 
 async function destroySection(group) {
@@ -154,7 +158,9 @@ load(fetch)
 							<CollapsibleHeader
 								:title="group.section.title"
 								:collapsed="collapsed.has(group.section.uuid)"
-								@toggle="toggleSection(group.section.uuid)" />
+								editable
+								@toggle="toggleSection(group.section.uuid)"
+								@edit="lightbox.edit(group.section)" />
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
@@ -203,6 +209,6 @@ load(fetch)
 	</Grid>
 
 	<!-- Lightbox -->
-	<CreateSectionLightbox ref="lightbox" :store-fn="storeGroupFn" @stored="onGroupStored" />
+	<SectionTitleForm ref="lightbox" label="Kategorie" create-label="Neue Kategorie" :store-fn="storeGroupFn" :update-fn="updateGroupFn" @stored="onGroupStored" @updated="fetch" />
 
 </template>

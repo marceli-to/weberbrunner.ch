@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useFormErrors } from '@/composables/useFormErrors'
 import { useLightbox } from '@/composables/useLightbox'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
@@ -9,13 +9,17 @@ import Input from '@/components/ui/form/Input.vue'
 const props = defineProps({
 	storeFn: Function,
 	updateFn: Function,
-	lightboxTitle: {
+	label: {
 		type: String,
-		default: 'Neue Kategorie',
+		default: 'Bezeichnung',
+	},
+	createLabel: {
+		type: String,
+		default: null,
 	},
 })
 
-const emit = defineEmits(['stored'])
+const emit = defineEmits(['stored', 'updated'])
 
 const title = ref('')
 const editingItem = ref(null)
@@ -25,6 +29,12 @@ const { show, open: openLightbox, close } = useLightbox(() => {
 	editingItem.value = null
 	clear()
 })
+
+const lightboxTitle = computed(() =>
+	editingItem.value
+		? `${props.label} bearbeiten`
+		: (props.createLabel ?? `Neue ${props.label}`)
+)
 
 function open() {
 	editingItem.value = null
@@ -38,13 +48,14 @@ function edit(item) {
 }
 
 async function store() {
-	const fn = editingItem.value && props.updateFn
+	const isUpdate = !!(editingItem.value && props.updateFn)
+	const fn = isUpdate
 		? () => props.updateFn(editingItem.value.uuid, title.value)
 		: () => props.storeFn(title.value)
 	const ok = await submit(fn)
 	if (ok) {
 		close()
-		emit('stored')
+		emit(isUpdate ? 'updated' : 'stored')
 	}
 }
 

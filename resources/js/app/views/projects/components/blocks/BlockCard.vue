@@ -10,9 +10,10 @@ const props = defineProps({
 	block: { type: Object, required: true },
 	initialOpen: { type: Boolean, default: false },
 	flush: { type: Boolean, default: false },
+	editable: { type: Boolean, default: false },
 })
 
-defineEmits(['delete'])
+defineEmits(['delete', 'edit-title'])
 
 const typeLabels = {
 	text: 'Text',
@@ -33,7 +34,9 @@ const collapsed = ref(!props.initialOpen)
 			<CollapsibleHeader
 				:title="block.title || typeLabels[block.type]"
 				:collapsed="collapsed"
-				@toggle="collapsed = !collapsed" />
+				:editable="editable"
+				@toggle="collapsed = !collapsed"
+				@edit="$emit('edit-title', block)" />
 			<div v-if="!flush" v-show="!collapsed" class="bg-white px-20 pb-20">
 				<slot />
 			</div>

@@ -5,13 +5,8 @@ import projectBlocksApi from '@/api/projectBlocks'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
-import { useFormErrors } from '@/composables/useFormErrors'
-import { useLightbox } from '@/composables/useLightbox'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
-import Button from '@/components/ui/form/Button.vue'
-import Input from '@/components/ui/form/Input.vue'
 import BlockCard from '@/views/projects/components/blocks/BlockCard.vue'
 import BlockAddMenu from '@/views/projects/components/blocks/BlockAddMenu.vue'
 import BlockTextForm from '@/views/projects/components/blocks/BlockTextForm.vue'
@@ -19,6 +14,7 @@ import BlockImageForm from '@/views/projects/components/blocks/BlockImageForm.vu
 import BlockSliderForm from '@/views/projects/components/blocks/BlockSliderForm.vue'
 import BlockLinksForm from '@/views/projects/components/blocks/BlockLinksForm.vue'
 import MediaEditModal from '@/components/media/MediaEditModal.vue'
+import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
 
 const props = defineProps({
 	project: { type: Object, required: true },
@@ -28,8 +24,8 @@ const emit = defineEmits(['updated'])
 
 const toast = useToast()
 const { confirm } = useConfirm()
-const { get, clear, submit } = useFormErrors()
 const editingMedia = ref(null)
+const blockTitleForm = ref(null)
 
 const blocks = ref([])
 watch(() => props.project.blocks, (val) => {
@@ -37,27 +33,24 @@ watch(() => props.project.blocks, (val) => {
 }, { immediate: true })
 const projectMedia = computed(() => props.project.media || [])
 const lastCreatedUuid = ref(null)
-
 const pendingType = ref(null)
-const blockTitle = ref('')
-const { show: showTitleLightbox, open: openTitleLightbox, close: closeTitleLightbox } = useLightbox(() => {
-	blockTitle.value = ''
-	clear()
-})
 
 function addBlock(type) {
 	pendingType.value = type
-	openTitleLightbox()
+	blockTitleForm.value.open()
 }
 
-async function storeBlock() {
-	let response
-	const ok = await submit(async () => {
-		response = await projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title: blockTitle.value })
-	})
-	if (!ok) return
+async function blockStoreFn(title) {
+	const response = await projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title })
 	lastCreatedUuid.value = response.data.data.uuid
-	closeTitleLightbox()
+	return response
+}
+
+function blockUpdateFn(uuid, title) {
+	return projectBlocksApi.update(props.project.uuid, uuid, { title })
+}
+
+async function onBlockStored() {
 	emit('updated')
 	toast.success('Block hinzugefügt')
 }
@@ -152,7 +145,7 @@ async function reorderLinks(block, items) {
 
 <template>
 	<Grid>
-    
+
 		<!-- Dynamic blocks -->
 		<draggable
 			v-if="blocks.length"
@@ -166,7 +159,13 @@ async function reorderLinks(block, items) {
 
 			<template #item="{ element }">
 
-				<BlockCard :block="element" :initial-open="element.uuid === lastCreatedUuid" :flush="element.type === 'links'" @delete="deleteBlock(element)">
+				<BlockCard
+					:block="element"
+					:initial-open="element.uuid === lastCreatedUuid"
+					:flush="element.type === 'links'"
+					editable
+					@delete="deleteBlock(element)"
+					@edit-title="blockTitleForm.edit($event)">
 
 					<BlockTextForm
 						v-if="element.type === 'text'"
@@ -211,10 +210,10 @@ async function reorderLinks(block, items) {
 
 	<!-- Block type picker -->
 	<Grid class="mt-40">
-    <Span class="col-span-8 col-start-2">
-		  <BlockAddMenu @select="addBlock" />
-    </Span>
-  </Grid>
+		<Span class="col-span-8 col-start-2">
+			<BlockAddMenu @select="addBlock" />
+		</Span>
+	</Grid>
 
 	<!-- Media edit lightbox -->
 	<MediaEditModal
@@ -222,14 +221,13 @@ async function reorderLinks(block, items) {
 		@save="onEditSave"
 		@close="editingMedia = null" />
 
-	<!-- Title lightbox -->
-	<Lightbox :open="showTitleLightbox" title="Neuer Block" @close="closeTitleLightbox" :closeable="false">
-		<form @submit.prevent="storeBlock" class="px-20">
-			<Input v-model="blockTitle" :error="get('title')" placeholder="Titel" class="form-input form-input--lg" @focus="clear('title')" />
-			<div class="flex gap-20 mt-20">
-				<Button type="submit" class="flex justify-center">Speichern</Button>
-				<Button @click="closeTitleLightbox" class="flex justify-center">Abbrechen</Button>
-			</div>
-		</form>
-	</Lightbox>
+	<!-- Block title form (create + edit) -->
+	<SectionTitleForm
+		ref="blockTitleForm"
+		label="Titel"
+		create-label="Titel"
+		:store-fn="blockStoreFn"
+		:update-fn="blockUpdateFn"
+		@stored="onBlockStored"
+		@updated="$emit('updated')" />
 </template>
