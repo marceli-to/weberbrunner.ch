@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import categoriesApi from '@/api/categories'
 import statusesApi from '@/api/statuses'
+import masterdataApi from '@/api/masterdata'
+import masterdataGroupsApi from '@/api/masterdata-groups'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
@@ -9,26 +11,36 @@ import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import Button from '@/components/ui/form/Button.vue'
+import Burger from '@/components/icons/Burger.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
+import Cross from '@/components/icons/Cross.vue'
+import Plus from '@/components/icons/Plus.vue'
 import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
+import MasterdataEntryForm from '@/components/ui/MasterdataEntryForm.vue'
 
 const { load } = usePageLoader()
 const statuses = ref([])
 const categories = ref([])
+const masterdataGroups = ref([])
 const statusLightbox = ref(null)
 const categoryLightbox = ref(null)
+const masterdataGroupLightbox = ref(null)
+const masterdataEntryLightbox = ref(null)
 const { collapsed, toggle } = useCollapsed('settings')
 const { confirm } = useConfirm()
 
 async function fetch() {
-	const [statusesRes, categoriesRes] = await Promise.all([
+	const [statusesRes, categoriesRes, masterdataRes] = await Promise.all([
 		statusesApi.index(),
 		categoriesApi.index(),
+		masterdataApi.index(),
 	])
 	statuses.value = statusesRes.data.data
 	categories.value = categoriesRes.data.data
+	masterdataGroups.value = masterdataRes.data.data
 }
 
 async function destroyStatus(status) {
@@ -69,6 +81,59 @@ async function reorderCategories() {
 		sort_order: i,
 	}))
 	await categoriesApi.reorder(items)
+}
+
+// Masterdata
+
+async function onMasterdataGroupStored() {
+	await fetch()
+	masterdataGroups.value.unshift(masterdataGroups.value.pop())
+	await reorderMasterdataGroups()
+}
+
+async function reorderMasterdataGroups() {
+	const items = masterdataGroups.value.map((g, i) => ({
+		uuid: g.section.uuid,
+		sort_order: i,
+	}))
+	await masterdataGroupsApi.reorder(items)
+}
+
+async function reorderMasterdata(group) {
+	const items = group.entries.map((e, i) => ({
+		uuid: e.uuid,
+		sort_order: i,
+		masterdata_group_id: group.section.id,
+	}))
+	await masterdataApi.reorder(items)
+}
+
+async function destroyMasterdataGroup(group) {
+	const count = group.entries.length
+	const message = count
+		? `Möchtest Du die Gruppe «${group.section.title}» wirklich löschen? Alle ${count} Einträge werden ebenfalls gelöscht.`
+		: `Möchtest Du die Gruppe «${group.section.title}» wirklich löschen?`
+	const ok = await confirm({
+		message,
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (ok) {
+		await masterdataGroupsApi.destroy(group.section.uuid)
+		await fetch()
+	}
+}
+
+async function destroyMasterdata(entry) {
+	const ok = await confirm({
+		message: 'Möchtest Du diesen Eintrag wirklich löschen?',
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (ok) {
+		await masterdataApi.destroy(entry.uuid)
+		await fetch()
+	}
 }
 
 load(fetch)
@@ -174,6 +239,108 @@ load(fetch)
 
 			</Span>
 
+			<!-- Stammdaten -->
+			<Span class="col-span-10">
+
+				<Grid :cols="10">
+
+					<Span class="col-span-8 col-start-2">
+						<CollapsibleHeader
+							title="Stammdaten"
+							:collapsed="collapsed.has('masterdata')"
+							@toggle="toggle('masterdata')" />
+					</Span>
+
+					<Span v-show="!collapsed.has('masterdata')" class="col-span-10 col-start-1">
+
+						<Grid :cols="10" class="mb-10">
+							<Span class="col-span-8 col-start-2">
+								<Button @click="masterdataGroupLightbox.open()" class="px-20">
+									<template #icon-right>
+										<Plus class="w-10 h-10" />
+									</template>
+									Neue Gruppe
+								</Button>
+							</Span>
+						</Grid>
+
+						<draggable
+							v-model="masterdataGroups"
+							item-key="section.uuid"
+							handle=".masterdata-group-drag-handle"
+							ghost-class="opacity-50"
+							animation="150"
+							class="flex flex-col gap-20 min-h-1"
+							@end="reorderMasterdataGroups">
+
+							<template #item="{ element: group }">
+
+								<Span class="col-span-10">
+
+									<Grid :cols="10">
+
+										<!-- Group header -->
+										<Span class="col-span-1 flex items-center justify-end">
+											<Burger class="w-18 h-10 cursor-grab masterdata-group-drag-handle" />
+										</Span>
+
+										<Span class="col-span-8">
+											<CollapsibleHeader
+												:title="group.section.title"
+												:collapsed="collapsed.has(`md-${group.section.uuid}`)"
+												editable
+												@toggle="toggle(`md-${group.section.uuid}`)"
+												@edit="masterdataGroupLightbox.edit(group.section)" />
+										</Span>
+
+										<Span class="col-span-1 flex items-center justify-start">
+											<Cross class="w-10 cursor-pointer" @click="destroyMasterdataGroup(group)" />
+										</Span>
+
+										<!-- Entries -->
+										<Span v-show="!collapsed.has(`md-${group.section.uuid}`)" class="col-span-10 col-start-1">
+											<draggable
+												v-model="group.entries"
+												group="masterdata-entries"
+												item-key="uuid"
+												handle=".masterdata-entry-drag-handle"
+												ghost-class="opacity-50"
+												animation="150"
+												class="flex flex-col gap-10 min-h-1"
+												:class="{ 'mb-10': group.entries.length }"
+												@change="reorderMasterdata(group)">
+												<template #item="{ element: entry }">
+													<DraggableEntryRow
+														:label="entry.title"
+														:show-publish="false"
+														drag-handle-class="masterdata-entry-drag-handle"
+														@edit="masterdataEntryLightbox.edit(entry, group.section.id)"
+														@delete="destroyMasterdata(entry)" />
+												</template>
+											</draggable>
+
+											<Grid :cols="10" class="mb-10">
+												<Span class="col-span-8 col-start-2">
+													<NewEntryButton @click="masterdataEntryLightbox.open(group.section.id)" />
+												</Span>
+											</Grid>
+
+										</Span>
+
+									</Grid>
+
+								</Span>
+
+							</template>
+
+						</draggable>
+
+					</Span>
+
+				</Grid>
+
+			</Span>
+
 		</div>
 
 	</Grid>
@@ -193,5 +360,21 @@ load(fetch)
 		:store-fn="categoriesApi.store"
 		:update-fn="categoriesApi.update"
 		@stored="fetch" />
+
+	<SectionTitleForm
+		ref="masterdataGroupLightbox"
+		label="Gruppe"
+		create-label="Neue Gruppe"
+		:store-fn="masterdataGroupsApi.store"
+		:update-fn="masterdataGroupsApi.update"
+		@stored="onMasterdataGroupStored"
+		@updated="fetch" />
+
+	<MasterdataEntryForm
+		ref="masterdataEntryLightbox"
+		:store-fn="masterdataApi.store"
+		:update-fn="masterdataApi.update"
+		@stored="fetch"
+		@updated="fetch" />
 
 </template>
