@@ -253,7 +253,7 @@ load(fetch)
 
 					<Span v-show="!collapsed.has('masterdata')" class="col-span-10 col-start-1">
 
-						<Grid :cols="10" class="mb-10">
+						<Grid :cols="10" class="mb-20">
 							<Span class="col-span-8 col-start-2">
 								<Button @click="masterdataGroupLightbox.open()" class="px-20">
 									<template #icon-right>
