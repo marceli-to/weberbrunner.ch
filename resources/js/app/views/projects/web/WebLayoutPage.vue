@@ -93,7 +93,7 @@ async function reorderSliderImages() {
 							:list="sliderImages"
 							item-key="uuid"
 							handle=".drag-handle"
-							class="grid grid-cols-4 gap-20"
+							class="_grid _grid-cols-4 gap-20 grid grid-cols-2 lg:grid-cols-4"
 							ghost-class="opacity-30"
 							animation="150"
 							@end="reorderSliderImages">
