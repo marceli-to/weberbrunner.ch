@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Project\FindBySlugAction;
+use App\Actions\Project\PrepareViewDataAction;
 
 class ProjectPreviewController extends Controller
 {
@@ -10,9 +11,6 @@ class ProjectPreviewController extends Controller
 	{
 		$project = (new FindBySlugAction)->execute($slug);
 
-		return view('pages.works.show', [
-			'project' => $project,
-			'isPreview' => true,
-		]);
+		return view('pages.works.show', (new PrepareViewDataAction)->execute($project, true));
 	}
 }

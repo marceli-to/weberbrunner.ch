@@ -1,22 +1,3 @@
-@php
-  // Prepare slides from media (excluding teaser)
-  $slides = $project->media->where('is_teaser', false)->map(fn($m) => [
-    'src' => $m->file,
-    'width' => $m->width,
-    'height' => $m->height,
-    'caption' => $m->caption,
-  ])->values();
-
-  // Prepare project info from attributes
-  $projectInfo = $project->attributes->map(fn($attr) => [
-    'label' => $attr->label,
-    'value' => $attr->value,
-  ])->toArray();
-
-  // Get first category as header
-  $header = $project->categories->first()?->title ?? 'weberbrunner architekten';
-@endphp
-
 @section('meta_title', $project->full_title)
 @section('meta_description', Str::limit($project->description, 160))
 @if($project->teaser->first()?->file)
@@ -42,10 +23,10 @@
 
       @foreach($slides as $slide)
         <x-slideshow.slide
-          :src="$slide['src']"
-          :width="$slide['width']"
-          :height="$slide['height']"
-          :caption="$slide['caption']"
+          :src="$slide->file"
+          :width="$slide->width"
+          :height="$slide->height"
+          :caption="$slide->caption"
         />
       @endforeach
 
@@ -67,44 +48,64 @@
     </div>
   </div>
 
-  <x-work.section title="Grundrisse" />
-  <x-slideshow.wrapper class="mb-40 lg:mb-80">
-    <x-slot:info>
-      &nbsp;
-    </x-slot:info>
-    @foreach($slides->take(3) as $slide)
-      <x-slideshow.slide
-        :src="$slide['src']"
-        :width="$slide['width']"
-        :height="$slide['height']"
-        :caption="$slide['caption']"
-      />
-    @endforeach
-  </x-slideshow.wrapper>
+  @foreach($project->blocks->where('type', '!=', 'fixed-slider') as $block)
 
-  <x-work.section title="Links" class="mb-40 lg:mb-80">
-    <x-container.inner class="max-w-prose hyphens-auto">
-      <div class="flex flex-col gap-y-6 md:gap-y-8 lg:gap-y-12">
-        <x-links.cta href="#" target="_blank" label="AW20 Architekturpreis Region Winterthur">
-          AW20 Architekturpreis Region Winterthur
-        </x-links.cta>
-        <x-links.cta href="#" target="_blank" label="Architekturpreis Kanton Zürich Auszeichnung 19">
-          Architekturpreis Kanton Zürich Auszeichnung 19
-        </x-links.cta>
-        <x-links.cta href="#" target="_blank" label="werk, bauen+wohnen 10-2018, Dorfbau">
-          werk, bauen+wohnen 10-2018, Dorfbau
-        </x-links.cta>
-      </div>
-    </x-container.inner>
-  </x-work.section>
+    @if($block->type === 'text' && $block->content)
+      <x-work.section :title="$block->title" class="mb-40 lg:mb-80">
+        <x-container.inner class="max-w-prose leading-[1.6] md:leading-[1.35]">
+          {!! $block->content !!}
+        </x-container.inner>
+      </x-work.section>
 
-  <x-work.section title="Team">
-    <x-container.inner class="max-w-prose leading-[1.6] md:leading-[1.35]">
-      <span><a href="{{ route('page.about.team') }}#boris-brunner" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Boris Brunner</a>,</span> <span><a href="{{ route('page.about.team') }}#eva-geering" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Eva Geering</a>,</span>
-      <span><a href="{{ route('page.about.team') }}#fabian-friedli" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Fabian Friedli</a>,</span> <span><a href="{{ route('page.about.team') }}#iris-bergamaschi" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Iris Bergamaschi</a>,</span>
-      <span><a href="{{ route('page.about.team') }}#rene-breuer" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">René Breuer</a>,</span> <span><a href="{{ route('page.about.team') }}#tamas-ozvald" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Tamas Ozvald</a>,</span>
-      <span><a href="{{ route('page.about.team') }}#roger-weber" class="underline underline-offset-4 md:underline-offset-6 decoration-1 hover:no-underline">Roger Weber</a></span>
-    </x-container.inner>
-  </x-work.section>
+    @elseif($block->type === 'slider' && $block->media->isNotEmpty())
+      <x-work.section :title="$block->title" />
+      <x-slideshow.wrapper class="mb-40 lg:mb-80">
+        <x-slot:info>
+          &nbsp;
+        </x-slot:info>
+        @foreach($block->media as $media)
+          <x-slideshow.slide
+            :src="$media->file"
+            :width="$media->width"
+            :height="$media->height"
+            :caption="$media->caption"
+          />
+        @endforeach
+      </x-slideshow.wrapper>
+
+    @elseif($block->type === 'image' && $block->media->first())
+      @php $blockMedia = $block->media->first(); @endphp
+      <x-work.section :title="$block->title" class="mb-40 lg:mb-80">
+        <x-container.inner>
+          <x-media.image
+            :src="$blockMedia->file"
+            :alt="$blockMedia->caption ?? ''"
+            :width="$blockMedia->width"
+            :height="$blockMedia->height"
+            class="w-full"
+          />
+        </x-container.inner>
+      </x-work.section>
+
+    @elseif($block->type === 'links' && $block->links->where('publish', true)->isNotEmpty())
+      <x-work.section :title="$block->title" class="mb-40 lg:mb-80">
+        <x-container.inner class="max-w-prose hyphens-auto">
+          <div class="flex flex-col gap-y-6 md:gap-y-8 lg:gap-y-12">
+            @foreach($block->links->where('publish', true) as $link)
+              <x-links.cta
+                :href="$link->link_type === 'internal' && $link->linkedProject ? route('page.works.show', $link->linkedProject->slug) : $link->url"
+                :target="$link->link_type === 'internal' ? '_self' : '_blank'"
+                :label="$link->title"
+              >
+                {{ $link->title }}
+              </x-links.cta>
+            @endforeach
+          </div>
+        </x-container.inner>
+      </x-work.section>
+
+    @endif
+
+  @endforeach
 
 </x-layout.show>
