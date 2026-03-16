@@ -1,0 +1,26 @@
+CRON JOB — PRODUCTION SERVER
+=============================
+
+Add the following cron entry to the server (via `crontab -e` for the web user,
+or by placing a file in /etc/cron.d/):
+
+  * * * * * cd /path/to/weberbrunner.ch && php artisan schedule:run >> /dev/null 2>&1
+
+Replace /path/to/weberbrunner.ch with the actual document root on the server.
+The schedule:run command must run every minute — Laravel dispatches the
+individual jobs based on their own frequency (daily, weekly, monthly).
+
+
+SCHEDULED JOBS (defined in routes/console.php)
+-----------------------------------------------
+
+  media:cleanup              — daily    — deletes temp/ files older than 24h
+  media:purge-orphans --force — weekly  — deletes uploads/ files with no DB record
+  activitylog:clean --days=90 — monthly — prunes Spatie activity log
+
+
+VERIFY AFTER SETUP
+------------------
+
+  php artisan schedule:list
+  php artisan schedule:run --verbose
