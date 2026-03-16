@@ -86,6 +86,13 @@ class Project extends Model
 		return $this->belongsToMany(Status::class);
 	}
 
+	public function masterdata(): BelongsToMany
+	{
+		return $this->belongsToMany(Masterdata::class, 'masterdata_project')
+			->withPivot('value')
+			->withTimestamps();
+	}
+
 	public function getActivitylogOptions(): LogOptions
 	{
 		return LogOptions::defaults()

@@ -28,6 +28,8 @@ use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\LandingItemController;
+use App\Http\Controllers\Api\MasterdataController;
+use App\Http\Controllers\Api\MasterdataGroupController;
 
 Route::prefix('dashboard')
 	->middleware(['web', 'auth'])
@@ -329,6 +331,32 @@ Route::prefix('dashboard')
 				Route::get('/{user}', 'show');
 				Route::put('/{user}', 'update');
 				Route::delete('/{user}', 'destroy');
+				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Masterdata
+		Route::controller(MasterdataController::class)
+			->prefix('masterdata')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::get('/{masterdata}', 'show');
+				Route::put('/{masterdata}', 'update');
+				Route::delete('/{masterdata}', 'destroy');
+				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Masterdata Groups
+		Route::controller(MasterdataGroupController::class)
+			->prefix('masterdata-groups')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::get('/{masterdataGroup}', 'show');
+				Route::put('/{masterdataGroup}', 'update');
+				Route::delete('/{masterdataGroup}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
 
