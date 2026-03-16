@@ -7,7 +7,7 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-	<header class="bg-white min-h-100 sticky top-0 left-0 z-10">
+	<header class="bg-white min-h-100 sticky top-0 left-0 z-50">
 		<div class="w-full h-20"></div>
 		<div class="min-h-80 grid grid-cols-12 gap-x-20">
 
