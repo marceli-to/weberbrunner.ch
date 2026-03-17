@@ -7,6 +7,11 @@ import EntryRow from '@/components/ui/EntryRow.vue'
 
 defineProps({
 	label: String,
+	sublabel: String,
+	split: {
+		type: Boolean,
+		default: false,
+	},
 	publish: Boolean,
 	showPublish: {
 		type: Boolean,
@@ -26,6 +31,8 @@ defineEmits(['edit', 'toggle-publish', 'delete'])
 		<Span class="col-span-8">
 			<EntryRow
 				:label="label"
+				:sublabel="sublabel"
+				:split="split"
 				:publish="publish"
 				:show-publish="showPublish"
 				@edit="$emit('edit')"

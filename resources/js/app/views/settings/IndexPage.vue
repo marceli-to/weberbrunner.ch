@@ -312,6 +312,7 @@ load(fetch)
 												<template #item="{ element: entry }">
 													<DraggableEntryRow
 														:label="entry.title"
+                            :split="true"
 														:show-publish="false"
 														drag-handle-class="masterdata-entry-drag-handle"
 														@edit="masterdataEntryLightbox.edit(entry, group.section.id)"
