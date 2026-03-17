@@ -19,8 +19,8 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 
 <template>
 	<div
-    class="border-thin bg-white"
-    :class="[variant === 'dark' ? 'border-black' : 'border-silver', publishable && !item.publish ? 'opacity-60' : '']">
+		class="border-thin bg-white"
+		:class="[variant === 'dark' ? 'border-black' : 'border-silver', publishable && !item.publish ? 'opacity-60' : '']">
 
 		<div class="relative aspect-square overflow-hidden">
 
@@ -39,19 +39,19 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 				</div>
 			</template>
 
-      <figure
-        class="m-0 w-full h-full"
-        :class="editable ? 'cursor-pointer' : ''"
-        @click="editable && $emit('edit', item)">
-        <div
-          class="w-full h-full min-w-0 min-h-0 flex items-center justify-center"
-          :class="compact ? 'px-20 py-30' : 'px-30 py-60'">
-          <img
-            :src="item.preview_url"
-            :alt="item.alt || ''"
-            class="block max-w-full max-h-full object-contain" />
-        </div>
-      </figure>
+			<figure
+				class="m-0 w-full h-full"
+				:class="editable ? 'cursor-pointer' : ''"
+				@click="editable && $emit('edit', item)">
+				<div
+					class="w-full h-full min-w-0 min-h-0 flex items-center justify-center"
+					:class="compact ? 'px-20 py-30' : 'px-30 py-60'">
+					<img
+						:src="item.preview_url"
+						:alt="item.alt || ''"
+						class="block max-w-full max-h-full object-contain" />
+				</div>
+			</figure>
 
 
 		</div>
@@ -63,6 +63,6 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 			@click="editable && $emit('edit', item)">
 			{{ item.original_name }}
 		</div>
-    
+		
 	</div>
 </template>

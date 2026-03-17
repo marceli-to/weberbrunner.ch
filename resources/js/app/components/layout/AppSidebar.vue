@@ -59,7 +59,7 @@ const isChildActive = (name) =>
 		<nav class="pt-30 sticky top-100">
 
 			<ul class="flex flex-col gap-y-2">
-        
+				
 				<li v-for="item in mainItems" :key="item.name">
 
 					<RouterLink

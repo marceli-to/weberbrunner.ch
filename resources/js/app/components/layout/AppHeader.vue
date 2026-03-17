@@ -24,8 +24,8 @@ const authStore = useAuthStore()
 
 					<div v-if="authStore.user" class="flex items-center gap-x-15">
 						<span class="text-lg font-semibold text-black leading-none">
-              {{ authStore.user.firstname }} {{ authStore.user.name }}
-            </span>
+							{{ authStore.user.firstname }} {{ authStore.user.name }}
+						</span>
 						<Avatar class="w-24 h-24" />
 					</div>
 				</div>

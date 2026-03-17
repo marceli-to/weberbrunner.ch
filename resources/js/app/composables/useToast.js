@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { reactive, readonly, toRef } from 'vue'
 
 const state = reactive({
 	current: null,
@@ -28,8 +28,10 @@ function clearErrors() {
 }
 
 export function useToast() {
+	const current = readonly(toRef(state, 'current'))
+
 	return {
-		current: readonly(state),
+		current,
 		success: (message) => add('success', message),
 		error: (message) => add('error', message),
 		dismiss,

@@ -70,7 +70,7 @@ function onBackdropClick(e) {
 					</Span>
 				</Grid>
 
-        <slot />
+				<slot />
 
 				<Grid v-if="submitLabel || cancelLabel" :cols="6" class="mt-40">
 					<Span class="col-span-4 col-start-2 flex flex-col gap-y-10">

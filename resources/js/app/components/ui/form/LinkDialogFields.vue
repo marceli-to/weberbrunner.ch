@@ -112,20 +112,20 @@ defineExpose({
 
 		<!-- Mode tabs -->
 		<Span class="col-span-1">
-			<Button 
-        class="justify-center" 
-        :class="localMode === 'internal' ? '!bg-navy !border-navy !text-white' : ''" 
-        @click="setMode('internal')">
-        Projekt
-      </Button>
+			<Button
+				class="justify-center"
+				:variant="localMode === 'internal' ? 'active' : 'default'"
+				@click="setMode('internal')">
+				Projekt
+			</Button>
 		</Span>
 		<Span class="col-span-1">
-			<Button 
-        class="justify-center" 
-        :class="localMode === 'external' ? '!bg-navy !border-navy !text-white' : ''" 
-        @click="setMode('external')">
-        Extern
-      </Button>
+			<Button
+				class="justify-center"
+				:variant="localMode === 'external' ? 'active' : 'default'"
+				@click="setMode('external')">
+				Extern
+			</Button>
 		</Span>
 
 		<!-- Projekt mode -->

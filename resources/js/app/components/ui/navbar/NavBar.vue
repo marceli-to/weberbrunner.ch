@@ -1,5 +1,9 @@
+<script setup>
+import Grid from '@/components/ui/grid/Grid.vue'
+</script>
+
 <template>
-	<nav class="grid grid-cols-8 gap-20">
+	<Grid as="nav" :cols="8">
 		<slot />
-	</nav>
+	</Grid>
 </template>

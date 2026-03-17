@@ -21,7 +21,7 @@ const cols = inject('listTableCols', 8)
 	<Grid
 		v-else
 		:cols="cols"
-    class="text-sm"
+		class="text-sm"
 		:class="header ? '' : 'hover:bg-navy group'">
 		<slot />
 	</Grid>

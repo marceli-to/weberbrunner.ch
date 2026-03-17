@@ -24,16 +24,16 @@ const teaser = (item) => item.project?.media?.[0] || null
 				</button>
 			</div>
 
-      <figure class="w-full h-full">
-        <div class="w-full h-full min-w-0 min-h-0 flex items-center justify-center px-30 py-60">
-          <img
-            v-if="teaser(item)"
-            :src="teaser(item).preview_url"
-            :alt="teaser(item).alt || ''"
-            class="block max-w-full max-h-full object-contain"
-          />
-        </div>
-      </figure>
+			<figure class="w-full h-full">
+				<div class="w-full h-full min-w-0 min-h-0 flex items-center justify-center px-30 py-60">
+					<img
+						v-if="teaser(item)"
+						:src="teaser(item).preview_url"
+						:alt="teaser(item).alt || ''"
+						class="block max-w-full max-h-full object-contain"
+					/>
+				</div>
+			</figure>
 
 
 		</div>

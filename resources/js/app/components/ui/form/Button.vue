@@ -10,6 +10,7 @@ const $slots = defineSlots()
 
 const variantClasses = {
 	default: '',
+	active: 'form-button--active',
 	primary: 'form-button--primary',
 	secondary: 'form-button--secondary',
 	ghost: 'form-button--ghost',

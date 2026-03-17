@@ -16,7 +16,6 @@ const emit = defineEmits(['close', 'save'])
 const open = computed(() => !!props.media)
 
 const form = ref({
-	original_name: '',
 	caption: '',
 	alt: '',
 	credits: '',
@@ -24,7 +23,6 @@ const form = ref({
 
 watch(() => props.media, (val) => {
 	if (val) {
-		form.value.original_name = val.original_name || ''
 		form.value.caption = val.caption || ''
 		form.value.alt = val.alt || ''
 		form.value.credits = val.credits || ''
@@ -62,7 +60,7 @@ function handleSave() {
 				<Label>Dateiname</Label>
 			</Span>
 			<Span class="col-span-6">
-				<Input v-model="form.original_name" disabled />
+				<Input :model-value="media?.original_name || ''" disabled />
 			</Span>
 
 			<Span class="col-span-2 flex items-center">
@@ -88,14 +86,14 @@ function handleSave() {
 		</Grid>
 
 		<!-- Actions -->
-    <Grid :cols="8" class="gap-y-10 px-20">
-      <Span class="col-span-6 col-start-3">
-        <Button type="button" @click="handleSave" class="px-10">Speichern</Button>
-      </Span>
-      <Span class="col-span-6 col-start-3">
-        <Button type="button" @click="emit('close')" class="px-10">Abbrechen</Button>
-      </Span>
-    </Grid>
+		<Grid :cols="8" class="gap-y-10 px-20">
+			<Span class="col-span-6 col-start-3">
+				<Button type="button" @click="handleSave" class="px-10">Speichern</Button>
+			</Span>
+			<Span class="col-span-6 col-start-3">
+				<Button type="button" @click="emit('close')" class="px-10">Abbrechen</Button>
+			</Span>
+		</Grid>
 
 	</Lightbox>
 </template>

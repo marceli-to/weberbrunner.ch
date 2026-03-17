@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+	variant: {
+		type: String,
+		default: null,
+	},
+})
+</script>
+
 <template>
 	<svg viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<template v-if="variant === 'sm'">
@@ -12,11 +21,3 @@
 		</template>
 	</svg>
 </template>
-<script setup>
-defineProps({
-	variant: {
-		type: String,
-		default: null,
-	},
-});
-</script>

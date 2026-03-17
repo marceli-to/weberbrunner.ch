@@ -1,7 +1,7 @@
 <template>
-  <svg viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 2H48V38H2V2ZM0 40H50V0H0V40Z" fill="currentColor"/>
-    <path d="M44 34L29 9L19 25.66L15 19L6 34H44Z" fill="currentColor"/>
-    <path d="M10.5 11C11.88 11 13 9.88 13 8.5C13 7.12 11.88 6 10.5 6C9.12 6 8 7.12 8 8.5C8 9.88 9.12 11 10.5 11Z" fill="currentColor"/>
-  </svg>
+	<svg viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M2 2H48V38H2V2ZM0 40H50V0H0V40Z" fill="currentColor"/>
+		<path d="M44 34L29 9L19 25.66L15 19L6 34H44Z" fill="currentColor"/>
+		<path d="M10.5 11C11.88 11 13 9.88 13 8.5C13 7.12 11.88 6 10.5 6C9.12 6 8 7.12 8 8.5C8 9.88 9.12 11 10.5 11Z" fill="currentColor"/>
+	</svg>
 </template>

@@ -17,11 +17,11 @@ const { current, dismiss } = useToast()
 			mode="out-in"
 		>
 			<ToastMessage
-				v-if="current.current"
-				:key="current.current.id"
-				:toast="current.current"
+				v-if="current"
+				:key="current.id"
+				:toast="current"
 				class="col-span-9 col-start-2"
-				@close="dismiss(current.current.id)"
+				@close="dismiss(current.id)"
 			/>
 		</Transition>
 	</div>

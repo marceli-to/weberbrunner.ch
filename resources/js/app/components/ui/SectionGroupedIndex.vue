@@ -209,13 +209,13 @@ load(fetch)
 	</Grid>
 
 	<!-- Lightbox -->
-	<SectionTitleForm 
-    ref="lightbox" 
-    label="Kategorie" 
-    create-label="Neue Kategorie" 
-    :store-fn="storeGroupFn" 
-    :update-fn="updateGroupFn" 
-    @stored="onGroupStored" 
-    @updated="fetch" />
+	<SectionTitleForm
+		ref="lightbox"
+		label="Kategorie"
+		create-label="Neue Kategorie"
+		:store-fn="storeGroupFn"
+		:update-fn="updateGroupFn"
+		@stored="onGroupStored"
+		@updated="fetch" />
 
 </template>
