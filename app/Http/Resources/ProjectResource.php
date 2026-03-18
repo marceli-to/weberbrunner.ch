@@ -26,6 +26,7 @@ class ProjectResource extends JsonResource
 			'location' => new LocationResource($this->whenLoaded('location')),
 			'attributes' => ProjectAttributeResource::collection($this->whenLoaded('attributes')),
 			'media' => MediaResource::collection($this->whenLoaded('media')),
+			'teaser' => MediaResource::collection($this->whenLoaded('teaser')),
 			'categories' => CategoryResource::collection($this->whenLoaded('categories')),
 			'statuses' => StatusResource::collection($this->whenLoaded('statuses')),
 			'links' => ProjectLinkResource::collection($this->whenLoaded('links')),

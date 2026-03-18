@@ -10,8 +10,8 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Button from '@/components/ui/form/Button.vue'
 import Plus from '@/components/icons/Plus.vue'
-import Drawer from '@/components/ui/drawer/Drawer.vue'
 import LandingCard from '@/components/landing/LandingCard.vue'
+import ProjectPickerDrawer from '@/components/landing/ProjectPickerDrawer.vue'
 
 const { load } = usePageLoader()
 const { confirm } = useConfirm()
@@ -20,6 +20,7 @@ const columns = ref({ 1: [], 2: [], 3: [] })
 const allProjects = ref([])
 const drawerOpen = ref(false)
 const drawerColumn = ref(null)
+const selectedProjectUuid = ref(null)
 
 const placedProjectIds = computed(() => {
 	const ids = new Set()
@@ -46,16 +47,27 @@ async function fetch() {
 
 function openDrawer(col) {
 	drawerColumn.value = col
+	selectedProjectUuid.value = null
 	drawerOpen.value = true
 }
 
-async function addProject(project) {
+function closeDrawer() {
+	drawerOpen.value = false
+	drawerColumn.value = null
+	selectedProjectUuid.value = null
+}
+
+async function addProject() {
+	if (!selectedProjectUuid.value) return
+	const project = allProjects.value.find(p => p.uuid === selectedProjectUuid.value)
+	if (!project) return
+	const col = drawerColumn.value
 	drawerOpen.value = false
 	const { data } = await landingApi.store({
 		project_id: project.id,
-		column: drawerColumn.value,
+		column: col,
 	})
-	columns.value[drawerColumn.value].push(data.data)
+	columns.value[col].push(data.data)
 }
 
 async function removeItem(item, col) {
@@ -136,28 +148,11 @@ load(fetch)
 	</Grid>
 
 	<!-- Project picker drawer -->
-	<Drawer
+	<ProjectPickerDrawer
 		:open="drawerOpen"
-		cancel-label="Abbrechen"
-		@close="drawerOpen = false">
-
-		<Grid :cols="6" class="mt-40">
-			<Span class="col-span-4 col-start-2">
-				<div class="text-white text-sm mb-20">Projekt wählen (Spalte {{ drawerColumn }})</div>
-				<div class="flex flex-col gap-10">
-					<button
-						v-for="project in availableProjects"
-						:key="project.uuid"
-						type="button"
-						class="flex items-center gap-x-10 border-t-thin border-t-white pt-10 cursor-pointer w-full text-left"
-						@click="addProject(project)">
-						<Plus class="w-10 h-10 text-white shrink-0" />
-						<span class="text-white text-sm truncate">{{ project.full_title || project.title }}</span>
-					</button>
-				</div>
-			</Span>
-		</Grid>
-
-	</Drawer>
+		:items="availableProjects"
+		v-model="selectedProjectUuid"
+		@submit="addProject"
+		@close="closeDrawer" />
 
 </template>

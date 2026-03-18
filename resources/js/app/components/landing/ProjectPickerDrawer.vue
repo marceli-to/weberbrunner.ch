@@ -4,13 +4,11 @@ import Drawer from '@/components/ui/drawer/Drawer.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import RadioIcon from '@/components/icons/Radio.vue'
-import CheckboxIcon from '@/components/icons/Checkbox.vue'
 
 const props = defineProps({
 	open: { type: Boolean, default: false },
 	items: { type: Array, default: () => [] },
-	modelValue: { type: [String, Array, null], default: null },
-	multiple: { type: Boolean, default: false },
+	modelValue: { type: [String, null], default: null },
 	submitLabel: { type: String, default: 'Übernehmen' },
 	cancelLabel: { type: String, default: 'Abbrechen' },
 })
@@ -19,26 +17,12 @@ const emit = defineEmits(['update:modelValue', 'close', 'submit'])
 const drawerView = ref('list')
 
 function isSelected(uuid) {
-	if (props.multiple) {
-		return Array.isArray(props.modelValue) && props.modelValue.includes(uuid)
-	}
 	return props.modelValue === uuid
 }
 
 function select(uuid) {
-	if (props.multiple) {
-		const current = Array.isArray(props.modelValue) ? [...props.modelValue] : []
-		const index = current.indexOf(uuid)
-		if (index === -1) {
-			current.push(uuid)
-		} else {
-			current.splice(index, 1)
-		}
-		emit('update:modelValue', current)
-	} else {
-		emit('update:modelValue', uuid)
-		emit('submit')
-	}
+	emit('update:modelValue', uuid)
+	emit('submit')
 }
 </script>
 
@@ -58,18 +42,22 @@ function select(uuid) {
 				<Grid :cols="4">
 					<Span class="col-span-3">
 						<button type="button" class="flex items-start gap-x-10 border-t-thin border-t-white pt-10 cursor-pointer w-full text-left" @click="select(item.uuid)">
-							<component
-								:is="multiple ? CheckboxIcon : RadioIcon"
+							<RadioIcon
 								:variant="isSelected(item.uuid) ? 'checked' : 'unchecked'"
 								class="w-12 shrink-0 mt-2 text-white" />
-							<span class="text-white text-sm overflow-hidden text-ellipsis whitespace-nowrap">{{ item.original_name }}</span>
+							<span class="text-white text-sm overflow-hidden text-ellipsis whitespace-nowrap">{{ item.full_title || item.title }}</span>
 						</button>
 					</Span>
 					<Span class="col-span-1">
 						<img
-							:src="item.thumbnail_url"
-							:alt="item.original_name"
+							v-if="item.teaser?.[0]"
+							:src="item.teaser[0].thumbnail_url"
+							:alt="item.full_title || item.title"
 							class="w-full h-auto aspect-square object-cover bg-white cursor-pointer"
+							@click="select(item.uuid)" />
+						<div
+							v-else
+							class="w-full aspect-square bg-white/10 cursor-pointer"
 							@click="select(item.uuid)" />
 					</Span>
 				</Grid>
@@ -87,12 +75,15 @@ function select(uuid) {
 						class="cursor-pointer relative"
 						@click="select(item.uuid)">
 						<img
-							:src="item.thumbnail_url"
-							:alt="item.original_name"
+							v-if="item.teaser?.[0]"
+							:src="item.teaser[0].thumbnail_url"
+							:alt="item.full_title || item.title"
 							class="w-full h-auto aspect-square object-cover bg-white" />
+						<div
+							v-else
+							class="w-full aspect-square bg-white/10" />
 						<span class="absolute top-10 left-10">
-							<component
-								:is="multiple ? CheckboxIcon : RadioIcon"
+							<RadioIcon
 								:variant="isSelected(item.uuid) ? 'checked' : 'unchecked'"
 								class="w-12 text-white" />
 						</span>

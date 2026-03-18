@@ -31,7 +31,7 @@ class ProjectController extends Controller
 	{
 		$this->authorize('viewAny', Project::class);
 
-		$projects = Project::published()->orderBy('title')->get();
+		$projects = Project::published()->with('teaser')->orderBy('title')->get();
 
 		return ProjectResource::collection($projects);
 	}

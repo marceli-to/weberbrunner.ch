@@ -54,7 +54,7 @@ function onBackdropClick(e) {
 				<button
 					v-if="closeable"
 					type="button"
-					class="absolute top-20 left-20 w-14 h-14 flex items-center justify-center text-white cursor-pointer"
+					class="sticky top-20 left-20 w-14 h-14 flex items-center justify-center text-white cursor-pointer"
 					@click="onClose">
 					<Cross class="w-14 h-14" />
 				</button>

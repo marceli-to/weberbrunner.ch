@@ -73,7 +73,7 @@ function onReorder() {
 			:open="drawerOpen"
 			:items="projectMedia"
 			v-model="selectedUuids"
-			:multiple="true"
+			multiple
 			submit-label="Übernehmen"
 			cancel-label="Abbrechen"
 			@close="drawerOpen = false"

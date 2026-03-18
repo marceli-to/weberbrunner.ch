@@ -76,7 +76,7 @@
     @elseif($block->type === 'image' && $block->media->first())
       @php $blockMedia = $block->media->first(); @endphp
       <x-work.section :title="$block->title" class="mb-40 lg:mb-80">
-        <x-container.inner>
+        <x-container.inner class="max-w-prose">
           <x-media.image
             :src="$blockMedia->file"
             :alt="$blockMedia->caption ?? ''"
