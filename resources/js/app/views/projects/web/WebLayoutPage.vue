@@ -32,7 +32,6 @@ const sliderImages = computed(() =>
 	fixedSliderBlock.value?.media || []
 )
 
-
 async function onSliderSubmit() {
 	const projectUuid = project.value.uuid
 	let block = fixedSliderBlock.value
@@ -119,7 +118,7 @@ async function reorderSliderImages() {
 
 				</Span>
 
-			  <!-- Fixed: Projektbeschrieb -->
+			  <!-- Projektbeschrieb -->
 				<Span class="col-span-8 col-start-2">
 
 					<CollapsibleHeader
@@ -135,7 +134,7 @@ async function reorderSliderImages() {
 
 				</Span>
 
-			  <!-- Fixed: Stammdaten -->
+			  <!-- Stammdaten -->
 				<Span class="col-span-8 col-start-2">
 					<CollapsibleHeader
 						title="Stammdaten"
