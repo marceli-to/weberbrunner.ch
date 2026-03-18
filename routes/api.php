@@ -126,10 +126,12 @@ Route::prefix('dashboard')
 		Route::controller(ProjectMasterdataController::class)
 			->prefix('projects/{project}')
 			->group(function () {
-				Route::get('/masterdata', 'index');
+				Route::get('/masterdata', 'all');
 				Route::get('/masterdata/attached', 'attached');
-				Route::patch('/masterdata', 'sync');
+				Route::get('/masterdata/available', 'available');
+				Route::patch('/masterdata', 'updateValues');
 				Route::patch('/masterdata/reorder', 'reorder');
+				Route::post('/masterdata/{masterdata}', 'attach');
 				Route::delete('/masterdata/{masterdata}', 'destroy');
 			});
 
@@ -355,6 +357,7 @@ Route::prefix('dashboard')
 				Route::patch('/reorder', 'reorder');
 				Route::get('/{masterdata}', 'show');
 				Route::put('/{masterdata}', 'update');
+				Route::patch('/{masterdata}/standard', 'toggleStandard');
 				Route::delete('/{masterdata}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});

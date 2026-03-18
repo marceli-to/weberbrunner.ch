@@ -3,8 +3,8 @@
 namespace App\Actions\ProjectMasterdata;
 
 use App\Models\Masterdata;
+use App\Models\MasterdataProject;
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 
 class ReorderAction
 {
@@ -12,8 +12,7 @@ class ReorderAction
 	{
 		foreach ($items as $item) {
 			$masterdata = Masterdata::where('uuid', $item['uuid'])->firstOrFail();
-			DB::table('masterdata_project')
-				->where('project_id', $project->id)
+			MasterdataProject::where('project_id', $project->id)
 				->where('masterdata_id', $masterdata->id)
 				->update(['sort_order' => $item['sort_order']]);
 		}

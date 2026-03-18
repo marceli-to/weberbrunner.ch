@@ -3,9 +3,9 @@ import { ref, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 import projectMasterdataApi from '@/api/project-masterdata'
 import { useConfirm } from '@/composables/useConfirm'
-import Grid from '@/components/ui/grid/Grid.vue'
-import Span from '@/components/ui/grid/Span.vue'
 import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
+import MasterdataPickerDrawer from '@/components/projects/MasterdataPickerDrawer.vue'
+import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 
 const props = defineProps({
 	project: { type: Object, required: true },
@@ -13,6 +13,7 @@ const props = defineProps({
 
 const { confirm } = useConfirm()
 const entries = ref([])
+const drawerOpen = ref(false)
 
 onMounted(fetch)
 
@@ -59,4 +60,12 @@ async function destroy(entry) {
 				@delete="destroy(element)" />
 		</template>
 	</draggable>
+
+	<NewEntryButton class="mt-10" @click="drawerOpen = true">Hinzufügen</NewEntryButton>
+
+	<MasterdataPickerDrawer
+		:open="drawerOpen"
+		:project-uuid="project.uuid"
+		@close="drawerOpen = false; fetch()"
+		@change="fetch" />
 </template>

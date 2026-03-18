@@ -124,6 +124,11 @@ async function destroyMasterdataGroup(group) {
 	}
 }
 
+async function toggleDefault(entry) {
+	await masterdataApi.toggleStandard(entry.uuid)
+	entry.standard = !entry.standard
+}
+
 async function destroyMasterdata(entry) {
 	const ok = await confirm({
 		message: 'Möchtest Du diesen Eintrag wirklich löschen?',
@@ -312,10 +317,13 @@ load(fetch)
 												<template #item="{ element: entry }">
 													<DraggableEntryRow
 														:label="entry.title"
-                            :split="true"
+														:split="true"
 														:show-publish="false"
+														:show-default="true"
+														:standard="entry.standard"
 														drag-handle-class="masterdata-entry-drag-handle"
 														@edit="masterdataEntryLightbox.edit(entry, group.section.id)"
+														@toggle-default="toggleDefault(entry)"
 														@delete="destroyMasterdata(entry)" />
 												</template>
 											</draggable>

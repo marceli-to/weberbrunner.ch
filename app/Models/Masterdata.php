@@ -21,12 +21,12 @@ class Masterdata extends Model
 	protected $fillable = [
 		'title',
 		'masterdata_group_id',
-		'is_default',
+		'standard',
 		'sort_order',
 	];
 
 	protected $casts = [
-		'is_default' => 'boolean',
+		'standard' => 'boolean',
 	];
 
 	public function masterdataGroup(): BelongsTo
@@ -37,7 +37,8 @@ class Masterdata extends Model
 	public function projects(): BelongsToMany
 	{
 		return $this->belongsToMany(Project::class, 'masterdata_project')
-			->withPivot('value')
+			->using(MasterdataProject::class)
+			->withPivot('value', 'sort_order', 'publish')
 			->withTimestamps();
 	}
 

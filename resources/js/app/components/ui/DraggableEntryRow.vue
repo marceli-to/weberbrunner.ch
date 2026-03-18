@@ -21,10 +21,15 @@ defineProps({
 		type: Boolean,
 		default: true,
 	},
+	standard: Boolean,
+	showDefault: {
+		type: Boolean,
+		default: false,
+	},
 	dragHandleClass: String,
 })
 
-defineEmits(['edit', 'toggle-publish', 'delete'])
+defineEmits(['edit', 'toggle-publish', 'toggle-default', 'delete'])
 </script>
 
 <template>
@@ -40,8 +45,11 @@ defineEmits(['edit', 'toggle-publish', 'delete'])
 				:publish="publish"
 				:show-publish="showPublish"
 				:editable="editable"
+				:standard="standard"
+				:show-default="showDefault"
 				@edit="$emit('edit')"
-				@toggle-publish="$emit('toggle-publish')" />
+				@toggle-publish="$emit('toggle-publish')"
+				@toggle-default="$emit('toggle-default')" />
 		</Span>
 		<Span class="col-span-1 flex items-center justify-start">
 			<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />

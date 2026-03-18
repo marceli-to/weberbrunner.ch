@@ -6,6 +6,7 @@ use App\Actions\Masterdata\DeleteAction as DeleteMasterdataAction;
 use App\Actions\Masterdata\ListAction as ListMasterdataAction;
 use App\Actions\Masterdata\ReorderAction as ReorderMasterdataAction;
 use App\Actions\Masterdata\StoreAction as StoreMasterdataAction;
+use App\Actions\Masterdata\ToggleStandardAction as ToggleMasterdataStandardAction;
 use App\Actions\Masterdata\UpdateAction as UpdateMasterdataAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masterdata\StoreMasterdataRequest;
@@ -54,6 +55,15 @@ class MasterdataController extends Controller
 		$masterdata = (new UpdateMasterdataAction)->execute($masterdata, $request->validated());
 
 		return new MasterdataResource($masterdata->load('masterdataGroup'));
+	}
+
+	public function toggleStandard(Masterdata $masterdata)
+	{
+		$this->authorize('update', $masterdata);
+
+		(new ToggleMasterdataStandardAction)->execute($masterdata);
+
+		return response()->json(null, 204);
 	}
 
 	public function destroy(Masterdata $masterdata)

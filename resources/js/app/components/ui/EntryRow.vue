@@ -1,6 +1,7 @@
 <script setup>
 import Eye from '@/components/icons/Eye.vue'
 import Pencil from '@/components/icons/Pencil.vue'
+import Star from '@/components/icons/Star.vue'
 
 defineProps({
 	label: String,
@@ -18,9 +19,14 @@ defineProps({
 		type: Boolean,
 		default: true,
 	},
+	standard: Boolean,
+	showDefault: {
+		type: Boolean,
+		default: false,
+	},
 })
 
-defineEmits(['edit', 'toggle-publish'])
+defineEmits(['edit', 'toggle-publish', 'toggle-default'])
 </script>
 
 <template>
@@ -31,9 +37,10 @@ defineEmits(['edit', 'toggle-publish'])
 			</div>
 			<div class="col-span-8 bg-white text-md min-h-30 border-thin border-black flex justify-between items-center px-20 flex-1">
 				<span>{{ sublabel }}</span>
-				<span class="flex gap-x-20">
+				<span class="flex items-center gap-x-20">
+					<Star v-if="showDefault" :variant="standard ? 'filled' : 'outline'" class="w-14 cursor-pointer" @click="$emit('toggle-default')" />
 					<Pencil v-if="editable" class="w-14 cursor-pointer" @click="$emit('edit')" />
-					<Eye v-if="showPublish" :variant="publish ? 'visible' : 'hidden'" class="w-14 cursor-pointer" @click="$emit('toggle-publish')" />
+          <Eye v-if="showPublish" :variant="publish ? 'visible' : 'hidden'" class="w-14 cursor-pointer" @click="$emit('toggle-publish')" />
 				</span>
 			</div>
 		</div>
@@ -45,6 +52,7 @@ defineEmits(['edit', 'toggle-publish'])
 			<span>{{ label }}</span>
 			<span class="flex gap-x-20">
 				<Pencil v-if="editable" class="w-14 cursor-pointer" @click="$emit('edit')" />
+				<Star v-if="showDefault" :variant="standard ? 'filled' : 'outline'" class="w-14 cursor-pointer" @click="$emit('toggle-default')" />
 				<Eye v-if="showPublish" :variant="publish ? 'visible' : 'hidden'" class="w-14 cursor-pointer" @click="$emit('toggle-publish')" />
 			</span>
 		</div>

@@ -18,14 +18,12 @@ const router = useRouter()
 
 const { project } = useProject()
 
-const groups = ref([])
+const entries = ref([])
 const form = ref({})
 
-const entries = computed(() => groups.value.flatMap(group => group.entries))
-
 onMounted(async () => {
-	const { data } = await projectMasterdataApi.index(route.params.id)
-	groups.value = data.data
+	const { data } = await projectMasterdataApi.all(route.params.id)
+	entries.value = data.data
 	form.value = Object.fromEntries(entries.value.map(e => [e.uuid, e.value ?? '']))
 })
 
@@ -34,11 +32,10 @@ function goBack() {
 }
 
 async function handleSubmit() {
-	const entries = Object.entries(form.value)
-		.filter(([, value]) => value !== '' && value !== null)
-		.map(([uuid, value]) => ({ uuid, value }))
-
-	await projectMasterdataApi.sync(route.params.id, entries)
+	const payload = entries.value
+		.filter(e => form.value[e.uuid] !== '' && form.value[e.uuid] != null)
+		.map(e => ({ uuid: e.uuid, value: form.value[e.uuid] }))
+	await projectMasterdataApi.updateValues(route.params.id, payload)
 	goBack()
 }
 </script>

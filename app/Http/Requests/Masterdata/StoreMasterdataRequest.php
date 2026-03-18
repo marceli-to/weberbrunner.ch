@@ -17,7 +17,7 @@ class StoreMasterdataRequest extends FormRequest
 		return [
 			'title' => 'required|string|max:255',
 			'masterdata_group_id' => 'required|exists:masterdata_groups,id',
-			'is_default' => 'boolean',
+			'standard' => 'boolean',
 		];
 	}
 

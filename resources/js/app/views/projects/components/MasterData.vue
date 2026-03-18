@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import projectMasterdataApi from '@/api/project-masterdata'
 import Card from '@/components/ui/Card.vue'
@@ -14,13 +14,11 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 
-const groups = ref([])
-
-const entries = computed(() => groups.value.flatMap(group => group.entries))
+const entries = ref([])
 
 onMounted(async () => {
-	const { data } = await projectMasterdataApi.index(props.project.uuid)
-	groups.value = data.data
+	const { data } = await projectMasterdataApi.attached(props.project.uuid)
+	entries.value = data.data
 })
 
 function edit() {

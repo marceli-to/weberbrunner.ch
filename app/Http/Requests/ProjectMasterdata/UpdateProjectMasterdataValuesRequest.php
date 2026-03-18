@@ -4,7 +4,7 @@ namespace App\Http\Requests\ProjectMasterdata;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SyncProjectMasterdataRequest extends FormRequest
+class UpdateProjectMasterdataValuesRequest extends FormRequest
 {
 	public function rules(): array
 	{

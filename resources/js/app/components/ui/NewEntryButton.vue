@@ -10,6 +10,6 @@ defineEmits(['click'])
 		<template #icon-right>
 			<Plus class="w-10 h-10" />
 		</template>
-		Neuer Eintrag
+		<slot>Neuer Eintrag</slot>
 	</Button>
 </template>

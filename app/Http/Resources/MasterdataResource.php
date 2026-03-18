@@ -13,7 +13,7 @@ class MasterdataResource extends JsonResource
 			'id' => $this->id,
 			'uuid' => $this->uuid,
 			'title' => $this->title,
-			'is_default' => $this->is_default,
+			'standard' => $this->standard,
 			'masterdata_group' => new MasterdataGroupResource($this->whenLoaded('masterdataGroup')),
 			'sort_order' => $this->sort_order,
 			'created_at' => $this->created_at,
