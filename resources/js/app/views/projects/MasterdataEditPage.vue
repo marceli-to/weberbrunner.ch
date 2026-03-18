@@ -32,9 +32,7 @@ function goBack() {
 }
 
 async function handleSubmit() {
-	const payload = entries.value
-		.filter(e => form.value[e.uuid] !== '' && form.value[e.uuid] != null)
-		.map(e => ({ uuid: e.uuid, value: form.value[e.uuid] }))
+	const payload = entries.value.map(e => ({ uuid: e.uuid, value: form.value[e.uuid] || null }))
 	await projectMasterdataApi.updateValues(route.params.id, payload)
 	goBack()
 }

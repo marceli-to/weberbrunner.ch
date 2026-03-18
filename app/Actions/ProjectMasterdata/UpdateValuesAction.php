@@ -16,6 +16,11 @@ class UpdateValuesAction
 				->where('masterdata_id', $masterdata->id)
 				->first();
 
+			if (!$entry['value']) {
+				$pivot?->delete();
+				continue;
+			}
+
 			if ($pivot) {
 				$pivot->update(['value' => $entry['value'], 'publish' => true]);
 			} else {
