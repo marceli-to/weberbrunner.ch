@@ -17,7 +17,7 @@ const router = useRouter()
 const entries = ref([])
 
 onMounted(async () => {
-	const { data } = await projectMasterdataApi.attached(props.project.uuid)
+	const { data } = await projectMasterdataApi.all(props.project.uuid)
 	entries.value = data.data
 })
 
