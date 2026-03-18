@@ -3,38 +3,62 @@
 namespace App\Actions\Media;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RuntimeException;
+use Throwable;
 
 class AttachAction
 {
 	public function execute(array $mediaItems, Model $parent): void
 	{
-		$maxSort = $parent->media()->max('sort_order') ?? -1;
+		$disk = Storage::disk('public');
+		$movedFiles = [];
 
-		foreach ($mediaItems as $item) {
-			$tempPath = 'temp/' . $item['file'];
+		try {
+			DB::transaction(function () use ($mediaItems, $parent, $disk, &$movedFiles): void {
+				$maxSort = $parent->media()->max('sort_order') ?? -1;
 
-			if (!Storage::disk('public')->exists($tempPath)) {
-				continue;
+				foreach ($mediaItems as $item) {
+					$tempPath = 'temp/' . $item['file'];
+
+					if (!$disk->exists($tempPath)) {
+						continue;
+					}
+
+					$filename = $this->uniqueFilename($item['file']);
+					$uploadPath = 'uploads/' . $filename;
+
+					if (!$disk->move($tempPath, $uploadPath)) {
+						throw new RuntimeException('Failed to move uploaded media into the permanent storage location.');
+					}
+
+					$movedFiles[] = [$tempPath, $uploadPath];
+
+					$maxSort++;
+					$parent->media()->create([
+						'uuid' => $item['uuid'],
+						'file' => $uploadPath,
+						'original_name' => $item['original_name'],
+						'mime_type' => $item['mime_type'],
+						'size' => $item['size'],
+						'width' => $item['width'] ?? null,
+						'height' => $item['height'] ?? null,
+						'alt' => $item['alt'] ?? null,
+						'caption' => $item['caption'] ?? null,
+						'sort_order' => $maxSort,
+					]);
+				}
+			});
+		} catch (Throwable $e) {
+			foreach (array_reverse($movedFiles) as [$tempPath, $uploadPath]) {
+				if ($disk->exists($uploadPath) && !$disk->exists($tempPath)) {
+					$disk->move($uploadPath, $tempPath);
+				}
 			}
 
-			$filename = $this->uniqueFilename($item['file']);
-			Storage::disk('public')->move($tempPath, 'uploads/' . $filename);
-
-			$maxSort++;
-			$parent->media()->create([
-				'uuid' => $item['uuid'],
-				'file' => 'uploads/' . $filename,
-				'original_name' => $item['original_name'],
-				'mime_type' => $item['mime_type'],
-				'size' => $item['size'],
-				'width' => $item['width'] ?? null,
-				'height' => $item['height'] ?? null,
-				'alt' => $item['alt'] ?? null,
-				'caption' => $item['caption'] ?? null,
-				'sort_order' => $maxSort,
-			]);
+			throw $e;
 		}
 	}
 

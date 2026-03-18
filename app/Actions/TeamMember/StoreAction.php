@@ -4,6 +4,7 @@ namespace App\Actions\TeamMember;
 
 use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Models\TeamMember;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StoreAction
@@ -15,12 +16,14 @@ class StoreAction
 
 		$data['slug'] = Str::slug($data['firstname'] . ' ' . $data['name']);
 
-		$teamMember = TeamMember::create($data);
+		return DB::transaction(function () use ($data, $media): TeamMember {
+			$teamMember = TeamMember::create($data);
 
-		if (!empty($media)) {
-			(new AttachMediaAction)->execute($media, $teamMember);
-		}
+			if (!empty($media)) {
+				(new AttachMediaAction)->execute($media, $teamMember);
+			}
 
-		return $teamMember;
+			return $teamMember;
+		});
 	}
 }

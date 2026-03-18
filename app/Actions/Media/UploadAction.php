@@ -2,7 +2,7 @@
 
 namespace App\Actions\Media;
 
-use App\Http\Controllers\ImageController;
+use App\Support\ImageUrlSigner;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -40,8 +40,8 @@ class UploadAction
 			'is_teaser' => false,
 			'sort_order' => 0,
 			'orientation' => $this->orientation($dimensions[0] ?? null, $dimensions[1] ?? null),
-			'thumbnail_url' => ImageController::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
-			'preview_url' => ImageController::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']),
+			'thumbnail_url' => ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
+			'preview_url' => ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']),
 			'_temp' => true,
 		];
 	}

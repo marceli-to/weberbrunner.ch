@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Support\ImageUrlSigner;
 use League\Glide\ServerFactory;
 use League\Glide\Server;
 use League\Glide\Signatures\SignatureFactory;
@@ -47,14 +48,11 @@ class ImageController extends Controller
 
 	public static function signUrl(string $path, array $params = []): string
 	{
-		$signature = SignatureFactory::create(config('app.key'));
-		$params['s'] = $signature->generateSignature('/img/' . $path, $params);
-
-		return '/img/' . $path . '?' . http_build_query($params);
+		return ImageUrlSigner::signUrl($path, $params);
 	}
 
 	public static function ogImageUrl(string $path): string
 	{
-		return url(static::signUrl($path, ['w' => 1200, 'h' => 630, 'fit' => 'crop', 'fm' => 'jpg']));
+		return ImageUrlSigner::ogImageUrl($path);
 	}
 }

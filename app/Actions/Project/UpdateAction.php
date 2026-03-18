@@ -4,12 +4,15 @@ namespace App\Actions\Project;
 
 use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Models\Project;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UpdateAction
 {
 	public function execute(Project $project, array $data): Project
 	{
+		$hasCategories = array_key_exists('categories', $data);
+		$hasStatuses = array_key_exists('statuses', $data);
 		$media = $data['media'] ?? [];
 		$categories = $data['categories'] ?? [];
 		$statuses = $data['statuses'] ?? [];
@@ -21,20 +24,22 @@ class UpdateAction
 		}
 		$data['slug'] = Str::slug(implode(' ', $slugParts));
 
-		$project->update($data);
+		return DB::transaction(function () use ($project, $data, $hasCategories, $categories, $hasStatuses, $statuses, $media): Project {
+			$project->update($data);
 
-		if (array_key_exists('categories', $data) || !empty($categories)) {
-			$project->categories()->sync($categories);
-		}
+			if ($hasCategories) {
+				$project->categories()->sync($categories);
+			}
 
-		if (array_key_exists('statuses', $data) || !empty($statuses)) {
-			$project->statuses()->sync($statuses);
-		}
+			if ($hasStatuses) {
+				$project->statuses()->sync($statuses);
+			}
 
-		if (!empty($media)) {
-			(new AttachMediaAction)->execute($media, $project);
-		}
+			if (!empty($media)) {
+				(new AttachMediaAction)->execute($media, $project);
+			}
 
-		return $project;
+			return $project;
+		});
 	}
 }

@@ -4,6 +4,7 @@ namespace App\Actions\Project;
 
 use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Models\Project;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StoreAction
@@ -21,20 +22,22 @@ class StoreAction
 		}
 		$data['slug'] = Str::slug(implode(' ', $slugParts));
 
-		$project = Project::create($data);
+		return DB::transaction(function () use ($data, $categories, $statuses, $media): Project {
+			$project = Project::create($data);
 
-		if (!empty($categories)) {
-			$project->categories()->sync($categories);
-		}
+			if (!empty($categories)) {
+				$project->categories()->sync($categories);
+			}
 
-		if (!empty($statuses)) {
-			$project->statuses()->sync($statuses);
-		}
+			if (!empty($statuses)) {
+				$project->statuses()->sync($statuses);
+			}
 
-		if (!empty($media)) {
-			(new AttachMediaAction)->execute($media, $project);
-		}
+			if (!empty($media)) {
+				(new AttachMediaAction)->execute($media, $project);
+			}
 
-		return $project;
+			return $project;
+		});
 	}
 }
