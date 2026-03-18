@@ -13,7 +13,7 @@ return new class extends Migration
 			$table->uuid('uuid')->unique();
 			$table->foreignId('masterdata_group_id')->nullable()->constrained('masterdata_groups')->nullOnDelete();
 			$table->string('title');
-			$table->boolean('is_default')->default(false);
+			$table->boolean('standard')->default(false);
 			$table->integer('sort_order')->default(0);
 			$table->timestamps();
 			$table->softDeletes();

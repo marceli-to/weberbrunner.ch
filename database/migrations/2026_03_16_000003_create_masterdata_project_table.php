@@ -13,6 +13,8 @@ return new class extends Migration
 			$table->foreignId('masterdata_id')->constrained('masterdata')->cascadeOnDelete();
 			$table->foreignId('project_id')->constrained()->cascadeOnDelete();
 			$table->text('value')->nullable();
+			$table->unsignedInteger('sort_order')->default(0);
+			$table->boolean('publish')->default(true);
 			$table->timestamps();
 
 			$table->unique(['masterdata_id', 'project_id']);
