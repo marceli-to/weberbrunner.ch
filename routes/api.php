@@ -38,7 +38,7 @@ Route::prefix('dashboard')
 
 		// Landing
 		Route::controller(LandingItemController::class)
-			->prefix('homepage')
+			->prefix('landing')
 			->group(function () {
 				Route::get('/', 'index');
 				Route::post('/', 'store');

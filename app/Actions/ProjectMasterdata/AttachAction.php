@@ -14,15 +14,13 @@ class AttachAction
 			->where('masterdata_id', $masterdata->id)
 			->first();
 
-		if ($pivot) {
-			$pivot->update(['publish' => true]);
-		} else {
+		if (!$pivot) {
 			$maxSortOrder = MasterdataProject::where('project_id', $project->id)->max('sort_order') ?? 0;
 
 			MasterdataProject::create([
 				'project_id' => $project->id,
 				'masterdata_id' => $masterdata->id,
-				'publish' => true,
+				'publish' => false,
 				'sort_order' => $maxSortOrder + 1,
 			]);
 		}

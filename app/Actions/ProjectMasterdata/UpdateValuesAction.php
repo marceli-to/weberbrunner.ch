@@ -22,14 +22,14 @@ class UpdateValuesAction
 			}
 
 			if ($pivot) {
-				$pivot->update(['value' => $entry['value'], 'publish' => true]);
+				$pivot->update(['value' => $entry['value']]);
 			} else {
 				$maxSortOrder = MasterdataProject::where('project_id', $project->id)->max('sort_order') ?? 0;
 				MasterdataProject::create([
 					'project_id' => $project->id,
 					'masterdata_id' => $masterdata->id,
 					'value' => $entry['value'],
-					'publish' => true,
+					'publish' => false,
 					'sort_order' => $maxSortOrder + 1,
 				]);
 			}
