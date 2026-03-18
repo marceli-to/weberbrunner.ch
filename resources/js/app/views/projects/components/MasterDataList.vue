@@ -66,7 +66,9 @@ async function destroy(entry) {
 		</template>
 	</draggable>
 
-	<NewEntryButton class="mt-20" @click="drawerOpen = true">Hinzufügen</NewEntryButton>
+  <div class="mt-10 ml-38 mr-30">
+    <NewEntryButton @click="drawerOpen = true">Hinzufügen</NewEntryButton>
+  </div>
 
 	<MasterdataPickerDrawer
 		:open="drawerOpen"
