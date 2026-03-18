@@ -29,8 +29,7 @@ class ProjectResource extends JsonResource
 			'teaser' => MediaResource::collection($this->whenLoaded('teaser')),
 			'categories' => CategoryResource::collection($this->whenLoaded('categories')),
 			'statuses' => StatusResource::collection($this->whenLoaded('statuses')),
-			'links' => ProjectLinkResource::collection($this->whenLoaded('links')),
-			'blocks' => ProjectBlockResource::collection($this->whenLoaded('blocks')),
+'blocks' => ProjectBlockResource::collection($this->whenLoaded('blocks')),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 			'can' => [

@@ -56,12 +56,7 @@ class Project extends Model
 		return $this->hasMany(ProjectAttribute::class)->orderBy('sort_order');
 	}
 
-	public function links(): HasMany
-	{
-		return $this->hasMany(ProjectLink::class)->orderBy('sort_order');
-	}
-
-	public function blocks(): HasMany
+public function blocks(): HasMany
 	{
 		return $this->hasMany(ProjectBlock::class)->orderBy('sort_order');
 	}

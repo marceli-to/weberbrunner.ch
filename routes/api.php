@@ -15,7 +15,6 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectBlockController;
 use App\Http\Controllers\Api\ProjectBlockLinkController;
 use App\Http\Controllers\Api\ProjectBlockMediaController;
-use App\Http\Controllers\Api\ProjectLinkController;
 use App\Http\Controllers\Api\ProjectMediaController;
 use App\Http\Controllers\Api\ProjectMetaController;
 use App\Http\Controllers\Api\ProjectTextController;
@@ -146,18 +145,7 @@ Route::prefix('dashboard')
 				Route::delete('/{attribute}', 'destroy');
 			});
 
-		// Project Links (nested under projects)
-		Route::controller(ProjectLinkController::class)
-			->prefix('projects/{project}/links')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::put('/{link}', 'update');
-				Route::delete('/{link}', 'destroy');
-			});
-
-		// Project Blocks (nested under projects)
+// Project Blocks (nested under projects)
 		Route::controller(ProjectBlockController::class)
 			->prefix('projects/{project}/blocks')
 			->group(function () {
