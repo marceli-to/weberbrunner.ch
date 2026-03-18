@@ -10,6 +10,7 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
+import MasterDataList from '@/views/projects/components/MasterDataList.vue'
 import ProjectBlocks from '@/views/projects/components/blocks/ProjectBlocks.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
@@ -140,9 +141,10 @@ async function reorderSliderImages() {
 						title="Stammdaten"
 						:collapsed="collapsed.has('masterdata')"
 						@toggle="toggle('masterdata')" />
-          <div v-show="!collapsed.has('masterdata')" class="bg-white p-20">
-            [Stammdaten]
-          </div>
+
+            <div v-show="!collapsed.has('masterdata')" class="mt-10">
+              <MasterDataList :project="project" />
+            </div>
 				</Span>
 
 

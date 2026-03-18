@@ -89,7 +89,7 @@ class Project extends Model
 	public function masterdata(): BelongsToMany
 	{
 		return $this->belongsToMany(Masterdata::class, 'masterdata_project')
-			->withPivot('value')
+			->withPivot('value', 'sort_order')
 			->withTimestamps();
 	}
 

@@ -91,6 +91,10 @@ strong {
   @apply font-semibold;
 }
 
+u {
+  @apply underline underline-offset-4 md:underline-offset-6 decoration-1 group-hover:no-underline
+}
+
 p:not(:last-child),
 ul:not(:last-child):not(nav ul) {
   @apply mb-16 lg:mb-24;

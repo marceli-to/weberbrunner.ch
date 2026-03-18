@@ -17,6 +17,10 @@ defineProps({
 		type: Boolean,
 		default: true,
 	},
+	editable: {
+		type: Boolean,
+		default: true,
+	},
 	dragHandleClass: String,
 })
 
@@ -35,6 +39,7 @@ defineEmits(['edit', 'toggle-publish', 'delete'])
 				:split="split"
 				:publish="publish"
 				:show-publish="showPublish"
+				:editable="editable"
 				@edit="$emit('edit')"
 				@toggle-publish="$emit('toggle-publish')" />
 		</Span>

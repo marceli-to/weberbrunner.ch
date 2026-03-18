@@ -30,6 +30,7 @@ use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\LandingItemController;
 use App\Http\Controllers\Api\MasterdataController;
 use App\Http\Controllers\Api\MasterdataGroupController;
+use App\Http\Controllers\Api\ProjectMasterdataController;
 
 Route::prefix('dashboard')
 	->middleware(['web', 'auth'])
@@ -37,7 +38,7 @@ Route::prefix('dashboard')
 
 		// Landing
 		Route::controller(LandingItemController::class)
-			->prefix('landing')
+			->prefix('homepage')
 			->group(function () {
 				Route::get('/', 'index');
 				Route::post('/', 'store');
@@ -119,6 +120,17 @@ Route::prefix('dashboard')
 			->prefix('projects/{project}')
 			->group(function () {
 				Route::patch('/statuses', 'sync');
+			});
+
+		// Project Masterdata
+		Route::controller(ProjectMasterdataController::class)
+			->prefix('projects/{project}')
+			->group(function () {
+				Route::get('/masterdata', 'index');
+				Route::get('/masterdata/attached', 'attached');
+				Route::patch('/masterdata', 'sync');
+				Route::patch('/masterdata/reorder', 'reorder');
+				Route::delete('/masterdata/{masterdata}', 'destroy');
 			});
 
 		// Project Attributes (nested under projects)

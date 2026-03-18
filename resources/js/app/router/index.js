@@ -5,6 +5,7 @@ import LandingIndex from '@/views/landing/IndexPage.vue'
 import ProjectsIndex from '@/views/projects/IndexPage.vue'
 import ProjectsShow from '@/views/projects/ShowPage.vue'
 import ProjectImagesEdit from '@/views/projects/ImagesEditPage.vue'
+import ProjectMasterdataEdit from '@/views/projects/MasterdataEditPage.vue'
 import ProjectTextEdit from '@/views/projects/TextEditPage.vue'
 import ProjectsLayout from '@/views/projects/web/WebLayoutPage.vue'
 import ProjectsMetaData from '@/views/projects/web/MetadataPage.vue'
@@ -78,6 +79,12 @@ const routes = [
     path: '/dashboard/arbeiten/:id/web/einstellungen',
     name: 'projects.settings',
     component: ProjectsSettings,
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+  },
+  {
+    path: '/dashboard/arbeiten/:id/stammdaten',
+    name: 'projects.masterdata.edit',
+    component: ProjectMasterdataEdit,
     meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {
