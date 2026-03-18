@@ -142,7 +142,7 @@ async function reorderSliderImages() {
 						:collapsed="collapsed.has('masterdata')"
 						@toggle="toggle('masterdata')" />
 
-            <div v-show="!collapsed.has('masterdata')" class="mt-10">
+            <div v-show="!collapsed.has('masterdata')" class="mt-20">
               <MasterDataList :project="project" />
             </div>
 				</Span>

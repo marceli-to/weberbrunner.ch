@@ -3,7 +3,9 @@ import { ref, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 import projectMasterdataApi from '@/api/project-masterdata'
 import { useConfirm } from '@/composables/useConfirm'
-import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
+import Burger from '@/components/icons/Burger.vue'
+import Cross from '@/components/icons/Cross.vue'
+import EntryRow from '@/components/ui/EntryRow.vue'
 import MasterdataPickerDrawer from '@/components/projects/MasterdataPickerDrawer.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 
@@ -50,18 +52,21 @@ async function destroy(entry) {
 		:class="{ 'mb-10': entries.length }"
 		@end="reorder">
 		<template #item="{ element }">
-			<DraggableEntryRow
-				:label="element.title"
-				:sublabel="element.value"
-				:editable="false"
-				:show-publish="false"
-				drag-handle-class="masterdata-drag-handle"
-				split
-				@delete="destroy(element)" />
+			<div class="flex items-center gap-20">
+				<Burger variant="sm" class="w-18 h-10 cursor-grab masterdata-drag-handle flex-none" />
+				<EntryRow
+					:label="element.title"
+					:sublabel="element.value"
+					:editable="false"
+					:show-publish="false"
+					class="flex-1"
+					split />
+				<Cross class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+			</div>
 		</template>
 	</draggable>
 
-	<NewEntryButton class="mt-10" @click="drawerOpen = true">Hinzufügen</NewEntryButton>
+	<NewEntryButton class="mt-20" @click="drawerOpen = true">Hinzufügen</NewEntryButton>
 
 	<MasterdataPickerDrawer
 		:open="drawerOpen"
