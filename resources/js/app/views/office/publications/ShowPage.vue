@@ -7,6 +7,7 @@
 	import { useConfirm } from '@/composables/useConfirm'
 	import { useToast } from '@/composables/useToast'
 	import publicationsApi from '@/api/publications'
+	import mediaApi from '@/api/media'
 	import PublicationLayout from '@/views/office/publications/components/Layout.vue'
 	import Grid from '@/components/ui/grid/Grid.vue'
 	import Span from '@/components/ui/grid/Span.vue'
@@ -22,8 +23,10 @@
 	const toast = useToast()
 
 	const { publication, fetch } = usePublication((data) => {
-		mediaStore.setItems(data.media || [])
+		mediaStore.setItems((data.media || []).filter(m => m.is_image))
 	})
+
+	const file = computed(() => publication.value?.media?.find(m => !m.is_image) || null)
 	const { collapsed, toggle } = useCollapsed('publication-show')
 
 	const editingMedia = ref(null)
@@ -46,6 +49,23 @@
 		})
 		if (!ok) return
 		await mediaStore.deleteItem(item.uuid)
+	}
+
+	async function onFileUploaded(media) {
+		await publicationsApi.attachMedia(publication.value.uuid, [media])
+		await fetch()
+	}
+
+	async function onFileDelete() {
+		if (!file.value) return
+		const ok = await confirm({
+			message: 'Möchtest Du diese Datei wirklich löschen?',
+			confirmLabel: 'Löschen',
+			variant: 'danger',
+		})
+		if (!ok) return
+		await mediaApi.destroy(file.value.uuid)
+		await fetch()
 	}
 
 	async function onEditSave({ uuid, data }) {
@@ -101,6 +121,17 @@
 					<CollapsibleHeader title="Attribute" :collapsed="collapsed.has('attributes')" @toggle="toggle('attributes')" />
 					<div v-show="!collapsed.has('attributes')" class="mt-20">
 						<AttributeList :publication="publication" @updated="fetch" />
+					</div>
+				</Span>
+
+				<!-- File upload -->
+				<Span class="col-span-8 col-start-2">
+					<CollapsibleHeader title="Download" :collapsed="collapsed.has('file')" @toggle="toggle('file')" />
+					<div v-show="!collapsed.has('file')" class="mt-20">
+						<div v-if="file" class="grid grid-cols-2 lg:grid-cols-4">
+							<MediaCard :item="file" :deletable="true" :show-filename="true" variant="dark" @delete="onFileDelete" />
+						</div>
+						<MediaUploader v-else :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']" @uploaded="onFileUploaded" />
 					</div>
 				</Span>
 

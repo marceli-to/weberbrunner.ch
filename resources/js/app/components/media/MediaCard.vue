@@ -1,7 +1,7 @@
 <script setup>
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
-import Download from '@/components/icons/Download.vue'
+import Document from '@/components/icons/Document.vue'
 import Eye from '@/components/icons/Eye.vue'
 
 defineProps({
@@ -54,8 +54,7 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 							class="block max-w-full max-h-full object-contain" />
 					</template>
 					<div v-else class="flex flex-col items-center gap-5 text-gray-400">
-						<Download class="w-24 h-auto" />
-						<span class="text-xs uppercase">{{ item.original_name?.split('.').pop() }}</span>
+						<Document class="w-64 h-auto" />
 					</div>
 				</div>
 			</figure>
