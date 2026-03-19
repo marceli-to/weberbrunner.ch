@@ -5,6 +5,7 @@ import DialogShell from '@/components/ui/dialog/DialogShell.vue'
 defineProps({
 	open: { type: Boolean, default: false },
 	title: { type: String, default: null },
+	closeOnBackdrop: { type: Boolean, default: true },
 })
 
 const emit = defineEmits(['close'])
@@ -12,7 +13,7 @@ const emit = defineEmits(['close'])
 
 <template>
 
-	<DialogShell :open="open" @close="emit('close')">
+	<DialogShell :open="open" :close-on-backdrop="closeOnBackdrop" @close="emit('close')">
 
 		<!-- Header -->
 		<div

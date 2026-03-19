@@ -6,6 +6,7 @@ import Span from '@/components/ui/grid/Span.vue'
 const props = defineProps({
 	open: { type: Boolean, default: false },
 	closeable: { type: Boolean, default: true },
+	closeOnBackdrop: { type: Boolean, default: true },
 	spanClass: { type: String, default: 'bg-white border-thin border-black' },
 })
 
@@ -28,7 +29,7 @@ function onClose() {
 }
 
 function onBackdropClick(e) {
-	if (e.target === dialogRef.value && props.closeable) {
+	if (e.target === dialogRef.value && props.closeable && props.closeOnBackdrop) {
 		emit('close')
 	}
 }
