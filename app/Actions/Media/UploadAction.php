@@ -14,18 +14,20 @@ class UploadAction
 		'image/png',
 		'image/webp',
 		'image/gif',
+		'application/pdf',
 	];
 
 	public function execute(UploadedFile $file): array
 	{
-		$this->validateImageContent($file);
+		$this->validateFileContent($file);
 
 		$directory = 'temp';
 		$filename = $this->uniqueFilename($file->getClientOriginalName());
 
 		$file->storeAs($directory, $filename, 'public');
 
-		$dimensions = @getimagesize($file->getRealPath());
+		$isImage = str_starts_with($file->getMimeType(), 'image/');
+		$dimensions = $isImage ? @getimagesize($file->getRealPath()) : null;
 
 		return [
 			'uuid' => Str::uuid()->toString(),
@@ -38,10 +40,12 @@ class UploadAction
 			'alt' => null,
 			'caption' => null,
 			'is_teaser' => false,
+			'is_image' => $isImage,
 			'sort_order' => 0,
 			'orientation' => $this->orientation($dimensions[0] ?? null, $dimensions[1] ?? null),
-			'thumbnail_url' => ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
-			'preview_url' => ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']),
+			'thumbnail_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,
+			'preview_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']) : null,
+			'file_url' => !$isImage ? asset('storage/temp/' . $filename) : null,
 			'_temp' => true,
 		];
 	}
@@ -55,7 +59,7 @@ class UploadAction
 		return $name . '-' . $suffix . '.' . $extension;
 	}
 
-	private function validateImageContent(UploadedFile $file): void
+	private function validateFileContent(UploadedFile $file): void
 	{
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$detectedMime = finfo_file($finfo, $file->getRealPath());
@@ -63,11 +67,11 @@ class UploadAction
 
 		if (!in_array($detectedMime, self::ALLOWED_MIMES, true)) {
 			throw ValidationException::withMessages([
-				'file' => 'The file content does not match an allowed image type.',
+				'file' => 'The file content does not match an allowed type.',
 			]);
 		}
 
-		if (!@getimagesize($file->getRealPath())) {
+		if (str_starts_with($detectedMime, 'image/') && !@getimagesize($file->getRealPath())) {
 			throw ValidationException::withMessages([
 				'file' => 'The file is not a valid image.',
 			]);

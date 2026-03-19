@@ -45,6 +45,13 @@ class Media extends Model
 		return $this->morphTo();
 	}
 
+	protected $appends = ['is_image'];
+
+	public function getIsImageAttribute(): bool
+	{
+		return str_starts_with($this->mime_type, 'image/');
+	}
+
 	public function getOrientationAttribute(): string
 	{
 		if (!$this->width || !$this->height) {

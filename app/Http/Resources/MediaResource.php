@@ -23,12 +23,14 @@ class MediaResource extends JsonResource
 			'width' => $this->width,
 			'height' => $this->height,
 			'orientation' => $this->orientation,
+			'is_image' => $this->is_image,
 			'is_teaser' => $this->is_teaser,
 			'is_og' => $this->is_og,
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
-			'thumbnail_url' => ImageController::signUrl($this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']),
-			'preview_url' => ImageController::signUrl($this->file, ['w' => 800, 'fit' => 'max']),
+			'thumbnail_url' => $this->is_image ? ImageController::signUrl($this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,
+			'preview_url' => $this->is_image ? ImageController::signUrl($this->file, ['w' => 800, 'fit' => 'max']) : null,
+			'file_url' => !$this->is_image ? asset('storage/' . $this->file) : null,
 		];
 	}
 }

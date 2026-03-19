@@ -1,6 +1,7 @@
 <script setup>
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
+import Download from '@/components/icons/Download.vue'
 import Eye from '@/components/icons/Eye.vue'
 
 defineProps({
@@ -46,10 +47,16 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 				<div
 					class="w-full h-full min-w-0 min-h-0 flex items-center justify-center"
 					:class="compact ? 'px-10 py-15 lg:px-20 lg:py-30' : 'px-10 py-30 md:px-20 md:py-40 xl:px-30 xl:py-60'">
-					<img
-						:src="item.preview_url"
-						:alt="item.alt || ''"
-						class="block max-w-full max-h-full object-contain" />
+					<template v-if="item.preview_url">
+						<img
+							:src="item.preview_url"
+							:alt="item.alt || ''"
+							class="block max-w-full max-h-full object-contain" />
+					</template>
+					<div v-else class="flex flex-col items-center gap-5 text-gray-400">
+						<Download class="w-24 h-auto" />
+						<span class="text-xs uppercase">{{ item.original_name?.split('.').pop() }}</span>
+					</div>
 				</div>
 			</figure>
 

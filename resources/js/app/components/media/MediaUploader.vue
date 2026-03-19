@@ -12,6 +12,7 @@ import '@uppy/status-bar/css/style.min.css'
 
 const props = defineProps({
 	showButtons: { type: Boolean, default: false },
+	allowedFileTypes: { type: Array, default: () => ['.jpg', '.jpeg', '.png', '.webp', '.gif'] },
 })
 
 const emit = defineEmits(['uploaded', 'save', 'cancel'])
@@ -81,7 +82,7 @@ onMounted(() => {
 		locale: German,
 		autoProceed: true,
 		restrictions: {
-			allowedFileTypes: ['.jpg', '.jpeg', '.png', '.webp', '.gif'],
+			allowedFileTypes: props.allowedFileTypes,
 			maxFileSize: 51200 * 1024,
 		},
 	})
@@ -136,7 +137,7 @@ onBeforeUnmount(() => {
 				ref="fileInputRef"
 				type="file"
 				multiple
-				accept=".jpg,.jpeg,.png,.webp,.gif"
+				:accept="props.allowedFileTypes.join(',')"
 				class="hidden"
 				@change="onFileChange"
 			/>

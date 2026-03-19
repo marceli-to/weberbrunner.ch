@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import Download from '@/components/icons/Download.vue'
 import Drawer from '@/components/ui/drawer/Drawer.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -66,11 +67,20 @@ function select(uuid) {
 						</button>
 					</Span>
 					<Span class="col-span-1">
-						<img
-							:src="item.thumbnail_url"
-							:alt="item.original_name"
-							class="w-full h-auto aspect-square object-cover bg-white cursor-pointer"
-							@click="select(item.uuid)" />
+						<template v-if="item.thumbnail_url">
+							<img
+								:src="item.thumbnail_url"
+								:alt="item.original_name"
+								class="w-full h-auto aspect-square object-cover bg-white cursor-pointer"
+								@click="select(item.uuid)" />
+						</template>
+						<div
+							v-else
+							class="w-full aspect-square flex flex-col items-center justify-center gap-2 bg-white text-gray-400 cursor-pointer"
+							@click="select(item.uuid)">
+							<Download class="w-16 h-auto" />
+							<span class="text-[10px] uppercase">{{ item.original_name?.split('.').pop() }}</span>
+						</div>
 					</Span>
 				</Grid>
 			</Span>
@@ -86,10 +96,16 @@ function select(uuid) {
 						type="button"
 						class="cursor-pointer relative"
 						@click="select(item.uuid)">
-						<img
-							:src="item.thumbnail_url"
-							:alt="item.original_name"
-							class="w-full h-auto aspect-square object-cover bg-white" />
+						<template v-if="item.thumbnail_url">
+							<img
+								:src="item.thumbnail_url"
+								:alt="item.original_name"
+								class="w-full h-auto aspect-square object-cover bg-white" />
+						</template>
+						<div v-else class="w-full aspect-square flex flex-col items-center justify-center gap-2 bg-white text-gray-400">
+							<Download class="w-20 h-auto" />
+							<span class="text-[10px] uppercase">{{ item.original_name?.split('.').pop() }}</span>
+						</div>
 						<span class="absolute top-10 left-10">
 							<component
 								:is="multiple ? CheckboxIcon : RadioIcon"

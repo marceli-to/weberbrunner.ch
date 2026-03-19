@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import draggable from 'vuedraggable'
 import Cross from '@/components/icons/Cross.vue'
+import Download from '@/components/icons/Download.vue'
 import PencilCircle from '@/components/icons/PencilCircle.vue'
 import Checkmark from '@/components/icons/Checkmark.vue'
 
@@ -27,11 +28,17 @@ const dragItems = computed({
 	>
 		<template #item="{ element }">
 			<div class="relative group border-thin border-silver" :class="{ 'border-black': element.is_teaser }">
-				<img
-					:src="element.thumbnail_url"
-					:alt="element.alt || ''"
-					class="block w-full aspect-square object-cover"
-				/>
+				<template v-if="element.thumbnail_url">
+					<img
+						:src="element.thumbnail_url"
+						:alt="element.alt || ''"
+						class="block w-full aspect-square object-cover"
+					/>
+				</template>
+				<div v-else class="w-full aspect-square flex flex-col items-center justify-center gap-5 bg-gray-50 text-gray-400">
+					<Download class="w-24 h-auto" />
+					<span class="text-xs uppercase">{{ element.original_name?.split('.').pop() }}</span>
+				</div>
 				<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-8">
 					<button
 						type="button"
@@ -42,6 +49,7 @@ const dragItems = computed({
 						<PencilCircle class="w-12 h-12" />
 					</button>
 					<button
+						v-if="element.is_image !== false"
 						type="button"
 						class="w-24 h-24 flex items-center justify-center bg-white text-black"
 						title="Teaser"
