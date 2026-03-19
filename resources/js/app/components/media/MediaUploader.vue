@@ -16,7 +16,6 @@ const props = defineProps({
 
 const emit = defineEmits(['uploaded', 'save', 'cancel'])
 
-const dropZoneRef = ref(null)
 const statusBarRef = ref(null)
 const fileInputRef = ref(null)
 const isDragging = ref(false)
@@ -122,7 +121,6 @@ onBeforeUnmount(() => {
 			<button type="button" class="media-uploader__browse" @click="onBrowse">Drag-and-drop / Durchsuchen</button>
 		</div>
 		<div
-			ref="dropZoneRef"
 			class="media-uploader__dropzone"
 			:class="{ 'media-uploader__dropzone--dragging': isDragging }"
 			@dragenter="onDragEnter"
