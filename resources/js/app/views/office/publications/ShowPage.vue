@@ -127,12 +127,23 @@
 				<!-- File upload -->
 				<Span class="col-span-8 col-start-2">
 					<CollapsibleHeader title="Download" :collapsed="collapsed.has('file')" @toggle="toggle('file')" />
-					<div v-show="!collapsed.has('file')" class="mt-20">
-						<div v-if="file" class="grid grid-cols-2 lg:grid-cols-4">
-							<MediaCard :item="file" :deletable="true" :show-filename="true" variant="dark" @delete="onFileDelete" />
-						</div>
-						<MediaUploader v-else :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']" @uploaded="onFileUploaded" />
-					</div>
+				</Span>
+				<Span v-show="!collapsed.has('file')" class="col-span-2 col-start-2">
+					<template v-if="file">
+						<MediaCard 
+              :item="file" 
+              :deletable="true" 
+              :editable="true" 
+              :show-filename="true" 
+              variant="dark" 
+              @delete="onFileDelete"
+              @edit="editingMedia = $event" />
+					</template>
+          <template v-else>
+            <MediaUploader 
+              :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']" 
+              @uploaded="onFileUploaded" />
+          </template>
 				</Span>
 
 			</Grid>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import Download from '@/components/icons/Download.vue'
+import Document from '@/components/icons/Document.vue'
 import Lightbox from '@/components/ui/lightbox/Lightbox.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -55,7 +55,7 @@ function handleSave() {
 				/>
 			</template>
 			<div v-else-if="media" class="flex flex-col items-center gap-5 text-gray-400">
-				<Download class="w-40 h-auto" />
+				<Document class="w-64 h-auto" />
 				<span class="text-sm">{{ media.original_name }}</span>
 			</div>
 		</div>
