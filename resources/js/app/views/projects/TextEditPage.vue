@@ -14,7 +14,7 @@ import Card from '@/components/ui/Card.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import Textarea from '@/components/ui/form/Textarea.vue'
 import Button from '@/components/ui/form/Button.vue'
-import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
+import ProjectNavBar from '@/views/projects/components/ProjectTabs.vue'
 
 const route = useRoute()
 const router = useRouter()

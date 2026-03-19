@@ -11,6 +11,11 @@ import ProjectsLayout from '@/views/projects/web/WebLayoutPage.vue'
 import ProjectsMetaData from '@/views/projects/web/MetadataPage.vue'
 import ProjectsTeaserImage from '@/views/projects/web/TeaserImagePage.vue'
 import ProjectsSettings from '@/views/projects/web/SettingsPage.vue'
+import PublicationsIndex from '@/views/office/publications/IndexPage.vue'
+import PublicationsShow from '@/views/office/publications/ShowPage.vue'
+import PublicationsMetadata from '@/views/office/publications/web/MetadataPage.vue'
+import PublicationsTeaserImage from '@/views/office/publications/web/TeaserImagePage.vue'
+import PublicationsSettings from '@/views/office/publications/web/SettingsPage.vue'
 import OfficeTeam from '@/views/office/team/IndexPage.vue'
 import OfficeTeamShow from '@/views/office/team/DetailPage.vue'
 import OfficeContacts from '@/views/office/contacts/IndexPage.vue'
@@ -110,6 +115,36 @@ const routes = [
     name: 'team.show',
     component: OfficeTeamShow,
     meta: { title: 'Team', navSection: 'office', navParent: 'office.team' },
+  },
+  {
+    path: '/dashboard/buero/publikationen',
+    name: 'office.publications',
+    component: PublicationsIndex,
+    meta: { title: 'Publikationen', navSection: 'office', navLabel: 'Publikationen', navOrder: 15 },
+  },
+  {
+    path: '/dashboard/buero/publikationen/:id',
+    name: 'publications.show',
+    component: PublicationsShow,
+    meta: { title: 'Publikationen', navSection: 'office', navParent: 'office.publications' },
+  },
+  {
+    path: '/dashboard/buero/publikationen/:id/metadaten',
+    name: 'publications.metadata',
+    component: PublicationsMetadata,
+    meta: { title: 'Publikationen', navSection: 'office', navParent: 'office.publications' },
+  },
+  {
+    path: '/dashboard/buero/publikationen/:id/teaserbild',
+    name: 'publications.teaser_image',
+    component: PublicationsTeaserImage,
+    meta: { title: 'Publikationen', navSection: 'office', navParent: 'office.publications' },
+  },
+  {
+    path: '/dashboard/buero/publikationen/:id/einstellungen',
+    name: 'publications.settings',
+    component: PublicationsSettings,
+    meta: { title: 'Publikationen', navSection: 'office', navParent: 'office.publications' },
   },
   {
     path: '/dashboard/buero/kontakt',

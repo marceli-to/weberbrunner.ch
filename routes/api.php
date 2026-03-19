@@ -19,6 +19,11 @@ use App\Http\Controllers\Api\ProjectMediaController;
 use App\Http\Controllers\Api\ProjectMetaController;
 use App\Http\Controllers\Api\ProjectTextController;
 use App\Http\Controllers\Api\ProjectStatusController;
+use App\Http\Controllers\Api\PublicationAttributeController;
+use App\Http\Controllers\Api\PublicationBlockController;
+use App\Http\Controllers\Api\PublicationBlockMediaController;
+use App\Http\Controllers\Api\PublicationController;
+use App\Http\Controllers\Api\PublicationMediaController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\TalkController;
@@ -199,6 +204,58 @@ Route::prefix('dashboard')
 				Route::put('/{status}', 'update');
 				Route::delete('/{status}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Publications
+		Route::controller(PublicationController::class)
+			->prefix('publications')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::get('/{publication}', 'show');
+				Route::put('/{publication}', 'update');
+				Route::patch('/{publication}/toggle', 'toggle');
+				Route::delete('/{publication}', 'destroy');
+				Route::patch('/{uuid}/restore', 'restore');
+			});
+
+		// Publication Media
+		Route::controller(PublicationMediaController::class)
+			->prefix('publications/{publication}')
+			->group(function () {
+				Route::post('/media', 'attach');
+			});
+
+		// Publication Attributes
+		Route::controller(PublicationAttributeController::class)
+			->prefix('publications/{publication}/attributes')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::put('/{attribute}', 'update');
+				Route::delete('/{attribute}', 'destroy');
+			});
+
+		// Publication Blocks
+		Route::controller(PublicationBlockController::class)
+			->prefix('publications/{publication}/blocks')
+			->group(function () {
+				Route::get('/', 'index');
+				Route::post('/', 'store');
+				Route::patch('/reorder', 'reorder');
+				Route::put('/{block}', 'update');
+				Route::delete('/{block}', 'destroy');
+			});
+
+		// Publication Block Media
+		Route::controller(PublicationBlockMediaController::class)
+			->prefix('publications/{publication}/blocks/{block}')
+			->group(function () {
+				Route::post('/media/select', 'select');
+				Route::post('/media/upload', 'uploadFile');
+				Route::delete('/media/{media}', 'detach');
 			});
 
 		// Team Members

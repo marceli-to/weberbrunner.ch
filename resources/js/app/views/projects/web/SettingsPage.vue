@@ -1,6 +1,6 @@
 <script setup>
 import { useProjectSettings } from '@/composables/useProjectSettings'
-import WebLayout from '@/views/projects/components/WebLayout.vue'
+import WebLayout from '@/views/projects/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Checkbox from '@/components/ui/form/Checkbox.vue'

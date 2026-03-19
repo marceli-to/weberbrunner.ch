@@ -20,6 +20,8 @@ const typeLabels = {
 	image: 'Einzelbild',
 	slider: 'Slider',
 	links: 'Links',
+	download: 'Download',
+	link: 'Link',
 }
 
 const collapsed = ref(!props.initialOpen)

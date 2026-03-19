@@ -14,6 +14,7 @@ use App\Models\Location;
 use App\Models\Media;
 use App\Models\NetworkEntry;
 use App\Models\Project;
+use App\Models\Publication;
 use App\Models\Section;
 use App\Models\Status;
 use App\Models\Talk;
@@ -30,6 +31,7 @@ use App\Policies\LocationPolicy;
 use App\Policies\MediaPolicy;
 use App\Policies\NetworkEntryPolicy;
 use App\Policies\ProjectPolicy;
+use App\Policies\PublicationPolicy;
 use App\Policies\SectionPolicy;
 use App\Policies\StatusPolicy;
 use App\Policies\TalkPolicy;
@@ -64,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
 		Gate::policy(LandingItem::class, LandingItemPolicy::class);
 		Gate::policy(Masterdata::class, MasterdataPolicy::class);
 		Gate::policy(MasterdataGroup::class, MasterdataGroupPolicy::class);
+		Gate::policy(Publication::class, PublicationPolicy::class);
 
 		Blade::directive('ogImage', function (string $expression) {
 			return "<?php \$__env->startSection('og_image', \App\Http\Controllers\ImageController::ogImageUrl({$expression})); ?>";

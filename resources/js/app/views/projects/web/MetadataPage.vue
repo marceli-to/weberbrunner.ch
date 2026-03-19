@@ -1,7 +1,7 @@
 <script setup>
 import { useProjectMeta } from '@/composables/useProjectMeta'
 import { useCollapsed } from '@/composables/useCollapsed'
-import WebLayout from '@/views/projects/components/WebLayout.vue'
+import WebLayout from '@/views/projects/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import Card from '@/components/ui/Card.vue'

@@ -5,7 +5,7 @@ import { useProject } from '@/composables/useProject'
 import { useCollapsed } from '@/composables/useCollapsed'
 import projectBlocksApi from '@/api/projectBlocks'
 import mediaApi from '@/api/media'
-import WebLayout from '@/views/projects/components/WebLayout.vue'
+import WebLayout from '@/views/projects/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
@@ -93,7 +93,7 @@ async function reorderSliderImages() {
 							:list="sliderImages"
 							item-key="uuid"
 							handle=".drag-handle"
-							class="_grid _grid-cols-4 gap-20 grid grid-cols-2 lg:grid-cols-4"
+							class="gap-20 grid grid-cols-2 lg:grid-cols-4"
 							ghost-class="opacity-30"
 							animation="150"
 							@end="reorderSliderImages">

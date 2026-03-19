@@ -6,11 +6,11 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BackButton from '@/components/ui/BackButton.vue'
-import ProjectNavBar from '@/views/projects/components/navbar/Project.vue'
+import ProjectNavBar from '@/views/projects/components/ProjectTabs.vue'
 import ProjectImages from '@/views/projects/components/ImageGrid.vue'
 import ProjectMasterData from '@/views/projects/components/MasterData.vue'
 import ProjectText from '@/views/projects/components/TextCards.vue'
-import EditProjectTitleLightbox from '@/views/projects/components/EditProjectTitleLightbox.vue'
+import TitleLightbox from '@/views/projects/components/TitleLightbox.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()
@@ -63,6 +63,6 @@ function goBack() {
 
 	</Grid>
 
-	<EditProjectTitleLightbox ref="titleLightbox" @saved="fetch" />
+	<TitleLightbox ref="titleLightbox" @saved="fetch" />
 
 </template>

@@ -251,6 +251,43 @@ erDiagram
         timestamp updated_at
     }
 
+    PUBLICATION {
+        int id PK
+        uuid uuid UK
+        string title
+        string subtitle
+        int location_id FK
+        boolean publish
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+    }
+
+    PUBLICATION_ATTRIBUTE {
+        int id PK
+        uuid uuid UK
+        int publication_id FK
+        string key
+        text value
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PUBLICATION_BLOCK {
+        int id PK
+        uuid uuid UK
+        int publication_id FK
+        enum type
+        string title
+        text content
+        string url
+        int sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
     LOCATION ||--o{ PROJECT : has
     LOCATION ||--o{ TEAM_MEMBER : has
     LOCATION ||--o{ JOB : has
@@ -276,4 +313,10 @@ erDiagram
     SECTION ||--o{ AWARD : has
     SECTION ||--o{ JURY : has
     SECTION ||--o{ TALK : has
+
+    LOCATION ||--o{ PUBLICATION : has
+    PUBLICATION ||--o{ PUBLICATION_ATTRIBUTE : has
+    PUBLICATION ||--o{ PUBLICATION_BLOCK : has
+    PUBLICATION ||--o{ MEDIA : "morph"
+    PUBLICATION_BLOCK ||--o{ MEDIA : "morph"
 ```

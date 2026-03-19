@@ -45,7 +45,7 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 				@click="editable && $emit('edit', item)">
 				<div
 					class="w-full h-full min-w-0 min-h-0 flex items-center justify-center"
-					:class="compact ? 'px-20 py-30' : 'px-30 py-60'">
+					:class="compact ? 'px-10 py-15 lg:px-20 lg:py-30' : 'px-10 py-30 md:px-20 md:py-40 xl:px-30 xl:py-60'">
 					<img
 						:src="item.preview_url"
 						:alt="item.alt || ''"

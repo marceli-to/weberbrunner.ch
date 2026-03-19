@@ -1,6 +1,6 @@
 <script setup>
 import { useProjectTeaser } from '@/composables/useProjectTeaser'
-import WebLayout from '@/views/projects/components/WebLayout.vue'
+import WebLayout from '@/views/projects/components/Layout.vue'
 import SectionTitle from '@/components/ui/SectionTitle.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'

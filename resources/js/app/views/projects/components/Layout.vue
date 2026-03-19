@@ -4,7 +4,7 @@ import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BackButton from '@/components/ui/BackButton.vue'
-import WebNavBar from '@/views/projects/components/navbar/Web.vue'
+import Tabs from '@/components/ui/navbar/Tabs.vue'
 
 defineProps({
 	project: { type: Object, default: null },
@@ -12,6 +12,13 @@ defineProps({
 
 const route = useRoute()
 const router = useRouter()
+
+const tabs = [
+	{ label: 'Layout', name: 'projects.layout' },
+	{ label: 'Meta / SEO', name: 'projects.metadata' },
+	{ label: 'Teaserbild', name: 'projects.teaser_image' },
+	{ label: 'Einstellungen', name: 'projects.settings' },
+]
 
 function goBack() {
 	router.push({ name: 'projects.show', params: { id: route.params.id } })
@@ -24,7 +31,7 @@ function goBack() {
 		<!-- NavBar -->
 		<Grid class="mb-40">
 			<Span class="col-span-8 col-start-2">
-				<WebNavBar />
+				<Tabs :items="tabs" />
 			</Span>
 		</Grid>
 

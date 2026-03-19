@@ -25,7 +25,7 @@ const teaser = (item) => item.project?.media?.[0] || null
 			</div>
 
 			<figure class="w-full h-full">
-				<div class="w-full h-full min-w-0 min-h-0 flex items-center justify-center px-30 py-60">
+				<div class="w-full h-full min-w-0 min-h-0 flex items-center justify-center px-10 py-30 md:px-20 md:py-40 lg:px-30 lg:py-60">
 					<img
 						v-if="teaser(item)"
 						:src="teaser(item).preview_url"
