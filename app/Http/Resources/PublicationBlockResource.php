@@ -17,6 +17,7 @@ class PublicationBlockResource extends JsonResource
 			'content' => $this->content,
 			'url' => $this->url,
 			'sort_order' => $this->sort_order,
+			'links' => PublicationBlockLinkResource::collection($this->whenLoaded('links')),
 			'media' => MediaResource::collection($this->whenLoaded('media')),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,

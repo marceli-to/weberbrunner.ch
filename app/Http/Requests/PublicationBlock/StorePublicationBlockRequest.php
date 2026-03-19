@@ -14,7 +14,7 @@ class StorePublicationBlockRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'type' => 'required|string|in:text',
+			'type' => 'required|string|in:text,links',
 			'title' => 'nullable|string|max:255',
 			'content' => 'nullable|string',
 		];

@@ -27,5 +27,10 @@ export default {
 		uploadFile: (pubId, blockId, formData) => api.post(`/publications/${pubId}/blocks/${blockId}/media/upload`, formData, {
 			headers: { 'Content-Type': 'multipart/form-data' },
 		}),
+		storeLink: (pubId, blockId, data) => api.post(`/publications/${pubId}/blocks/${blockId}/links`, data),
+		updateLink: (pubId, blockId, linkId, data) => api.put(`/publications/${pubId}/blocks/${blockId}/links/${linkId}`, data),
+		toggleLink: (pubId, blockId, linkId) => api.patch(`/publications/${pubId}/blocks/${blockId}/links/${linkId}/toggle`),
+		destroyLink: (pubId, blockId, linkId) => api.delete(`/publications/${pubId}/blocks/${blockId}/links/${linkId}`),
+		reorderLinks: (pubId, blockId, items) => api.patch(`/publications/${pubId}/blocks/${blockId}/links/reorder`, { items }),
 	},
 }

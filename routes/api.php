@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\ProjectTextController;
 use App\Http\Controllers\Api\ProjectStatusController;
 use App\Http\Controllers\Api\PublicationAttributeController;
 use App\Http\Controllers\Api\PublicationBlockController;
+use App\Http\Controllers\Api\PublicationBlockLinkController;
 use App\Http\Controllers\Api\PublicationBlockMediaController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\PublicationMediaController;
@@ -256,6 +257,17 @@ Route::prefix('dashboard')
 				Route::post('/media/select', 'select');
 				Route::post('/media/upload', 'uploadFile');
 				Route::delete('/media/{media}', 'detach');
+			});
+
+		// Publication Block Links
+		Route::controller(PublicationBlockLinkController::class)
+			->prefix('publications/{publication}/blocks/{block}/links')
+			->group(function () {
+				Route::post('/', 'store');
+				Route::put('/{link}', 'update');
+				Route::patch('/{link}/toggle', 'toggle');
+				Route::delete('/{link}', 'destroy');
+				Route::patch('/reorder', 'reorder');
 			});
 
 		// Team Members

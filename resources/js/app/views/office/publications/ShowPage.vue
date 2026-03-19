@@ -80,7 +80,7 @@
 
 		<template v-if="publication">
 
-			<Grid>
+			<Grid :class="publication.blocks?.length ? 'mb-20' : ''">
 
 				<!-- Slider -->
 				<Span class="col-span-8 col-start-2">

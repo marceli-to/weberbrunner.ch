@@ -7,6 +7,7 @@ use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PublicationBlock extends Model
@@ -25,6 +26,11 @@ class PublicationBlock extends Model
 	public function publication(): BelongsTo
 	{
 		return $this->belongsTo(Publication::class);
+	}
+
+	public function links(): HasMany
+	{
+		return $this->hasMany(PublicationBlockLink::class)->orderBy('sort_order');
 	}
 
 	public function media(): MorphMany

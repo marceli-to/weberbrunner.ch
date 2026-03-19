@@ -33,14 +33,14 @@ class PublicationController extends Controller
 
 		$publication = (new StorePublicationAction)->execute($request->validated());
 
-		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og']));
+		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'blocks.links.linkedProject', 'media', 'teaser', 'og']));
 	}
 
 	public function show(Publication $publication)
 	{
 		$this->authorize('view', $publication);
 
-		$publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og']);
+		$publication->load(['location', 'attributes', 'blocks.media', 'blocks.links.linkedProject', 'media', 'teaser', 'og']);
 
 		return new PublicationResource($publication);
 	}
@@ -51,7 +51,7 @@ class PublicationController extends Controller
 
 		$publication = (new UpdatePublicationAction)->execute($publication, $request->validated());
 
-		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og']));
+		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'blocks.links.linkedProject', 'media', 'teaser', 'og']));
 	}
 
 	public function destroy(Publication $publication)
@@ -70,7 +70,7 @@ class PublicationController extends Controller
 
 		$publication->restore();
 
-		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og']));
+		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'blocks.links.linkedProject', 'media', 'teaser', 'og']));
 	}
 
 	public function toggle(Publication $publication)

@@ -21,7 +21,7 @@ class PublicationBlockController extends Controller
 		$this->authorize('view', $publication);
 
 		return PublicationBlockResource::collection(
-			$publication->blocks()->with(['media'])->orderBy('sort_order')->get()
+			$publication->blocks()->with(['media', 'links.linkedProject'])->orderBy('sort_order')->get()
 		);
 	}
 
