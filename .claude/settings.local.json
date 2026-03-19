@@ -40,7 +40,8 @@
       "Bash(python3:*)",
       "Bash(mv:*)",
       "Bash(rm /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Models/ProjectLink.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Controllers/Api/ProjectLinkController.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Resources/ProjectLinkResource.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink/StoreProjectLinkRequest.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink/UpdateProjectLinkRequest.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink/ReorderProjectLinkRequest.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink/StoreAction.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink/UpdateAction.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink/DeleteAction.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink/ReorderAction.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/database/factories/ProjectLinkFactory.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/database/migrations/2025_01_24_000009_create_project_links_table.php /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/tests/Feature/Api/ProjectLinkTest.php)",
-      "Bash(rmdir /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink)"
+      "Bash(rmdir /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink)",
+      "Bash(git checkout:*)"
     ]
   }
 }

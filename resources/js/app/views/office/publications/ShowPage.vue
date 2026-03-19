@@ -95,9 +95,9 @@ async function onEditSave({ uuid, data }) {
 						</div>
 					</Span>
 
-					<!-- Metadaten (publication attributes) -->
+					<!-- Attribute -->
 					<Span class="col-span-8 col-start-2">
-						<CollapsibleHeader title="Metadaten" :collapsed="collapsed.has('attributes')" @toggle="toggle('attributes')" />
+						<CollapsibleHeader title="Attribute" :collapsed="collapsed.has('attributes')" @toggle="toggle('attributes')" />
 						<div v-show="!collapsed.has('attributes')" class="mt-20">
 							<AttributeList :publication="publication" @updated="fetch" />
 						</div>
