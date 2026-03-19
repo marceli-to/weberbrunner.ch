@@ -98,7 +98,12 @@ function onReorder() {
     </Span>
   </Grid>
 
-	<AppDialog :open="dialogOpen" :title="editingLink ? 'Link bearbeiten' : 'Link'" @close="closeDialog">
+	<AppDialog 
+    :open="dialogOpen" 
+    :title="editingLink ? 'Link bearbeiten' : 'Link'" 
+    @close="closeDialog"
+    :close-on-backdrop="false">
+
 		<LinkDialogFields
 			v-if="dialogOpen"
 			ref="formRef"
@@ -113,6 +118,7 @@ function onReorder() {
 				<Span><Button class="justify-center" @click="closeDialog">Abbrechen</Button></Span>
 			</Grid>
 		</template>
+    
 	</AppDialog>
-  
+
 </template>

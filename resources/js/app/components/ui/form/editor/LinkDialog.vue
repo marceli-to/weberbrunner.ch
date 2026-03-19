@@ -82,7 +82,11 @@ function remove() {
 </script>
 
 <template>
-	<AppDialog :open="open" title="Link" @close="emit('close')">
+	<AppDialog 
+    :open="open" 
+    title="Link" 
+    @close="emit('close')"
+    :close-on-backdrop="false">
 
 		<LinkDialogFields
 			ref="formRef"
