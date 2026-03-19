@@ -1,57 +1,57 @@
 <script setup>
-import { ref, computed } from 'vue'
-import draggable from 'vuedraggable'
-import { usePublication } from '@/composables/usePublication'
-import { useCollapsed } from '@/composables/useCollapsed'
-import { useMediaStore } from '@/stores/media'
-import { useConfirm } from '@/composables/useConfirm'
-import { useToast } from '@/composables/useToast'
-import publicationsApi from '@/api/publications'
-import PublicationLayout from '@/views/office/publications/components/Layout.vue'
-import Grid from '@/components/ui/grid/Grid.vue'
-import Span from '@/components/ui/grid/Span.vue'
-import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
-import MediaCard from '@/components/media/MediaCard.vue'
-import MediaUploader from '@/components/media/MediaUploader.vue'
-import MediaEditModal from '@/components/media/MediaEditModal.vue'
-import AttributeList from '@/views/office/publications/components/AttributeList.vue'
+  import { ref, computed } from 'vue'
+  import draggable from 'vuedraggable'
+  import { usePublication } from '@/composables/usePublication'
+  import { useCollapsed } from '@/composables/useCollapsed'
+  import { useMediaStore } from '@/stores/media'
+  import { useConfirm } from '@/composables/useConfirm'
+  import { useToast } from '@/composables/useToast'
+  import publicationsApi from '@/api/publications'
+  import PublicationLayout from '@/views/office/publications/components/Layout.vue'
+  import Grid from '@/components/ui/grid/Grid.vue'
+  import Span from '@/components/ui/grid/Span.vue'
+  import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
+  import MediaCard from '@/components/media/MediaCard.vue'
+  import MediaUploader from '@/components/media/MediaUploader.vue'
+  import MediaEditModal from '@/components/media/MediaEditModal.vue'
+  import AttributeList from '@/views/office/publications/components/AttributeList.vue'
 
-const mediaStore = useMediaStore()
-const { confirm } = useConfirm()
-const toast = useToast()
+  const mediaStore = useMediaStore()
+  const { confirm } = useConfirm()
+  const toast = useToast()
 
-const { publication, fetch } = usePublication((data) => {
-	mediaStore.setItems(data.media || [])
-})
-const { collapsed, toggle } = useCollapsed('publication-show')
+  const { publication, fetch } = usePublication((data) => {
+    mediaStore.setItems(data.media || [])
+  })
+  const { collapsed, toggle } = useCollapsed('publication-show')
 
-const editingMedia = ref(null)
+  const editingMedia = ref(null)
 
-const dragItems = computed({
-	get: () => mediaStore.items,
-	set: (value) => mediaStore.reorder(value),
-})
+  const dragItems = computed({
+    get: () => mediaStore.items,
+    set: (value) => mediaStore.reorder(value),
+  })
 
-async function onUploaded(media) {
-	await publicationsApi.attachMedia(publication.value.uuid, [media])
-	await fetch()
-}
+  async function onUploaded(media) {
+    await publicationsApi.attachMedia(publication.value.uuid, [media])
+    await fetch()
+  }
 
-async function onDelete(item) {
-	const ok = await confirm({
-		message: 'Möchtest Du dieses Bild wirklich löschen?',
-		confirmLabel: 'Löschen',
-		variant: 'danger',
-	})
-	if (!ok) return
-	await mediaStore.deleteItem(item.uuid)
-}
+  async function onDelete(item) {
+    const ok = await confirm({
+      message: 'Möchtest Du dieses Bild wirklich löschen?',
+      confirmLabel: 'Löschen',
+      variant: 'danger',
+    })
+    if (!ok) return
+    await mediaStore.deleteItem(item.uuid)
+  }
 
-async function onEditSave({ uuid, data }) {
-	await mediaStore.updateItem(uuid, data)
-	editingMedia.value = null
-	toast.success('Bild gespeichert')
-}
+  async function onEditSave({ uuid, data }) {
+    await mediaStore.updateItem(uuid, data)
+    editingMedia.value = null
+    toast.success('Bild gespeichert')
+  }
 </script>
 
 <template>
@@ -59,51 +59,53 @@ async function onEditSave({ uuid, data }) {
 
 		<template v-if="publication">
 
-			<Grid class="mb-20">
+      <Grid class="mb-20">
 
-					<!-- Slider -->
-					<Span class="col-span-8 col-start-2">
+        <!-- Slider -->
+        <Span class="col-span-8 col-start-2">
 
-						<CollapsibleHeader title="Slider" :collapsed="collapsed.has('images')" @toggle="toggle('images')" />
-						<div v-show="!collapsed.has('images')" class="mt-20">
-							
-              <draggable
-								v-if="mediaStore.items.length"
-								v-model="dragItems"
-								item-key="uuid"
-								handle=".drag-handle"
-								class="grid grid-cols-2 lg:grid-cols-4 gap-20"
-								ghost-class="opacity-30"
-								animation="150"
-							>
-								<template #item="{ element }">
-									<MediaCard
-										:item="element"
-										:draggable="true"
-										:deletable="true"
-										:editable="true"
-										:show-filename="true"
-										variant="dark"
-										@delete="onDelete"
-										@edit="editingMedia = $event" />
-								</template>
-							</draggable>
+          <CollapsibleHeader title="Slider" :collapsed="collapsed.has('images')" @toggle="toggle('images')" />
+          <div v-show="!collapsed.has('images')" class="mt-20">
+            
+            <draggable
+              v-if="mediaStore.items.length"
+              v-model="dragItems"
+              item-key="uuid"
+              handle=".drag-handle"
+              class="grid grid-cols-2 lg:grid-cols-4 gap-20"
+              ghost-class="opacity-30"
+              animation="150"
+            >
+              <template #item="{ element }">
+                <MediaCard
+                  :item="element"
+                  :draggable="true"
+                  :deletable="true"
+                  :editable="true"
+                  :show-filename="true"
+                  variant="dark"
+                  @delete="onDelete"
+                  @edit="editingMedia = $event" />
+              </template>
+            </draggable>
 
-							<div :class="{ 'mt-20': mediaStore.items.length }">
-								<MediaUploader @uploaded="onUploaded" />
-							</div>
-						</div>
-					</Span>
+            <div :class="{ 'mt-20': mediaStore.items.length }">
+              <MediaUploader @uploaded="onUploaded" />
+            </div>
+          </div>
+        </Span>
 
-					<!-- Attribute -->
-					<Span class="col-span-8 col-start-2">
-						<CollapsibleHeader title="Attribute" :collapsed="collapsed.has('attributes')" @toggle="toggle('attributes')" />
-						<div v-show="!collapsed.has('attributes')" class="mt-20">
-							<AttributeList :publication="publication" @updated="fetch" />
-						</div>
-					</Span>
+        <!-- Attribute -->
+        <Span class="col-span-8 col-start-2">
+          <CollapsibleHeader title="Attribute" :collapsed="collapsed.has('attributes')" @toggle="toggle('attributes')" />
+          <div v-show="!collapsed.has('attributes')" class="mt-20">
+            <AttributeList :publication="publication" @updated="fetch" />
+          </div>
+        </Span>
 
-				</Grid>
+      </Grid>
+
+      <!-- Dynamic blocks + block type picker -->
 
 		</template>
 

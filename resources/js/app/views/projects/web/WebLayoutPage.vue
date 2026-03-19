@@ -82,7 +82,7 @@ async function reorderSliderImages() {
 
 			<Grid class="mb-20">
 
-        <!-- Fixed: Slider -->
+        <!-- Slider -->
 				<Span class="col-span-8 col-start-2">
 
 					<CollapsibleHeader title="Slider" :collapsed="collapsed.has('slider')" @toggle="toggle('slider')" />
