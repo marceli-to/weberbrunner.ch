@@ -10,7 +10,7 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
-import AddButton from '@/components/media/AddButton.vue'
+import MediaUploader from '@/components/media/MediaUploader.vue'
 import Textarea from '@/components/ui/form/Textarea.vue'
 import Button from '@/components/ui/form/Button.vue'
 
@@ -35,15 +35,9 @@ async function saveMetaDescription() {
 	toast.success('Gespeichert')
 }
 
-async function uploadOgImage(event) {
-	const file = event.target.files[0]
-	if (!file) return
-	event.target.value = ''
-	const fd = new FormData()
-	fd.append('file', file)
-	const { data: { data: tempItem } } = await mediaApi.upload(fd)
-	await publicationsApi.attachMedia(publication.value.uuid, [tempItem])
-	await mediaApi.og(tempItem.uuid)
+async function uploadOgImage(media) {
+	await publicationsApi.attachMedia(publication.value.uuid, [media])
+	await mediaApi.og(media.uuid)
 	await fetch()
 }
 
@@ -87,10 +81,7 @@ async function removeOgImage() {
 				<div v-if="ogImage">
 					<MediaCard :item="ogImage" deletable @delete="removeOgImage" />
 				</div>
-				<label v-else class="cursor-pointer">
-					<AddButton @click.prevent />
-					<input type="file" accept="image/*" class="hidden" @change="uploadOgImage" />
-				</label>
+				<MediaUploader v-else @uploaded="uploadOgImage" />
 			</Span>
 		</Grid>
 
