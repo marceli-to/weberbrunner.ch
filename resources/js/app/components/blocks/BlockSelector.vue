@@ -5,6 +5,7 @@ import Span from '@/components/ui/grid/Span.vue'
 
 defineProps({
 	types: { type: Array, required: true },
+	cols: { type: Number, default: 4 },
 })
 
 const emit = defineEmits(['select'])
@@ -12,7 +13,7 @@ const emit = defineEmits(['select'])
 
 <template>
 
-	<Grid :cols="types.length">
+	<Grid :cols="cols">
 
 		<Span class="col-span-1" v-for="bt in types" :key="bt.type">
 

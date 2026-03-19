@@ -8,7 +8,7 @@ import { useConfirm } from '@/composables/useConfirm'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BlockCard from '@/components/blocks/BlockCard.vue'
-import BlockAddMenu from '@/components/blocks/BlockAddMenu.vue'
+import BlockSelector from '@/components/blocks/BlockSelector.vue'
 import BlockTextForm from '@/components/blocks/BlockTextForm.vue'
 import BlockImageForm from '@/components/blocks/BlockImageForm.vue'
 import BlockSliderForm from '@/components/blocks/BlockSliderForm.vue'
@@ -222,7 +222,7 @@ async function reorderLinks(block, items) {
 	<!-- Block type picker -->
 	<Grid class="mt-40">
 		<Span class="col-span-8 col-start-2">
-			<BlockAddMenu :types="blockTypes" @select="addBlock" />
+			<BlockSelector :types="blockTypes" @select="addBlock" />
 		</Span>
 	</Grid>
 
