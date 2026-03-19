@@ -43,7 +43,8 @@
       "Bash(rmdir /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Http/Requests/ProjectLink /Users/marceli.to/Jamon.digital/Webroot/weberbrunner.ch/app/Actions/ProjectLink)",
       "Bash(git checkout:*)",
       "Bash(perl -pe 's/^\\( +\\)/\"\"\"\"\\\\t\"\"\"\" x \\(length\\($1\\)\\\\/2\\)/e' resources/js/app/views/office/publications/ShowPage.vue)",
-      "Read(//private/tmp/**)"
+      "Read(//private/tmp/**)",
+      "Bash(cat:*)"
     ]
   }
 }
