@@ -6,7 +6,7 @@ import { useConfirm } from '@/composables/useConfirm'
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
 import EntryRow from '@/components/ui/EntryRow.vue'
-import MasterdataPickerDrawer from '@/components/projects/MasterdataPickerDrawer.vue'
+import MasterdataPickerDrawer from '@/components/ui/MasterdataPickerDrawer.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 
 const props = defineProps({
