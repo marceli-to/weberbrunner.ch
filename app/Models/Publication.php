@@ -20,6 +20,7 @@ class Publication extends Model
 
 	protected $fillable = [
 		'title',
+		'slug',
 		'subtitle',
 		'meta_description',
 		'location_id',

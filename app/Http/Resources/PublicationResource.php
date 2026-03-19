@@ -13,6 +13,7 @@ class PublicationResource extends JsonResource
 			'id' => $this->id,
 			'uuid' => $this->uuid,
 			'title' => $this->title,
+			'slug' => $this->slug,
 			'subtitle' => $this->subtitle,
 			'meta_description' => $this->meta_description,
 			'location_id' => $this->location_id,

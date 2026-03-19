@@ -12,6 +12,7 @@ return new class extends Migration
 			$table->id();
 			$table->uuid('uuid')->unique();
 			$table->string('title');
+			$table->string('slug')->unique();
 			$table->string('subtitle')->nullable();
 			$table->text('meta_description')->nullable();
 			$table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();

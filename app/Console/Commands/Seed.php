@@ -46,6 +46,9 @@ class Seed extends Command
 		$this->info('Seeding office data...');
 		$this->call('app:seed-office-data');
 
+		$this->info('Seeding masterdata...');
+		$this->call('app:seed-masterdata');
+
 		$this->info('Done!');
 	}
 }

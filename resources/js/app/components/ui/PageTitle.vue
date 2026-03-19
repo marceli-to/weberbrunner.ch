@@ -18,17 +18,17 @@ defineEmits(['edit'])
 
 <template>
 	<div class="bg-white min-h-50 flex items-center px-20" :class="{ 'justify-between': slug || editable }">
-		<h1 class="text-lg font-semibold">
+		<h1 class="text-lg font-semibold group/title flex items-center gap-10">
 			<slot />
+			<button v-if="editable" type="button" class="cursor-pointer" @click="$emit('edit')">
+				<PencilCircle class="w-20 opacity-0 group-hover/title:opacity-100 transition-opacity" />
+			</button>
 		</h1>
-		<button v-if="editable" type="button" class="cursor-pointer" @click="$emit('edit')">
-			<PencilCircle class="w-25" />
-		</button>
 		<a
-			v-else-if="slug"
+			v-if="slug"
 			:href="`/vorschau/${slug}`"
 			target="_blank"
-			aria-label="Projekt auf der Website anzeigen">
+			aria-label="Vorschau auf der Website anzeigen">
 			<LinkExternal class="w-24 h-auto" />
 		</a>
 	</div>

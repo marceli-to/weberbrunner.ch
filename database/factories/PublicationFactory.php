@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Publication;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PublicationFactory extends Factory
 {
@@ -11,8 +12,11 @@ class PublicationFactory extends Factory
 
 	public function definition(): array
 	{
+		$title = fake()->sentence(3);
+
 		return [
-			'title' => fake()->sentence(3),
+			'title' => $title,
+			'slug' => Str::slug($title),
 			'subtitle' => fake()->optional()->sentence(4),
 			'publish' => fake()->boolean(),
 		];
