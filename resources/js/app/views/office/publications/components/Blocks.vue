@@ -1,16 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 import publicationsApi from '@/api/publications'
-import { useToast } from '@/composables/useToast'
-import { useConfirm } from '@/composables/useConfirm'
+import { useBlocks } from '@/composables/useBlocks'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BlockCard from '@/components/blocks/BlockCard.vue'
 import BlockSelector from '@/components/blocks/BlockSelector.vue'
 import BlockTextForm from '@/components/blocks/BlockTextForm.vue'
+import BlockLinksForm from '@/components/blocks/BlockLinksForm.vue'
 import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
 import BlockText from '@/components/icons/BlockText.vue'
+import BlockLink from '@/components/icons/BlockLink.vue'
 
 const props = defineProps({
 	publication: { type: Object, required: true },
@@ -18,67 +18,23 @@ const props = defineProps({
 
 const emit = defineEmits(['updated'])
 
-const toast = useToast()
-const { confirm } = useConfirm()
-const blockTitleForm = ref(null)
+const {
+	blocks, lastCreatedUuid, blockTitleForm,
+	watchBlocks, addBlock, blockStoreFn, blockUpdateFn, onBlockStored,
+	updateBlock, deleteBlock, reorderBlocks,
+	addLink, saveLink, deleteLink, toggleLink, reorderLinks,
+} = useBlocks(
+	publicationsApi.blocks,
+	() => props.publication.uuid,
+	emit,
+)
 
-const blocks = ref([])
-watch(() => props.publication.blocks, (val) => {
-	blocks.value = val || []
-}, { immediate: true })
-const lastCreatedUuid = ref(null)
-const pendingType = ref(null)
+watchBlocks(() => props.publication.blocks)
 
 const blockTypes = [
 	{ type: 'text', label: 'Text', icon: { component: BlockText, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
+	{ type: 'links', label: 'Link', icon: { component: BlockLink, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 ]
-
-function addBlock(type) {
-	pendingType.value = type
-	blockTitleForm.value.open()
-}
-
-async function blockStoreFn(title) {
-	const response = await publicationsApi.blocks.store(props.publication.uuid, { type: pendingType.value, title })
-	lastCreatedUuid.value = response.data.data.uuid
-	return response
-}
-
-function blockUpdateFn(uuid, title) {
-	return publicationsApi.blocks.update(props.publication.uuid, uuid, { title })
-}
-
-async function onBlockStored() {
-	emit('updated')
-	toast.success('Block hinzugefügt')
-}
-
-async function updateBlock(block, data) {
-	await publicationsApi.blocks.update(props.publication.uuid, block.uuid, data)
-	emit('updated')
-	toast.success('Block gespeichert')
-}
-
-async function deleteBlock(block) {
-	const ok = await confirm({
-		message: 'Möchtest Du diesen Block wirklich löschen?',
-		confirmLabel: 'Löschen',
-		variant: 'danger',
-	})
-	if (!ok) return
-	await publicationsApi.blocks.destroy(props.publication.uuid, block.uuid)
-	emit('updated')
-	toast.success('Block gelöscht')
-}
-
-async function reorderBlocks() {
-	const items = blocks.value.map((block, index) => ({
-		uuid: block.uuid,
-		sort_order: index,
-	}))
-	await publicationsApi.blocks.reorder(props.publication.uuid, items)
-	emit('updated')
-}
 </script>
 
 <template>
@@ -100,6 +56,7 @@ async function reorderBlocks() {
 				<BlockCard
 					:block="element"
 					:initial-open="element.uuid === lastCreatedUuid"
+					:flush="element.type === 'links'"
 					editable
 					@delete="deleteBlock(element)"
 					@edit-title="blockTitleForm.edit($event)">
@@ -108,6 +65,15 @@ async function reorderBlocks() {
 						v-if="element.type === 'text'"
 						:block="element"
 						@save="(data) => updateBlock(element, data)" />
+
+					<BlockLinksForm
+						v-if="element.type === 'links'"
+						:block="element"
+						@add-link="(data) => addLink(element, data)"
+						@save-link="(linkUuid, data) => saveLink(element, linkUuid, data)"
+						@toggle-link="(linkUuid) => toggleLink(element, linkUuid)"
+						@delete-link="(linkUuid) => deleteLink(element, linkUuid)"
+						@reorder-links="(items) => reorderLinks(element, items)" />
 
 				</BlockCard>
 

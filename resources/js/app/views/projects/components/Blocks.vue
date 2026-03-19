@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import draggable from 'vuedraggable'
 import projectBlocksApi from '@/api/projectBlocks'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
-import { useConfirm } from '@/composables/useConfirm'
+import { useBlocks } from '@/composables/useBlocks'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BlockCard from '@/components/blocks/BlockCard.vue'
@@ -24,6 +24,25 @@ const props = defineProps({
 	project: { type: Object, required: true },
 })
 
+const emit = defineEmits(['updated'])
+
+const toast = useToast()
+const editingMedia = ref(null)
+
+const {
+	blocks, lastCreatedUuid, blockTitleForm,
+	watchBlocks, addBlock, blockStoreFn, blockUpdateFn, onBlockStored,
+	updateBlock, deleteBlock, reorderBlocks,
+	addLink, saveLink, deleteLink, toggleLink, reorderLinks,
+} = useBlocks(
+	projectBlocksApi,
+	() => props.project.uuid,
+	emit,
+	{ filterFn: b => b.type !== 'fixed-slider' },
+)
+
+watchBlocks(() => props.project.blocks)
+
 const blockTypes = [
 	{ type: 'text', label: 'Text', icon: { component: BlockText, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 	{ type: 'slider', label: 'Slider', icon: { component: BlockGallery, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
@@ -31,67 +50,7 @@ const blockTypes = [
 	{ type: 'links', label: 'Link', icon: { component: BlockLink, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 ]
 
-const emit = defineEmits(['updated'])
-
-const toast = useToast()
-const { confirm } = useConfirm()
-const editingMedia = ref(null)
-const blockTitleForm = ref(null)
-
-const blocks = ref([])
-watch(() => props.project.blocks, (val) => {
-	blocks.value = (val || []).filter(b => b.type !== 'fixed-slider')
-}, { immediate: true })
 const projectMedia = computed(() => props.project.media || [])
-const lastCreatedUuid = ref(null)
-const pendingType = ref(null)
-
-function addBlock(type) {
-	pendingType.value = type
-	blockTitleForm.value.open()
-}
-
-async function blockStoreFn(title) {
-	const response = await projectBlocksApi.store(props.project.uuid, { type: pendingType.value, title })
-	lastCreatedUuid.value = response.data.data.uuid
-	return response
-}
-
-function blockUpdateFn(uuid, title) {
-	return projectBlocksApi.update(props.project.uuid, uuid, { title })
-}
-
-async function onBlockStored() {
-	emit('updated')
-	toast.success('Block hinzugefügt')
-}
-
-async function updateBlock(block, data) {
-	await projectBlocksApi.update(props.project.uuid, block.uuid, data)
-	emit('updated')
-	toast.success('Block gespeichert')
-}
-
-async function deleteBlock(block) {
-	const ok = await confirm({
-		message: 'Möchtest Du diesen Block wirklich löschen?',
-		confirmLabel: 'Löschen',
-		variant: 'danger',
-	})
-	if (!ok) return
-	await projectBlocksApi.destroy(props.project.uuid, block.uuid)
-	emit('updated')
-	toast.success('Block gelöscht')
-}
-
-async function reorderBlocks() {
-	const items = blocks.value.map((block, index) => ({
-		uuid: block.uuid,
-		sort_order: index,
-	}))
-	await projectBlocksApi.reorder(props.project.uuid, items)
-	emit('updated')
-}
 
 async function selectMedia(block, mediaUuids) {
 	await projectBlocksApi.selectMedia(props.project.uuid, block.uuid, mediaUuids)
@@ -118,38 +77,6 @@ async function togglePublish(item) {
 
 async function reorderMedia(block, items) {
 	await mediaApi.reorder(items)
-	emit('updated')
-}
-
-async function addLink(block, data) {
-	await projectBlocksApi.storeLink(props.project.uuid, block.uuid, data)
-	emit('updated')
-}
-
-async function saveLink(block, linkUuid, data) {
-	await projectBlocksApi.updateLink(props.project.uuid, block.uuid, linkUuid, data)
-	emit('updated')
-	toast.success('Link gespeichert')
-}
-
-async function deleteLink(block, linkUuid) {
-	const ok = await confirm({
-		message: 'Möchtest Du diesen Link wirklich löschen?',
-		confirmLabel: 'Löschen',
-		variant: 'danger',
-	})
-	if (!ok) return
-	await projectBlocksApi.destroyLink(props.project.uuid, block.uuid, linkUuid)
-	emit('updated')
-}
-
-async function toggleLink(block, linkUuid) {
-	await projectBlocksApi.toggleLink(props.project.uuid, block.uuid, linkUuid)
-	emit('updated')
-}
-
-async function reorderLinks(block, items) {
-	await projectBlocksApi.reorderLinks(props.project.uuid, block.uuid, items)
 	emit('updated')
 }
 </script>
