@@ -1,6 +1,8 @@
 import api from '@/api/axios'
 
 export default {
+	index: (search) => api.get('/media', { params: { search } }),
+	persist: (data) => api.post('/media/persist', data),
 	upload: (data) => api.post('/media/upload', data, {
 		headers: { 'Content-Type': 'multipart/form-data' },
 	}),

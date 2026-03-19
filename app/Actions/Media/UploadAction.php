@@ -46,6 +46,7 @@ class UploadAction
 			'thumbnail_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,
 			'preview_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']) : null,
 			'file_url' => !$isImage ? asset('storage/temp/' . $filename) : null,
+			'download_url' => asset('storage/temp/' . $filename),
 			'_temp' => true,
 		];
 	}

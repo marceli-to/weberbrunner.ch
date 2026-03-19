@@ -31,6 +31,7 @@ class MediaResource extends JsonResource
 			'thumbnail_url' => $this->is_image ? ImageController::signUrl($this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,
 			'preview_url' => $this->is_image ? ImageController::signUrl($this->file, ['w' => 800, 'fit' => 'max']) : null,
 			'file_url' => !$this->is_image ? asset('storage/' . $this->file) : null,
+			'download_url' => asset('storage/' . $this->file),
 		];
 	}
 }

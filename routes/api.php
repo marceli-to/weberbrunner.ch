@@ -55,7 +55,9 @@ Route::prefix('dashboard')
 		Route::controller(MediaController::class)
 			->prefix('media')
 			->group(function () {
+				Route::get('/', 'index');
 				Route::post('/upload', 'upload');
+				Route::post('/persist', 'persist');
 				Route::put('/{media}', 'update');
 				Route::delete('/{media}', 'destroy');
 				Route::patch('/reorder', 'reorder');

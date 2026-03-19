@@ -44,8 +44,8 @@ function buildPayload() {
 	const data = formRef.value?.getFormData()
 	return {
 		title: data.title,
-		link_type: data.mode,
-		url: data.mode === 'external' ? data.url : null,
+		link_type: data.mode === 'media' ? 'external' : data.mode,
+		url: data.mode === 'external' ? data.url : (data.mode === 'media' && data.selectedMedia ? data.selectedMedia.download_url : null),
 		linked_project_id: data.mode === 'internal' && data.selectedProject ? data.selectedProject.id : null,
 	}
 }
@@ -98,8 +98,6 @@ function onReorder() {
     </Span>
   </Grid>
 
-	
-
 	<AppDialog :open="dialogOpen" :title="editingLink ? 'Link bearbeiten' : 'Link'" @close="closeDialog">
 		<LinkDialogFields
 			v-if="dialogOpen"
@@ -116,4 +114,5 @@ function onReorder() {
 			</Grid>
 		</template>
 	</AppDialog>
+  
 </template>

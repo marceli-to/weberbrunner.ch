@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Actions\Media\DeleteAction as DeleteMediaAction;
+use App\Actions\Media\ListAction as ListMediaAction;
+use App\Actions\Media\PersistAction as PersistMediaAction;
 use App\Actions\Media\ReorderAction as ReorderMediaAction;
 use App\Actions\Media\SetOgAction;
 use App\Actions\Media\SetTeaserAction;
@@ -15,9 +17,19 @@ use App\Http\Requests\Media\UpdateMediaRequest;
 use App\Http\Requests\Media\UploadMediaRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
+use Illuminate\Http\Request;
 
 class MediaController extends Controller
 {
+	public function index(Request $request)
+	{
+		$this->authorize('viewAny', Media::class);
+
+		$media = (new ListMediaAction)->execute($request->query('search'));
+
+		return MediaResource::collection($media);
+	}
+
 	public function upload(UploadMediaRequest $request)
 	{
 		$this->authorize('create', Media::class);
@@ -25,6 +37,15 @@ class MediaController extends Controller
 		$data = (new UploadMediaAction)->execute($request->file('file'));
 
 		return response()->json(['data' => $data]);
+	}
+
+	public function persist(Request $request)
+	{
+		$this->authorize('create', Media::class);
+
+		$media = (new PersistMediaAction)->execute($request->all());
+
+		return new MediaResource($media);
 	}
 
 	public function update(UpdateMediaRequest $request, Media $media)

@@ -18,6 +18,7 @@ const initialMode = ref('external')
 const initialUrl = ref('')
 const initialTitle = ref('')
 const initialProjectId = ref(null)
+const initialMediaUuid = ref(null)
 const initialNewTab = ref(false)
 
 watch(() => props.open, async (val) => {
@@ -27,6 +28,7 @@ watch(() => props.open, async (val) => {
 	initialUrl.value = ''
 	initialTitle.value = ''
 	initialProjectId.value = null
+	initialMediaUuid.value = null
 	initialNewTab.value = false
 
 	const attrs = props.editor.getAttributes('link')
@@ -35,13 +37,18 @@ watch(() => props.open, async (val) => {
 		initialTitle.value = attrs.title || ''
 		initialNewTab.value = attrs.target === '_blank'
 
-		// Wait for projects to load, then check if href matches an internal project
 		await new Promise(r => setTimeout(r, 0))
 		if (formRef.value) {
-			const match = formRef.value.projects.find(p => attrs.href === `/arbeiten/${p.slug}`)
-			if (match) {
+			const projectMatch = formRef.value.projects.find(p => attrs.href === `/arbeiten/${p.slug}`)
+			if (projectMatch) {
 				initialMode.value = 'internal'
-				formRef.value.setSelectedProject(match)
+				formRef.value.setSelectedProject(projectMatch)
+			} else {
+				const mediaMatch = formRef.value.mediaItems.find(m => attrs.href === m.download_url)
+				if (mediaMatch) {
+					initialMode.value = 'media'
+					formRef.value.setSelectedMedia(mediaMatch)
+				}
 			}
 		}
 	}
@@ -51,7 +58,9 @@ function apply() {
 	if (!formRef.value.validate()) return
 	const data = formRef.value.getFormData()
 	let href
-	if (data.mode === 'internal' && data.selectedProject) {
+	if (data.mode === 'media' && data.selectedMedia) {
+		href = data.selectedMedia.download_url
+	} else if (data.mode === 'internal' && data.selectedProject) {
 		href = `/arbeiten/${data.selectedProject.slug}`
 	} else {
 		href = data.url.trim()
@@ -81,6 +90,7 @@ function remove() {
 			:url="initialUrl"
 			:title="initialTitle"
 			:selected-project-id="initialProjectId"
+			:selected-media-uuid="initialMediaUuid"
 			:new-tab="initialNewTab"
 			title-optional />
 
