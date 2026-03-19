@@ -13,6 +13,7 @@ return new class extends Migration
 			$table->uuid('uuid')->unique();
 			$table->string('title');
 			$table->string('subtitle')->nullable();
+			$table->text('meta_description')->nullable();
 			$table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();
 			$table->boolean('publish')->default(true);
 			$table->integer('sort_order')->default(0);
