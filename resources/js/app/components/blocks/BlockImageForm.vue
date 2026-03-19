@@ -6,7 +6,7 @@ import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
-	projectMedia: { type: Array, default: () => [] },
+	mediaPool: { type: Array, default: () => [] },
 })
 
 const emit = defineEmits(['select-media', 'remove-media', 'toggle-publish', 'edit-media'])
@@ -47,7 +47,7 @@ function onDrawerSubmit() {
 
 		<MediaPickerDrawer
 			:open="drawerOpen"
-			:items="projectMedia"
+			:items="mediaPool"
 			v-model="selectedUuid"
 			submit-label="Übernehmen"
 			cancel-label="Abbrechen"

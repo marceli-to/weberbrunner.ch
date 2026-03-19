@@ -7,18 +7,29 @@ import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import BlockCard from '@/views/projects/components/blocks/BlockCard.vue'
-import BlockAddMenu from '@/views/projects/components/blocks/BlockAddMenu.vue'
-import BlockTextForm from '@/views/projects/components/blocks/BlockTextForm.vue'
-import BlockImageForm from '@/views/projects/components/blocks/BlockImageForm.vue'
-import BlockSliderForm from '@/views/projects/components/blocks/BlockSliderForm.vue'
-import BlockLinksForm from '@/views/projects/components/blocks/BlockLinksForm.vue'
+import BlockCard from '@/components/blocks/BlockCard.vue'
+import BlockAddMenu from '@/components/blocks/BlockAddMenu.vue'
+import BlockTextForm from '@/components/blocks/BlockTextForm.vue'
+import BlockImageForm from '@/components/blocks/BlockImageForm.vue'
+import BlockSliderForm from '@/components/blocks/BlockSliderForm.vue'
+import BlockLinksForm from '@/components/blocks/BlockLinksForm.vue'
 import MediaEditModal from '@/components/media/MediaEditModal.vue'
 import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
+import BlockText from '@/components/icons/BlockText.vue'
+import BlockImage from '@/components/icons/BlockImage.vue'
+import BlockGallery from '@/components/icons/BlockGallery.vue'
+import BlockLink from '@/components/icons/BlockLink.vue'
 
 const props = defineProps({
 	project: { type: Object, required: true },
 })
+
+const blockTypes = [
+	{ type: 'text', label: 'Text', icon: { component: BlockText, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
+	{ type: 'slider', label: 'Slider', icon: { component: BlockGallery, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
+	{ type: 'image', label: 'Bild', icon: { component: BlockImage, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
+	{ type: 'links', label: 'Link', icon: { component: BlockLink, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
+]
 
 const emit = defineEmits(['updated'])
 
@@ -175,7 +186,7 @@ async function reorderLinks(block, items) {
 					<BlockImageForm
 						v-if="element.type === 'image'"
 						:block="element"
-						:project-media="projectMedia"
+						:media-pool="projectMedia"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@toggle-publish="togglePublish"
@@ -184,7 +195,7 @@ async function reorderLinks(block, items) {
 					<BlockSliderForm
 						v-if="element.type === 'slider'"
 						:block="element"
-						:project-media="projectMedia"
+						:media-pool="projectMedia"
 						@select-media="(uuids) => selectMedia(element, uuids)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@reorder-media="(items) => reorderMedia(element, items)"
@@ -211,7 +222,7 @@ async function reorderLinks(block, items) {
 	<!-- Block type picker -->
 	<Grid class="mt-40">
 		<Span class="col-span-8 col-start-2">
-			<BlockAddMenu @select="addBlock" />
+			<BlockAddMenu :types="blockTypes" @select="addBlock" />
 		</Span>
 	</Grid>
 

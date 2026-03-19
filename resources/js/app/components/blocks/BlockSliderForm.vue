@@ -7,7 +7,7 @@ import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
-	projectMedia: { type: Array, default: () => [] },
+	mediaPool: { type: Array, default: () => [] },
 })
 
 const emit = defineEmits(['select-media', 'remove-media', 'reorder-media', 'toggle-publish', 'edit-media'])
@@ -71,7 +71,7 @@ function onReorder() {
 
 		<MediaPickerDrawer
 			:open="drawerOpen"
-			:items="projectMedia"
+			:items="mediaPool"
 			v-model="selectedUuids"
 			multiple
 			submit-label="Übernehmen"

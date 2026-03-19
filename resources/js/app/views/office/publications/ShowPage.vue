@@ -15,6 +15,7 @@
 	import MediaUploader from '@/components/media/MediaUploader.vue'
 	import MediaEditModal from '@/components/media/MediaEditModal.vue'
 	import AttributeList from '@/views/office/publications/components/AttributeList.vue'
+	import Blocks from '@/views/office/publications/components/Blocks.vue'
 
 	const mediaStore = useMediaStore()
 	const { confirm } = useConfirm()
@@ -106,6 +107,7 @@
 			</Grid>
 
 			<!-- Dynamic blocks + block type picker -->
+			<Blocks :publication="publication" @updated="fetch" />
 
 		</template>
 

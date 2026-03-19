@@ -11,7 +11,7 @@ import Span from '@/components/ui/grid/Span.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import MasterDataList from '@/views/projects/components/MasterDataList.vue'
-import ProjectBlocks from '@/views/projects/components/blocks/ProjectBlocks.vue'
+import Blocks from '@/views/projects/components/Blocks.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 import MediaEditModal from '@/components/media/MediaEditModal.vue'
@@ -151,7 +151,7 @@ async function reorderSliderImages() {
       </Grid>
 
 			<!-- Dynamic blocks + block type picker -->
-			<ProjectBlocks :project="project" @updated="fetch" />
+			<Blocks :project="project" @updated="fetch" />
 
 		</template>
 
