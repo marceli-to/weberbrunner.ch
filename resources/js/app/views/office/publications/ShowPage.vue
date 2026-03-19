@@ -60,7 +60,7 @@
 
 		<template v-if="publication">
 
-			<Grid class="mb-20">
+			<Grid>
 
 				<!-- Slider -->
 				<Span class="col-span-8 col-start-2">
