@@ -29,7 +29,7 @@ Route::prefix('arbeiten')->name('page.works')->group(function () {
 // About
 Route::prefix('buero')->name('page.about')->group(function () {
 	Route::view('/', 'pages.about.index');
-	Route::view('/team', 'pages.about.team')->name('.team');
+	Route::view('/team', 'pages.about.team.index')->name('.team');
 	Route::get('/team/{slug}', [TeamController::class, 'show'])->name('.team.show');
 	Route::get('/jobs', JobController::class)->name('.jobs');
 	Route::get('/kontakt', ContactController::class)->name('.contact');

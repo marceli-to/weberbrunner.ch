@@ -9,7 +9,7 @@ class PublicationController extends Controller
 {
 	public function index(): View
 	{
-		return view('pages.about.publications');
+		return view('pages.about.publications.index');
 	}
 
 	public function show(string $slug): View
@@ -26,7 +26,7 @@ class PublicationController extends Controller
 			'value' => $attr->value,
 		])->toArray();
 
-		return view('pages.about.publications-show', [
+		return view('pages.about.publications.show', [
 			'publication' => $publication,
 			'slides' => $slides,
 			'publicationInfo' => $publicationInfo,
