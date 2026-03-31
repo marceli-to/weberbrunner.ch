@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ProjectPreviewController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
@@ -36,6 +37,8 @@ Route::prefix('buero')->name('page.about')->group(function () {
 	Route::get('/vortraege', TalkController::class)->name('.talks');
 	Route::get('/jury', JuryController::class)->name('.jury');
 	Route::get('/auszeichnungen', AwardController::class)->name('.awards');
+	Route::get('/publikationen', [PublicationController::class, 'index'])->name('.publications');
+	Route::get('/publikationen/{slug}', [PublicationController::class, 'show'])->name('.publications.show');
 });
 
 // Legal

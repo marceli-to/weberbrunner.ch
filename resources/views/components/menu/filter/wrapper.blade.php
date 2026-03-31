@@ -4,7 +4,6 @@
   'types' => [],
   'status' => [],
   'locations' => [],
-  'publications' => false,
   'availableTypes' => [],
   'availableStatus' => [],
   'availableLocations' => [],
@@ -61,13 +60,6 @@
         @endforeach
       </ul>
 
-      <ul class="flex flex-col gap-y-6">
-        <x-menu.filter.item
-          title="Publikationen"
-          :active="$publications"
-          action="togglePublications" />
-      </ul>
-
       <ul class="flex flex-col gap-y-6 w-full">
         @foreach($availableLocations as $key => $label)
           <x-menu.filter.item
@@ -115,7 +107,7 @@
 
   </nav>
 
-  @if(!empty($query) || !empty($types) || !empty($status) || !empty($locations) || $publications)
+  @if(!empty($query) || !empty($types) || !empty($status) || !empty($locations))
     <button @click="filter = false" class="flex justify-end mb-20 md:hidden">
       <x-icons.arrow-right size="lg" class="w-28 h-auto" />
     </button>

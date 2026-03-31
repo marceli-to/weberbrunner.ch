@@ -1,6 +1,7 @@
 @props([
   'title' => null,
-  'location' => null
+  'location' => null,
+  'backUrl' => null,
 ])
 @php
   $referer = request()->headers->get('referer', '');
@@ -16,7 +17,7 @@
     <div class="md:col-span-3 md:pl-20 lg:pl-40">
 
       <a
-        href="{{ route('page.works') }}"
+        href="{{ $backUrl ?? route('page.works') }}"
         @if($isInternalReferrer) onclick="history.back(); return false;" @endif
         class="block mt-4 md:mt-0">
         <x-icons.arrow-left size="lg" class="w-20 h-auto md:w-43" />

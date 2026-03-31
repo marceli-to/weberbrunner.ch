@@ -3,7 +3,6 @@
 	import draggable from 'vuedraggable'
 	import { usePublication } from '@/composables/usePublication'
 	import { useCollapsed } from '@/composables/useCollapsed'
-	import { useMediaStore } from '@/stores/media'
 	import { useConfirm } from '@/composables/useConfirm'
 	import { useToast } from '@/composables/useToast'
 	import publicationsApi from '@/api/publications'
@@ -18,26 +17,33 @@
 	import AttributeList from '@/views/office/publications/components/AttributeList.vue'
 	import Blocks from '@/views/office/publications/components/Blocks.vue'
 
-	const mediaStore = useMediaStore()
 	const { confirm } = useConfirm()
 	const toast = useToast()
 
-	const { publication, fetch } = usePublication((data) => {
-		mediaStore.setItems((data.media || []).filter(m => m.is_image))
-	})
+	const { publication, fetch } = usePublication()
 
 	const file = computed(() => publication.value?.media?.find(m => !m.is_image) || null)
 	const { collapsed, toggle } = useCollapsed('publication-show')
 
 	const editingMedia = ref(null)
 
-	const dragItems = computed({
-		get: () => mediaStore.items,
-		set: (value) => mediaStore.reorder(value),
-	})
+	const fixedSliderBlock = computed(() =>
+		(publication.value?.blocks || []).find(b => b.type === 'fixed-slider')
+	)
+
+	const sliderImages = computed(() =>
+		fixedSliderBlock.value?.media || []
+	)
+
+	async function ensureFixedSliderBlock() {
+		if (fixedSliderBlock.value) return fixedSliderBlock.value
+		const { data } = await publicationsApi.blocks.store(publication.value.uuid, { type: 'fixed-slider' })
+		return data.data
+	}
 
 	async function onUploaded(media) {
-		await publicationsApi.attachMedia(publication.value.uuid, [media])
+		const block = await ensureFixedSliderBlock()
+		await publicationsApi.blocks.selectMedia(publication.value.uuid, block.uuid, [media.uuid])
 		await fetch()
 	}
 
@@ -48,7 +54,17 @@
 			variant: 'danger',
 		})
 		if (!ok) return
-		await mediaStore.deleteItem(item.uuid)
+		await publicationsApi.blocks.detachMedia(publication.value.uuid, fixedSliderBlock.value.uuid, item.uuid)
+		await fetch()
+	}
+
+	async function reorderSliderImages() {
+		const items = sliderImages.value.map((m, index) => ({
+			uuid: m.uuid,
+			sort_order: index,
+		}))
+		await mediaApi.reorder(items)
+		await fetch()
 	}
 
 	async function onFileUploaded(media) {
@@ -69,9 +85,10 @@
 	}
 
 	async function onEditSave({ uuid, data }) {
-		await mediaStore.updateItem(uuid, data)
+		await mediaApi.update(uuid, data)
 		editingMedia.value = null
 		toast.success('Bild gespeichert')
+		await fetch()
 	}
 </script>
 
@@ -87,15 +104,16 @@
 
 					<CollapsibleHeader title="Slider" :collapsed="collapsed.has('images')" @toggle="toggle('images')" />
 					<div v-show="!collapsed.has('images')" class="mt-20">
-						
+
 						<draggable
-							v-if="mediaStore.items.length"
-							v-model="dragItems"
+							v-if="sliderImages.length"
+							:list="sliderImages"
 							item-key="uuid"
 							handle=".drag-handle"
 							class="grid grid-cols-2 lg:grid-cols-4 gap-20"
 							ghost-class="opacity-30"
 							animation="150"
+							@end="reorderSliderImages"
 						>
 							<template #item="{ element }">
 								<MediaCard
@@ -110,7 +128,7 @@
 							</template>
 						</draggable>
 
-						<div :class="{ 'mt-20': mediaStore.items.length }">
+						<div :class="{ 'mt-20': sliderImages.length }">
 							<MediaUploader @uploaded="onUploaded" />
 						</div>
 					</div>
@@ -130,18 +148,18 @@
 				</Span>
 				<Span v-show="!collapsed.has('file')" class="col-span-2 col-start-2">
 					<template v-if="file">
-						<MediaCard 
-              :item="file" 
-              :deletable="true" 
-              :editable="true" 
-              :show-filename="true" 
-              variant="dark" 
+						<MediaCard
+              :item="file"
+              :deletable="true"
+              :editable="true"
+              :show-filename="true"
+              variant="dark"
               @delete="onFileDelete"
               @edit="editingMedia = $event" />
 					</template>
           <template v-else>
-            <MediaUploader 
-              :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']" 
+            <MediaUploader
+              :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']"
               @uploaded="onFileUploaded" />
           </template>
 				</Span>

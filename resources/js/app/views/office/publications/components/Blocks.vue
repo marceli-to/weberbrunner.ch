@@ -27,6 +27,7 @@ const {
 	publicationsApi.blocks,
 	() => props.publication.uuid,
 	emit,
+	{ filterFn: b => b.type !== 'fixed-slider' },
 )
 
 watchBlocks(() => props.publication.blocks)

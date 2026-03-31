@@ -105,6 +105,14 @@
               :active="Route::is('page.about.awards')" />
           </ul>
 
+          <ul class="flex flex-col gap-y-2">
+            <x-menu.page.item
+              url="{{ route('page.about.publications') }}"
+              title="Publikationen"
+              :level="2"
+              :active="Route::is('page.about.publications')" />
+          </ul>
+
       </div>
       
     </div>

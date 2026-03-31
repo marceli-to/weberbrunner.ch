@@ -25,9 +25,6 @@ class Works extends Component
 	#[Url]
 	public array $locations = [];
 
-	#[Url]
-	public bool $publications = false;
-
 	public function clearSearch(): void
 	{
 		$this->query = '';
@@ -48,18 +45,12 @@ class Works extends Component
 		$this->locations = $this->toggleArrayValue($this->locations, $location);
 	}
 
-	public function togglePublications(): void
-	{
-		$this->publications = !$this->publications;
-	}
-
 	public function clearFilters(): void
 	{
 		$this->query = '';
 		$this->types = [];
 		$this->status = [];
 		$this->locations = [];
-		$this->publications = false;
 	}
 
 	#[Computed]
@@ -68,8 +59,7 @@ class Works extends Component
 		return !empty($this->query)
 			|| !empty($this->types)
 			|| !empty($this->status)
-			|| !empty($this->locations)
-			|| $this->publications;
+			|| !empty($this->locations);
 	}
 
 	#[Computed]
@@ -171,9 +161,6 @@ class Works extends Component
 			$query->whereHas('location', fn ($q) => $q->whereNotIn('slug', $this->locations));
 		}
 
-		if ($this->publications) {
-			$query->where('publish', true);
-		}
 	}
 
 	protected function splitIntoColumns(Collection $items, int $count): array

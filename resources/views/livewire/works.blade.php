@@ -12,7 +12,6 @@
       :types="$types"
       :status="$status"
       :locations="$locations"
-      :publications="$publications"
       :availableTypes="$this->availableTypes"
       :availableStatus="$this->availableStatus"
       :availableLocations="$this->availableLocations"
