@@ -245,6 +245,7 @@ class SeedPublications extends Command
 			'size' => $disk->size("uploads/{$filename}"),
 			'alt' => $entry['title'],
 			'is_teaser' => false,
+			'is_download' => true,
 			'sort_order' => 1,
 		]);
 	}
