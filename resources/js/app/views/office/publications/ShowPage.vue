@@ -43,7 +43,8 @@
 
 	async function onUploaded(media) {
 		const block = await ensureFixedSliderBlock()
-		await publicationsApi.blocks.selectMedia(publication.value.uuid, block.uuid, [media.uuid])
+		const { data } = await mediaApi.persist(media)
+		await publicationsApi.blocks.selectMedia(publication.value.uuid, block.uuid, [data.data.uuid])
 		await fetch()
 	}
 
