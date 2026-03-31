@@ -6,6 +6,10 @@
 
 <x-layout.show :title="$publication->title" :location="$publication->subtitle" :backUrl="route('page.about.publications')">
 
+	@if (!empty($isPreview))
+		<div class="bg-[#dc0000] text-white px-8 py-4 text-sm font-semibold text-center fixed top-20 right-20">Vorschau</div>
+	@endif
+
 	@if($slides->isNotEmpty())
 		<x-slideshow.wrapper class="mb-20 lg:mb-40">
 

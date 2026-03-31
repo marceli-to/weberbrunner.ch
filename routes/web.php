@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ProjectPreviewController;
+use App\Http\Controllers\PublicationPreviewController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JuryController;
@@ -17,6 +18,7 @@ Route::get('/img/{path}', [ImageController::class, 'show'])->where('path', '.*')
 Route::get('/', LandingController::class)->name('page.landing');
 
 Route::prefix('vorschau')->name('page.preview')->group(function () {
+	Route::get('/publikationen/{slug}', [PublicationPreviewController::class, 'show'])->name('.publications');
 	Route::get('/{slug}', [ProjectPreviewController::class, 'show'])->name('.show');
 });
 

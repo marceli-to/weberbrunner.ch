@@ -7,6 +7,10 @@ defineProps({
 		type: String,
 		default: null,
 	},
+	previewPrefix: {
+		type: String,
+		default: '/vorschau',
+	},
 	editable: {
 		type: Boolean,
 		default: false,
@@ -26,7 +30,7 @@ defineEmits(['edit'])
 		</h1>
 		<a
 			v-if="slug"
-			:href="`/vorschau/${slug}`"
+			:href="`${previewPrefix}/${slug}`"
 			target="_blank"
 			aria-label="Vorschau auf der Website anzeigen">
 			<LinkExternal class="w-24 h-auto" />

@@ -45,7 +45,7 @@ function goBack() {
 				<BackButton @click="goBack" />
 			</Span>
 			<Span class="col-span-8">
-				<PageTitle editable :slug="publication.slug" @edit="titleLightbox.open(publication)">
+				<PageTitle editable :slug="publication.slug" preview-prefix="/vorschau/publikationen" @edit="titleLightbox.open(publication)">
 					{{ publication.title }}
 				</PageTitle>
 			</Span>

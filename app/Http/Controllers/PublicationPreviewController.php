@@ -6,20 +6,14 @@ use App\Models\Publication;
 use App\Actions\Publication\PrepareViewDataAction;
 use Illuminate\View\View;
 
-class PublicationController extends Controller
+class PublicationPreviewController extends Controller
 {
-	public function index(): View
-	{
-		return view('pages.about.publications.index');
-	}
-
 	public function show(string $slug): View
 	{
-		$publication = Publication::published()
-			->where('slug', $slug)
+		$publication = Publication::where('slug', $slug)
 			->with(['attributes', 'teaser', 'download', 'blocks.media', 'blocks.links.linkedProject'])
 			->firstOrFail();
 
-		return view('pages.about.publications.show', (new PrepareViewDataAction)->execute($publication));
+		return view('pages.about.publications.show', (new PrepareViewDataAction)->execute($publication, true));
 	}
 }
