@@ -62,6 +62,11 @@ class Publication extends Model
 		return $this->morphMany(Media::class, 'mediable')->where('is_og', true);
 	}
 
+	public function download(): MorphMany
+	{
+		return $this->morphMany(Media::class, 'mediable')->where('is_download', true);
+	}
+
 	public function getActivitylogOptions(): LogOptions
 	{
 		return LogOptions::defaults()

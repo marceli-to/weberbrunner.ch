@@ -47,6 +47,7 @@ class AttachAction
 						'height' => $item['height'] ?? null,
 						'alt' => $item['alt'] ?? null,
 						'caption' => $item['caption'] ?? null,
+						'is_download' => $item['is_download'] ?? false,
 						'sort_order' => $maxSort,
 					]);
 				}

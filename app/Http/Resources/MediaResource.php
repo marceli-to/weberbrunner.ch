@@ -26,6 +26,7 @@ class MediaResource extends JsonResource
 			'is_image' => $this->is_image,
 			'is_teaser' => $this->is_teaser,
 			'is_og' => $this->is_og,
+			'is_download' => $this->is_download,
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
 			'thumbnail_url' => $this->is_image ? ImageController::signUrl($this->file, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,

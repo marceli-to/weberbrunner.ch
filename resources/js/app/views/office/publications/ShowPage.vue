@@ -22,7 +22,7 @@
 
 	const { publication, fetch } = usePublication()
 
-	const file = computed(() => publication.value?.media?.find(m => !m.is_image) || null)
+	const file = computed(() => publication.value?.download || null)
 	const { collapsed, toggle } = useCollapsed('publication-show')
 
 	const editingMedia = ref(null)
@@ -69,7 +69,7 @@
 	}
 
 	async function onFileUploaded(media) {
-		await publicationsApi.attachMedia(publication.value.uuid, [media])
+		await publicationsApi.attachMedia(publication.value.uuid, [{ ...media, is_download: true }])
 		await fetch()
 	}
 

@@ -27,6 +27,7 @@ class Media extends Model
 		'height',
 		'is_teaser',
 		'is_og',
+		'is_download',
 		'publish',
 		'sort_order',
 	];
@@ -34,6 +35,7 @@ class Media extends Model
 	protected $casts = [
 		'is_teaser' => 'boolean',
 		'is_og' => 'boolean',
+		'is_download' => 'boolean',
 		'publish' => 'boolean',
 		'size' => 'integer',
 		'width' => 'integer',

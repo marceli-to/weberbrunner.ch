@@ -16,7 +16,7 @@ class PublicationController extends Controller
 	{
 		$publication = Publication::published()
 			->where('slug', $slug)
-			->with(['attributes', 'teaser', 'blocks.media', 'blocks.links.linkedProject'])
+			->with(['attributes', 'teaser', 'download', 'blocks.media', 'blocks.links.linkedProject'])
 			->firstOrFail();
 
 		$slides = $publication->blocks->firstWhere('type', 'fixed-slider')?->media ?? collect();

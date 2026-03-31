@@ -25,6 +25,7 @@ class PublicationResource extends JsonResource
 			'media' => MediaResource::collection($this->whenLoaded('media')),
 			'teaser' => new MediaResource($this->whenLoaded('teaser', fn() => $this->teaser->first())),
 			'og' => new MediaResource($this->whenLoaded('og', fn() => $this->og->first())),
+			'download' => new MediaResource($this->whenLoaded('download', fn() => $this->download->first())),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 			'can' => [

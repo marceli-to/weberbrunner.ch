@@ -16,6 +16,6 @@ class PublicationMediaController extends Controller
 
 		(new AttachMediaAction)->execute($request->validated('media'), $publication);
 
-		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og']));
+		return new PublicationResource($publication->load(['location', 'attributes', 'blocks.media', 'media', 'teaser', 'og', 'download']));
 	}
 }
