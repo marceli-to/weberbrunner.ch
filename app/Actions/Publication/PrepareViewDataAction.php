@@ -14,8 +14,13 @@ class PrepareViewDataAction
 			'value' => $attr->value,
 		])->toArray();
 
-		if ($downloadFile && count($info)) {
-			$info[array_key_last($info)]['link'] = '/' . $downloadFile->file;
+		$download = null;
+		if ($downloadFile) {
+			$download = [
+				'url' => '/' . $downloadFile->file,
+				'extension' => strtoupper(pathinfo($downloadFile->original_name ?? $downloadFile->file, PATHINFO_EXTENSION)),
+				'size' => $this->formatFileSize($downloadFile->size),
+			];
 		}
 
 		return [
@@ -23,6 +28,20 @@ class PrepareViewDataAction
 			'isPreview' => $isPreview,
 			'slides' => $publication->blocks->firstWhere('type', 'fixed-slider')?->media ?? collect(),
 			'publicationInfo' => $info,
+			'download' => $download,
 		];
+	}
+
+	private function formatFileSize(?int $bytes): ?string
+	{
+		if (!$bytes) {
+			return null;
+		}
+
+		if ($bytes >= 1048576) {
+			return round($bytes / 1048576, 1) . ' MB';
+		}
+
+		return round($bytes / 1024) . ' KB';
 	}
 }

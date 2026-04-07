@@ -1,5 +1,6 @@
 @props([
 	'items' => [],
+	'download' => null,
 	'isSlideshow' => false,
 ])
 
@@ -7,17 +8,18 @@
 	@foreach($items as $item)
 		<div>
 			<strong>{{ $item['label'] }}:</strong>
-			@if(!empty($item['link']))
-				<a 
-          href="{{ $item['link'] }}" 
-          target="_blank" 
-          class="no-underline hover:underline underline-offset-2"
-          aria-label="Download {{ $item['value'] }}">
-					{{ $item['value'] }}
-				</a>
-			@else
-				{{ $item['value'] }}
-			@endif
+			{{ $item['value'] }}
 		</div>
 	@endforeach
+	@if($download)
+		<div>
+			<strong>Download:</strong>
+			<a
+				href="{{ $download['url'] }}"
+				target="_blank"
+				class="no-underline hover:underline underline-offset-2">
+				{{ $download['extension'] }}@if($download['size']), {{ $download['size'] }}@endif
+			</a>
+		</div>
+	@endif
 </div>

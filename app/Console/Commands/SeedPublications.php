@@ -125,15 +125,6 @@ class SeedPublications extends Command
 			]);
 		}
 
-		$file = $entry['file'] ?? null;
-		if ($file && isset($file['size'])) {
-			$format = strtoupper($file['format'] ?? 'PDF');
-			$publication->attributes()->create([
-				'key' => 'Download',
-				'value' => "{$format}, {$file['size']}",
-				'sort_order' => $sortOrder++,
-			]);
-		}
 	}
 
 	private function seedTeaserImage(Publication $publication, array $entry): void

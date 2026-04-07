@@ -16,6 +16,7 @@
 			<x-slot:info>
 				<x-publication.info
 					:items="$publicationInfo"
+					:download="$download"
 					:isSlideshow="true"
 				/>
 			</x-slot:info>
@@ -37,6 +38,7 @@
 			<div class="md:col-span-9 md:col-start-4">
 				<x-publication.info
 					:items="$publicationInfo"
+					:download="$download"
 				/>
 			</div>
 		</div>
