@@ -16,8 +16,8 @@ class UpdateMediaRequest extends FormRequest
 	{
 		return [
 			'alt' => 'nullable|string|max:255',
-			'caption' => 'nullable|string|max:255',
-			'credits' => 'nullable|string|max:255',
+			'caption' => 'nullable|string',
+			'credits' => 'nullable|string',
 			'is_og' => 'sometimes|boolean',
 			'is_teaser' => 'sometimes|boolean',
 		];
@@ -27,7 +27,6 @@ class UpdateMediaRequest extends FormRequest
 	{
 		return [
 			'alt.max' => 'Bitte überprüfe den Alt-Text',
-			'caption.max' => 'Bitte überprüfe die Bildunterschrift',
 		];
 	}
 }
