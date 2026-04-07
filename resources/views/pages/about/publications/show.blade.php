@@ -14,7 +14,7 @@
 		<x-slideshow.wrapper class="mb-20 lg:mb-40">
 
 			<x-slot:info>
-				<x-work.info
+				<x-publication.info
 					:items="$publicationInfo"
 					:isSlideshow="true"
 				/>
@@ -35,7 +35,7 @@
 	@if($publicationInfo && $slides->isEmpty())
 		<div class="md:grid md:grid-cols-12 mb-40">
 			<div class="md:col-span-9 md:col-start-4">
-				<x-work.info
+				<x-publication.info
 					:items="$publicationInfo"
 				/>
 			</div>

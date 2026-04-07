@@ -15,4 +15,4 @@
       <strong>{{ $item['label'] }}:</strong> {{ $item['value'] }}
     </div>
   @endforeach
-</div>
+  </div>
