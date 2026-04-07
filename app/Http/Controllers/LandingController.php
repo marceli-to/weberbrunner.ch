@@ -16,7 +16,7 @@ class LandingController extends Controller
 		return view('pages.landing', [
 			'columns' => $columns,
 			'column' => $this->getColumn($columns),
-			'text' => $landing?->publish ? $landing->text : null,
+			'text' => $landing?->text ? $landing->text : null,
 		]);
 	}
 
