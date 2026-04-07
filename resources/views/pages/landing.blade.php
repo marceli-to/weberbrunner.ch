@@ -1,9 +1,9 @@
 @section('meta_description', 'Weberbrunner Architektur – Architektur und Planung')
-<x-layout.landing>
+<x-layout.landing :text="$text">
 
   {{-- Mobile: interleaved row-first order --}}
   <section class="border-t border-black pb-20 md:hidden">
-    @foreach($mobileItems as $project)
+    @foreach($column as $project)
       <x-cards.project-teaser
         :title="$project['title']"
         :image="$project['image']"

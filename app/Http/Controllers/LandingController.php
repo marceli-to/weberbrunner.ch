@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Landing;
 use App\Models\LandingItem;
 use Illuminate\View\View;
 
@@ -9,15 +10,18 @@ class LandingController extends Controller
 {
 	public function __invoke(): View
 	{
-		$columns = $this->getHomepageColumns();
+		$columns = $this->getColumns();
+		$landing = Landing::first();
 
 		return view('pages.landing', [
 			'columns' => $columns,
-			'mobileItems' => $this->interleaveForMobile($columns),
+			'column' => $this->getColumn($columns),
+			'text' => $landing?->publish ? $landing->text : null,
 		]);
 	}
 
-	protected function getHomepageColumns(): array
+	// Desktop: 3-column grid
+	protected function getColumns(): array
 	{
 		$items = LandingItem::with(['project' => fn ($q) => $q->with(['media' => fn ($q) => $q->where('is_teaser', true)])])
 			->orderBy('sort_order')
@@ -45,7 +49,8 @@ class LandingController extends Controller
 		return $grouped;
 	}
 
-	protected function interleaveForMobile(array $columns): array
+	// Mobile: interleaved single column
+	protected function getColumn(array $columns): array
 	{
 		$maxLen = max(array_map('count', $columns));
 		$result = [];

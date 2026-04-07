@@ -33,6 +33,7 @@ use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\LandingItemController;
+use App\Http\Controllers\Api\LandingTextController;
 use App\Http\Controllers\Api\MasterdataController;
 use App\Http\Controllers\Api\MasterdataGroupController;
 use App\Http\Controllers\Api\ProjectMasterdataController;
@@ -49,6 +50,14 @@ Route::prefix('dashboard')
 				Route::post('/', 'store');
 				Route::patch('/reorder', 'reorder');
 				Route::delete('/{landingItem}', 'destroy');
+			});
+
+		// Landing Text
+		Route::controller(LandingTextController::class)
+			->prefix('landing/text')
+			->group(function () {
+				Route::get('/', 'show');
+				Route::put('/', 'update');
 			});
 
 		// Media
