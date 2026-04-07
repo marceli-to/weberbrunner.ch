@@ -16,13 +16,24 @@ export default function initSlideshows() {
       speed: 800,
       spaceBetween: 5,
       navigation: {
-        nextEl: '.swiper-btn-next',
-        prevEl: '.swiper-btn-prev',
+        nextEl: element.querySelector('.swiper-btn-next'),
+        prevEl: element.querySelector('.swiper-btn-prev'),
       },
       on: {
+        init: function() {
+          const prevBtn = element.querySelector('.swiper-btn-prev');
+          if (prevBtn) {
+            prevBtn.style.opacity = this.isBeginning ? '0' : '1';
+            prevBtn.style.pointerEvents = this.isBeginning ? 'none' : 'auto';
+          }
+        },
         slideChange: function() {
-
-        }
+          const prevBtn = element.querySelector('.swiper-btn-prev');
+          if (prevBtn) {
+            prevBtn.style.opacity = this.isBeginning ? '0' : '1';
+            prevBtn.style.pointerEvents = this.isBeginning ? 'none' : 'auto';
+          }
+        },
       },
       breakpoints: {
         768: {
