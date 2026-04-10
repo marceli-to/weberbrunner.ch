@@ -7,21 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Landing extends Model
+class PageText extends Model
 {
 	use HasUuid, LogsActivity;
 
 	protected $fillable = [
+		'page',
+		'title',
 		'text',
-		'publish',
 	];
-
-	protected function casts(): array
-	{
-		return [
-			'publish' => 'boolean',
-		];
-	}
 
 	public function getActivitylogOptions(): LogOptions
 	{

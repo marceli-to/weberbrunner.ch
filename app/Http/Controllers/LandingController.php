@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Landing;
+use App\Models\PageText;
 use App\Models\LandingItem;
 use Illuminate\View\View;
 
@@ -11,7 +11,7 @@ class LandingController extends Controller
 	public function __invoke(): View
 	{
 		$columns = $this->getColumns();
-		$landing = Landing::first();
+		$landing = PageText::where('page', 'landing')->first();
 
 		return view('pages.landing', [
 			'columns' => $columns,

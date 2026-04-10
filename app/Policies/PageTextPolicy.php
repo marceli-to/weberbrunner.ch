@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class LandingPolicy
+class PageTextPolicy
 {
 	public function viewAny(User $user): bool
 	{

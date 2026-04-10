@@ -33,7 +33,7 @@ use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\LandingItemController;
-use App\Http\Controllers\Api\LandingTextController;
+use App\Http\Controllers\Api\PageTextController;
 use App\Http\Controllers\Api\MasterdataController;
 use App\Http\Controllers\Api\MasterdataGroupController;
 use App\Http\Controllers\Api\ProjectMasterdataController;
@@ -52,12 +52,12 @@ Route::prefix('dashboard')
 				Route::delete('/{landingItem}', 'destroy');
 			});
 
-		// Landing Text
-		Route::controller(LandingTextController::class)
-			->prefix('landing/text')
+		// Page Text
+		Route::controller(PageTextController::class)
+			->prefix('page-text')
 			->group(function () {
-				Route::get('/', 'show');
-				Route::put('/', 'update');
+				Route::get('/{page}', 'show');
+				Route::put('/{page}', 'update');
 			});
 
 		// Media

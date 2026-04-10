@@ -32,7 +32,7 @@ const drawerOpen = ref(false)
 const drawerColumn = ref(null)
 const selectedProjectUuid = ref(null)
 
-const landingText = ref({ text: '', publish: false })
+const landingText = ref({ text: '' })
 const originalText = ref('')
 
 const textDirty = computed(() => landingText.value.text !== originalText.value)
@@ -55,11 +55,11 @@ async function fetch() {
 	const [landingRes, projectsRes, textRes] = await Promise.all([
 		landingApi.index(),
 		projectsApi.published(),
-		landingTextApi.show(),
+		landingTextApi.show('landing'),
 	])
 	columns.value = landingRes.data.data
 	allProjects.value = projectsRes.data.data
-	landingText.value = { text: textRes.data.data.text ?? '', publish: textRes.data.data.publish }
+	landingText.value = { text: textRes.data.data.text ?? '' }
 	originalText.value = textRes.data.data.text ?? ''
 }
 
@@ -115,9 +115,8 @@ async function onDragEnd() {
 }
 
 async function saveText() {
-	const ok = await submit(() => landingTextApi.update({
+	const ok = await submit(() => landingTextApi.update('landing', {
 		text: landingText.value.text,
-		publish: landingText.value.publish,
 	}))
 	if (!ok) return
 	originalText.value = landingText.value.text
@@ -150,7 +149,7 @@ load(fetch)
 		<Span v-show="!collapsed.has('intro-text')" class="col-span-8 col-start-2">
 			<Card>
 				<form @submit.prevent="saveText">
-					<Textarea v-model="landingText.text" />
+					<Textarea v-model="landingText.text" :rows="8" />
 					<div class="flex gap-20 mt-10">
 						<Button type="submit" class="flex justify-center" :disabled="!textDirty">Speichern</Button>
 						<Button type="button" class="flex justify-center" :disabled="!textDirty" @click="cancelText">Abbrechen</Button>

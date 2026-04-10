@@ -16,6 +16,7 @@ import PublicationsShow from '@/views/office/publications/ShowPage.vue'
 import PublicationsMetadata from '@/views/office/publications/MetadataPage.vue'
 import PublicationsTeaserImage from '@/views/office/publications/TeaserImagePage.vue'
 import PublicationsSettings from '@/views/office/publications/SettingsPage.vue'
+import OfficeIntro from '@/views/office/intro/IndexPage.vue'
 import OfficeTeam from '@/views/office/team/IndexPage.vue'
 import OfficeTeamShow from '@/views/office/team/DetailPage.vue'
 import OfficeContacts from '@/views/office/contacts/IndexPage.vue'
@@ -105,10 +106,16 @@ const routes = [
     meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
   },
   {
+    path: '/dashboard/buero/intro',
+    name: 'office.intro',
+    component: OfficeIntro,
+    meta: { title: 'Intro', navSection: 'office', navLabel: 'Intro', navOrder: 1, navMain: { label: 'Büro', order: 20 } },
+  },
+  {
     path: '/dashboard/buero/team',
     name: 'office.team',
     component: OfficeTeam,
-    meta: { title: 'Team', navSection: 'office', navLabel: 'Team', navOrder: 10, navMain: { label: 'Büro', order: 20 } },
+    meta: { title: 'Team', navSection: 'office', navLabel: 'Team', navOrder: 10 },
   },
   {
     path: '/dashboard/buero/team/:id',

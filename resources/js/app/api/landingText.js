@@ -1,6 +1,6 @@
 import api from '@/api/axios'
 
 export default {
-	show: () => api.get('/landing/text'),
-	update: (data) => api.put('/landing/text', data),
+	show: (page) => api.get(`/page-text/${page}`),
+	update: (page, data) => api.put(`/page-text/${page}`, data),
 }
