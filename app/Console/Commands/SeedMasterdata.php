@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Masterdata;
 use App\Models\MasterdataGroup;
+use App\Models\MasterdataProject;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class SeedMasterdata extends Command
 {
@@ -31,6 +31,7 @@ class SeedMasterdata extends Command
 		}
 
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
+		MasterdataProject::truncate();
 		Masterdata::truncate();
 		MasterdataGroup::truncate();
 		DB::statement('SET FOREIGN_KEY_CHECKS=1');
