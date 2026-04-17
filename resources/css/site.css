@@ -88,7 +88,7 @@
 }
 
 a, button {
-  @apply focus:!outline-none;
+  @apply focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-neutral-400;
 }
 
 strong {
