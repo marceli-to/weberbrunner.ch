@@ -87,6 +87,10 @@
   display: none;
 }
 
+a, button {
+  @apply focus:!outline-none;
+}
+
 strong {
   @apply font-semibold;
 }

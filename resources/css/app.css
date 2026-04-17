@@ -65,10 +65,6 @@
 	border-bottom-width: var(--border-thin);
 }
 
-a, button {
-  @apply focus:!outline-none;
-}
-
 /* Debug for grids */
 .debug-grid {
   @apply bg-yellow-50/50;
