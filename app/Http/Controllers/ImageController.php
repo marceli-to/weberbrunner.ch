@@ -38,12 +38,26 @@ class ImageController extends Controller
 		$cachedPath = $this->server->makeImage($path, $params);
 		$cache = $this->server->getCache();
 		$imageContent = $cache->read($cachedPath);
-		$mimeType = $cache->mimeType($cachedPath);
+		$mimeType = $this->resolveMimeType($params['fm'] ?? null, $path);
 
 		return response($imageContent, 200)
 			->header('Content-Type', $mimeType)
 			->header('Cache-Control', 'public, max-age=31536000, immutable')
 			->header('Expires', now()->addYear()->toRfc7231String());
+	}
+
+	private function resolveMimeType(?string $format, string $path): string
+	{
+		$format = strtolower($format ?: pathinfo($path, PATHINFO_EXTENSION));
+
+		return match ($format) {
+			'jpg', 'jpeg', 'pjpg' => 'image/jpeg',
+			'png' => 'image/png',
+			'webp' => 'image/webp',
+			'avif' => 'image/avif',
+			'gif' => 'image/gif',
+			default => 'application/octet-stream',
+		};
 	}
 
 	public static function signUrl(string $path, array $params = []): string
