@@ -103,3 +103,23 @@ p:not(:last-child),
 ul:not(:last-child):not(nav ul) {
   @apply mb-16 lg:mb-24;
 }
+
+article h2 {
+  @apply font-semibold mb-16 lg:mb-24;
+}
+
+article h3 {
+  @apply font-semibold;
+}
+
+article ul {
+  @apply list-disc pl-[1.5em];
+}
+
+article a[href]:not([href^="mailto:"]) {
+  @apply underline underline-offset-4 md:underline-offset-6 decoration-1;
+}
+
+article a:hover {
+  @apply no-underline;
+}

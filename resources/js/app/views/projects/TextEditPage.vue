@@ -13,6 +13,7 @@ import BackButton from '@/components/ui/BackButton.vue'
 import Card from '@/components/ui/Card.vue'
 import CollapsibleHeader from '@/components/ui/CollapsibleHeader.vue'
 import Textarea from '@/components/ui/form/Textarea.vue'
+import Editor from '@/components/ui/form/editor/Editor.vue'
 import Button from '@/components/ui/form/Button.vue'
 import ProjectNavBar from '@/views/projects/components/ProjectTabs.vue'
 
@@ -84,7 +85,7 @@ async function saveShortDescription() {
 		<Span v-show="!collapsed.has('description')" class="col-span-8 col-start-2">
 			<Card>
 				<form @submit.prevent="saveDescription">
-					<Textarea v-model="project.description" />
+					<Editor v-model="project.description" />
 					<div class="flex gap-20 mt-10">
 						<Button type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
 					</div>

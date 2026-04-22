@@ -4,8 +4,10 @@
 
 	@if($block->type === 'text' && $block->content)
 		<x-blocks.section :title="$block->title" :standalone="$standalone" class="mb-40 lg:mb-80">
-			<x-container.inner class="max-w-prose leading-[1.6] md:leading-[1.35]">
-				{!! $block->content !!}
+			<x-container.inner class="max-w-prose hyphens-auto">
+        <article class="max-w-prose hyphens-auto">
+				  {!! $block->content !!}
+        </article>
 			</x-container.inner>
 		</x-blocks.section>
 
