@@ -15,13 +15,15 @@
     <div class="md:grid md:grid-cols-9 pb-20 lg:pb-40 border-t border-black">
 
       <div class="md:col-span-3 p-20 pb-25">
-        <x-media.image
-          :src="$member->image?->file"
-          :alt="$member->firstname . ' ' . $member->name"
-          :width="$member->image?->width"
-          :height="$member->image?->height"
-          class="w-full aspect-3/4 object-cover max-w-[70%] md:max-w-none mx-auto"
-        />
+        @if($member->image)
+          <x-media.image
+            :media="$member->image"
+            :alt="$member->firstname . ' ' . $member->name"
+            sizes="(min-width: 768px) 33vw, 70vw"
+            :max-width="1280"
+            class="w-full aspect-3/4 object-cover max-w-[70%] md:max-w-none mx-auto"
+          />
+        @endif
         <div class="md:mt-20 lg:mt-40 hidden md:block">
           <a
             href="{{ route('page.about.team') }}"

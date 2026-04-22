@@ -2,131 +2,120 @@
 
 namespace App\View\Components\Media;
 
-use App\Http\Controllers\ImageController;
+use App\Models\Media;
+use App\Support\ImageUrlSigner;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Image extends Component
 {
-    public string $src;
-    public string $alt;
-    public ?int $width;
-    public ?int $height;
-    public string $fit;
-    public int $quality;
-    public array $formats;
-    public string $class;
-    public string $loading;
-    public array $breakpoints;
-    public array $sources = [];
-    public string $fallbackUrl;
+	public string $src;
+	public string $alt;
+	public int $width;
+	public int $height;
+	public float $aspectRatio;
+	public string $fit;
+	public int $quality;
+	public array $formats;
+	public string $class;
+	public string $loading;
+	public string $sizes;
+	public array $sources = [];
+	public string $fallbackUrl;
 
-    public function __construct(
-        string $src,
-        string $alt = '',
-        ?int $width = null,
-        ?int $height = null,
-        string $fit = 'crop',
-        int $quality = 90,
-        array $formats = ['avif', 'webp', 'jpg'],
-        array $breakpoints = [],
-        string $class = '',
-        string $loading = 'lazy'
-    ) {
-        $this->src = $src;
-        $this->alt = $alt;
-        $this->width = $width;
-        $this->height = $height;
-        $this->fit = $fit;
-        $this->quality = $quality;
-        $this->formats = $formats;
-        $this->breakpoints = $breakpoints;
-        $this->class = $class;
-        $this->loading = $loading;
+	protected const WIDTHS = [480, 640, 768, 1024, 1280, 1440, 1600, 1920];
 
-        if (!empty($this->breakpoints)) {
-            $this->buildResponsiveSources();
-        } else {
-            $this->buildSimpleSources();
-        }
-    }
+	public function __construct(
+		Media $media,
+		string $sizes = '100vw',
+		int $maxWidth = 1600,
+		?string $alt = null,
+		string $fit = 'crop',
+		int $quality = 90,
+		array $formats = ['avif', 'webp', 'jpg'],
+		string $class = '',
+		string $loading = 'lazy',
+	) {
+		$this->src = $media->file;
+		$this->alt = $alt ?? $media->alt ?? '';
+		$this->fit = $fit;
+		$this->quality = $quality;
+		$this->formats = $formats;
+		$this->class = $class;
+		$this->loading = $loading;
+		$this->sizes = $sizes;
 
-    protected function buildResponsiveSources(): void
-    {
-        foreach ($this->breakpoints as $breakpoint) {
-            $bpWidth = $breakpoint['width'] ?? $this->width;
-            $bpHeight = $breakpoint['height'] ?? $this->height;
-            $media = $breakpoint['media'] ?? null;
+		$baseWidth = $media->width ?? 1;
+		$baseHeight = $media->height ?? 1;
+		$this->aspectRatio = $baseHeight / max($baseWidth, 1);
 
-            foreach ($this->formats as $format) {
-                $this->sources[] = [
-                    'srcset' => $this->buildUrl($format, $bpWidth, $bpHeight),
-                    'type' => $this->getMimeType($format),
-                    'media' => $media,
-                ];
-            }
-        }
+		$widths = array_values(array_filter(self::WIDTHS, fn ($w) => $w <= $maxWidth));
+		if ($media->width) {
+			$widths = array_values(array_filter($widths, fn ($w) => $w <= $media->width));
+		}
+		if (empty($widths)) {
+			$widths = [min($maxWidth, $media->width ?: $maxWidth)];
+		}
 
-        $lastBreakpoint = end($this->breakpoints);
-        $this->fallbackUrl = $this->buildUrl('jpg', $lastBreakpoint['width'] ?? $this->width, $lastBreakpoint['height'] ?? $this->height);
-    }
+		$this->width = end($widths);
+		$this->height = (int) round($this->width * $this->aspectRatio);
 
-    protected function buildSimpleSources(): void
-    {
-        foreach ($this->formats as $format) {
-            if ($format !== 'jpg' && $format !== 'jpeg') {
-                $this->sources[] = [
-                    'srcset' => $this->buildUrl($format),
-                    'type' => $this->getMimeType($format),
-                    'media' => null,
-                ];
-            }
-        }
+		$this->buildSources($widths);
+	}
 
-        $this->fallbackUrl = $this->buildUrl('jpg');
-    }
+	protected function buildSources(array $widths): void
+	{
+		foreach ($this->formats as $format) {
+			if ($format === 'jpg' || $format === 'jpeg') {
+				continue;
+			}
 
-    public function buildUrl(string $format = null, ?int $width = null, ?int $height = null): string
-    {
-        $params = [];
-        $useWidth = $width ?? $this->width;
-        $useHeight = $height ?? $this->height;
+			$this->sources[] = [
+				'srcset' => $this->buildSrcset($format, $widths),
+				'type' => $this->getMimeType($format),
+				'sizes' => $this->sizes,
+			];
+		}
 
-        if ($useWidth) {
-            $params['w'] = $useWidth;
-        }
+		$this->fallbackUrl = $this->buildUrl('jpg', $this->width, $this->height);
+	}
 
-        if ($useHeight) {
-            $params['h'] = $useHeight;
-        }
+	protected function buildSrcset(string $format, array $widths): string
+	{
+		$parts = [];
+		foreach ($widths as $w) {
+			$h = (int) round($w * $this->aspectRatio);
+			$parts[] = $this->buildUrl($format, $w, $h) . ' ' . $w . 'w';
+		}
 
-        if ($this->fit) {
-            $params['fit'] = $this->fit;
-        }
+		return implode(', ', $parts);
+	}
 
-        if ($format) {
-            $params['fm'] = $format;
-        }
+	protected function buildUrl(string $format, int $width, int $height): string
+	{
+		return ImageUrlSigner::signUrl($this->src, [
+			'w' => $width,
+			'h' => $height,
+			'fit' => $this->fit,
+			'fm' => $format,
+			'q' => $this->quality,
+		]);
+	}
 
-        $params['q'] = $this->quality;
+	protected function getMimeType(string $format): string
+	{
+		return match ($format) {
+			'avif' => 'image/avif',
+			'webp' => 'image/webp',
+			'jpg', 'jpeg' => 'image/jpeg',
+			'png' => 'image/png',
+			default => 'image/jpeg',
+		};
+	}
 
-        return ImageController::signUrl($this->src, $params);
-    }
-
-    public function getMimeType(string $format): string
-    {
-        return match ($format) {
-            'avif' => 'image/avif',
-            'webp' => 'image/webp',
-            'jpg', 'jpeg' => 'image/jpeg',
-            'png' => 'image/png',
-            default => 'image/jpeg',
-        };
-    }
-
-    public function render(): View|Closure|string
-    {
-        return view('components.media.image');
-    }
+	public function render(): View|Closure|string
+	{
+		return view('components.media.image');
+	}
 }

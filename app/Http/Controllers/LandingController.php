@@ -34,15 +34,10 @@ class LandingController extends Controller
 		$grouped = [0 => [], 1 => [], 2 => []];
 
 		foreach ($items as $item) {
-			$media = $item->project->media->first();
 			$grouped[$item->column - 1][] = [
 				'title' => $item->project->full_title,
 				'slug' => $item->project->slug,
-				'image' => $media?->file ?? 'images/dummy-teaser-1.jpg',
-				'width' => $media?->width,
-				'height' => $media?->height,
-				'orientation' => $media?->orientation ?? 'unknown',
-				'caption' => $media?->caption,
+				'media' => $item->project->media->first(),
 			];
 		}
 

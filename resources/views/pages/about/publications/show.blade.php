@@ -23,10 +23,7 @@
 
 			@foreach($slides as $slide)
 				<x-slideshow.slide
-					:src="$slide->file"
-					:width="$slide->width"
-					:height="$slide->height"
-					:caption="$slide->caption"
+					:media="$slide"
 				/>
 			@endforeach
 

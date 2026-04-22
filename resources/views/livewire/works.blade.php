@@ -28,12 +28,8 @@
             <x-cards.project-teaser
               wire:key="project-{{ $project['slug'] }}-2col"
               :title="$project['title']"
-              :image="$project['image']"
-              :width="$project['width']"
-              :height="$project['height']"
-              :orientation="$project['orientation']"
+              :media="$project['media']"
               :slug="$project['slug']"
-              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>
@@ -48,12 +44,8 @@
             <x-cards.project-teaser
               wire:key="project-{{ $project['slug'] }}-3col"
               :title="$project['title']"
-              :image="$project['image']"
-              :width="$project['width']"
-              :height="$project['height']"
-              :orientation="$project['orientation']"
+              :media="$project['media']"
               :slug="$project['slug']"
-              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>
@@ -68,12 +60,8 @@
             <x-cards.project-teaser
               wire:key="project-{{ $project['slug'] }}-4col"
               :title="$project['title']"
-              :image="$project['image']"
-              :width="$project['width']"
-              :height="$project['height']"
-              :orientation="$project['orientation']"
+              :media="$project['media']"
               :slug="$project['slug']"
-              :caption="$project['caption']"
               variant="sm" />
           @endforeach
         </div>

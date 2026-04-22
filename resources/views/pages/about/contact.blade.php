@@ -13,7 +13,7 @@
           </x-headings.section>
 
           <x-cards.location
-            :image="$contact->image?->file"
+            :media="$contact->image"
             :alt="$contact->company_name . ' ' . $location->title">
 
             <x-headings.h3 variant="normal">

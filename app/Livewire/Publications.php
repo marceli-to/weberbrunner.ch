@@ -27,16 +27,11 @@ class Publications extends Component
 			->orderBy('sort_order')
 			->get()
 			->map(function (Publication $publication) {
-				$media = $publication->teaser->first();
 				return [
 					'uuid' => $publication->uuid,
 					'title' => $publication->title,
 					'slug' => $publication->slug,
-					'image' => $media?->file,
-					'width' => $media?->width,
-					'height' => $media?->height,
-					'orientation' => $media?->orientation ?? 'unknown',
-					'caption' => $media?->caption,
+					'media' => $publication->teaser->first(),
 				];
 			});
 	}

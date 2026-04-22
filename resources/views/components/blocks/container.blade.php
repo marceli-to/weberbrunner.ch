@@ -21,10 +21,7 @@
 			@endunless
 			@foreach($block->media as $media)
 				<x-slideshow.slide
-					:src="$media->file"
-					:width="$media->width"
-					:height="$media->height"
-					:caption="$media->caption"
+					:media="$media"
 				/>
 			@endforeach
 		</x-slideshow.wrapper>
@@ -34,10 +31,10 @@
 		<x-blocks.section :title="$block->title" :standalone="$standalone" class="mb-40 lg:mb-80">
 			<x-container.inner class="max-w-prose">
 				<x-media.image
-					:src="$blockMedia->file"
+					:media="$blockMedia"
 					:alt="$blockMedia->caption ?? ''"
-					:width="$blockMedia->width"
-					:height="$blockMedia->height"
+					sizes="(min-width: 1024px) 800px, 90vw"
+					:max-width="1280"
 					class="w-full"
 				/>
 			</x-container.inner>

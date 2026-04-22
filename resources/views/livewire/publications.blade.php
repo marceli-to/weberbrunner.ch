@@ -8,12 +8,8 @@
 					<x-cards.publication-teaser
 						wire:key="publication-{{ $publication['uuid'] }}-2col"
 						:title="$publication['title']"
-						:image="$publication['image']"
-						:width="$publication['width']"
-						:height="$publication['height']"
-						:orientation="$publication['orientation']"
+						:media="$publication['media']"
 						:slug="$publication['slug']"
-						:caption="$publication['caption']"
 						variant="sm" />
 				@endforeach
 			</div>
@@ -28,12 +24,8 @@
 					<x-cards.publication-teaser
 						wire:key="publication-{{ $publication['uuid'] }}-3col"
 						:title="$publication['title']"
-						:image="$publication['image']"
-						:width="$publication['width']"
-						:height="$publication['height']"
-						:orientation="$publication['orientation']"
+						:media="$publication['media']"
 						:slug="$publication['slug']"
-						:caption="$publication['caption']"
 						variant="sm" />
 				@endforeach
 			</div>
@@ -48,12 +40,8 @@
 					<x-cards.publication-teaser
 						wire:key="publication-{{ $publication['uuid'] }}-4col"
 						:title="$publication['title']"
-						:image="$publication['image']"
-						:width="$publication['width']"
-						:height="$publication['height']"
-						:orientation="$publication['orientation']"
+						:media="$publication['media']"
 						:slug="$publication['slug']"
-						:caption="$publication['caption']"
 						variant="sm" />
 				@endforeach
 			</div>

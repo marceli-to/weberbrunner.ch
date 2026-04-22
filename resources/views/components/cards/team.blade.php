@@ -1,7 +1,5 @@
 @props([
-  'image' => null,
-  'width' => null,
-  'height' => null,
+  'media' => null,
   'firstname' => '',
   'name' => '',
   'title' => '',
@@ -11,13 +9,13 @@
 ])
 
 <div class="flex flex-col p-20 pb-25">
-  
-  @if($image)
+
+  @if($media)
     <x-media.image
-      :src="$image"
+      :media="$media"
       :alt="$firstname . ' ' . $name"
-      :width="$width"
-      :height="$height"
+      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 35vw, 70vw"
+      :max-width="1024"
       class="w-full aspect-3/4 object-cover max-w-[70%] mx-auto mb-20"
     />
   @endif

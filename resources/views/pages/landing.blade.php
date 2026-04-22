@@ -6,12 +6,10 @@
     @foreach($column as $project)
       <x-cards.project-teaser
         :title="$project['title']"
-        :image="$project['image']"
-        :width="$project['width']"
-        :height="$project['height']"
-        :orientation="$project['orientation']"
+        :media="$project['media']"
         :slug="$project['slug']"
-        :caption="$project['caption']"
+        sizes="100vw"
+        :max-width="1024"
         :class="$loop->last ? '!border-b-0' : ''" />
     @endforeach
   </section>
@@ -23,12 +21,10 @@
         @foreach($column as $projectIndex => $project)
           <x-cards.project-teaser
             :title="$project['title']"
-            :image="$project['image']"
-            :width="$project['width']"
-            :height="$project['height']"
-            :orientation="$project['orientation']"
+            :media="$project['media']"
             :slug="$project['slug']"
-            :caption="$project['caption']"
+            sizes="33vw"
+            :max-width="1280"
             :class="$colIndex === 2 && $loop->last ? '!border-b-0 md:!border-b' : ''" />
         @endforeach
       </div>

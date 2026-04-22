@@ -43,9 +43,7 @@
                         {{ $isInLastRow3 ? 'lg:border-b-0' : '' }}">
 
                     <x-cards.team
-                        :image="$member->image?->file"
-                        :width="$member->image?->width"
-                        :height="$member->image?->height"
+                        :media="$member->image"
                         :firstname="$member->firstname"
                         :name="$member->name"
                         :title="$member->title"
