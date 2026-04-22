@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import draggable from 'vuedraggable'
-import projectBlocksApi from '@/api/projectBlocks'
+import { projectBlocksApi } from '@/api/blocks'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
 import { useBlocks } from '@/composables/useBlocks'

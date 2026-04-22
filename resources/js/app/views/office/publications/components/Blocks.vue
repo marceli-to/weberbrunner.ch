@@ -1,6 +1,6 @@
 <script setup>
 import draggable from 'vuedraggable'
-import publicationsApi from '@/api/publications'
+import { publicationBlocksApi } from '@/api/blocks'
 import { useBlocks } from '@/composables/useBlocks'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -24,7 +24,7 @@ const {
 	updateBlock, deleteBlock, reorderBlocks,
 	addLink, saveLink, deleteLink, toggleLink, reorderLinks,
 } = useBlocks(
-	publicationsApi.blocks,
+	publicationBlocksApi,
 	() => props.publication.uuid,
 	emit,
 	{ filterFn: b => b.type !== 'fixed-slider' },

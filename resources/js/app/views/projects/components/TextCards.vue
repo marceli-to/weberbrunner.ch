@@ -20,7 +20,7 @@ defineProps({
           </RouterLink>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
-          {{ project.description }}
+          <span class="line-clamp-12">{{ project.description }}</span>
         </div>
       </Card>
     </Span>
@@ -33,7 +33,7 @@ defineProps({
           </RouterLink>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
-          {{ project.short_description }}
+          <span class="line-clamp-12">{{ project.short_description }}</span>
         </div>
       </Card>
     </Span>

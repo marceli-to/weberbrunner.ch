@@ -16,6 +16,7 @@ class PageTextController extends Controller
 		$this->authorize('viewAny', PageText::class);
 
 		$pageText = (new FindPageTextAction)->execute($page);
+		$pageText->load(['blocks.media', 'blocks.links.linkedProject']);
 
 		return new PageTextResource($pageText);
 	}
@@ -25,6 +26,8 @@ class PageTextController extends Controller
 		$pageText = (new FindPageTextAction)->execute($page);
 
 		(new UpdatePageTextAction)->execute($pageText, $request->validated());
+
+		$pageText->load(['blocks.media', 'blocks.links.linkedProject']);
 
 		return new PageTextResource($pageText);
 	}

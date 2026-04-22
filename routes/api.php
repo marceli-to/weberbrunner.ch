@@ -1,7 +1,13 @@
 <?php
 
+use App\Models\PageText;
+use App\Models\Project;
+use App\Models\Publication;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AwardController;
+use App\Http\Controllers\Api\BlockController;
+use App\Http\Controllers\Api\BlockLinkController;
+use App\Http\Controllers\Api\BlockMediaController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\JuryController;
@@ -12,17 +18,11 @@ use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectCategoryController;
 use App\Http\Controllers\Api\ProjectController;
-use App\Http\Controllers\Api\ProjectBlockController;
-use App\Http\Controllers\Api\ProjectBlockLinkController;
-use App\Http\Controllers\Api\ProjectBlockMediaController;
 use App\Http\Controllers\Api\ProjectMediaController;
 use App\Http\Controllers\Api\ProjectMetaController;
 use App\Http\Controllers\Api\ProjectTextController;
 use App\Http\Controllers\Api\ProjectStatusController;
 use App\Http\Controllers\Api\PublicationAttributeController;
-use App\Http\Controllers\Api\PublicationBlockController;
-use App\Http\Controllers\Api\PublicationBlockLinkController;
-use App\Http\Controllers\Api\PublicationBlockMediaController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\PublicationMediaController;
 use App\Http\Controllers\Api\SectionController;
@@ -38,9 +38,43 @@ use App\Http\Controllers\Api\MasterdataController;
 use App\Http\Controllers\Api\MasterdataGroupController;
 use App\Http\Controllers\Api\ProjectMasterdataController;
 
+Route::bind('project', fn ($value) => Project::where('uuid', $value)->firstOrFail());
+Route::bind('publication', fn ($value) => Publication::where('uuid', $value)->firstOrFail());
+Route::bind('pageText', fn ($value) => PageText::where('page', $value)->firstOrFail());
+
 Route::prefix('dashboard')
 	->middleware(['web', 'auth'])
 	->group(function () {
+
+		$blockRoutes = function () {
+			Route::controller(BlockController::class)
+				->prefix('blocks')
+				->group(function () {
+					Route::get('/', 'index');
+					Route::post('/', 'store');
+					Route::patch('/reorder', 'reorder');
+					Route::put('/{block}', 'update');
+					Route::delete('/{block}', 'destroy');
+				});
+
+			Route::controller(BlockMediaController::class)
+				->prefix('blocks/{block}')
+				->group(function () {
+					Route::post('/media/select', 'select');
+					Route::post('/media/upload', 'upload');
+					Route::delete('/media/{media}', 'detach');
+				});
+
+			Route::controller(BlockLinkController::class)
+				->prefix('blocks/{block}/links')
+				->group(function () {
+					Route::post('/', 'store');
+					Route::patch('/reorder', 'reorder');
+					Route::put('/{link}', 'update');
+					Route::patch('/{link}/toggle', 'toggle');
+					Route::delete('/{link}', 'destroy');
+				});
+		};
 
 		// Landing
 		Route::controller(LandingItemController::class)
@@ -162,35 +196,8 @@ Route::prefix('dashboard')
 				Route::delete('/{attribute}', 'destroy');
 			});
 
-// Project Blocks (nested under projects)
-		Route::controller(ProjectBlockController::class)
-			->prefix('projects/{project}/blocks')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::put('/{block}', 'update');
-				Route::delete('/{block}', 'destroy');
-			});
-
-		// Project Block Media
-		Route::controller(ProjectBlockMediaController::class)
-			->prefix('projects/{project}/blocks/{block}')
-			->group(function () {
-				Route::post('/media/select', 'select');
-				Route::delete('/media/{media}', 'detach');
-			});
-
-		// Project Block Links (nested under blocks)
-		Route::controller(ProjectBlockLinkController::class)
-			->prefix('projects/{project}/blocks/{block}/links')
-			->group(function () {
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::put('/{link}', 'update');
-				Route::patch('/{link}/toggle', 'toggle');
-				Route::delete('/{link}', 'destroy');
-			});
+		// Project Blocks (shared BlockController)
+		Route::prefix('projects/{project}')->group($blockRoutes);
 
 		// Categories
 		Route::controller(CategoryController::class)
@@ -250,36 +257,11 @@ Route::prefix('dashboard')
 				Route::delete('/{attribute}', 'destroy');
 			});
 
-		// Publication Blocks
-		Route::controller(PublicationBlockController::class)
-			->prefix('publications/{publication}/blocks')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::put('/{block}', 'update');
-				Route::delete('/{block}', 'destroy');
-			});
+		// Publication Blocks (shared BlockController)
+		Route::prefix('publications/{publication}')->group($blockRoutes);
 
-		// Publication Block Media
-		Route::controller(PublicationBlockMediaController::class)
-			->prefix('publications/{publication}/blocks/{block}')
-			->group(function () {
-				Route::post('/media/select', 'select');
-				Route::post('/media/upload', 'uploadFile');
-				Route::delete('/media/{media}', 'detach');
-			});
-
-		// Publication Block Links
-		Route::controller(PublicationBlockLinkController::class)
-			->prefix('publications/{publication}/blocks/{block}/links')
-			->group(function () {
-				Route::post('/', 'store');
-				Route::put('/{link}', 'update');
-				Route::patch('/{link}/toggle', 'toggle');
-				Route::delete('/{link}', 'destroy');
-				Route::patch('/reorder', 'reorder');
-			});
+		// Page Blocks (shared BlockController — Office and other pages)
+		Route::prefix('pages/{pageText}')->group($blockRoutes);
 
 		// Team Members
 		Route::controller(TeamMemberController::class)

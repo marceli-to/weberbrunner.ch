@@ -33,7 +33,7 @@ select:-webkit-autofill:focus {
 }
 
 .form-textarea {
-	@apply text-md px-10 py-10 resize-y min-h-100 placeholder:text-md;
+	@apply text-md px-10 py-10 resize-y min-h-100 placeholder:text-md field-sizing-content;
 }
 
 /* Select */

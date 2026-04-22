@@ -3,13 +3,16 @@ import { ref, computed } from 'vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
+import MediaUploader from '@/components/media/MediaUploader.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
 	mediaPool: { type: Array, default: () => [] },
+	allowUpload: { type: Boolean, default: false },
+	allowPick: { type: Boolean, default: true },
 })
 
-const emit = defineEmits(['select-media', 'remove-media', 'toggle-publish', 'edit-media'])
+const emit = defineEmits(['select-media', 'upload-media', 'remove-media', 'toggle-publish', 'edit-media'])
 
 const drawerOpen = ref(false)
 const selectedUuid = ref(null)
@@ -31,7 +34,7 @@ function onDrawerSubmit() {
 
 <template>
 	<div class="pt-10">
-		<div class="grid grid-cols-4 gap-20">
+		<div v-if="image || allowPick" class="grid grid-cols-4 gap-20">
 			<MediaCard
 				v-if="image"
 				:item="image"
@@ -42,10 +45,15 @@ function onDrawerSubmit() {
 				@delete="$emit('remove-media', image.uuid)"
 				@toggle-publish="$emit('toggle-publish', image)"
 				@edit="$emit('edit-media', $event)" />
-			<AddButton v-else @click="openDrawer" />
+			<AddButton v-else-if="allowPick" @click="openDrawer" />
+		</div>
+
+		<div v-if="allowUpload && !image" class="mt-20">
+			<MediaUploader @uploaded="$emit('upload-media', $event)" />
 		</div>
 
 		<MediaPickerDrawer
+			v-if="allowPick"
 			:open="drawerOpen"
 			:items="mediaPool"
 			v-model="selectedUuid"

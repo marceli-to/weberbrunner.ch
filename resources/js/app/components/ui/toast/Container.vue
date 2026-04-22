@@ -6,7 +6,7 @@ const { current, dismiss } = useToast()
 </script>
 
 <template>
-	<div class="absolute top-0 left-0 w-full z-50 grid grid-cols-10 gap-20">
+	<div class="fixed top-100 left-0 w-full z-50 grid grid-cols-12 gap-20">
 		<Transition
 			enter-active-class="transition-opacity duration-100 ease-out"
 			enter-from-class="opacity-0"
@@ -20,7 +20,7 @@ const { current, dismiss } = useToast()
 				v-if="current"
 				:key="current.id"
 				:toast="current"
-				class="col-span-9 col-start-2"
+				class="col-span-9 col-start-4"
 				@close="dismiss(current.id)"
 			/>
 		</Transition>

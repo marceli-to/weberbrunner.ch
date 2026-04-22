@@ -9,11 +9,12 @@ class AboutController extends Controller
 {
 	public function __invoke(): View
 	{
-		$intro = PageText::where('page', 'office')->first();
+		$intro = PageText::where('page', 'office')
+			->with(['blocks.media', 'blocks.links.linkedProject'])
+			->first();
 
 		return view('pages.about.index', [
-			'title' => $intro?->title,
-			'text' => $intro?->text,
+			'blocks' => $intro?->blocks ?? collect(),
 		]);
 	}
 }

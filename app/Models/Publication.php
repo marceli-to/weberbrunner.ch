@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasBlocks;
 use App\Traits\HasPublishScope;
 use App\Traits\HasUuid;
 use App\Traits\Sortable;
@@ -16,7 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Publication extends Model
 {
-	use HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
+	use HasBlocks, HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
 		'title',
@@ -42,9 +43,9 @@ class Publication extends Model
 		return $this->hasMany(PublicationAttribute::class)->orderBy('sort_order');
 	}
 
-	public function blocks(): HasMany
+	public function allowedBlockTypes(): array
 	{
-		return $this->hasMany(PublicationBlock::class)->orderBy('sort_order');
+		return ['text', 'links', 'fixed-slider'];
 	}
 
 	public function media(): MorphMany

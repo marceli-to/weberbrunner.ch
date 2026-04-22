@@ -16,21 +16,4 @@ export default {
 		destroy: (pubId, attrId) => api.delete(`/publications/${pubId}/attributes/${attrId}`),
 		reorder: (pubId, items) => api.patch(`/publications/${pubId}/attributes/reorder`, { items }),
 	},
-	blocks: {
-		index: (pubId) => api.get(`/publications/${pubId}/blocks`),
-		store: (pubId, data) => api.post(`/publications/${pubId}/blocks`, data),
-		update: (pubId, blockId, data) => api.put(`/publications/${pubId}/blocks/${blockId}`, data),
-		destroy: (pubId, blockId) => api.delete(`/publications/${pubId}/blocks/${blockId}`),
-		reorder: (pubId, items) => api.patch(`/publications/${pubId}/blocks/reorder`, { items }),
-		selectMedia: (pubId, blockId, mediaUuids) => api.post(`/publications/${pubId}/blocks/${blockId}/media/select`, { media_uuids: mediaUuids }),
-		detachMedia: (pubId, blockId, mediaId) => api.delete(`/publications/${pubId}/blocks/${blockId}/media/${mediaId}`),
-		uploadFile: (pubId, blockId, formData) => api.post(`/publications/${pubId}/blocks/${blockId}/media/upload`, formData, {
-			headers: { 'Content-Type': 'multipart/form-data' },
-		}),
-		storeLink: (pubId, blockId, data) => api.post(`/publications/${pubId}/blocks/${blockId}/links`, data),
-		updateLink: (pubId, blockId, linkId, data) => api.put(`/publications/${pubId}/blocks/${blockId}/links/${linkId}`, data),
-		toggleLink: (pubId, blockId, linkId) => api.patch(`/publications/${pubId}/blocks/${blockId}/links/${linkId}/toggle`),
-		destroyLink: (pubId, blockId, linkId) => api.delete(`/publications/${pubId}/blocks/${blockId}/links/${linkId}`),
-		reorderLinks: (pubId, blockId, items) => api.patch(`/publications/${pubId}/blocks/${blockId}/links/reorder`, { items }),
-	},
 }

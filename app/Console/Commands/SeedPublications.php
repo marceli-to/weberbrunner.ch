@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Block;
+use App\Models\BlockLink;
 use App\Models\Publication;
 use App\Models\PublicationAttribute;
-use App\Models\PublicationBlock;
-use App\Models\PublicationBlockLink;
 use App\Models\Media;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -45,11 +45,12 @@ class SeedPublications extends Command
 		}
 
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
-		PublicationBlockLink::truncate();
-		PublicationBlock::truncate();
+		$publicationBlockIds = Block::where('blockable_type', Publication::class)->pluck('id');
+		BlockLink::whereIn('block_id', $publicationBlockIds)->delete();
+		Media::where('mediable_type', Block::class)->whereIn('mediable_id', $publicationBlockIds)->delete();
+		Block::where('blockable_type', Publication::class)->delete();
 		PublicationAttribute::truncate();
 		Media::where('mediable_type', Publication::class)->delete();
-		Media::where('mediable_type', PublicationBlock::class)->delete();
 		Publication::truncate();
 		DB::statement('SET FOREIGN_KEY_CHECKS=1');
 

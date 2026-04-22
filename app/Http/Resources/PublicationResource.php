@@ -21,7 +21,7 @@ class PublicationResource extends JsonResource
 			'sort_order' => $this->sort_order,
 			'location' => new LocationResource($this->whenLoaded('location')),
 			'attributes' => PublicationAttributeResource::collection($this->whenLoaded('attributes')),
-			'blocks' => PublicationBlockResource::collection($this->whenLoaded('blocks')),
+			'blocks' => BlockResource::collection($this->whenLoaded('blocks')),
 			'media' => MediaResource::collection($this->whenLoaded('media')),
 			'teaser' => new MediaResource($this->whenLoaded('teaser', fn() => $this->teaser->first())),
 			'og' => new MediaResource($this->whenLoaded('og', fn() => $this->og->first())),

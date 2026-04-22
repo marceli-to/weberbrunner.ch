@@ -6,6 +6,7 @@
 	import { useConfirm } from '@/composables/useConfirm'
 	import { useToast } from '@/composables/useToast'
 	import publicationsApi from '@/api/publications'
+	import { publicationBlocksApi } from '@/api/blocks'
 	import mediaApi from '@/api/media'
 	import PublicationLayout from '@/views/office/publications/components/Layout.vue'
 	import Grid from '@/components/ui/grid/Grid.vue'
@@ -37,14 +38,14 @@
 
 	async function ensureFixedSliderBlock() {
 		if (fixedSliderBlock.value) return fixedSliderBlock.value
-		const { data } = await publicationsApi.blocks.store(publication.value.uuid, { type: 'fixed-slider' })
+		const { data } = await publicationBlocksApi.store(publication.value.uuid, { type: 'fixed-slider' })
 		return data.data
 	}
 
 	async function onUploaded(media) {
 		const block = await ensureFixedSliderBlock()
 		const { data } = await mediaApi.persist(media)
-		await publicationsApi.blocks.selectMedia(publication.value.uuid, block.uuid, [data.data.uuid])
+		await publicationBlocksApi.selectMedia(publication.value.uuid, block.uuid, [data.data.uuid])
 		await fetch()
 	}
 
@@ -55,7 +56,7 @@
 			variant: 'danger',
 		})
 		if (!ok) return
-		await publicationsApi.blocks.detachMedia(publication.value.uuid, fixedSliderBlock.value.uuid, item.uuid)
+		await publicationBlocksApi.detachMedia(publication.value.uuid, fixedSliderBlock.value.uuid, item.uuid)
 		await fetch()
 	}
 

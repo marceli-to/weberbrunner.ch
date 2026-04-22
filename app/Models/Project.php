@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasBlocks;
 use App\Traits\HasPublishScope;
 use App\Traits\HasUuid;
 use App\Traits\Sortable;
@@ -18,7 +19,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
-	use HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
+	use HasBlocks, HasFactory, HasPublishScope, HasUuid, LogsActivity, Sortable, SoftDeletes;
 
 	protected $fillable = [
 		'priority',
@@ -54,11 +55,6 @@ class Project extends Model
 	public function attributes(): HasMany
 	{
 		return $this->hasMany(ProjectAttribute::class)->orderBy('sort_order');
-	}
-
-public function blocks(): HasMany
-	{
-		return $this->hasMany(ProjectBlock::class)->orderBy('sort_order');
 	}
 
 	public function media(): MorphMany

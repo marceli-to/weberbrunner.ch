@@ -4,13 +4,16 @@ import draggable from 'vuedraggable'
 import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
+import MediaUploader from '@/components/media/MediaUploader.vue'
 
 const props = defineProps({
 	block: { type: Object, required: true },
 	mediaPool: { type: Array, default: () => [] },
+	allowUpload: { type: Boolean, default: false },
+	allowPick: { type: Boolean, default: true },
 })
 
-const emit = defineEmits(['select-media', 'remove-media', 'reorder-media', 'toggle-publish', 'edit-media'])
+const emit = defineEmits(['select-media', 'upload-media', 'remove-media', 'reorder-media', 'toggle-publish', 'edit-media'])
 
 const drawerOpen = ref(false)
 const selectedUuids = ref([])
@@ -61,15 +64,20 @@ function onReorder() {
 					@toggle-publish="$emit('toggle-publish', element)"
 					@edit="$emit('edit-media', $event)" />
 			</template>
-			<template #footer>
+			<template v-if="allowPick" #footer>
 				<AddButton @click="openDrawer" />
 			</template>
 		</draggable>
-		<div v-else class="grid grid-cols-4 gap-20">
+		<div v-else-if="allowPick" class="grid grid-cols-4 gap-20">
 			<AddButton @click="openDrawer" />
 		</div>
 
+		<div v-if="allowUpload" class="mt-20">
+			<MediaUploader @uploaded="$emit('upload-media', $event)" />
+		</div>
+
 		<MediaPickerDrawer
+			v-if="allowPick"
 			:open="drawerOpen"
 			:items="mediaPool"
 			v-model="selectedUuids"

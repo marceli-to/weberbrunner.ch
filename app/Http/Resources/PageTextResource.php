@@ -15,6 +15,7 @@ class PageTextResource extends JsonResource
 			'page' => $this->page,
 			'title' => $this->title,
 			'text' => $this->text,
+			'blocks' => BlockResource::collection($this->whenLoaded('blocks')),
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 		];
