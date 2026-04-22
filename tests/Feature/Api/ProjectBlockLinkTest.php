@@ -1,12 +1,12 @@
 <?php
 
+use App\Models\Block;
+use App\Models\BlockLink;
 use App\Models\Project;
-use App\Models\ProjectBlock;
-use App\Models\ProjectBlockLink;
 
 it('requires authentication', function () {
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->postJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links", [])
 		->assertUnauthorized();
 });
@@ -14,7 +14,7 @@ it('requires authentication', function () {
 it('creates an external link', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->postJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links", [
 		'title' => 'Example',
 		'url' => 'https://example.com',
@@ -29,7 +29,7 @@ it('creates an internal link', function () {
 	asAdmin();
 	$project = Project::factory()->create();
 	$linked = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->postJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links", [
 		'link_type' => 'internal',
 		'linked_project_id' => $linked->id,
@@ -41,7 +41,7 @@ it('creates an internal link', function () {
 it('validates link_type is required', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->postJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links", [
 		'title' => 'No type',
 	])
@@ -52,7 +52,7 @@ it('validates link_type is required', function () {
 it('validates link_type must be valid', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->postJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links", [
 		'link_type' => 'invalid',
 	])
@@ -63,8 +63,8 @@ it('validates link_type must be valid', function () {
 it('updates a link', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
-	$link = ProjectBlockLink::factory()->create(['project_block_id' => $block->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
+	$link = BlockLink::factory()->create(['block_id' => $block->id]);
 	$this->putJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links/{$link->uuid}", [
 		'title' => 'Updated',
 		'url' => 'https://updated.com',
@@ -77,18 +77,18 @@ it('updates a link', function () {
 it('deletes a link', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
-	$link = ProjectBlockLink::factory()->create(['project_block_id' => $block->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
+	$link = BlockLink::factory()->create(['block_id' => $block->id]);
 	$this->deleteJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links/{$link->uuid}")
 		->assertNoContent();
-	expect(ProjectBlockLink::count())->toBe(0);
+	expect(BlockLink::count())->toBe(0);
 });
 
 it('toggles link publish state', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
-	$link = ProjectBlockLink::factory()->create(['project_block_id' => $block->id, 'publish' => true]);
+	$block = Block::factory()->for($project, 'blockable')->create();
+	$link = BlockLink::factory()->create(['block_id' => $block->id, 'publish' => true]);
 	$this->patchJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links/{$link->uuid}/toggle")
 		->assertNoContent();
 	expect($link->fresh()->publish)->toBe(false);
@@ -97,9 +97,9 @@ it('toggles link publish state', function () {
 it('reorders links', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
-	$a = ProjectBlockLink::factory()->create(['project_block_id' => $block->id]);
-	$b = ProjectBlockLink::factory()->create(['project_block_id' => $block->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
+	$a = BlockLink::factory()->create(['block_id' => $block->id]);
+	$b = BlockLink::factory()->create(['block_id' => $block->id]);
 	$this->patchJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}/links/reorder", [
 		'items' => [
 			['uuid' => $a->uuid, 'sort_order' => 2],

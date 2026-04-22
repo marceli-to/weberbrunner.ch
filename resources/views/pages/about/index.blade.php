@@ -7,6 +7,6 @@
     <x-icons.logo.animation class="w-full h-auto max-w-[60%] md:max-w-none md:col-span-4 mb-30 md:mb-50 lg:mb-70" />
   </div>
 
-  <x-blocks.container :blocks="$blocks" />
+  <x-blocks.container :blocks="$blocks" standalone />
 
 </x-layout.inner>

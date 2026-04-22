@@ -6,11 +6,11 @@
 
 	<div class="swiper-wrapper relative">
 
-		<div class="swiper-slide w-col-3-offset pl-40 pr-10 justify-center items-center bg-white !hidden lg:!flex">
-			@if($info)
+		@if($info)
+			<div class="swiper-slide w-col-3-offset pl-40 pr-10 justify-center items-center bg-white !hidden lg:!flex">
 				{{ $info }}
-			@endif
-		</div>
+			</div>
+		@endif
 
 		{{ $slot }}
 

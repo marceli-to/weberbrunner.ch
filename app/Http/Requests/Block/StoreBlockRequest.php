@@ -20,7 +20,7 @@ class StoreBlockRequest extends FormRequest
 			'type' => ['required', 'string', Rule::in($this->blockable()->allowedBlockTypes())],
 			'title' => $this->input('type') === 'fixed-slider'
 				? 'nullable|string|max:255'
-				: 'nullable|string|max:255',
+				: 'required|string|max:255',
 			'content' => 'nullable|string',
 			'url' => 'nullable|string|max:2048',
 		];
@@ -31,6 +31,7 @@ class StoreBlockRequest extends FormRequest
 		return [
 			'type.required' => 'Bitte einen Blocktyp angeben',
 			'type.in' => 'Ungültiger Blocktyp',
+			'title.required' => 'Bitte einen Titel angeben',
 			'title.max' => 'Bitte überprüfe den Titel',
 		];
 	}

@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Block;
 use App\Models\Project;
-use App\Models\ProjectBlock;
 
 it('requires authentication', function () {
 	$project = Project::factory()->create();
@@ -11,7 +11,7 @@ it('requires authentication', function () {
 it('lists blocks for a project', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	ProjectBlock::factory()->count(3)->create(['project_id' => $project->id]);
+	Block::factory()->count(3)->for($project, 'blockable')->create();
 	$this->getJson("/api/dashboard/projects/{$project->uuid}/blocks")
 		->assertOk()
 		->assertJsonCount(3, 'data');
@@ -84,7 +84,7 @@ it('allows nullable title for fixed-slider type', function () {
 it('updates a block', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id, 'type' => 'text']);
+	$block = Block::factory()->for($project, 'blockable')->create(['type' => 'text']);
 	$this->putJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}", [
 		'type' => 'text',
 		'title' => 'Updated',
@@ -97,17 +97,17 @@ it('updates a block', function () {
 it('deletes a block', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$block = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$block = Block::factory()->for($project, 'blockable')->create();
 	$this->deleteJson("/api/dashboard/projects/{$project->uuid}/blocks/{$block->uuid}")
 		->assertNoContent();
-	expect(ProjectBlock::count())->toBe(0);
+	expect(Block::count())->toBe(0);
 });
 
 it('reorders blocks', function () {
 	asAdmin();
 	$project = Project::factory()->create();
-	$a = ProjectBlock::factory()->create(['project_id' => $project->id]);
-	$b = ProjectBlock::factory()->create(['project_id' => $project->id]);
+	$a = Block::factory()->for($project, 'blockable')->create();
+	$b = Block::factory()->for($project, 'blockable')->create();
 	$this->patchJson("/api/dashboard/projects/{$project->uuid}/blocks/reorder", [
 		'items' => [
 			['uuid' => $a->uuid, 'sort_order' => 2],
