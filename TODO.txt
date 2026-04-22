@@ -8,15 +8,27 @@ or by placing a file in /etc/cron.d/):
 
 Replace /path/to/weberbrunner.ch with the actual document root on the server.
 The schedule:run command must run every minute — Laravel dispatches the
-individual jobs based on their own frequency (daily, weekly, monthly).
+individual jobs based on their own frequency (every minute, daily, weekly, monthly).
 
 
 SCHEDULED JOBS (defined in routes/console.php)
 -----------------------------------------------
 
-  media:cleanup              — daily    — deletes temp/ files older than 24h
-  media:purge-orphans --force — weekly  — deletes uploads/ files with no DB record
-  activitylog:clean --days=90 — monthly — prunes Spatie activity log
+  queue:work --stop-when-empty — every minute — processes queued jobs (e.g. Glide cache warming after media upload). Uses withoutOverlapping() and runInBackground() so it never blocks the scheduler.
+  media:cleanup                — daily        — deletes temp/ files older than 24h
+  media:purge-orphans --force  — weekly       — deletes uploads/ files with no DB record
+  activitylog:clean --days=90  — monthly      — prunes Spatie activity log
+
+
+BACKFILL (run once after deploy)
+---------------------------------
+
+  php artisan media:reprocess
+
+Downsizes existing originals in uploads/ over 3000px on the long edge, updates
+their DB dimensions, and dispatches Glide cache warm jobs for every image. The
+scheduled queue:work will consume the jobs minute-by-minute. Flags:
+--no-warm (skip cache warming), --no-resize (only warm, don't touch files).
 
 
 VERIFY AFTER SETUP
@@ -24,3 +36,4 @@ VERIFY AFTER SETUP
 
   php artisan schedule:list
   php artisan schedule:run --verbose
+  php artisan queue:failed        — check for failed jobs

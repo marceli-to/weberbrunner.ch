@@ -2,6 +2,7 @@
 
 namespace App\Actions\Media;
 
+use App\Jobs\WarmGlideCacheJob;
 use App\Models\Media;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ class PersistAction
 			throw new RuntimeException('Failed to move uploaded media into the permanent storage location.');
 		}
 
-		return Media::create([
+		$media = Media::create([
 			'uuid' => $item['uuid'],
 			'file' => $uploadPath,
 			'original_name' => $item['original_name'],
@@ -37,6 +38,12 @@ class PersistAction
 			'caption' => $item['caption'] ?? null,
 			'sort_order' => 0,
 		]);
+
+		if (str_starts_with((string) $media->mime_type, 'image/')) {
+			WarmGlideCacheJob::dispatch($media->uuid);
+		}
+
+		return $media;
 	}
 
 	private function uniqueFilename(string $filename): string

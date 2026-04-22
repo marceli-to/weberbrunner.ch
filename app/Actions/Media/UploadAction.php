@@ -2,8 +2,10 @@
 
 namespace App\Actions\Media;
 
+use App\Support\ImageDownsizer;
 use App\Support\ImageUrlSigner;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -27,22 +29,35 @@ class UploadAction
 		$file->storeAs($directory, $filename, 'public');
 
 		$isImage = str_starts_with($file->getMimeType(), 'image/');
-		$dimensions = $isImage ? @getimagesize($file->getRealPath()) : null;
+		$storedPath = Storage::disk('public')->path($directory . '/' . $filename);
+
+		$width = null;
+		$height = null;
+		$size = $file->getSize();
+
+		if ($isImage) {
+			$info = ImageDownsizer::downsizeIfNeeded($storedPath);
+			if ($info) {
+				$width = $info['width'];
+				$height = $info['height'];
+				$size = $info['size'];
+			}
+		}
 
 		return [
 			'uuid' => Str::uuid()->toString(),
 			'file' => $filename,
 			'original_name' => $file->getClientOriginalName(),
 			'mime_type' => $file->getMimeType(),
-			'size' => $file->getSize(),
-			'width' => $dimensions[0] ?? null,
-			'height' => $dimensions[1] ?? null,
+			'size' => $size,
+			'width' => $width,
+			'height' => $height,
 			'alt' => null,
 			'caption' => null,
 			'is_teaser' => false,
 			'is_image' => $isImage,
 			'sort_order' => 0,
-			'orientation' => $this->orientation($dimensions[0] ?? null, $dimensions[1] ?? null),
+			'orientation' => $this->orientation($width, $height),
 			'thumbnail_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 200, 'h' => 200, 'fit' => 'crop']) : null,
 			'preview_url' => $isImage ? ImageUrlSigner::signUrl('temp/' . $filename, ['w' => 800, 'fit' => 'max']) : null,
 			'file_url' => !$isImage ? asset('storage/temp/' . $filename) : null,

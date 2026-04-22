@@ -24,24 +24,22 @@ class Image extends Component
 	public array $sources = [];
 	public string $fallbackUrl;
 
-	protected const WIDTHS = [480, 640, 768, 1024, 1280, 1440, 1600, 1920];
-
 	public function __construct(
 		Media $media,
 		string $sizes = '100vw',
 		int $maxWidth = 1600,
 		?string $alt = null,
 		string $fit = 'crop',
-		int $quality = 90,
-		array $formats = ['avif', 'webp', 'jpg'],
+		?int $quality = null,
+		?array $formats = null,
 		string $class = '',
 		string $loading = 'lazy',
 	) {
 		$this->src = $media->file;
 		$this->alt = $alt ?? $media->alt ?? '';
 		$this->fit = $fit;
-		$this->quality = $quality;
-		$this->formats = $formats;
+		$this->quality = $quality ?? (int) config('media.quality', 90);
+		$this->formats = $formats ?? config('media.formats', ['avif', 'webp', 'jpg']);
 		$this->class = $class;
 		$this->loading = $loading;
 		$this->sizes = $sizes;
@@ -50,7 +48,7 @@ class Image extends Component
 		$baseHeight = $media->height ?? 1;
 		$this->aspectRatio = $baseHeight / max($baseWidth, 1);
 
-		$widths = array_values(array_filter(self::WIDTHS, fn ($w) => $w <= $maxWidth));
+		$widths = array_values(array_filter(config('media.widths', []), fn ($w) => $w <= $maxWidth));
 		if ($media->width) {
 			$widths = array_values(array_filter($widths, fn ($w) => $w <= $media->width));
 		}

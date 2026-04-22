@@ -8,6 +8,11 @@ Artisan::command('inspire', function () {
 	$this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
+Schedule::command('queue:work --stop-when-empty --tries=3 --timeout=300')
+	->everyMinute()
+	->withoutOverlapping()
+	->runInBackground();
+
 Schedule::command('media:cleanup')->daily();
 Schedule::command('media:purge-orphans --force')->weekly();
 Schedule::command('activitylog:clean --days=90')->monthly();
