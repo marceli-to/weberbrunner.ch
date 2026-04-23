@@ -14,11 +14,19 @@ class CleanupDeferredMedia extends Command
 
 	public function handle(): int
 	{
-		$disk = Storage::disk('public');
-		$files = $disk->files('temp');
+		$count = $this->purgeStale(Storage::disk('public'), 'temp')
+			+ $this->purgeStale(Storage::disk('originals'), 'temp');
+
+		$this->info("Deleted {$count} temp file(s).");
+
+		return self::SUCCESS;
+	}
+
+	private function purgeStale($disk, string $directory): int
+	{
 		$count = 0;
 
-		foreach ($files as $file) {
+		foreach ($disk->files($directory) as $file) {
 			$lastModified = Carbon::createFromTimestamp($disk->lastModified($file));
 
 			if ($lastModified->lt(now()->subHours(24))) {
@@ -27,8 +35,6 @@ class CleanupDeferredMedia extends Command
 			}
 		}
 
-		$this->info("Deleted {$count} temp file(s).");
-
-		return self::SUCCESS;
+		return $count;
 	}
 }

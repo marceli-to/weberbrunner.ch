@@ -26,6 +26,13 @@ class PersistAction
 			throw new RuntimeException('Failed to move uploaded media into the permanent storage location.');
 		}
 
+		$originalsDisk = Storage::disk('originals');
+		$tempOriginalPath = 'temp/' . $item['file'];
+
+		if ($originalsDisk->exists($tempOriginalPath)) {
+			$originalsDisk->move($tempOriginalPath, $uploadPath);
+		}
+
 		$media = Media::create([
 			'uuid' => $item['uuid'],
 			'file' => $uploadPath,

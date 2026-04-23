@@ -14,10 +14,12 @@ class AttachAction
 	public function execute(array $mediaItems, Model $parent): void
 	{
 		$disk = Storage::disk('public');
+		$originalsDisk = Storage::disk('originals');
 		$movedFiles = [];
+		$movedOriginals = [];
 
 		try {
-			DB::transaction(function () use ($mediaItems, $parent, $disk, &$movedFiles): void {
+			DB::transaction(function () use ($mediaItems, $parent, $disk, $originalsDisk, &$movedFiles, &$movedOriginals): void {
 				$maxSort = $parent->media()->max('sort_order') ?? -1;
 
 				foreach ($mediaItems as $item) {
@@ -36,6 +38,14 @@ class AttachAction
 
 					$movedFiles[] = [$tempPath, $uploadPath];
 
+					$tempOriginalPath = 'temp/' . $item['file'];
+					if ($originalsDisk->exists($tempOriginalPath)) {
+						if (!$originalsDisk->move($tempOriginalPath, $uploadPath)) {
+							throw new RuntimeException('Failed to move original master into the permanent storage location.');
+						}
+						$movedOriginals[] = [$tempOriginalPath, $uploadPath];
+					}
+
 					$maxSort++;
 					$parent->media()->create([
 						'uuid' => $item['uuid'],
@@ -53,6 +63,12 @@ class AttachAction
 				}
 			});
 		} catch (Throwable $e) {
+			foreach (array_reverse($movedOriginals) as [$tempOriginalPath, $uploadPath]) {
+				if ($originalsDisk->exists($uploadPath) && !$originalsDisk->exists($tempOriginalPath)) {
+					$originalsDisk->move($uploadPath, $tempOriginalPath);
+				}
+			}
+
 			foreach (array_reverse($movedFiles) as [$tempPath, $uploadPath]) {
 				if ($disk->exists($uploadPath) && !$disk->exists($tempPath)) {
 					$disk->move($uploadPath, $tempPath);

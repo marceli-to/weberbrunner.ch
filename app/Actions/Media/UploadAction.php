@@ -36,6 +36,8 @@ class UploadAction
 		$size = $file->getSize();
 
 		if ($isImage) {
+			$this->archiveOriginal($storedPath, $filename);
+
 			$info = ImageDownsizer::downsizeIfNeeded($storedPath);
 			if ($info) {
 				$width = $info['width'];
@@ -64,6 +66,22 @@ class UploadAction
 			'download_url' => asset('storage/temp/' . $filename),
 			'_temp' => true,
 		];
+	}
+
+	private function archiveOriginal(string $sourcePath, string $filename): void
+	{
+		$stream = fopen($sourcePath, 'r');
+		if ($stream === false) {
+			return;
+		}
+
+		try {
+			Storage::disk('originals')->writeStream('temp/' . $filename, $stream);
+		} finally {
+			if (is_resource($stream)) {
+				fclose($stream);
+			}
+		}
 	}
 
 	private function uniqueFilename(string $originalName): string

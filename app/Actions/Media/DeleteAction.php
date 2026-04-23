@@ -17,6 +17,7 @@ class DeleteAction
 
 			DB::afterCommit(function () use ($file): void {
 				Storage::disk('public')->delete($file);
+				Storage::disk('originals')->delete($file);
 			});
 		});
 	}
