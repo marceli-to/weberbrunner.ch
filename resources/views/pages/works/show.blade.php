@@ -32,7 +32,7 @@
 
   @if($project->description)
     <x-work.description>
-      <p>{{ $project->description }}</p>
+      {!! $project->description !!}
     </x-work.description>
   @endif
 

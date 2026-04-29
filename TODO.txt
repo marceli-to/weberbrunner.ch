@@ -4,7 +4,7 @@ CRON JOB — PRODUCTION SERVER
 Add the following cron entry to the server (via `crontab -e` for the web user,
 or by placing a file in /etc/cron.d/):
 
-  * * * * * cd /path/to/weberbrunner.ch && php artisan schedule:run >> /dev/null 2>&1
+  * * * * * cd /home/wbgch18/www/wbp.ch && /usr/local/php83/bin/php artisan schedule:run >> /dev/null 2>&1
 
 Replace /path/to/weberbrunner.ch with the actual document root on the server.
 The schedule:run command must run every minute — Laravel dispatches the
