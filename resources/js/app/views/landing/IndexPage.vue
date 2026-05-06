@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import landingApi from '@/api/landing'
-import landingTextApi from '@/api/landingText'
+import pageTextApi from '@/api/pageText'
 import projectsApi from '@/api/projects'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
@@ -55,7 +55,7 @@ async function fetch() {
 	const [landingRes, projectsRes, textRes] = await Promise.all([
 		landingApi.index(),
 		projectsApi.published(),
-		landingTextApi.show('landing'),
+		pageTextApi.show('landing'),
 	])
 	columns.value = landingRes.data.data
 	allProjects.value = projectsRes.data.data
@@ -115,7 +115,7 @@ async function onDragEnd() {
 }
 
 async function saveText() {
-	const ok = await submit(() => landingTextApi.update('landing', {
+	const ok = await submit(() => pageTextApi.update('landing', {
 		text: landingText.value.text,
 	}))
 	if (!ok) return

@@ -16,7 +16,7 @@ class SectionFactory extends Factory
 	{
 		return [
 			'title' => (string) fake()->year(),
-			'type' => fake()->randomElement(['award', 'jury', 'talk', 'network']),
+			'type' => fake()->randomElement(['award', 'jury', 'talk']),
 		];
 	}
 }

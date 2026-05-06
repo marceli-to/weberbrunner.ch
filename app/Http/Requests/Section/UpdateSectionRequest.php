@@ -15,7 +15,7 @@ class UpdateSectionRequest extends FormRequest
 	{
 		return [
 			'title' => 'required|string|max:255',
-			'type' => 'sometimes|string|in:award,jury,talk,network',
+			'type' => 'sometimes|string|in:award,jury,talk',
 		];
 	}
 

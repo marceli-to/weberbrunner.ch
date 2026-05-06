@@ -24,7 +24,6 @@ import OfficeContactsForm from '@/views/office/contacts/FormPage.vue'
 import OfficeJobs from '@/views/office/jobs/IndexPage.vue'
 import OfficeJobsForm from '@/views/office/jobs/FormPage.vue'
 import OfficeNetwork from '@/views/office/network/IndexPage.vue'
-import OfficeNetworkForm from '@/views/office/network/FormPage.vue'
 import OfficeTalks from '@/views/office/talks/IndexPage.vue'
 import OfficeTalksForm from '@/views/office/talks/FormPage.vue'
 import OfficeJury from '@/views/office/jury/IndexPage.vue'
@@ -194,18 +193,6 @@ const routes = [
     name: 'office.network',
     component: OfficeNetwork,
     meta: { title: 'Netzwerk', navSection: 'office', navLabel: 'Netzwerk', navOrder: 30 },
-  },
-  {
-    path: '/dashboard/buero/netzwerk/erstellen',
-    name: 'network.create',
-    component: OfficeNetworkForm,
-    meta: { title: 'Netzwerk', navSection: 'office', navParent: 'office.network' },
-  },
-  {
-    path: '/dashboard/buero/netzwerk/:id/bearbeiten',
-    name: 'network.edit',
-    component: OfficeNetworkForm,
-    meta: { title: 'Netzwerk', navSection: 'office', navParent: 'office.network' },
   },
   {
     path: '/dashboard/buero/vortraege',
