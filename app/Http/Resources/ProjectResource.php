@@ -24,7 +24,6 @@ class ProjectResource extends JsonResource
 			'publish' => $this->publish,
 			'sort_order' => $this->sort_order,
 			'location' => new LocationResource($this->whenLoaded('location')),
-			'attributes' => ProjectAttributeResource::collection($this->whenLoaded('attributes')),
 			'media' => MediaResource::collection($this->whenLoaded('media')),
 			'teaser' => MediaResource::collection($this->whenLoaded('teaser')),
 			'categories' => CategoryResource::collection($this->whenLoaded('categories')),

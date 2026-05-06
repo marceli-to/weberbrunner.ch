@@ -14,6 +14,6 @@ class ProjectMediaController extends Controller
 	{
 		(new AttachMediaAction)->execute($request->validated('media'), $project);
 
-		return new ProjectResource($project->load(['attributes', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']));
+		return new ProjectResource($project->load(['masterdata', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject']));
 	}
 }

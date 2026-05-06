@@ -12,10 +12,15 @@ class PrepareViewDataAction
 			'project' => $project,
 			'isPreview' => $isPreview,
 			'slides' => $project->blocks->firstWhere('type', 'fixed-slider')?->media ?? collect(),
-			'projectInfo' => $project->attributes->map(fn($attr) => [
-				'label' => $attr->label,
-				'value' => $attr->value,
-			])->toArray(),
+			'projectInfo' => $project->masterdata
+				->filter(fn ($m) => (bool) $m->pivot->publish)
+				->sortBy(fn ($m) => $m->pivot->sort_order)
+				->map(fn ($m) => [
+					'label' => $m->title,
+					'value' => $m->pivot->value,
+				])
+				->values()
+				->toArray(),
 			'header' => $project->categories->first()?->title ?? 'weberbrunner architekten',
 		];
 	}

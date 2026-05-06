@@ -7,7 +7,9 @@
 
 <x-layout.show :title="$project->title" :location="$project->city">
   @if ($isPreview)
-    <div class="bg-[#dc0000] text-white px-8 py-4 text-sm font-semibold text-center fixed top-20 right-20">Vorschau</div>
+    <div class="bg-[#dc0000] text-white px-8 py-4 text-sm font-semibold text-center fixed top-20 right-20">
+      Vorschau
+    </div>
   @endif
 
   @if($slides->isNotEmpty())

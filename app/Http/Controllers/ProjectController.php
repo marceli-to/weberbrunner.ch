@@ -11,7 +11,7 @@ class ProjectController extends Controller
 	{
 		$project = Project::published()
 			->where('slug', $slug)
-			->with(['attributes', 'teaser', 'categories', 'statuses', 'blocks.media', 'blocks.links.linkedProject'])
+			->with(['masterdata', 'teaser', 'categories', 'statuses', 'blocks.media', 'blocks.links.linkedProject'])
 			->firstOrFail();
 
 		return view('pages.works.show', (new PrepareViewDataAction)->execute($project, false));

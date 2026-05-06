@@ -51,33 +51,7 @@ class SeedProjects extends Command
 		'https://www.espazium.ch/de/aktuelles/architektur',
 	];
 
-	private array $attributeLabels = [
-		'Auftraggeberin',
-		'Entwurf und Generalplanung LP 1-8',
-		'Projekt',
-		'Umsetzung',
-		'Budget',
-		'Auszeichnungen',
-		'Anzahl Wohnungen',
-		'Geschossfläche',
-		'Bauherrschaft',
-		'Landschaftsarchitektur',
-	];
-
-	private array $attributeValues = [
-		'Auftraggeberin' => ['Fa. Bateg GmbH (GÜ) für die HOWOGE', 'Stadt Zürich', 'Baugenossenschaft Mehr als Wohnen', 'Allgemeine Baugenossenschaft Zürich', 'Stiftung PWG'],
-		'Entwurf und Generalplanung LP 1-8' => ['ZOOMARCHITEKTEN', 'weberbrunner architekten', 'EM2N', 'Gigon/Guyer', 'Caruso St John'],
-		'Projekt' => ['Neubau', 'Umbau', 'Sanierung', 'Erweiterung', 'Aufstockung'],
-		'Umsetzung' => ['2020', '2021', '2022', '2023', '2024', '2025'],
-		'Budget' => ['1.2 Mio.', '2.5 Mio.', '4.8 Mio.', '12 Mio.', '25 Mio.', '48 Mio.'],
-		'Auszeichnungen' => ['Architekturpreis 2024', 'Gute Bauten 2023 (1. Platz)', 'best architect 19, gold award', 'AW20 Architekturpreis Region Winterthur'],
-		'Anzahl Wohnungen' => ['12 Wohnungen', '24 Wohnungen', '48 Wohnungen', '63 teilweise geförderte Wohnungen', '120 Wohnungen'],
-		'Geschossfläche' => ['1\'200 m²', '3\'500 m²', '8\'000 m²', '15\'000 m²', '25\'000 m²'],
-		'Bauherrschaft' => ['Privat', 'Öffentlich', 'Genossenschaft', 'Stiftung'],
-		'Landschaftsarchitektur' => ['Rotzler Krebs Partner', 'Westpol Landschaftsarchitektur', 'Studio Vulkan', 'Antón & Ghiggi'],
-	];
-
-	private array $shortDescriptions = [
+private array $shortDescriptions = [
 		'Neubau einer Wohnüberbauung mit gemeinschaftlichem Aussenraum.',
 		'Sanierung und Erweiterung eines denkmalgeschützten Gebäudes.',
 		'Nachhaltige Holzbauweise mit Minergie-P-ECO-Standard.',
@@ -227,21 +201,6 @@ class SeedProjects extends Command
 				'publish' => rand(0, 1) === 1,
 			]);
 
-			$numAttributes = rand(3, 7);
-			$selectedLabels = array_rand(array_flip($this->attributeLabels), $numAttributes);
-			if (!is_array($selectedLabels)) {
-				$selectedLabels = [$selectedLabels];
-			}
-
-			foreach ($selectedLabels as $order => $label) {
-				$values = $this->attributeValues[$label] ?? ['Muster'];
-				$project->attributes()->create([
-					'label' => $label,
-					'value' => $values[array_rand($values)],
-					'sort_order' => $order,
-				]);
-			}
-
 			$teaserNum = $teaserImages[array_rand($teaserImages)];
 			$this->attachImage($project, "dummy-teaser-{$teaserNum}.jpg", $title, 0, true);
 
@@ -280,7 +239,7 @@ class SeedProjects extends Command
 			$this->line("  Created: {$title}");
 		}
 
-		$this->info('Done! Created 50 dummy projects with attributes and media.');
+		$this->info('Done! Created 50 dummy projects with media.');
 	}
 
 	private function attachPlaceholder(Project $project): void

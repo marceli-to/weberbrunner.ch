@@ -52,17 +52,6 @@ erDiagram
         timestamp updated_at
     }
 
-    PROJECT_ATTRIBUTE {
-        int id PK
-        uuid uuid UK
-        int project_id FK
-        string label
-        string value
-        int sort_order
-        timestamp created_at
-        timestamp updated_at
-    }
-
     CATEGORY {
         int id PK
         uuid uuid UK
@@ -293,7 +282,6 @@ erDiagram
     LOCATION ||--o{ JOB : has
 
     PROJECT ||--o{ PROJECT_LINK : has
-    PROJECT ||--|{ PROJECT_ATTRIBUTE : has
     PROJECT ||--o{ CATEGORY_PROJECT : has
     PROJECT ||--o{ PROJECT_STATUS : has
     PROJECT ||--o{ PROJECT_BLOCK : has

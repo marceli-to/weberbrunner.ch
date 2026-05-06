@@ -9,7 +9,7 @@ class FindBySlugAction
 	public function execute(string $slug): Project
 	{
 		return Project::where('slug', $slug)
-			->with(['attributes', 'teaser', 'categories', 'statuses', 'blocks.media', 'blocks.links.linkedProject'])
+			->with(['masterdata', 'teaser', 'categories', 'statuses', 'blocks.media', 'blocks.links.linkedProject'])
 			->firstOrFail();
 	}
 }

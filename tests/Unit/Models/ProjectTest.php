@@ -3,19 +3,12 @@
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Project;
-use App\Models\ProjectAttribute;
 use App\Models\Status;
 
 it('belongs to a location', function () {
 	$location = Location::factory()->create();
 	$project = Project::factory()->create(['location_id' => $location->id]);
 	expect($project->location->id)->toBe($location->id);
-});
-
-it('has many attributes', function () {
-	$project = Project::factory()->create();
-	ProjectAttribute::factory()->count(2)->create(['project_id' => $project->id]);
-	expect($project->attributes)->toHaveCount(2);
 });
 
 it('belongs to many categories', function () {

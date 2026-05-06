@@ -15,7 +15,6 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\NetworkEntryController;
-use App\Http\Controllers\Api\ProjectAttributeController;
 use App\Http\Controllers\Api\ProjectCategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectMediaController;
@@ -183,17 +182,6 @@ Route::prefix('dashboard')
 				Route::patch('/masterdata/reorder', 'reorder');
 				Route::post('/masterdata/{masterdata}', 'attach');
 				Route::delete('/masterdata/{masterdata}', 'destroy');
-			});
-
-		// Project Attributes (nested under projects)
-		Route::controller(ProjectAttributeController::class)
-			->prefix('projects/{project}/attributes')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::put('/{attribute}', 'update');
-				Route::delete('/{attribute}', 'destroy');
 			});
 
 		// Project Blocks (shared BlockController)
