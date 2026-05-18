@@ -1,5 +1,5 @@
 @section('meta_title', 'Kontakt – Büro')
-@section('meta_description', '')
+@section('meta_description', config('seo.page.about.contact'))
 <x-layout.inner title="Kontakt">
 
   <div class="flex flex-col gap-y-24 md:gap-y-40 lg:gap-56">

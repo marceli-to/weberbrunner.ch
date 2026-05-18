@@ -1,5 +1,5 @@
 @section('meta_title', 'Profil – Büro')
-@section('meta_description', 'Weberbrunner Architektur – Architektur und Planung')
+@section('meta_description', config('seo.page.about'))
 
 <x-layout.inner title="Profil">
   

@@ -1,4 +1,4 @@
-@section('meta_description', 'Weberbrunner Architektur – Architektur und Planung')
+@section('meta_description', config('seo.page.landing'))
 <x-layout.landing :text="$text">
 
   {{-- Mobile: interleaved row-first order --}}

@@ -79,6 +79,26 @@ async function saveShortDescription() {
 		<Span class="col-span-8 col-start-2">
 			<CollapsibleHeader
 				:title="'Projektbeschrieb'"
+				:collapsed="collapsed.has('short-description')"
+				@toggle="toggle('short-description')" />
+		</Span>
+		<Span v-show="!collapsed.has('short-description')" class="col-span-8 col-start-2">
+			<Card>
+				<form @submit.prevent="saveShortDescription">
+          <Editor v-model="project.short_description" />
+					<div class="flex gap-20 mt-10">
+						<Button type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
+					</div>
+				</form>
+			</Card>
+		</Span>
+	</Grid>
+
+	<!-- Erläuterung Projekt -->
+	<Grid v-if="project" class="mb-20">
+		<Span class="col-span-8 col-start-2">
+			<CollapsibleHeader
+				:title="'Erläuterung Projekt'"
 				:collapsed="collapsed.has('description')"
 				@toggle="toggle('description')" />
 		</Span>
@@ -88,26 +108,6 @@ async function saveShortDescription() {
 					<Editor v-model="project.description" />
 					<div class="flex gap-20 mt-10">
 						<Button type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
-					</div>
-				</form>
-			</Card>
-		</Span>
-	</Grid>
-
-	<!-- Kurztext -->
-	<Grid v-if="project" class="mb-20">
-		<Span class="col-span-8 col-start-2">
-			<CollapsibleHeader
-				:title="'Kurztext'"
-				:collapsed="collapsed.has('short-description')"
-				@toggle="toggle('short-description')" />
-		</Span>
-		<Span v-show="!collapsed.has('short-description')" class="col-span-8 col-start-2">
-			<Card>
-				<form @submit.prevent="saveShortDescription">
-					<Textarea v-model="project.short_description" />
-					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
 					</div>
 				</form>
 			</Card>

@@ -14,26 +14,26 @@ defineProps({
     <Span class="col-span-4 h-full">
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
-          <span>Projektbeschrieb</span>
+          <span>Erläuterung Projekt</span>
           <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
-          <span class="line-clamp-12">{{ project.description }}</span>
+          <span class="line-clamp-12" v-html="project.description"></span>
         </div>
       </Card>
     </Span>
     <Span class="col-span-4 h-full">
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
-          <span>Kurztext</span>
+          <span>Projektbeschrieb</span>
           <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
-          <span class="line-clamp-12">{{ project.short_description }}</span>
+          <span class="line-clamp-12" v-html="project.short_description"></span>
         </div>
       </Card>
     </Span>

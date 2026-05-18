@@ -1,5 +1,5 @@
 @section('meta_title', 'Team – Büro')
-@section('meta_description', '')
+@section('meta_description', config('seo.page.about.team'))
 
 <x-layout.inner
   title="Team"

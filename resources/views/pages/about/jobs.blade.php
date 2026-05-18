@@ -1,5 +1,5 @@
 @section('meta_title', 'Jobs – Büro')
-@section('meta_description', '')
+@section('meta_description', config('seo.page.about.jobs'))
 <x-layout.inner title="Jobs">
 	<div class="flex flex-col gap-y-24 md:gap-y-40 lg:gap-56">
 		@foreach($locations as $location)

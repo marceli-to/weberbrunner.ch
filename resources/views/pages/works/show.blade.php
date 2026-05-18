@@ -1,9 +1,8 @@
 @section('meta_title', $project->full_title)
-@section('meta_description', Str::limit($project->description, 160))
+@section('meta_description', Str::limit($project->meta_description ?: strip_tags($project->short_description), 160))
 @if($project->teaser->first()?->file)
 	@ogImage($project->teaser->first()->file)
 @endif
-
 
 <x-layout.show :title="$project->title" :location="$project->city">
   @if ($isPreview)
@@ -32,9 +31,9 @@
     </x-slideshow.wrapper>
   @endif
 
-  @if($project->description)
+  @if($project->short_description)
     <x-work.description>
-      {!! $project->description !!}
+      {!! $project->short_description !!}
     </x-work.description>
   @endif
 

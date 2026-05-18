@@ -1,5 +1,5 @@
 @section('meta_title', 'Jury – Büro')
-@section('meta_description', '')
+@section('meta_description', config('seo.page.about.jury'))
 <x-layout.inner title="Jury">
 	<x-container.inner class="!pr-0 flex flex-col gap-y-16 md:gap-y-24 lg:gap-y-48">
 		@foreach($sections as $section)

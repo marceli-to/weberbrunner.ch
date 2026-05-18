@@ -1,5 +1,5 @@
 @section('meta_title', 'Publikationen – Büro')
-@section('meta_description', '')
+@section('meta_description', config('seo.page.about.publications'))
 
 <x-layout.inner
 	title="Publikationen"
