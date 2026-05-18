@@ -10,9 +10,10 @@ $defaultDescription = config('app.description');
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@hasSection('meta_title')@yield('meta_title') – {{ $appName }}@else{{ $appName }}@endif</title>
 <meta name="description" content="@yield('meta_description', $defaultDescription)">
+<link rel="canonical" href="{{ rtrim(config('app.url'), '/') . request()->getRequestUri() }}">
 <meta property="og:title" content="@hasSection('meta_title')@yield('meta_title') – {{ $appName }}@else{{ $appName }}@endif">
 <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
-<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:url" content="{{ rtrim(config('app.url'), '/') . request()->getRequestUri() }}">
 <meta property="og:site_name" content="{{ $appName }}">
 @hasSection('og_image')
 <meta property="og:image" content="@yield('og_image')">

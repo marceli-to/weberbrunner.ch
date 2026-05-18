@@ -12,6 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustHosts(at: [
+            'weberbrunner.ch',
+            'www.weberbrunner.ch',
+            'wbp-architektur.de',
+            'www.wbp-architektur.de',
+            'weberbrunner.ch.test',
+            'wbp-architektur.de.test',
+        ]);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
