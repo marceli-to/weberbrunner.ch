@@ -12,7 +12,7 @@
 /.phpunit.cache
 /.vscode
 /.zed
-/.claude/skills
+/.claude
 /auth.json
 /node_modules
 /public/hot

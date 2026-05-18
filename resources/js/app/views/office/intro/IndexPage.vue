@@ -1,18 +1,18 @@
 <script setup>
 import { ref } from 'vue'
-import landingTextApi from '@/api/landingText'
+import pageTextApi from '@/api/pageText'
 import { usePageLoader } from '@/composables/usePageLoader'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
-import Blocks from '@/views/office/intro/components/Blocks.vue'
+import PageBlocks from '@/components/blocks/PageBlocks.vue'
 
 const { load } = usePageLoader()
 
 const page = ref(null)
 
 async function fetch() {
-	const { data } = await landingTextApi.show('office')
+	const { data } = await pageTextApi.show('office')
 	page.value = data.data
 }
 
@@ -27,6 +27,6 @@ load(fetch)
 		</Span>
 	</Grid>
 
-	<Blocks v-if="page" :page="page" @updated="fetch" />
+	<PageBlocks v-if="page" :page="page" @updated="fetch" />
 
 </template>

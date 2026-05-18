@@ -14,7 +14,6 @@ use App\Http\Controllers\Api\JuryController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\NetworkEntryController;
 use App\Http\Controllers\Api\ProjectCategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ProjectMediaController;
@@ -357,20 +356,6 @@ Route::prefix('dashboard')
 				Route::get('/{section}', 'show');
 				Route::put('/{section}', 'update');
 				Route::delete('/{section}', 'destroy');
-				Route::patch('/{uuid}/restore', 'restore');
-			});
-
-		// Network
-		Route::controller(NetworkEntryController::class)
-			->prefix('network')
-			->group(function () {
-				Route::get('/', 'index');
-				Route::post('/', 'store');
-				Route::patch('/reorder', 'reorder');
-				Route::get('/{networkEntry}', 'show');
-				Route::put('/{networkEntry}', 'update');
-				Route::patch('/{networkEntry}/toggle', 'toggle');
-				Route::delete('/{networkEntry}', 'destroy');
 				Route::patch('/{uuid}/restore', 'restore');
 			});
 

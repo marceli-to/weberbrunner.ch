@@ -23,6 +23,8 @@ class PageTextController extends Controller
 
 	public function update(UpdatePageTextRequest $request, string $page)
 	{
+		$this->authorize('update', PageText::class);
+
 		$pageText = (new FindPageTextAction)->execute($page);
 
 		(new UpdatePageTextAction)->execute($pageText, $request->validated());

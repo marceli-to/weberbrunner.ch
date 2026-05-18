@@ -43,10 +43,18 @@ load(fetch)
 
 				<!-- Entries -->
 				<ListTableRow v-for="member in sorted" :key="member.uuid" :to="{ name: 'team.show', params: { id: member.uuid } }">
-					<ListTableCell span="col-span-2" first>{{ member.name }}</ListTableCell>
-					<ListTableCell span="col-span-2">{{ member.firstname }}</ListTableCell>
-					<ListTableCell span="col-span-3">{{ member.title }}</ListTableCell>
-					<ListTableCell span="col-span-1" last>{{ member.location?.title }}</ListTableCell>
+					<ListTableCell span="col-span-2" first>
+            <span class="block truncate">{{ member.name }}</span>
+          </ListTableCell>
+					<ListTableCell span="col-span-2">
+            <span class="block truncate">{{ member.firstname }}</span>
+          </ListTableCell>
+					<ListTableCell span="col-span-3">
+            <span class="block truncate">{{ member.title }}</span>
+          </ListTableCell>
+					<ListTableCell span="col-span-1" last>
+            <span class="block truncate">{{ member.location?.title }}</span>
+          </ListTableCell>
 				</ListTableRow>
 
 			</ListTable>
