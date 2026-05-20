@@ -145,15 +145,15 @@ class Works extends Component
 	protected function applyFilters(Builder $query): void
 	{
 		if (!empty($this->types)) {
-			$query->whereDoesntHave('categories', fn ($q) => $q->whereIn('slug', $this->types));
+			$query->whereHas('categories', fn ($q) => $q->whereIn('slug', $this->types));
 		}
 
 		if (!empty($this->status)) {
-			$query->whereDoesntHave('statuses', fn ($q) => $q->whereIn('slug', $this->status));
+			$query->whereHas('statuses', fn ($q) => $q->whereIn('slug', $this->status));
 		}
 
 		if (!empty($this->locations)) {
-			$query->whereHas('location', fn ($q) => $q->whereNotIn('slug', $this->locations));
+			$query->whereHas('location', fn ($q) => $q->whereIn('slug', $this->locations));
 		}
 
 	}
