@@ -59,6 +59,12 @@
               class="md:hidden" />
 
             <x-menu.page.item
+              url="{{ route('page.about.arbeitsweisen') }}"
+              title="Arbeitsweisen"
+              :level="2"
+              :active="Route::is('page.about.arbeitsweisen')" />
+
+            <x-menu.page.item
               url="{{ route('page.about.team') }}"
               title="Team"
               :level="2"

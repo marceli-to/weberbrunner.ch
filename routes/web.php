@@ -7,6 +7,7 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ProjectPreviewController;
 use App\Http\Controllers\PublicationPreviewController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArbeitsweisenController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JuryController;
@@ -33,6 +34,7 @@ Route::prefix('arbeiten')->name('page.works')->group(function () {
 // About
 Route::prefix('buero')->name('page.about')->group(function () {
 	Route::get('/', AboutController::class);
+	Route::get('/arbeitsweisen', ArbeitsweisenController::class)->name('.arbeitsweisen');
 	Route::view('/team', 'pages.about.team.index')->name('.team');
 	Route::get('/team/{slug}', [TeamController::class, 'show'])->name('.team.show');
 	Route::get('/jobs', JobController::class)->name('.jobs');
