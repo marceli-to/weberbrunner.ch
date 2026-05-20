@@ -17,7 +17,7 @@ class PrepareViewDataAction
 		$download = null;
 		if ($downloadFile) {
 			$download = [
-				'url' => '/' . $downloadFile->file,
+				'url' => asset('storage/' . $downloadFile->file),
 				'extension' => strtoupper(pathinfo($downloadFile->original_name ?? $downloadFile->file, PATHINFO_EXTENSION)),
 				'size' => $this->formatFileSize($downloadFile->size),
 			];
