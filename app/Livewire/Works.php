@@ -78,7 +78,7 @@ class Works extends Component
 	public function availableLocations(): array
 	{
 		return [
-			'zurich' => 'Zürich',
+			'zuerich' => 'Zürich',
 			'berlin' => 'Berlin',
 		];
 	}
