@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Hash;
 
 class SeedUsers extends Command
 {
-	protected $signature = 'app:seed-users';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-users {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed default users';
 
@@ -53,6 +56,10 @@ class SeedUsers extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		foreach ($this->users as $data) {
 			$user = User::firstOrCreate(
 				['email' => $data['email']],

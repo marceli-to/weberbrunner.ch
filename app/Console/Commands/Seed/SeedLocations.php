@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Location;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class SeedLocations extends Command
 {
-	protected $signature = 'app:seed-locations';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-locations {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed locations';
 
@@ -18,6 +21,10 @@ class SeedLocations extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		foreach ($this->locations as $slug => $title) {
 			Location::firstOrCreate(
 				['slug' => $slug],

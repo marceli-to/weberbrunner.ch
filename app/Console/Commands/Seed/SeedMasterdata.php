@@ -1,21 +1,28 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Masterdata;
 use App\Models\MasterdataGroup;
 use App\Models\MasterdataProject;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\DB;
 
 class SeedMasterdata extends Command
 {
-	protected $signature = 'app:seed-masterdata';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-masterdata {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed masterdata groups and entries from storage/app/master-data.json';
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		$path = storage_path('app/master-data.json');
 
 		if (! file_exists($path)) {

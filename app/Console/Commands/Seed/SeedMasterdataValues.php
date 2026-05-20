@@ -1,21 +1,28 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Masterdata;
 use App\Models\MasterdataGroup;
 use App\Models\MasterdataProject;
 use App\Models\Project;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class SeedMasterdataValues extends Command
 {
-	protected $signature = 'app:seed-masterdata-values';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-masterdata-values {--force : Force the operation to run in production}';
 
 	protected $description = 'Import per-project masterdata values from storage/app/projects-masterdata-complete.json';
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		$path = storage_path('app/projects-masterdata-complete.json');
 
 		if (! file_exists($path)) {

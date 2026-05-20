@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Category;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class SeedCategories extends Command
 {
-	protected $signature = 'app:seed-categories';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-categories {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed project categories';
 
@@ -22,6 +25,10 @@ class SeedCategories extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		foreach ($this->categories as $slug => $title) {
 			Category::firstOrCreate(
 				['slug' => $slug],

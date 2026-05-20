@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Location;
 use App\Models\Section;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Storage;
 
 class SeedOfficeData extends Command
 {
-	protected $signature = 'app:seed-office-data';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-office-data {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed awards, jury entries, talks and contacts';
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		$this->seedAwards();
 		$this->seedJuries();
 		$this->seedTalks();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Block;
 use App\Models\BlockLink;
@@ -8,13 +8,16 @@ use App\Models\Publication;
 use App\Models\PublicationAttribute;
 use App\Models\Media;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SeedPublications extends Command
 {
-	protected $signature = 'app:seed-publications';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-publications {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed publications from storage/app/publications/publikationen.json';
 
@@ -30,6 +33,10 @@ class SeedPublications extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		$path = storage_path('app/publications/publikationen.json');
 
 		if (!file_exists($path)) {

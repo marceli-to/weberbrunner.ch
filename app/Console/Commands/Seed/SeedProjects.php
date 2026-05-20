@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Project;
 use App\Models\Status;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SeedProjects extends Command
 {
-	protected $signature = 'app:seed-projects {--dummy : Seed with dummy data instead of project-data.json}';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-projects {--dummy : Seed with dummy data instead of project-data.json} {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed projects from project-data.json or with dummy data';
 
@@ -98,6 +101,10 @@ private array $shortDescriptions = [
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		if ($this->option('dummy')) {
 			$this->seedDummy();
 		} else {

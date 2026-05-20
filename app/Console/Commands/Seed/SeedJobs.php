@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Job;
 use App\Models\Location;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class SeedJobs extends Command
 {
-	protected $signature = 'app:seed-jobs';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-jobs {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed job listings';
 
@@ -29,6 +32,10 @@ class SeedJobs extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		foreach ($this->jobs as $order => $data) {
 			$location = Location::where('slug', $data['location'])->first();
 

@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Seed;
 
 use App\Models\Location;
 use App\Models\TeamMember;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SeedTeam extends Command
 {
-	protected $signature = 'app:seed-team';
+	use ConfirmableTrait;
+
+	protected $signature = 'app:seed-team {--force : Force the operation to run in production}';
 
 	protected $description = 'Seed team members with images';
 
@@ -61,6 +64,10 @@ class SeedTeam extends Command
 
 	public function handle(): void
 	{
+		if (!$this->confirmToProceed()) {
+			return;
+		}
+
 		$locations = Location::all()->keyBy('slug');
 		$disk = Storage::disk('public');
 
