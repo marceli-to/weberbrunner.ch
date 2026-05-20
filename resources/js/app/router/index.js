@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Styleguide from '@/views/dev/Styleguide.vue'
 import LandingIndex from '@/views/landing/IndexPage.vue'
 import ProjectsIndex from '@/views/projects/IndexPage.vue'
 import ProjectsShow from '@/views/projects/ShowPage.vue'
@@ -37,12 +36,6 @@ const routes = [
   {
     path: '/dashboard',
     redirect: '/dashboard/arbeiten',
-  },
-  {
-    path: '/dashboard/components',
-    name: 'components',
-    component: Styleguide,
-    meta: { title: 'Components' },
   },
   {
     path: '/dashboard/startseite',
