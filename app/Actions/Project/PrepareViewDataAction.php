@@ -22,6 +22,7 @@ class PrepareViewDataAction
 				->values()
 				->toArray(),
 			'header' => $project->categories->first()?->title ?? 'weberbrunner architekten',
+			'city' => $project->city,
 		];
 	}
 }

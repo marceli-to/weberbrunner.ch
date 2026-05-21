@@ -18,6 +18,7 @@
         <x-work.info
           :items="$projectInfo"
           :header="$header"
+          :city="$city"
           :isSlideshow="true"
         />
       </x-slot:info>
@@ -42,6 +43,7 @@
       <x-work.info
         :items="$projectInfo"
         :header="$header"
+        :city="$city"
       />
     </div>
   </div>

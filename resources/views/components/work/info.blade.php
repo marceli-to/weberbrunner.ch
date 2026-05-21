@@ -1,6 +1,7 @@
 @props([
   'items' => [],
   'header' => null,
+  'city' => null,
   'isSlideshow' => false,
 ])
 
@@ -8,6 +9,11 @@
   @if($header)
     <div>
       <strong>{{ $header }}</strong>
+    </div>
+  @endif
+  @if($city)
+    <div>
+      <strong>Ort:</strong> {{ $city }}
     </div>
   @endif
   @foreach($items as $item)
