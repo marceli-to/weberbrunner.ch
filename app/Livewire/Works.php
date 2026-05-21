@@ -65,13 +65,17 @@ class Works extends Component
 	#[Computed]
 	public function availableTypes(): array
 	{
-		return Category::pluck('title', 'slug')->toArray();
+		return Category::whereHas('projects', fn ($q) => $q->published())
+			->pluck('title', 'slug')
+			->toArray();
 	}
 
 	#[Computed]
 	public function availableStatus(): array
 	{
-		return Status::pluck('title', 'slug')->toArray();
+		return Status::whereHas('projects', fn ($q) => $q->published())
+			->pluck('title', 'slug')
+			->toArray();
 	}
 
 	#[Computed]
