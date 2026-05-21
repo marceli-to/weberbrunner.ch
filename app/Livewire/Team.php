@@ -19,7 +19,7 @@ class Team extends Component
 	public function render()
 	{
 		$query = TeamMember::published()
-			->with(['location', 'image'])
+			->with(['location', 'image', 'bios'])
 			->orderBy('sort_order');
 
 		if ($this->location !== 'all') {

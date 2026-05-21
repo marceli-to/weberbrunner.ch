@@ -41,16 +41,8 @@
                         {{ $isLast ? 'max-md:border-b-0' : '' }}
                         {{ $isInLastRow2 ? 'md:max-lg:border-b-0' : '' }}
                         {{ $isInLastRow3 ? 'lg:border-b-0' : '' }}">
-
-                    <x-cards.team
-                        :media="$member->image"
-                        :firstname="$member->firstname"
-                        :name="$member->name"
-                        :title="$member->title"
-                        :since="$member->since"
-                        :email="$member->email"
-                        :slug="$member->slug"
-                    />
+      
+                    <x-cards.team :member="$member" />
                 </div>
             @endforeach
         </div>
