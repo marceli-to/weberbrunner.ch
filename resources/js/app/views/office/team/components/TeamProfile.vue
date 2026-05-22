@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import teamApi from '@/api/team'
 import locationsApi from '@/api/locations'
 import { useFormErrors } from '@/composables/useFormErrors'
+import { useConfirm } from '@/composables/useConfirm'
 import Card from '@/components/ui/Card.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -17,7 +19,9 @@ const props = defineProps({
 
 const emit = defineEmits(['updated'])
 
+const router = useRouter()
 const { get, clear, submit } = useFormErrors()
+const { confirm } = useConfirm()
 const editing = ref(false)
 const form = ref({})
 const locations = ref([])
@@ -55,6 +59,17 @@ async function save() {
 		editing.value = false
 		emit('updated')
 	}
+}
+
+async function destroy() {
+	const ok = await confirm({
+		message: `Möchtest Du ${props.member.fullname} wirklich löschen?`,
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (!ok) return
+	await teamApi.destroy(props.member.uuid)
+	router.push({ name: 'office.team' })
 }
 </script>
 
@@ -129,6 +144,7 @@ async function save() {
 					<Span class="col-span-4 flex flex-col gap-10">
 						<Button type="submit" class="px-10">Speichern</Button>
 						<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
+						<Button type="button" variant="danger" @click="destroy" class="px-10 border-white! hover:border-red! ">Löschen</Button>
 					</Span>
 				</Grid>
 			</form>

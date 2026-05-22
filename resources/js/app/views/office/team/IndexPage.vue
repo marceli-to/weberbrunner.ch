@@ -1,22 +1,34 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import teamApi from '@/api/team'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useTableSort } from '@/composables/useTableSort'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import Button from '@/components/ui/form/Button.vue'
+import Plus from '@/components/icons/Plus.vue'
 import ListTable from '@/components/ui/list/ListTable.vue'
 import ListTableRow from '@/components/ui/list/ListTableRow.vue'
 import ListTableCell from '@/components/ui/list/ListTableCell.vue'
+import CreateLightbox from '@/views/office/team/components/CreateLightbox.vue'
 
+const router = useRouter()
 const { load } = usePageLoader()
 const members = ref([])
+const createLightbox = ref(null)
 const { sorted, sortKey, sortDir, toggleSort } = useTableSort(members, 'name', 'asc', 'team')
 
 async function fetch() {
 	const { data } = await teamApi.index()
 	members.value = data.data
+}
+
+function onCreated(member) {
+	if (member?.uuid) {
+		router.push({ name: 'team.show', params: { id: member.uuid } })
+	}
 }
 
 load(fetch)
@@ -28,6 +40,15 @@ load(fetch)
 
 		<Span class="col-span-8 col-start-2">
 			<PageTitle>Team</PageTitle>
+		</Span>
+
+		<Span class="col-span-8 col-start-2 mb-20">
+			<Button @click="createLightbox.open()" class="px-20">
+				<template #icon-right>
+					<Plus class="w-10 h-10" />
+				</template>
+				Neues Teammitglied
+			</Button>
 		</Span>
 
 		<Span class="col-span-8 col-start-2">
@@ -61,5 +82,7 @@ load(fetch)
 		</Span>
 
 	</Grid>
+
+	<CreateLightbox ref="createLightbox" @created="onCreated" />
 
 </template>
