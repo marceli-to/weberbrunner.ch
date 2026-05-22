@@ -35,30 +35,38 @@ load(fetch)
 
 				<!-- Header -->
 				<ListTableRow header>
-					<ListTableCell span="col-span-1" first header sortable :sort-active="sortKey === 'priority'" :sort-dir="sortDir" @sort="toggleSort('priority')">Prio</ListTableCell>
-					<ListTableCell span="col-span-2" header sortable :sort-active="sortKey === 'number'" :sort-dir="sortDir" @sort="toggleSort('number')">Nr.</ListTableCell>
-					<ListTableCell span="col-span-8" header sortable :sort-active="sortKey === 'title'" :sort-dir="sortDir" @sort="toggleSort('title')">Projektname</ListTableCell>
-					<ListTableCell span="col-span-5" last header sortable :sort-active="sortKey === 'city'" :sort-dir="sortDir" @sort="toggleSort('city')">Ort</ListTableCell>
+					<ListTableCell span="col-span-1" first header sortable :sort-active="sortKey === 'priority'" :sort-dir="sortDir" @sort="toggleSort('priority')">
+						Prio
+					</ListTableCell>
+					<ListTableCell span="col-span-2" header sortable :sort-active="sortKey === 'number'" :sort-dir="sortDir" @sort="toggleSort('number')">
+						Nr.
+					</ListTableCell>
+					<ListTableCell span="col-span-8" header sortable :sort-active="sortKey === 'title'" :sort-dir="sortDir" @sort="toggleSort('title')">
+						Projektname
+					</ListTableCell>
+					<ListTableCell span="col-span-5" last header sortable :sort-active="sortKey === 'city'" :sort-dir="sortDir" @sort="toggleSort('city')">
+						Ort
+					</ListTableCell>
 				</ListTableRow>
 
 				<!-- Entries -->
 				<ListTableRow v-for="project in sorted" :key="project.uuid" :to="{ name: 'projects.show', params: { id: project.uuid } }">
 					<ListTableCell span="col-span-1" first>
-            {{ project.priority }}
-          </ListTableCell>
+						{{ project.priority }}
+					</ListTableCell>
 					<ListTableCell span="col-span-2">
-            {{ project.number }}
-          </ListTableCell>
+						{{ project.number }}
+					</ListTableCell>
 					<ListTableCell span="col-span-8">
-            <span class="block truncate">
-              {{ project.title }}
-            </span>
-          </ListTableCell>
+						<span class="block truncate">
+							{{ project.title }}
+						</span>
+					</ListTableCell>
 					<ListTableCell span="col-span-5" last>
-            <span class="block truncate">
-              {{ project.city }}
-            </span>
-          </ListTableCell>
+						<span class="block truncate">
+							{{ project.city }}
+						</span>
+					</ListTableCell>
 				</ListTableRow>
 
 			</ListTable>
