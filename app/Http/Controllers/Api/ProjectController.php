@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\ReorderProjectRequest;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
+use App\Http\Resources\ProjectListResource;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 
@@ -20,11 +21,12 @@ class ProjectController extends Controller
 	{
 		$this->authorize('viewAny', Project::class);
 
-		$projects = Project::with(['masterdata', 'media', 'categories', 'statuses', 'location', 'blocks.media', 'blocks.links.linkedProject'])
+		$projects = Project::query()
+			->select(['uuid', 'priority', 'number', 'title', 'city'])
 			->orderBy('number')
 			->get();
 
-		return ProjectResource::collection($projects);
+		return ProjectListResource::collection($projects);
 	}
 
 	public function published()
