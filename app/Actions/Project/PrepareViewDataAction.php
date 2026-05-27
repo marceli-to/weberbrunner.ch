@@ -21,7 +21,7 @@ class PrepareViewDataAction
 				])
 				->values()
 				->toArray(),
-			'header' => $project->categories->first()?->title ?? 'weberbrunner architekten',
+			'header' => $project->categories->sortBy('sort_order')->pluck('title')->filter()->implode(', ') ?: 'weberbrunner architekten',
 			'city' => $project->city,
 		];
 	}
