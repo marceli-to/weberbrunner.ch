@@ -20,7 +20,8 @@ class Team extends Component
 	{
 		$query = TeamMember::published()
 			->with(['location', 'image', 'bios'])
-			->orderBy('sort_order');
+			->orderBy('name')
+			->orderBy('firstname');
 
 		if ($this->location !== 'all') {
 			$query->whereHas('location', fn ($q) => $q->where('slug', $this->location));

@@ -11,6 +11,7 @@ class ListAction
 	{
 		return TeamMember::with(['bios', 'media', 'location'])
 			->orderBy('name')
+			->orderBy('firstname')
 			->get();
 	}
 }
