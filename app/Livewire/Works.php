@@ -25,6 +25,16 @@ class Works extends Component
 	#[Url]
 	public array $locations = [];
 
+	#[Url(keep: true)]
+	public int $seed = 0;
+
+	public function mount(): void
+	{
+		if ($this->seed === 0) {
+			$this->seed = random_int(1, PHP_INT_MAX);
+		}
+	}
+
 	public function clearSearch(): void
 	{
 		$this->query = '';
@@ -122,7 +132,7 @@ class Works extends Component
 		$this->applyFilters($query);
 
 		if (empty($this->query)) {
-			$query->latest();
+			$query->orderByRaw('RAND(?)', [$this->seed]);
 		}
 
 		return $query;
