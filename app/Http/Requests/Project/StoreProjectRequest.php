@@ -28,6 +28,10 @@ class StoreProjectRequest extends FormRequest
 		return [
 			'title.required' => 'Bitte überprüfe den Titel',
 			'title.max' => 'Bitte überprüfe den Titel',
+			'number.required' => 'Bitte überprüfe die Nummer',
+			'number.integer' => 'Bitte überprüfe die Nummer',
+			'priority.in' => 'Bitte überprüfe die Priorität',
+			'city.max' => 'Bitte überprüfe die Stadt',
 			'location_id.exists' => 'Bitte überprüfe den Standort',
 		];
 	}

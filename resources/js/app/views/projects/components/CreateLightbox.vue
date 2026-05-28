@@ -11,28 +11,32 @@ import Radio from '@/components/ui/form/Radio.vue'
 
 const emit = defineEmits(['created'])
 
-const priority = ref('')
+const priorities = ['A', 'B', 'C']
+const defaultPriority = 'A'
+
+const priority = ref(defaultPriority)
 const number = ref('')
 const title = ref('')
 const city = ref('')
 const locationId = ref('')
 const locations = ref([])
 
-const priorities = ['A', 'B', 'C']
-
 const { get, clear, submit } = useFormErrors()
 const { show, open: openLightbox, close } = useLightbox(() => {
 	clear()
-	priority.value = ''
+	priority.value = defaultPriority
 	number.value = ''
 	title.value = ''
 	city.value = ''
-	locationId.value = ''
+	locationId.value = locations.value[0]?.id ?? ''
 })
 
 onMounted(async () => {
 	const { data } = await locationsApi.index()
 	locations.value = data.data
+	if (!locationId.value) {
+		locationId.value = locations.value[0]?.id ?? ''
+	}
 })
 
 function open() {
@@ -43,7 +47,7 @@ async function save() {
 	let created = null
 	const ok = await submit(async () => {
 		const response = await projectsApi.store({
-			priority: priority.value || null,
+			priority: priority.value,
 			number: number.value === '' ? null : Number(number.value),
 			title: title.value,
 			city: city.value || null,
@@ -69,7 +73,7 @@ defineExpose({ open })
 			<Input v-model="city" :error="get('city')" placeholder="Ort" class="form-input form-input--lg mt-10" @focus="clear('city')" />
 
       <div class="flex gap-x-40 mt-20">
-        <div :class="['flex gap-20', { 'has-error': get('priority') }]" @click="clear('priority')">
+        <div class="flex gap-20">
           <label class="text-sm font-semibold">Priorität</label>
           <Radio
             v-for="p in priorities"
@@ -79,7 +83,7 @@ defineExpose({ open })
             :label="p"
             name="priority" />
         </div>
-        <div :class="['flex gap-20', { 'has-error': get('location_id') }]" @click="clear('location_id')">
+        <div class="flex gap-20">
           <label class="text-sm font-semibold">Standort</label>
           <Radio
             v-for="loc in locations"
