@@ -1,22 +1,34 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import projectsApi from '@/api/projects'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useTableSort } from '@/composables/useTableSort'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import Button from '@/components/ui/form/Button.vue'
+import Plus from '@/components/icons/Plus.vue'
 import ListTable from '@/components/ui/list/ListTable.vue'
 import ListTableRow from '@/components/ui/list/ListTableRow.vue'
 import ListTableCell from '@/components/ui/list/ListTableCell.vue'
+import CreateLightbox from '@/views/projects/components/CreateLightbox.vue'
 
+const router = useRouter()
 const { load } = usePageLoader()
 const projects = ref([])
+const createLightbox = ref(null)
 const { sorted, sortKey, sortDir, toggleSort } = useTableSort(projects, 'priority', 'asc', 'projects')
 
 async function fetch() {
 	const { data } = await projectsApi.index()
 	projects.value = data.data
+}
+
+function onCreated(project) {
+	if (project?.uuid) {
+		router.push({ name: 'projects.show', params: { id: project.uuid } })
+	}
 }
 
 load(fetch)
@@ -28,6 +40,15 @@ load(fetch)
 
 		<Span class="col-span-8 col-start-2">
 			<PageTitle>Arbeiten</PageTitle>
+		</Span>
+
+		<Span class="col-span-8 col-start-2 mb-20">
+			<Button @click="createLightbox.open()" class="px-20">
+				<template #icon-right>
+					<Plus class="w-10 h-10" />
+				</template>
+				Neues Projekt
+			</Button>
 		</Span>
 
 		<Span class="col-span-8 col-start-2">
@@ -73,5 +94,7 @@ load(fetch)
 		</Span>
 
 	</Grid>
+
+	<CreateLightbox ref="createLightbox" @created="onCreated" />
 
 </template>

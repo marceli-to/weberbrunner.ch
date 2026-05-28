@@ -17,26 +17,9 @@ class StoreProjectRequest extends FormRequest
 		return [
 			'title' => 'required|string|max:255',
 			'number' => 'required|integer',
-			'short_description' => 'nullable|string',
-			'description' => 'nullable|string',
-			'meta_description' => 'nullable|string',
+			'priority' => 'nullable|in:A,B,C',
 			'city' => 'nullable|string|max:255',
 			'location_id' => 'nullable|exists:locations,id',
-			'publish' => 'boolean',
-			'categories' => 'nullable|array',
-			'categories.*' => 'exists:categories,id',
-			'statuses' => 'nullable|array',
-			'statuses.*' => 'exists:statuses,id',
-			'media' => 'nullable|array',
-			'media.*.uuid' => 'required|string',
-			'media.*.file' => 'required|string',
-			'media.*.original_name' => 'required|string',
-			'media.*.mime_type' => 'required|string',
-			'media.*.size' => 'required|integer',
-			'media.*.width' => 'nullable|integer',
-			'media.*.height' => 'nullable|integer',
-			'media.*.alt' => 'nullable|string|max:255',
-			'media.*.caption' => 'nullable|string|max:255',
 		];
 	}
 
