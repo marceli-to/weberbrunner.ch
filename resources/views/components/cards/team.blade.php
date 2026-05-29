@@ -10,6 +10,8 @@
 			:max-width="1024"
 			class="w-full aspect-3/4 object-cover max-w-[70%] mx-auto mb-20"
 		/>
+	@else
+		<div class="w-full aspect-3/4 bg-[#f9f9f9] max-w-[70%] mx-auto mb-20"></div>
 	@endif
 
 	<div class="font-semibold text-xs md:text-xxs lg:text-sm flex flex-col">
