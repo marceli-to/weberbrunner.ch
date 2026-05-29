@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11dd5c095d6f7da7927cb69f7a2da99a",
+    "content-hash": "1c8d0fd698cb2e98cb24e8519a9b4a7a",
     "packages": [
         {
             "name": "brick/math",
@@ -2306,6 +2306,55 @@
             "time": "2025-12-19T02:00:29+00:00"
         },
         {
+            "name": "marceli-to/laravel-sync",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marceli-to/laravel-sync.git",
+                "reference": "749bfcf5047734b816b446ae167890975beb9487"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marceli-to/laravel-sync/zipball/749bfcf5047734b816b446ae167890975beb9487",
+                "reference": "749bfcf5047734b816b446ae167890975beb9487",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1",
+                "spatie/db-dumper": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MarceliTo\\LaravelSync\\LaravelSyncServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarceliTo\\LaravelSync\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "marceli-to",
+                    "email": "m@marceli.to"
+                }
+            ],
+            "description": "Sync the production database and storage assets from remote Laravel environments to local.",
+            "support": {
+                "issues": "https://github.com/marceli-to/laravel-sync/issues",
+                "source": "https://github.com/marceli-to/laravel-sync/tree/v1.0.0"
+            },
+            "time": "2026-05-29T07:10:42+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.10.0",
             "source": {
@@ -3575,6 +3624,69 @@
                 "source": "https://github.com/ramsey/uuid/tree/4.9.2"
             },
             "time": "2025-12-14T04:43:48+00:00"
+        },
+        {
+            "name": "spatie/db-dumper",
+            "version": "3.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/db-dumper.git",
+                "reference": "eac3221fbe27fac51f388600d27b67b1b079406e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/eac3221fbe27fac51f388600d27b67b1b079406e",
+                "reference": "eac3221fbe27fac51f388600d27b67b1b079406e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "symfony/process": "^5.0|^6.0|^7.0|^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.22"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DbDumper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dump databases",
+            "homepage": "https://github.com/spatie/db-dumper",
+            "keywords": [
+                "database",
+                "db-dumper",
+                "dump",
+                "mysqldump",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/db-dumper/tree/3.8.3"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-05T16:26:03+00:00"
         },
         {
             "name": "spatie/laravel-activitylog",

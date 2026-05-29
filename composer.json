@@ -11,6 +11,7 @@
         "laravel/tinker": "^2.10.1",
         "league/glide": "^3.1",
         "livewire/livewire": "^3.7",
+        "marceli-to/laravel-sync": "^1.0",
         "spatie/laravel-activitylog": "^4.11"
     },
     "require-dev": {
