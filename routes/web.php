@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
@@ -17,6 +18,20 @@ use App\Http\Controllers\TalkController;
 use App\Http\Controllers\TeamController;
 
 Route::get('/img/{path}', [ImageController::class, 'show'])->where('path', '.*');
+
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', function () {
+	$lines = [
+		'User-agent: *',
+		'Disallow: /dashboard',
+		'Disallow: /vorschau',
+		'',
+		'Sitemap: ' . route('sitemap'),
+	];
+
+	return response(implode("\n", $lines) . "\n")
+		->header('Content-Type', 'text/plain');
+})->name('robots');
 
 Route::get('/', LandingController::class)->name('page.landing');
 
