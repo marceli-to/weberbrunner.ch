@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'description' => 'Weberbrunner Architektur – Architektur und Planung mit Standorten in Zürich und Berlin. Ausgewählte Arbeiten aus Hochbau, Städtebau und Wettbewerb.',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

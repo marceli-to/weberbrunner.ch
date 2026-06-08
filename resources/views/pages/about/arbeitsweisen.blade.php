@@ -1,5 +1,5 @@
 @section('meta_title', 'Arbeitsweisen – Büro')
-@section('meta_description', config('seo.page.about'))
+@section('meta_description', config('seo.page.about.index'))
 
 <x-layout.inner title="Arbeitsweisen">
 
