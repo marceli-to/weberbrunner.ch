@@ -11,13 +11,13 @@
 
       <div class="pr-20 lg:pr-40 max-w-prose">
         <x-headings.h3>Fotografie:</x-headings.h3>
-        <p>Andrea Helbling, Zürich / Beat Bühler, Zürich / Georg Aerni, Zürich / Hannes Henz, Zürich / Volker Schopp, Zürich / weberbrunner architekten ag</p>
+        <p>Andrea Helbling, Zürich / Beat Bühler, Zürich / Georg Aerni, Zürich / Hannes Henz, Zürich / Volker Schopp, Zürich / Nils Koenning, Berlin / weberbrunner architekten ag</p>
 
         <x-headings.h3>Modellbau:</x-headings.h3>
         <p>Gruber.Forster, Zürich</p>
 
         <x-headings.h3>Visualisierung:</x-headings.h3>
-        <p>YOS, Zürich / Raumgleiter, Zürich / Architron, Zürich / Maaars, Zürich / Atelier Brunecky, Zürich</p>
+        <p>YOS, Zürich / Raumgleiter, Zürich / Architron, Zürich / Maaars, Zürich / Atelier Brunecky, Zürich / Carsten Pesch, Berlin / Dalia Liksaite, Berlin</p>
 
         <x-headings.h3>Portraits:</x-headings.h3>
         <p>Michaela Medea, <a href="https://michaelamedea.ch" target="_blank" class="underline hover:no-underline underline-offset-4 lg:underline-offset-6 decoration-1">michaelamedea.ch</a></p>
