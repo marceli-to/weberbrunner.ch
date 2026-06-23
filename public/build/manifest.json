@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DNqgdbc1.css",
+    "file": "assets/app-BNg4YWP9.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -34,7 +34,7 @@
     "src": "resources/fonts/Routine-Semibold.woff2"
   },
   "resources/js/app/app.js": {
-    "file": "assets/app-Dp7cc1Qw.js",
+    "file": "assets/app-DdRPDC4W.js",
     "name": "app",
     "src": "resources/js/app/app.js",
     "isEntry": true,
