@@ -2,6 +2,7 @@
 import draggable from 'vuedraggable'
 import { publicationBlocksApi } from '@/api/blocks'
 import { useBlocks } from '@/composables/useBlocks'
+import { useCan } from '@/composables/useCan'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BlockCard from '@/components/blocks/BlockCard.vue'
@@ -32,6 +33,8 @@ const {
 
 watchBlocks(() => props.publication.blocks)
 
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+
 const blockTypes = [
 	{ type: 'text', label: 'Text', icon: { component: BlockText, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 	{ type: 'links', label: 'Link', icon: { component: BlockLink, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
@@ -47,6 +50,7 @@ const blockTypes = [
 			v-model="blocks"
 			item-key="uuid"
 			handle=".drag-handle"
+			:disabled="!canReorder"
 			ghost-class="opacity-50"
 			animation="150"
 			class="col-span-10 flex flex-col gap-20"
@@ -58,7 +62,9 @@ const blockTypes = [
 					:block="element"
 					:initial-open="element.uuid === lastCreatedUuid"
 					:flush="element.type === 'links'"
-					editable
+					:editable="canUpdate"
+					:draggable="canReorder"
+					:deletable="canDelete"
 					@delete="deleteBlock(element)"
 					@edit-title="blockTitleForm.edit($event)">
 
@@ -86,7 +92,7 @@ const blockTypes = [
 
 	<!-- Block type picker -->
 	<Grid class="mt-40">
-		<Span class="col-span-8 col-start-2">
+		<Span v-if="canCreate" class="col-span-8 col-start-2">
 			<BlockSelector :types="blockTypes" @select="addBlock" />
 		</Span>
 	</Grid>
