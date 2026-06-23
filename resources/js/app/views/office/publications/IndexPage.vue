@@ -94,7 +94,7 @@ load(fetch)
 					<Grid :cols="10">
 
 						<Span class="col-span-1 flex items-center justify-end">
-							<Burger class="w-18 h-10 cursor-grab pub-drag-handle" />
+							<Burger v-if="canReorder" class="w-18 h-10 cursor-grab pub-drag-handle" />
 						</Span>
 
 						<Span class="col-span-8">
