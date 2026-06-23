@@ -8,12 +8,14 @@ import Toolbar from '@/components/ui/form/editor/Toolbar.vue'
 const props = defineProps({
 	modelValue: { type: String, default: '' },
 	error: { type: String, default: null },
+	editable: { type: Boolean, default: true },
 })
 
 const emit = defineEmits(['update:modelValue', 'focus'])
 
 const editor = useEditor({
 	content: props.modelValue,
+	editable: props.editable,
 	extensions: [
 		StarterKit.configure({
 			heading: {
@@ -45,11 +47,16 @@ watch(() => props.modelValue, (value) => {
 	if (editor.value.getHTML() === value) return
 	editor.value.commands.setContent(value, false)
 })
+
+watch(() => props.editable, (value) => {
+	if (!editor.value) return
+	editor.value.setEditable(value)
+})
 </script>
 
 <template>
 	<div class="editor" :class="{ 'has-error': error }">
-		<Toolbar v-if="editor" :editor="editor" />
+		<Toolbar v-if="editor && editable" :editor="editor" />
 		<EditorContent :editor="editor" />
 	</div>
 </template>

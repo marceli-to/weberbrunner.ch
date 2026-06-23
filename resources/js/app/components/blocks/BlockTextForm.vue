@@ -27,7 +27,7 @@ function save() {
 
 <template>
 	<div class="flex flex-col gap-y-10 pt-10">
-		<Editor v-model="form.content" />
+		<Editor v-model="form.content" :editable="canUpdate" />
 		<div v-if="canUpdate" class="flex justify-end pt-5">
 			<Button @click="save" class="flex justify-center">Speichern</Button>
 		</div>
