@@ -151,7 +151,7 @@ load(fetch)
 		<Span v-show="!collapsed.has('intro-text')" class="col-span-8 col-start-2">
 			<Card>
 				<form @submit.prevent="saveText">
-					<Textarea v-model="landingText.text" :rows="8" />
+					<Textarea v-model="landingText.text" :rows="8" :disabled="!canUpdate" />
 					<div v-if="canUpdate" class="flex gap-20 mt-10">
 						<Button type="submit" class="flex justify-center" :disabled="!textDirty">Speichern</Button>
 						<Button type="button" class="flex justify-center" :disabled="!textDirty" @click="cancelText">Abbrechen</Button>

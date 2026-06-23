@@ -35,7 +35,7 @@ const { canUpdate, canDelete } = useCan()
 			<Span v-show="!collapsed.has('meta')" class="col-span-8 col-start-2">
 				<Card>
 					<form @submit.prevent="saveDescription">
-						<Textarea v-model="project.meta_description" />
+						<Textarea v-model="project.meta_description" :disabled="!canUpdate" />
 						<div v-if="canUpdate" class="flex gap-20 mt-10">
 							<Button type="submit" class="flex justify-center">Speichern</Button>
 						</div>
@@ -56,7 +56,7 @@ const { canUpdate, canDelete } = useCan()
 				<div v-if="ogImage">
 					<MediaCard :item="ogImage" :deletable="canDelete" :editable="canUpdate" @delete="removeOgImage" @edit="ogDrawerOpen = true" />
 				</div>
-				<AddButton v-else @click="ogDrawerOpen = true" />
+				<AddButton v-else-if="canUpdate" @click="ogDrawerOpen = true" />
 			</Span>
 		</Grid>
 
