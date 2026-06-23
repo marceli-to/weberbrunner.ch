@@ -76,7 +76,9 @@ async function handleSubmit() {
 			</Span>
 		</Grid>
 
-		<ActionBar v-if="canUpdate" @cancel="goBack" />
+		<template v-if="canUpdate">
+			<ActionBar @cancel="goBack" />
+		</template>
 	</FormContainer>
 
 </template>

@@ -105,9 +105,11 @@ async function save() {
 					Lebenslauf Website
 				</Span>
 				<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-					<button v-if="canUpdate" type="button" @click="startEditing" class="cursor-pointer">
-						<PencilCircle class="w-25" />
-					</button>
+					<template v-if="canUpdate">
+						<button type="button" @click="startEditing" class="cursor-pointer">
+							<PencilCircle class="w-25" />
+						</button>
+					</template>
 				</Span>
 			</Grid>
 			<div v-for="bio in member.bios" :key="bio.uuid">
@@ -138,17 +140,23 @@ async function save() {
 						</Span>
 						<Span class="col-span-4 pb-3 flex items-center gap-10">
 							<Input v-model="bio.description" :error="i === failedIndex ? get('description') : null" @focus="clear('description')" class="flex-1" />
-							<button v-if="canDelete" type="button" @click="removeRow(i)" class="cursor-pointer shrink-0">
-								<Cross class="w-10 text-black" />
-							</button>
+							<template v-if="canDelete">
+								<button type="button" @click="removeRow(i)" class="cursor-pointer shrink-0">
+									<Cross class="w-10 text-black" />
+								</button>
+							</template>
 						</Span>
 					</Grid>
 				</div>
 				<Grid :cols="6" class="pt-20">
 					<Span class="col-span-2" />
 					<Span class="col-span-4 flex flex-col gap-10">
-						<Button v-if="canCreate" type="button" @click="addRow" class="px-10">Eintrag hinzufügen</Button>
-						<Button v-if="canUpdate" type="submit" class="px-10">Speichern</Button>
+						<template v-if="canCreate">
+							<Button type="button" @click="addRow" class="px-10">Eintrag hinzufügen</Button>
+						</template>
+						<template v-if="canUpdate">
+							<Button type="submit" class="px-10">Speichern</Button>
+						</template>
 						<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
 					</Span>
 				</Grid>

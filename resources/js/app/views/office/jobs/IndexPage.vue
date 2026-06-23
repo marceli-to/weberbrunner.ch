@@ -112,7 +112,9 @@ load(fetch)
 
 							<Grid :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
-									<NewEntryButton v-if="canCreate" @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })" />
+									<template v-if="canCreate">
+										<NewEntryButton @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })" />
+									</template>
 								</Span>
 							</Grid>
 

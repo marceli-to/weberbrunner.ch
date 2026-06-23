@@ -167,7 +167,9 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar v-if="canUpdate" v-show="dirty" @cancel="goBack" />
+		<template v-if="canUpdate">
+			<ActionBar v-show="dirty" @cancel="goBack" />
+		</template>
 
 	</FormContainer>
 </template>

@@ -122,35 +122,37 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<div v-if="canUpload" class="media-uploader">
-		<div class="media-uploader__label">
-			<button type="button" class="media-uploader__browse" @click="onBrowse">Drag-and-drop / Durchsuchen</button>
-		</div>
-		<div
-			class="media-uploader__dropzone"
-			:class="{ 'media-uploader__dropzone--dragging': isDragging }"
-			@dragenter="onDragEnter"
-			@dragover="onDragOver"
-			@dragleave="onDragLeave"
-			@drop="onDrop"
-			@click="onBrowse"
-		>
-			<div class="media-uploader__icon">
-				<PlusCircle class="w-25 h-auto" />
+	<template v-if="canUpload">
+		<div class="media-uploader">
+			<div class="media-uploader__label">
+				<button type="button" class="media-uploader__browse" @click="onBrowse">Drag-and-drop / Durchsuchen</button>
 			</div>
-			<input
-				ref="fileInputRef"
-				type="file"
-				multiple
-				:accept="props.allowedFileTypes.join(',')"
-				class="hidden"
-				@change="onFileChange"
-			/>
+			<div
+				class="media-uploader__dropzone"
+				:class="{ 'media-uploader__dropzone--dragging': isDragging }"
+				@dragenter="onDragEnter"
+				@dragover="onDragOver"
+				@dragleave="onDragLeave"
+				@drop="onDrop"
+				@click="onBrowse"
+			>
+				<div class="media-uploader__icon">
+					<PlusCircle class="w-25 h-auto" />
+				</div>
+				<input
+					ref="fileInputRef"
+					type="file"
+					multiple
+					:accept="props.allowedFileTypes.join(',')"
+					class="hidden"
+					@change="onFileChange"
+				/>
+			</div>
+			<div ref="statusBarRef"></div>
+			<div v-if="showButtons" class="media-uploader__buttons">
+				<button type="button" class="media-uploader__btn" @click="$emit('save')">Speichern</button>
+				<button type="button" class="media-uploader__btn" @click="$emit('cancel')">Abbrechen</button>
+			</div>
 		</div>
-		<div ref="statusBarRef"></div>
-		<div v-if="showButtons" class="media-uploader__buttons">
-			<button type="button" class="media-uploader__btn" @click="$emit('save')">Speichern</button>
-			<button type="button" class="media-uploader__btn" @click="$emit('cancel')">Abbrechen</button>
-		</div>
-	</div>
+	</template>
 </template>

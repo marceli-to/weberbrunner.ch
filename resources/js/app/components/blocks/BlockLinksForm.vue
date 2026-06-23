@@ -100,11 +100,13 @@ function onReorder() {
 		</template>
 	</draggable>
 
-  <Grid v-if="canCreate" :cols="10" class="mb-10">
-    <Span class="col-span-8 col-start-2">
-      <NewEntryButton @click="openCreate" />
-    </Span>
-  </Grid>
+  <template v-if="canCreate">
+    <Grid :cols="10" class="mb-10">
+      <Span class="col-span-8 col-start-2">
+        <NewEntryButton @click="openCreate" />
+      </Span>
+    </Grid>
+  </template>
 
 	<AppDialog 
     :open="dialogOpen" 

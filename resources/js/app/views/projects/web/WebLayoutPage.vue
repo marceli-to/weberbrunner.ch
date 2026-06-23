@@ -104,11 +104,15 @@ async function reorderSliderImages() {
 								<MediaCard :item="element" :draggable="canReorder" :publishable="canUpdate" :deletable="canDelete" :editable="canUpdate" show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
 							</template>
 							<template #footer>
-								<AddButton v-if="canCreate" @click="sliderDrawerOpen = true" />
+								<template v-if="canCreate">
+									<AddButton @click="sliderDrawerOpen = true" />
+								</template>
 							</template>
 						</draggable>
 						<div v-else class="grid grid-cols-4 gap-20">
-							<AddButton v-if="canCreate" @click="sliderDrawerOpen = true" />
+							<template v-if="canCreate">
+								<AddButton @click="sliderDrawerOpen = true" />
+							</template>
 						</div>
 					</div>
 

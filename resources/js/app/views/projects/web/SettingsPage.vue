@@ -30,7 +30,9 @@ const { canUpdate } = useCan()
 		<!-- Publish -->
 		<Grid class="mb-20">
 			<Span class="col-span-8 col-start-2">
-				<PublishToggle v-if="canUpdate" :model-value="project.publish" @update:model-value="togglePublish" />
+				<template v-if="canUpdate">
+					<PublishToggle :model-value="project.publish" @update:model-value="togglePublish" />
+				</template>
 			</Span>
 		</Grid>
 

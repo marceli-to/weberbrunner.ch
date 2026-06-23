@@ -152,10 +152,12 @@ load(fetch)
 			<Card>
 				<form @submit.prevent="saveText">
 					<Textarea v-model="landingText.text" :rows="8" :disabled="!canUpdate" />
-					<div v-if="canUpdate" class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center" :disabled="!textDirty">Speichern</Button>
-						<Button type="button" class="flex justify-center" :disabled="!textDirty" @click="cancelText">Abbrechen</Button>
-					</div>
+					<template v-if="canUpdate">
+						<div class="flex gap-20 mt-10">
+							<Button type="submit" class="flex justify-center" :disabled="!textDirty">Speichern</Button>
+							<Button type="button" class="flex justify-center" :disabled="!textDirty" @click="cancelText">Abbrechen</Button>
+						</div>
+					</template>
 				</form>
 			</Card>
 		</Span>
@@ -194,15 +196,16 @@ load(fetch)
 						</template>
 					</draggable>
 
-					<Button
-            v-if="canCreate"
-            class="px-10 mt-20"
-            @click="openDrawer(col)">
-						<template #icon-right>
-							<Plus class="w-10 h-10" />
-						</template>
-						Projekt
-					</Button>
+					<template v-if="canCreate">
+						<Button
+							class="px-10 mt-20"
+							@click="openDrawer(col)">
+							<template #icon-right>
+								<Plus class="w-10 h-10" />
+							</template>
+							Projekt
+						</Button>
+					</template>
 
 				</div>
 

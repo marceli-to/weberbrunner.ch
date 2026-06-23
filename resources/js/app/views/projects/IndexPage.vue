@@ -44,14 +44,16 @@ load(fetch)
 			<PageTitle>Arbeiten</PageTitle>
 		</Span>
 
-		<Span v-if="canCreate" class="col-span-8 col-start-2 mb-20">
-			<Button @click="createLightbox.open()" class="px-20">
-				<template #icon-right>
-					<Plus class="w-10 h-10" />
-				</template>
-				Neues Projekt
-			</Button>
-		</Span>
+		<template v-if="canCreate">
+			<Span class="col-span-8 col-start-2 mb-20">
+				<Button @click="createLightbox.open()" class="px-20">
+					<template #icon-right>
+						<Plus class="w-10 h-10" />
+					</template>
+					Neues Projekt
+				</Button>
+			</Span>
+		</template>
 
 		<Span class="col-span-8 col-start-2">
 			<ListTable :cols="16">

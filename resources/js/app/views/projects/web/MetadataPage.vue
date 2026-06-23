@@ -36,9 +36,11 @@ const { canUpdate, canDelete } = useCan()
 				<Card>
 					<form @submit.prevent="saveDescription">
 						<Textarea v-model="project.meta_description" :disabled="!canUpdate" />
-						<div v-if="canUpdate" class="flex gap-20 mt-10">
-							<Button type="submit" class="flex justify-center">Speichern</Button>
-						</div>
+						<template v-if="canUpdate">
+							<div class="flex gap-20 mt-10">
+								<Button type="submit" class="flex justify-center">Speichern</Button>
+							</div>
+						</template>
 					</form>
 				</Card>
 			</Span>

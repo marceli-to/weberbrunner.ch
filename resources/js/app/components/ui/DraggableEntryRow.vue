@@ -43,7 +43,9 @@ defineEmits(['edit', 'toggle-publish', 'toggle-default', 'delete'])
 <template>
 	<Grid :cols="10">
 		<Span class="col-span-1 flex items-center justify-end">
-			<Burger v-if="draggable" variant="sm" class="w-18 h-10 cursor-grab" :class="dragHandleClass" />
+			<template v-if="draggable">
+				<Burger variant="sm" class="w-18 h-10 cursor-grab" :class="dragHandleClass" />
+			</template>
 		</Span>
 		<Span class="col-span-8">
 			<EntryRow
@@ -60,7 +62,9 @@ defineEmits(['edit', 'toggle-publish', 'toggle-default', 'delete'])
 				@toggle-default="$emit('toggle-default')" />
 		</Span>
 		<Span class="col-span-1 flex items-center justify-start">
-			<Cross v-if="deletable" class="w-10 cursor-pointer" @click="$emit('delete')" />
+			<template v-if="deletable">
+				<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />
+			</template>
 		</Span>
 	</Grid>
 </template>

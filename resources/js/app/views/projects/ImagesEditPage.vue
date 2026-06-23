@@ -135,9 +135,11 @@ async function handleSubmit() {
 					</template>
 				</draggable>
 
-				<div v-if="canUpload" class="pt-20">
-					<MediaUploader @uploaded="onUploaded" />
-				</div>
+				<template v-if="canUpload">
+					<div class="pt-20">
+						<MediaUploader @uploaded="onUploaded" />
+					</div>
+				</template>
 
 			</Span>
 		</Grid>

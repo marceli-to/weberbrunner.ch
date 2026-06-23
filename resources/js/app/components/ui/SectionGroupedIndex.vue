@@ -122,12 +122,14 @@ load(fetch)
 
 		<Span class="col-span-8 col-start-2">
 
-			<Button v-if="canCreate" @click="lightbox.open()" class="px-20">
-				<template #icon-right>
-					<Plus class="w-10 h-10" />
-				</template>
-				Neue Kategorie
-			</Button>
+			<template v-if="canCreate">
+				<Button @click="lightbox.open()" class="px-20">
+					<template #icon-right>
+						<Plus class="w-10 h-10" />
+					</template>
+					Neue Kategorie
+				</Button>
+			</template>
 
 		</Span>
 
@@ -154,7 +156,9 @@ load(fetch)
 
 						<!-- Section header -->
 						<Span class="col-span-1 flex items-center justify-end">
-							<Burger v-if="canReorder" class="w-18 h-10 cursor-grab section-drag-handle" />
+							<template v-if="canReorder">
+								<Burger class="w-18 h-10 cursor-grab section-drag-handle" />
+							</template>
 						</Span>
 
 						<Span class="col-span-8">
@@ -167,7 +171,9 @@ load(fetch)
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
-							<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroySection(group)" />
+							<template v-if="canDelete">
+								<Cross class="w-10 cursor-pointer" @click="destroySection(group)" />
+							</template>
 						</Span>
 
 						<!-- Entries -->
@@ -198,11 +204,13 @@ load(fetch)
 								</template>
 							</draggable>
 
-							<Grid v-if="canCreate" :cols="10" class="mb-10">
-								<Span class="col-span-8 col-start-2">
-									<NewEntryButton @click="router.push({ name: `${routePrefix}.create`, query: { section: group.section.uuid } })" />
-								</Span>
-							</Grid>
+							<template v-if="canCreate">
+								<Grid :cols="10" class="mb-10">
+									<Span class="col-span-8 col-start-2">
+										<NewEntryButton @click="router.push({ name: `${routePrefix}.create`, query: { section: group.section.uuid } })" />
+									</Span>
+								</Grid>
+							</template>
 
 						</Span>
 

@@ -8,7 +8,7 @@ import { useCan } from '@/composables/useCan'
 const { canUpdate } = useCan()
 
 defineProps({
-	project: { type: Object, required: true },
+  project: { type: Object, required: true },
 })
 </script>
 
@@ -18,9 +18,11 @@ defineProps({
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
           <span>Erläuterung Projekt</span>
-          <RouterLink v-if="canUpdate" :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
-            <PencilCircle class="w-25" />
-          </RouterLink>
+          <template v-if="canUpdate">
+            <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
+              <PencilCircle class="w-25" />
+            </RouterLink>
+          </template>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
           <span class="line-clamp-12" v-html="project.description"></span>
@@ -31,9 +33,11 @@ defineProps({
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
           <span>Projektbeschrieb</span>
-          <RouterLink v-if="canUpdate" :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
-            <PencilCircle class="w-25" />
-          </RouterLink>
+          <template v-if="canUpdate">
+            <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
+              <PencilCircle class="w-25" />
+            </RouterLink>
+          </template>
         </div>
         <div class="text-md pt-5 pb-20 flex-1 border-b-thin">
           <span class="line-clamp-12" v-html="project.short_description"></span>

@@ -133,9 +133,11 @@
 							</template>
 						</draggable>
 
-						<div v-if="canUpload" :class="{ 'mt-20': sliderImages.length }">
-							<MediaUploader @uploaded="onUploaded" />
-						</div>
+						<template v-if="canUpload">
+							<div :class="{ 'mt-20': sliderImages.length }">
+								<MediaUploader @uploaded="onUploaded" />
+							</div>
+						</template>
 					</div>
 				</Span>
 

@@ -89,7 +89,9 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveShortDescription">
           <Editor v-model="project.short_description" />
 					<div class="flex gap-20 mt-10">
-						<Button v-if="canUpdate" type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
+						<template v-if="canUpdate">
+							<Button type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
+						</template>
 					</div>
 				</form>
 			</Card>
@@ -109,7 +111,9 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveDescription">
 					<Editor v-model="project.description" />
 					<div class="flex gap-20 mt-10">
-						<Button v-if="canUpdate" type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
+						<template v-if="canUpdate">
+							<Button type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
+						</template>
 					</div>
 				</form>
 			</Card>

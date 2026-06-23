@@ -153,9 +153,11 @@ async function reorderMedia(block, items) {
 
 	<!-- Block type picker -->
 	<Grid class="mt-40">
-		<Span v-if="canCreate" class="col-span-8 col-start-2">
-			<BlockSelector :types="blockTypes" @select="addBlock" />
-		</Span>
+		<template v-if="canCreate">
+			<Span class="col-span-8 col-start-2">
+				<BlockSelector :types="blockTypes" @select="addBlock" />
+			</Span>
+		</template>
 	</Grid>
 
 	<!-- Media edit lightbox -->

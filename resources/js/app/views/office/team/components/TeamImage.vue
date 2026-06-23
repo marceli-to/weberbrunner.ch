@@ -55,7 +55,9 @@ async function onDelete() {
 	</template>
 
 	<template v-else>
-		<MediaUploader v-if="canUpload" @uploaded="onUploaded" />
+		<template v-if="canUpload">
+			<MediaUploader @uploaded="onUploaded" />
+		</template>
 	</template>
 
 </template>

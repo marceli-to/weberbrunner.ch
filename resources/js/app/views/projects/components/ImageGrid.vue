@@ -24,9 +24,11 @@ function editImages() {
 		<Grid :cols="6">
 			<Span class="col-span-8 font-semibold text-md min-h-50 flex items-center justify-between border-b-thin">
 				<span>Bilder</span>
-				<button v-if="canUpdate" type="button" class="cursor-pointer" @click="editImages">
-					<PencilCircle class="w-25" />
-				</button>
+				<template v-if="canUpdate">
+					<button type="button" class="cursor-pointer" @click="editImages">
+						<PencilCircle class="w-25" />
+					</button>
+				</template>
 			</Span>
 		</Grid>
 		<div v-if="project.media?.length" class="grid grid-cols-2 lg:grid-cols-5 gap-20 pt-20">

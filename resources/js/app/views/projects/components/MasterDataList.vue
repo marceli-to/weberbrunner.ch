@@ -56,7 +56,9 @@ async function destroy(entry) {
 		@end="reorder">
 		<template #item="{ element }">
 			<div class="flex items-center gap-20">
-				<Burger v-if="canReorder" variant="sm" class="w-18 h-10 cursor-grab masterdata-drag-handle flex-none" />
+				<template v-if="canReorder">
+					<Burger variant="sm" class="w-18 h-10 cursor-grab masterdata-drag-handle flex-none" />
+				</template>
 				<EntryRow
 					:label="element.title"
 					:sublabel="element.value"
@@ -64,14 +66,18 @@ async function destroy(entry) {
 					:show-publish="false"
 					class="flex-1"
 					split />
-				<Cross v-if="canDelete" class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				<template v-if="canDelete">
+					<Cross class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				</template>
 			</div>
 		</template>
 	</draggable>
 
-  <div v-if="canCreate" class="mt-10 ml-38 mr-30">
-    <NewEntryButton @click="drawerOpen = true">Hinzufügen</NewEntryButton>
-  </div>
+  <template v-if="canCreate">
+    <div class="mt-10 ml-38 mr-30">
+      <NewEntryButton @click="drawerOpen = true">Hinzufügen</NewEntryButton>
+    </div>
+  </template>
 
 	<MasterdataPickerDrawer
 		:open="drawerOpen"

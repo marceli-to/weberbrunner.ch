@@ -32,7 +32,9 @@ const collapsed = ref(!props.initialOpen)
 <template>
 	<Grid :cols="10">
 		<Span class="col-span-1 flex items-start justify-end pt-20">
-			<Burger v-if="draggable" variant="sm" class="w-18 h-10 cursor-grab drag-handle" />
+			<template v-if="draggable">
+				<Burger variant="sm" class="w-18 h-10 cursor-grab drag-handle" />
+			</template>
 		</Span>
 		<Span class="col-span-8">
 			<CollapsibleHeader
@@ -46,7 +48,9 @@ const collapsed = ref(!props.initialOpen)
 			</div>
 		</Span>
 		<Span class="col-span-1 flex items-start justify-start pt-20">
-			<Cross v-if="deletable" class="w-10 cursor-pointer" @click="$emit('delete')" />
+			<template v-if="deletable">
+				<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />
+			</template>
 		</Span>
 		<Span v-if="flush" v-show="!collapsed" class="col-span-10">
 			<slot />

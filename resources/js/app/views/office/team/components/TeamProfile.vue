@@ -86,9 +86,11 @@ async function destroy() {
 					Steckbrief Website
 				</Span>
 				<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-					<button v-if="canUpdate" type="button" @click="startEditing" class="cursor-pointer">
-						<PencilCircle class="w-25" />
-					</button>
+					<template v-if="canUpdate">
+						<button type="button" @click="startEditing" class="cursor-pointer">
+							<PencilCircle class="w-25" />
+						</button>
+					</template>
 				</Span>
 			</Grid>
 			<div v-for="(row, i) in [
@@ -144,9 +146,13 @@ async function destroy() {
 				<Grid :cols="6" class="pt-20">
 					<Span class="col-span-2" />
 					<Span class="col-span-4 flex flex-col gap-10">
-						<Button v-if="canUpdate" type="submit" class="px-10">Speichern</Button>
+						<template v-if="canUpdate">
+							<Button type="submit" class="px-10">Speichern</Button>
+						</template>
 						<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
-						<Button v-if="canDelete" type="button" variant="danger" @click="destroy" class="px-10 border-white! hover:border-red! ">Löschen</Button>
+						<template v-if="canDelete">
+							<Button type="button" variant="danger" @click="destroy" class="px-10 border-white! hover:border-red! ">Löschen</Button>
+						</template>
 					</Span>
 				</Grid>
 			</form>

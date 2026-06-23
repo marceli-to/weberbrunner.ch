@@ -68,12 +68,14 @@ load(fetch)
 			<PageTitle>Publikationen</PageTitle>
 		</Span>
 		<Span class="col-span-8 col-start-2">
-			<Button v-if="canCreate" @click="titleLightbox.open()" class="px-20">
-				<template #icon-right>
-					<Plus class="w-10 h-10" />
-				</template>
-				Neue Publikation
-			</Button>
+			<template v-if="canCreate">
+				<Button @click="titleLightbox.open()" class="px-20">
+					<template #icon-right>
+						<Plus class="w-10 h-10" />
+					</template>
+					Neue Publikation
+				</Button>
+			</template>
 		</Span>
 	</Grid>
 
@@ -94,7 +96,9 @@ load(fetch)
 					<Grid :cols="10">
 
 						<Span class="col-span-1 flex items-center justify-end">
-							<Burger v-if="canReorder" class="w-18 h-10 cursor-grab pub-drag-handle" />
+							<template v-if="canReorder">
+								<Burger class="w-18 h-10 cursor-grab pub-drag-handle" />
+							</template>
 						</Span>
 
 						<Span class="col-span-8">
@@ -107,7 +111,9 @@ load(fetch)
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
-							<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroy(pub)" />
+							<template v-if="canDelete">
+								<Cross class="w-10 cursor-pointer" @click="destroy(pub)" />
+							</template>
 						</Span>
 
 					</Grid>

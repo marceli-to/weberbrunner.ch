@@ -55,7 +55,9 @@ async function destroy(attribute) {
 		@end="reorder">
 		<template #item="{ element }">
 			<div class="flex items-center gap-20">
-				<Burger v-if="canReorder" variant="sm" class="w-18 h-10 cursor-grab attribute-drag-handle flex-none" />
+				<template v-if="canReorder">
+					<Burger variant="sm" class="w-18 h-10 cursor-grab attribute-drag-handle flex-none" />
+				</template>
 				<EntryRow
 					:label="element.key"
 					:sublabel="element.value"
@@ -64,14 +66,18 @@ async function destroy(attribute) {
 					class="flex-1"
 					split
 					@edit="lightbox.open(publication, element)" />
-				<Cross v-if="canDelete" class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				<template v-if="canDelete">
+					<Cross class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				</template>
 			</div>
 		</template>
 	</draggable>
 
-	<div v-if="canCreate" class="mt-10" :class="{ 'ml-38 mr-30': attributes.length }">
-		<NewEntryButton @click="lightbox.open(publication)">Hinzufügen</NewEntryButton>
-	</div>
+	<template v-if="canCreate">
+		<div class="mt-10" :class="{ 'ml-38 mr-30': attributes.length }">
+			<NewEntryButton @click="lightbox.open(publication)">Hinzufügen</NewEntryButton>
+		</div>
+	</template>
 
 	<AttributeLightbox ref="lightbox" @saved="emit('updated')" />
 </template>

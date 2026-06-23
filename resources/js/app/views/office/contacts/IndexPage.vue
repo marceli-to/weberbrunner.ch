@@ -88,13 +88,17 @@ load(fetch)
 										@toggle-publish="toggle(contact)" />
 								</Span>
 								<Span class="col-span-1 flex items-center justify-start">
-									<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroy(contact)" />
+									<template v-if="canDelete">
+										<Cross class="w-10 cursor-pointer" @click="destroy(contact)" />
+									</template>
 								</Span>
 							</Grid>
 
 							<Grid v-if="!group.contacts.length" :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
-									<NewEntryButton v-if="canCreate" @click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
+									<template v-if="canCreate">
+										<NewEntryButton @click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
+									</template>
 								</Span>
 							</Grid>
 

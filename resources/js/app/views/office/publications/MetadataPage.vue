@@ -65,7 +65,9 @@ async function removeOgImage() {
 				<form @submit.prevent="saveMetaDescription">
 					<Textarea v-model="metaDescription" :disabled="!canUpdate" />
 					<div class="flex gap-20 mt-10">
-						<Button v-if="canUpdate" type="submit" class="flex justify-center">Speichern</Button>
+						<template v-if="canUpdate">
+							<Button type="submit" class="flex justify-center">Speichern</Button>
+						</template>
 					</div>
 				</form>
 			</Span>

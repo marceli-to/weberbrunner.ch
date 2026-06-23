@@ -198,7 +198,9 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-10">
 							<Span class="col-span-8 col-start-2">
-								<NewEntryButton v-if="canCreate" @click="statusLightbox.open()" />
+								<template v-if="canCreate">
+									<NewEntryButton @click="statusLightbox.open()" />
+								</template>
 							</Span>
 						</Grid>
 					</Span>
@@ -245,7 +247,9 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-10">
 							<Span class="col-span-8 col-start-2">
-								<NewEntryButton v-if="canCreate" @click="categoryLightbox.open()" />
+								<template v-if="canCreate">
+									<NewEntryButton @click="categoryLightbox.open()" />
+								</template>
 							</Span>
 						</Grid>
 					</Span>
@@ -270,12 +274,14 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-20">
 							<Span class="col-span-8 col-start-2">
-								<Button v-if="canCreate" @click="masterdataGroupLightbox.open()" class="px-20">
-									<template #icon-right>
-										<Plus class="w-10 h-10" />
-									</template>
-									Neue Gruppe
-								</Button>
+								<template v-if="canCreate">
+									<Button @click="masterdataGroupLightbox.open()" class="px-20">
+										<template #icon-right>
+											<Plus class="w-10 h-10" />
+										</template>
+										Neue Gruppe
+									</Button>
+								</template>
 							</Span>
 						</Grid>
 
@@ -297,7 +303,9 @@ load(fetch)
 
 										<!-- Group header -->
 										<Span class="col-span-1 flex items-center justify-end">
-											<Burger v-if="canReorder" class="w-18 h-10 cursor-grab masterdata-group-drag-handle" />
+											<template v-if="canReorder">
+												<Burger class="w-18 h-10 cursor-grab masterdata-group-drag-handle" />
+											</template>
 										</Span>
 
 										<Span class="col-span-8">
@@ -310,7 +318,9 @@ load(fetch)
 										</Span>
 
 										<Span class="col-span-1 flex items-center justify-start">
-											<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroyMasterdataGroup(group)" />
+											<template v-if="canDelete">
+												<Cross class="w-10 cursor-pointer" @click="destroyMasterdataGroup(group)" />
+											</template>
 										</Span>
 
 										<!-- Entries -->
@@ -345,7 +355,9 @@ load(fetch)
 
 											<Grid :cols="10" class="mb-10">
 												<Span class="col-span-8 col-start-2">
-													<NewEntryButton v-if="canCreate" @click="masterdataEntryLightbox.open(group.section.id)" />
+													<template v-if="canCreate">
+														<NewEntryButton @click="masterdataEntryLightbox.open(group.section.id)" />
+													</template>
 												</Span>
 											</Grid>
 

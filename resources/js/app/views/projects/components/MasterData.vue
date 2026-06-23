@@ -35,9 +35,11 @@ function edit() {
 				Stammdaten
 			</Span>
 			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-				<button v-if="canUpdate" type="button" class="cursor-pointer" @click="edit">
-					<PencilCircle class="w-25" />
-				</button>
+				<template v-if="canUpdate">
+					<button type="button" class="cursor-pointer" @click="edit">
+						<PencilCircle class="w-25" />
+					</button>
+				</template>
 			</Span>
 		</Grid>
 		<div v-for="entry in entries" :key="entry.uuid">
