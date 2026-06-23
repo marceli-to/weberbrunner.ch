@@ -8,6 +8,7 @@ import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
 import { useFormErrors } from '@/composables/useFormErrors'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -25,6 +26,7 @@ const { collapsed, toggle } = useCollapsed('landing')
 const { confirm } = useConfirm()
 const { submit } = useFormErrors()
 const toast = useToast()
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 
 const columns = ref({ 1: [], 2: [], 3: [] })
 const allProjects = ref([])
@@ -149,8 +151,8 @@ load(fetch)
 		<Span v-show="!collapsed.has('intro-text')" class="col-span-8 col-start-2">
 			<Card>
 				<form @submit.prevent="saveText">
-					<Textarea v-model="landingText.text" :rows="8" />
-					<div class="flex gap-20 mt-10">
+					<Textarea v-model="landingText.text" :rows="8" :disabled="!canUpdate" />
+					<div v-if="canUpdate" class="flex gap-20 mt-10">
 						<Button type="submit" class="flex justify-center" :disabled="!textDirty">Speichern</Button>
 						<Button type="button" class="flex justify-center" :disabled="!textDirty" @click="cancelText">Abbrechen</Button>
 					</div>
@@ -185,13 +187,15 @@ load(fetch)
 						ghost-class="opacity-50"
 						animation="150"
 						class="flex flex-col gap-20 min-h-40"
+						:disabled="!canReorder"
 						@end="onDragEnd">
 						<template #item="{ element: item }">
-							<LandingCard :item="item" @delete="removeItem(item, col)" />
+							<LandingCard :item="item" :deletable="canDelete" :draggable="canReorder" @delete="removeItem(item, col)" />
 						</template>
 					</draggable>
 
 					<Button
+            v-if="canCreate"
             class="px-10 mt-20"
             @click="openDrawer(col)">
 						<template #icon-right>

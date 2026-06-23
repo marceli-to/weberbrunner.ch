@@ -1,5 +1,6 @@
 <script setup>
 import { useProjectSettings } from '@/composables/useProjectSettings'
+import { useCan } from '@/composables/useCan'
 import WebLayout from '@/views/projects/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -19,6 +20,8 @@ const {
 	selectStatus,
 	toggleCategory,
 } = useProjectSettings()
+
+const { canUpdate } = useCan()
 </script>
 
 <template>
@@ -27,7 +30,7 @@ const {
 		<!-- Publish -->
 		<Grid class="mb-20">
 			<Span class="col-span-8 col-start-2">
-				<PublishToggle :model-value="project.publish" @update:model-value="togglePublish" />
+				<PublishToggle v-if="canUpdate" :model-value="project.publish" @update:model-value="togglePublish" />
 			</Span>
 		</Grid>
 
@@ -46,6 +49,7 @@ const {
 							:value="status.id"
 							:label="status.title"
 							name="status"
+							:disabled="!canUpdate"
 							@update:model-value="selectStatus(status.id)" />
 					</CardRow>
 				</Card>
@@ -63,6 +67,7 @@ const {
 						<Checkbox
 							:model-value="isCategorySelected(category.id)"
 							:label="category.title"
+							:disabled="!canUpdate"
 							@update:model-value="toggleCategory(category.id)" />
 					</CardRow>
 				</Card>

@@ -30,3 +30,36 @@
 .editor .tiptap strong {
 	@apply font-semibold;
 }
+
+.editor-readonly {
+	@apply text-md leading-normal;
+}
+
+.editor-readonly p {
+	@apply mb-[0.5em];
+}
+
+.editor-readonly h2,
+.editor-readonly h3 {
+	@apply font-semibold mb-[0.5em];
+}
+
+.editor-readonly ul {
+	@apply list-disc pl-[1.5em] mb-[0.5em];
+}
+
+.editor-readonly ol {
+	@apply list-decimal pl-[1.5em] mb-[0.5em];
+}
+
+.editor-readonly li {
+	@apply mb-[0.25em];
+}
+
+.editor-readonly a {
+	@apply text-black underline underline-offset-4 decoration-1;
+}
+
+.editor-readonly strong {
+	@apply font-semibold;
+}

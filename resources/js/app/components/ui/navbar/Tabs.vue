@@ -7,6 +7,7 @@ import Eye from '@/components/icons/Eye.vue'
 const props = defineProps({
 	items: { type: Array, required: true },
 	publishable: { type: Object, default: null },
+	canPublish: { type: Boolean, default: true },
 })
 
 const emit = defineEmits(['toggle-publish'])
@@ -34,7 +35,7 @@ function navigate(name) {
 			{{ item.label }}
 		</NavBarButton>
 		<NavBarButton
-			v-if="publishable"
+			v-if="publishable && canPublish"
 			class="!border-none"
 			:class="publishable.publish ? '!bg-lime !text-white' : '!bg-silver !text-white'"
 			@click="emit('toggle-publish')">

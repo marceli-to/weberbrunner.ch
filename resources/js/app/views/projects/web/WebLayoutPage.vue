@@ -16,10 +16,12 @@ import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 import MediaEditModal from '@/components/media/MediaEditModal.vue'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 
 const { project, fetch } = useProject()
 const toast = useToast()
 const { collapsed, toggle } = useCollapsed('web-layout')
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 
 const editingMedia = ref(null)
 const sliderDrawerOpen = ref(false)
@@ -93,19 +95,20 @@ async function reorderSliderImages() {
 							:list="sliderImages"
 							item-key="uuid"
 							handle=".drag-handle"
+							:disabled="!canReorder"
 							class="gap-20 grid grid-cols-2 lg:grid-cols-4"
 							ghost-class="opacity-30"
 							animation="150"
 							@end="reorderSliderImages">
 							<template #item="{ element }">
-								<MediaCard :item="element" draggable publishable deletable editable show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
+								<MediaCard :item="element" :draggable="canReorder" :publishable="canUpdate" :deletable="canDelete" :editable="canUpdate" show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
 							</template>
 							<template #footer>
-								<AddButton @click="sliderDrawerOpen = true" />
+								<AddButton v-if="canCreate" @click="sliderDrawerOpen = true" />
 							</template>
 						</draggable>
 						<div v-else class="grid grid-cols-4 gap-20">
-							<AddButton @click="sliderDrawerOpen = true" />
+							<AddButton v-if="canCreate" @click="sliderDrawerOpen = true" />
 						</div>
 					</div>
 

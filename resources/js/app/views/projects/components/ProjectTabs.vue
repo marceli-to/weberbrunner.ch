@@ -6,11 +6,13 @@ import projectsApi from '@/api/projects'
 import { useRoute } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import Tabs from '@/components/ui/navbar/Tabs.vue'
 
 const route = useRoute()
 const toast = useToast()
 const { project } = useProject(null, { skipFetch: true })
+const { canUpdate } = useCan()
 
 const items = [
 	{ label: 'Web', name: 'projects.layout', icon: Window },
@@ -32,5 +34,5 @@ async function togglePublish() {
 </script>
 
 <template>
-	<Tabs :items="items" :publishable="project" @toggle-publish="togglePublish" />
+	<Tabs :items="items" :publishable="project" :can-publish="canUpdate" @toggle-publish="togglePublish" />
 </template>

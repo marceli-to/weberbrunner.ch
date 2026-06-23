@@ -1,6 +1,15 @@
-# Role-Based Access Control — Frontend Plan
+# Role-Based Access Control — Frontend
 
-Status: **Documentation only.** No code has been changed. This document maps every Vue component that needs a client-side permission guard and describes the proposed `useCan()` composable. Implementation is pending confirmation of the permission matrix.
+Status: **Implemented.** Client-side permission guards are wired across the dashboard via the `useCan()` composable, meta-driven router guards, and sidebar nav filtering. The backend policies remain the real security boundary; these guards are UX only.
+
+## Resolved decisions
+
+The matrix below is confirmed correct. Role source is the `260612_Mitarbeitende_Zugang DataHub.xlsx` list (A=admin, B=editor, C=viewer; 4/6/39 users). Applying those assignments to user records is a separate backend task (planned: an idempotent artisan command keyed by email) and is **not** part of this frontend work.
+
+- **Settings** (statuses/categories/masterdata) — visible to **admin + editor** (`canViewSettings`). Not admin-only.
+- **Users** — no Users-management section or Profile-management route exists, so there is no `canViewUsers` guard. (`profile.index` route exists but is not a management surface.)
+- **Viewer hitting a guarded route** — redirected to the dashboard (`projects.index`) by the global `beforeEach` guard.
+- **Activity log** — admin-only (`canViewActivity`); no route exists yet, so it is a composable flag only.
 
 ## Background
 
@@ -152,18 +161,20 @@ Add `beforeEnter` guards so non-permitted users are redirected rather than reach
 - **Admin + editor only:** Users viewing routes.
 - **Create / edit routes** (redirect viewers): `*.create`, `*.edit` for contacts, jobs, talks, jury, awards, projects (images/text/masterdata edit), publications, team detail edits.
 
-## Implementation Order (when approved)
+## What was built
 
-1. Add `useCan.js`; confirm `authStore.user.role` is populated.
-2. Wire the high-leverage reusable components (parents bind `useCan()` flags to existing visibility props). This is the highest coverage-per-change step.
-3. Sweep page-specific controls with `v-if`.
-4. Add sidebar nav filtering.
-5. Add router `beforeEnter` guards.
-6. Manual QA per role (admin / editor / viewer).
+1. **`composables/useCan.js`** — the composable (no `canViewUsers`; `canViewSettings` = admin+editor).
+2. **`stores/auth.js`** — added `ensureUser()` (shared, memoised fetch) so the router guard and `App.vue` await the same user load with no race or double request.
+3. **Reusable components** — `DraggableEntryRow` and `BlockCard` gained `draggable`/`deletable` props (default `true`). `SectionGroupedIndex`, `PageBlocks`, `MediaUploader`, `BlockImageForm`, `BlockSliderForm`, `BlockLinksForm` call `useCan()` directly (they own their controls; the dumb-leaf model didn't fit). `EntryRow`/`MediaCard` props are bound by parents. This covers Talks/Jury/Awards (via `SectionGroupedIndex`) and Network/Intro/Arbeitsweisen (via `PageBlocks`).
+4. **Page sweep** — all ~24 page-specific views in the inventory below now gate their create/update/delete/reorder/upload controls.
+5. **Sidebar** (`AppSidebar.vue`) — filters nav items by `meta.roles` (hides Settings from viewers).
+6. **Router** (`router/index.js`) — `meta.roles` on Settings + all create/edit routes; a global async `beforeEach` awaits `ensureUser()` and redirects disallowed roles to `projects.index`.
 
-## Open Questions
+### Design note: disabled vs hidden on Settings page
 
-1. Is the permission matrix above exactly correct, including reorder/upload mapping to create/update?
-2. Should **editors** see the **Settings** section (statuses/categories/masterdata) at all, or is it admin-only?
-3. Is there a frontend **Users** management section/route today, or only the Profile page? (Affects whether the admin+editor Users guard has a target.)
-4. For viewers hitting a guarded route directly — redirect to dashboard, or show a "no access" page?
+On `projects/web/SettingsPage.vue` the status/category controls are bound `:disabled="!canUpdate"` (visible but read-only) rather than `v-if`-hidden, so viewers still see the current selection. Action buttons elsewhere are hidden with `v-if`.
+
+## Remaining
+
+- Manual QA per role (admin / editor / viewer).
+- Backend: artisan command to apply the A/B/C role assignments to user records.

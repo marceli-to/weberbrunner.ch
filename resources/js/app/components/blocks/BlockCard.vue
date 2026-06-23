@@ -11,6 +11,8 @@ const props = defineProps({
 	initialOpen: { type: Boolean, default: false },
 	flush: { type: Boolean, default: false },
 	editable: { type: Boolean, default: false },
+	draggable: { type: Boolean, default: true },
+	deletable: { type: Boolean, default: true },
 })
 
 defineEmits(['delete', 'edit-title'])
@@ -30,7 +32,7 @@ const collapsed = ref(!props.initialOpen)
 <template>
 	<Grid :cols="10">
 		<Span class="col-span-1 flex items-start justify-end pt-20">
-			<Burger variant="sm" class="w-18 h-10 cursor-grab drag-handle" />
+			<Burger v-if="draggable" variant="sm" class="w-18 h-10 cursor-grab drag-handle" />
 		</Span>
 		<Span class="col-span-8">
 			<CollapsibleHeader
@@ -44,7 +46,7 @@ const collapsed = ref(!props.initialOpen)
 			</div>
 		</Span>
 		<Span class="col-span-1 flex items-start justify-start pt-20">
-			<Cross class="w-10 cursor-pointer" @click="$emit('delete')" />
+			<Cross v-if="deletable" class="w-10 cursor-pointer" @click="$emit('delete')" />
 		</Span>
 		<Span v-if="flush" v-show="!collapsed" class="col-span-10">
 			<slot />

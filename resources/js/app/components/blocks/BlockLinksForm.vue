@@ -8,6 +8,9 @@ import Button from '@/components/ui/form/Button.vue'
 import LinkDialogFields from '@/components/ui/form/LinkDialogFields.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
+import { useCan } from '@/composables/useCan'
+
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -76,6 +79,7 @@ function onReorder() {
 		v-model="links"
 		item-key="uuid"
 		handle=".link-drag-handle"
+		:disabled="!canReorder"
 		ghost-class="opacity-50"
 		animation="150"
 		class="flex flex-col gap-10"
@@ -85,6 +89,10 @@ function onReorder() {
 			<DraggableEntryRow
 				:label="element.title || element.url || '(kein Titel)'"
 				:publish="element.publish"
+				:draggable="canReorder"
+				:editable="canUpdate"
+				:show-publish="canUpdate"
+				:deletable="canDelete"
 				drag-handle-class="link-drag-handle"
 				@edit="openEdit(element)"
 				@toggle-publish="$emit('toggle-link', element.uuid)"
@@ -92,7 +100,7 @@ function onReorder() {
 		</template>
 	</draggable>
 
-  <Grid :cols="10" class="mb-10">
+  <Grid v-if="canCreate" :cols="10" class="mb-10">
     <Span class="col-span-8 col-start-2">
       <NewEntryButton @click="openCreate" />
     </Span>

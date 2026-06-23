@@ -6,6 +6,7 @@ import XHRUpload from '@uppy/xhr-upload'
 import German from '@uppy/locales/lib/de_DE'
 
 import PlusCircle from '@/components/icons/PlusCircle.vue'
+import { useCan } from '@/composables/useCan'
 
 import '@uppy/core/css/style.min.css'
 import '@uppy/status-bar/css/style.min.css'
@@ -16,6 +17,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['uploaded', 'save', 'cancel'])
+
+const { canUpload } = useCan()
 
 const statusBarRef = ref(null)
 const fileInputRef = ref(null)
@@ -76,6 +79,8 @@ function onFileChange(e) {
 }
 
 onMounted(() => {
+	if (!canUpload.value) return
+
 	const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
 	uppy = new Uppy({
@@ -117,7 +122,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<div class="media-uploader">
+	<div v-if="canUpload" class="media-uploader">
 		<div class="media-uploader__label">
 			<button type="button" class="media-uploader__browse" @click="onBrowse">Drag-and-drop / Durchsuchen</button>
 		</div>

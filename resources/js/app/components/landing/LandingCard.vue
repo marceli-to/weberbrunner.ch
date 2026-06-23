@@ -4,6 +4,14 @@ import Cross from '@/components/icons/Cross.vue'
 
 defineProps({
 	item: { type: Object, required: true },
+	draggable: {
+		type: Boolean,
+		default: true,
+	},
+	deletable: {
+		type: Boolean,
+		default: true,
+	},
 })
 
 defineEmits(['delete'])
@@ -16,10 +24,10 @@ const teaser = (item) => item.project?.media?.[0] || null
 
 		<div class="relative aspect-square overflow-hidden">
 			<div class="absolute z-10 top-20 left-20 right-20 flex items-center justify-between">
-				<button type="button" class="landing-drag-handle cursor-grab">
+				<button v-if="draggable" type="button" class="landing-drag-handle cursor-grab">
 					<Burger variant="sm" class="w-18 h-auto" />
 				</button>
-				<button type="button" class="cursor-pointer" @click="$emit('delete', item)">
+				<button v-if="deletable" type="button" class="cursor-pointer" @click="$emit('delete', item)">
 					<Cross class="w-12 h-auto" />
 				</button>
 			</div>

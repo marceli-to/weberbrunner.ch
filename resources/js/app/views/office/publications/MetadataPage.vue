@@ -5,6 +5,7 @@ import mediaApi from '@/api/media'
 import { usePublication } from '@/composables/usePublication'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import PublicationLayout from '@/views/office/publications/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -16,6 +17,7 @@ import Button from '@/components/ui/form/Button.vue'
 
 const { publication, fetch } = usePublication()
 const toast = useToast()
+const { canUpdate, canUpload, canDelete } = useCan()
 const { collapsed, toggle } = useCollapsed('publication-metadata')
 
 const metaDescription = ref('')
@@ -61,9 +63,9 @@ async function removeOgImage() {
 			</Span>
 			<Span v-show="!collapsed.has('meta')" class="col-span-8 col-start-2">
 				<form @submit.prevent="saveMetaDescription">
-					<Textarea v-model="metaDescription" />
+					<Textarea v-model="metaDescription" :disabled="!canUpdate" />
 					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center">Speichern</Button>
+						<Button v-if="canUpdate" type="submit" class="flex justify-center">Speichern</Button>
 					</div>
 				</form>
 			</Span>
@@ -79,9 +81,9 @@ async function removeOgImage() {
 			</Span>
 			<Span v-show="!collapsed.has('og')" class="col-span-2 col-start-2">
 				<div v-if="ogImage">
-					<MediaCard :item="ogImage" deletable @delete="removeOgImage" />
+					<MediaCard :item="ogImage" :deletable="canDelete" @delete="removeOgImage" />
 				</div>
-				<MediaUploader v-else @uploaded="uploadOgImage" />
+				<MediaUploader v-else-if="canUpload" @uploaded="uploadOgImage" />
 			</Span>
 		</Grid>
 

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import projectsApi from '@/api/projects'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useTableSort } from '@/composables/useTableSort'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -19,6 +20,7 @@ const { load } = usePageLoader()
 const projects = ref([])
 const createLightbox = ref(null)
 const { sorted, sortKey, sortDir, toggleSort } = useTableSort(projects, 'priority', 'asc', 'projects')
+const { canCreate } = useCan()
 
 async function fetch() {
 	const { data } = await projectsApi.index()
@@ -42,7 +44,7 @@ load(fetch)
 			<PageTitle>Arbeiten</PageTitle>
 		</Span>
 
-		<Span class="col-span-8 col-start-2 mb-20">
+		<Span v-if="canCreate" class="col-span-8 col-start-2 mb-20">
 			<Button @click="createLightbox.open()" class="px-20">
 				<template #icon-right>
 					<Plus class="w-10 h-10" />

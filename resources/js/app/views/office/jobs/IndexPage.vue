@@ -5,6 +5,7 @@ import jobsApi from '@/api/jobs'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -18,6 +19,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('jobs')
 const { confirm } = useConfirm()
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 
 async function fetch() {
 	const { data } = await jobsApi.index()
@@ -91,11 +93,16 @@ load(fetch)
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
 								:class="{ 'mb-10': group.jobs.length }"
+								:disabled="!canReorder"
 								@change="reorder(group)">
 								<template #item="{ element: job }">
 									<DraggableEntryRow
 										:label="job.title"
 										:publish="job.publish"
+										:editable="canUpdate"
+										:show-publish="canUpdate"
+										:draggable="canReorder"
+										:deletable="canDelete"
 										drag-handle-class="job-drag-handle"
 										@edit="router.push({ name: 'jobs.edit', params: { id: job.uuid } })"
 										@toggle-publish="toggle(job)"
@@ -105,7 +112,7 @@ load(fetch)
 
 							<Grid :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
-									<NewEntryButton @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })" />
+									<NewEntryButton v-if="canCreate" @click="router.push({ name: 'jobs.create', query: { location: group.location.uuid } })" />
 								</Span>
 							</Grid>
 

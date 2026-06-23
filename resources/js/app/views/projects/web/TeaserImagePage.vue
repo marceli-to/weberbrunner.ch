@@ -1,5 +1,6 @@
 <script setup>
 import { useProjectTeaser } from '@/composables/useProjectTeaser'
+import { useCan } from '@/composables/useCan'
 import WebLayout from '@/views/projects/components/Layout.vue'
 import SectionTitle from '@/components/ui/SectionTitle.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
@@ -12,6 +13,7 @@ const {
 	project, teaserImage, selectedTeaserImage, teaserDrawerOpen,
 	saveTeaserImage, removeTeaserImage,
 } = useProjectTeaser()
+const { canUpdate, canDelete } = useCan()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const {
 			</Span>
 			<Span class="col-span-2 col-start-2">
 				<div v-if="teaserImage">
-					<MediaCard :item="teaserImage" deletable editable @delete="removeTeaserImage" @edit="teaserDrawerOpen = true" />
+					<MediaCard :item="teaserImage" :deletable="canDelete" :editable="canUpdate" @delete="removeTeaserImage" @edit="teaserDrawerOpen = true" />
 				</div>
 				<AddButton v-else @click="teaserDrawerOpen = true" />
 			</Span>

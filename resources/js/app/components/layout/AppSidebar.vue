@@ -2,10 +2,14 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import api from '@/api/axios'
+import { useCan } from '@/composables/useCan'
 import Arrow from '@/components/icons/Arrow.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { role } = useCan()
+
+const allowed = (meta) => !meta?.roles || (role.value && meta.roles.includes(role.value))
 
 function logout() {
 	api.post('/logout', {}, { baseURL: '/' }).then(() => {
@@ -17,7 +21,7 @@ const allRoutes = computed(() => router.getRoutes())
 
 const mainItems = computed(() => {
 	const direct = allRoutes.value
-		.filter(r => r.meta?.navSection === 'main' && r.meta?.navLabel)
+		.filter(r => r.meta?.navSection === 'main' && r.meta?.navLabel && allowed(r.meta))
 		.map(r => ({
 			name: r.name,
 			label: r.meta.navLabel,
@@ -39,7 +43,7 @@ const mainItems = computed(() => {
 
 const getChildren = (section) =>
 	allRoutes.value
-		.filter(r => r.meta?.navSection === section && r.meta?.navLabel)
+		.filter(r => r.meta?.navSection === section && r.meta?.navLabel && allowed(r.meta))
 		.sort((a, b) => (a.meta?.navOrder ?? 0) - (b.meta?.navOrder ?? 0))
 		.map(r => ({ name: r.name, label: r.meta.navLabel }))
 

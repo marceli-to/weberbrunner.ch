@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import publicationsApi from '@/api/publications'
 import { usePublication } from '@/composables/usePublication'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import PublicationLayout from '@/views/office/publications/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -10,6 +11,7 @@ import PublishToggle from '@/components/ui/form/PublishToggle.vue'
 
 const { publication, fetch } = usePublication()
 const toast = useToast()
+const { canUpdate } = useCan()
 
 async function togglePublish() {
 	await publicationsApi.toggle(publication.value.uuid)
@@ -25,7 +27,7 @@ async function togglePublish() {
 		<Grid class="mb-20">
 			<Span class="col-span-8 col-start-2">
 				<PublishToggle
-					v-if="publication"
+					v-if="publication && canUpdate"
 					:model-value="publication.publish"
 					@update:model-value="togglePublish" />
 			</Span>

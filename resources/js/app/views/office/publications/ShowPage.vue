@@ -5,6 +5,7 @@
 	import { useCollapsed } from '@/composables/useCollapsed'
 	import { useConfirm } from '@/composables/useConfirm'
 	import { useToast } from '@/composables/useToast'
+	import { useCan } from '@/composables/useCan'
 	import publicationsApi from '@/api/publications'
 	import { publicationBlocksApi } from '@/api/blocks'
 	import mediaApi from '@/api/media'
@@ -20,6 +21,7 @@
 
 	const { confirm } = useConfirm()
 	const toast = useToast()
+	const { canCreate, canUpdate, canReorder, canUpload, canDelete } = useCan()
 
 	const { publication, fetch } = usePublication()
 
@@ -109,6 +111,7 @@
 
 						<draggable
 							v-if="sliderImages.length"
+							:disabled="!canReorder"
 							:list="sliderImages"
 							item-key="uuid"
 							handle=".drag-handle"
@@ -120,9 +123,9 @@
 							<template #item="{ element }">
 								<MediaCard
 									:item="element"
-									:draggable="true"
-									:deletable="true"
-									:editable="true"
+									:draggable="canReorder"
+									:deletable="canDelete"
+									:editable="canUpdate"
 									:show-filename="true"
 									variant="dark"
 									@delete="onDelete"
@@ -130,7 +133,7 @@
 							</template>
 						</draggable>
 
-						<div :class="{ 'mt-20': sliderImages.length }">
+						<div v-if="canUpload" :class="{ 'mt-20': sliderImages.length }">
 							<MediaUploader @uploaded="onUploaded" />
 						</div>
 					</div>
@@ -152,14 +155,14 @@
 					<template v-if="file">
 						<MediaCard
               :item="file"
-              :deletable="true"
-              :editable="true"
+              :deletable="canDelete"
+              :editable="canUpdate"
               :show-filename="true"
               variant="dark"
               @delete="onFileDelete"
               @edit="editingMedia = $event" />
 					</template>
-          <template v-else>
+          <template v-else-if="canCreate">
             <MediaUploader
               :allowed-file-types="['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip']"
               @uploaded="onFileUploaded" />

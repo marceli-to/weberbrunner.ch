@@ -6,6 +6,7 @@ import Card from '@/components/ui/Card.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import PencilCircle from '@/components/icons/PencilCircle.vue'
+import { useCan } from '@/composables/useCan'
 
 const props = defineProps({
 	project: { type: Object, required: true },
@@ -13,6 +14,7 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
+const { canUpdate } = useCan()
 
 const entries = ref([])
 
@@ -33,7 +35,7 @@ function edit() {
 				Stammdaten
 			</Span>
 			<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-				<button type="button" class="cursor-pointer" @click="edit">
+				<button v-if="canUpdate" type="button" class="cursor-pointer" @click="edit">
 					<PencilCircle class="w-25" />
 				</button>
 			</Span>

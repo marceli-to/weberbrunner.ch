@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import teamApi from '@/api/team'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useTableSort } from '@/composables/useTableSort'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -19,6 +20,7 @@ const { load } = usePageLoader()
 const members = ref([])
 const createLightbox = ref(null)
 const { sorted, sortKey, sortDir, toggleSort } = useTableSort(members, 'name', 'asc', 'team')
+const { canCreate } = useCan()
 
 async function fetch() {
 	const { data } = await teamApi.index()
@@ -42,7 +44,7 @@ load(fetch)
 			<PageTitle>Team</PageTitle>
 		</Span>
 
-		<Span class="col-span-8 col-start-2 mb-20">
+		<Span v-if="canCreate" class="col-span-8 col-start-2 mb-20">
 			<Button @click="createLightbox.open()" class="px-20">
 				<template #icon-right>
 					<Plus class="w-10 h-10" />

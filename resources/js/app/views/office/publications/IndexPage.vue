@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import publicationsApi from '@/api/publications'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -17,6 +18,7 @@ import TitleLightbox from '@/views/office/publications/components/TitleLightbox.
 const router = useRouter()
 const { load } = usePageLoader()
 const { confirm } = useConfirm()
+const { canCreate, canReorder, canDelete } = useCan()
 
 const publications = ref([])
 const titleLightbox = ref(null)
@@ -66,7 +68,7 @@ load(fetch)
 			<PageTitle>Publikationen</PageTitle>
 		</Span>
 		<Span class="col-span-8 col-start-2">
-			<Button @click="titleLightbox.open()" class="px-20">
+			<Button v-if="canCreate" @click="titleLightbox.open()" class="px-20">
 				<template #icon-right>
 					<Plus class="w-10 h-10" />
 				</template>
@@ -79,6 +81,7 @@ load(fetch)
 	<Grid>
 		<draggable
 			v-model="publications"
+			:disabled="!canReorder"
 			item-key="uuid"
 			handle=".pub-drag-handle"
 			ghost-class="opacity-50"
@@ -91,7 +94,7 @@ load(fetch)
 					<Grid :cols="10">
 
 						<Span class="col-span-1 flex items-center justify-end">
-							<Burger class="w-18 h-10 cursor-grab pub-drag-handle" />
+							<Burger v-if="canReorder" class="w-18 h-10 cursor-grab pub-drag-handle" />
 						</Span>
 
 						<Span class="col-span-8">
@@ -104,7 +107,7 @@ load(fetch)
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
-							<Cross class="w-10 cursor-pointer" @click="destroy(pub)" />
+							<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroy(pub)" />
 						</Span>
 
 					</Grid>

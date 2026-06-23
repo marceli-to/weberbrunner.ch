@@ -7,6 +7,7 @@ import { useProject } from '@/composables/useProject'
 import { useMediaStore } from '@/stores/media'
 import { useConfirm } from '@/composables/useConfirm'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -24,6 +25,7 @@ const router = useRouter()
 const mediaStore = useMediaStore()
 const { confirm } = useConfirm()
 const toast = useToast()
+const { canUpdate, canDelete, canReorder, canUpload } = useCan()
 
 const { project, fetch } = useProject((data) => {
 	mediaStore.setItems(data.media || [])
@@ -115,6 +117,7 @@ async function handleSubmit() {
 					v-model="dragItems"
 					item-key="uuid"
 					handle=".drag-handle"
+					:disabled="!canReorder"
 					class="grid grid-cols-2 lg:grid-cols-4 gap-20 pt-20"
 					ghost-class="opacity-30"
 					animation="150"
@@ -122,9 +125,9 @@ async function handleSubmit() {
 					<template #item="{ element }">
 						<MediaCard
 							:item="element"
-							:draggable="true"
-							:deletable="true"
-							:editable="true"
+							:draggable="canReorder"
+							:deletable="canDelete"
+							:editable="canUpdate"
 							:show-filename="true"
 							variant="dark"
 							@delete="onDelete"
@@ -132,7 +135,7 @@ async function handleSubmit() {
 					</template>
 				</draggable>
 
-				<div class="pt-20">
+				<div v-if="canUpload" class="pt-20">
 					<MediaUploader @uploaded="onUploaded" />
 				</div>
 
