@@ -3,6 +3,9 @@ import Card from '@/components/ui/Card.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import PencilCircle from '@/components/icons/PencilCircle.vue'
+import { useCan } from '@/composables/useCan'
+
+const { canUpdate } = useCan()
 
 defineProps({
 	project: { type: Object, required: true },
@@ -15,7 +18,7 @@ defineProps({
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
           <span>Erläuterung Projekt</span>
-          <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
+          <RouterLink v-if="canUpdate" :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>
@@ -28,7 +31,7 @@ defineProps({
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
           <span>Projektbeschrieb</span>
-          <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
+          <RouterLink v-if="canUpdate" :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
             <PencilCircle class="w-25" />
           </RouterLink>
         </div>

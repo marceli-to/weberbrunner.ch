@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 import projectMasterdataApi from '@/api/project-masterdata'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
 import EntryRow from '@/components/ui/EntryRow.vue'
@@ -14,6 +15,7 @@ const props = defineProps({
 })
 
 const { confirm } = useConfirm()
+const { canCreate, canDelete, canReorder } = useCan()
 const entries = ref([])
 const drawerOpen = ref(false)
 
@@ -46,6 +48,7 @@ async function destroy(entry) {
 		v-model="entries"
 		item-key="uuid"
 		handle=".masterdata-drag-handle"
+		:disabled="!canReorder"
 		ghost-class="opacity-50"
 		animation="150"
 		class="flex flex-col gap-10 min-h-1"
@@ -53,7 +56,7 @@ async function destroy(entry) {
 		@end="reorder">
 		<template #item="{ element }">
 			<div class="flex items-center gap-20">
-				<Burger variant="sm" class="w-18 h-10 cursor-grab masterdata-drag-handle flex-none" />
+				<Burger v-if="canReorder" variant="sm" class="w-18 h-10 cursor-grab masterdata-drag-handle flex-none" />
 				<EntryRow
 					:label="element.title"
 					:sublabel="element.value"
@@ -61,12 +64,12 @@ async function destroy(entry) {
 					:show-publish="false"
 					class="flex-1"
 					split />
-				<Cross class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				<Cross v-if="canDelete" class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
 			</div>
 		</template>
 	</draggable>
 
-  <div class="mt-10 ml-38 mr-30">
+  <div v-if="canCreate" class="mt-10 ml-38 mr-30">
     <NewEntryButton @click="drawerOpen = true">Hinzufügen</NewEntryButton>
   </div>
 

@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 import publicationsApi from '@/api/publications'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
 import EntryRow from '@/components/ui/EntryRow.vue'
@@ -16,6 +17,7 @@ const props = defineProps({
 const emit = defineEmits(['updated'])
 
 const { confirm } = useConfirm()
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 const lightbox = ref(null)
 const attributes = ref([])
 
@@ -45,6 +47,7 @@ async function destroy(attribute) {
 		v-model="attributes"
 		item-key="uuid"
 		handle=".attribute-drag-handle"
+		:disabled="!canReorder"
 		ghost-class="opacity-50"
 		animation="150"
 		class="flex flex-col gap-10 min-h-1"
@@ -52,20 +55,21 @@ async function destroy(attribute) {
 		@end="reorder">
 		<template #item="{ element }">
 			<div class="flex items-center gap-20">
-				<Burger variant="sm" class="w-18 h-10 cursor-grab attribute-drag-handle flex-none" />
+				<Burger v-if="canReorder" variant="sm" class="w-18 h-10 cursor-grab attribute-drag-handle flex-none" />
 				<EntryRow
 					:label="element.key"
 					:sublabel="element.value"
+					:editable="canUpdate"
 					:show-publish="false"
 					class="flex-1"
 					split
 					@edit="lightbox.open(publication, element)" />
-				<Cross class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
+				<Cross v-if="canDelete" class="w-10 cursor-pointer flex-none" @click="destroy(element)" />
 			</div>
 		</template>
 	</draggable>
 
-	<div class="mt-10" :class="{ 'ml-38 mr-30': attributes.length }">
+	<div v-if="canCreate" class="mt-10" :class="{ 'ml-38 mr-30': attributes.length }">
 		<NewEntryButton @click="lightbox.open(publication)">Hinzufügen</NewEntryButton>
 	</div>
 
