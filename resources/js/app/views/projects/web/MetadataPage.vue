@@ -1,6 +1,7 @@
 <script setup>
 import { useProjectMeta } from '@/composables/useProjectMeta'
 import { useCollapsed } from '@/composables/useCollapsed'
+import { useCan } from '@/composables/useCan'
 import WebLayout from '@/views/projects/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -17,6 +18,7 @@ const {
 	saveDescription, saveOgImage, removeOgImage,
 } = useProjectMeta()
 const { collapsed, toggle } = useCollapsed('project-meta')
+const { canUpdate, canDelete } = useCan()
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const { collapsed, toggle } = useCollapsed('project-meta')
 				<Card>
 					<form @submit.prevent="saveDescription">
 						<Textarea v-model="project.meta_description" />
-						<div class="flex gap-20 mt-10">
+						<div v-if="canUpdate" class="flex gap-20 mt-10">
 							<Button type="submit" class="flex justify-center">Speichern</Button>
 						</div>
 					</form>
@@ -52,7 +54,7 @@ const { collapsed, toggle } = useCollapsed('project-meta')
 			</Span>
 			<Span v-show="!collapsed.has('og')" class="col-span-2 col-start-2">
 				<div v-if="ogImage">
-					<MediaCard :item="ogImage" deletable editable @delete="removeOgImage" @edit="ogDrawerOpen = true" />
+					<MediaCard :item="ogImage" :deletable="canDelete" :editable="canUpdate" @delete="removeOgImage" @edit="ogDrawerOpen = true" />
 				</div>
 				<AddButton v-else @click="ogDrawerOpen = true" />
 			</Span>

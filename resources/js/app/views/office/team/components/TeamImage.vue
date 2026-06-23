@@ -5,6 +5,7 @@ import mediaApi from '@/api/media'
 import MediaUploader from '@/components/media/MediaUploader.vue'
 import MediaCard from '@/components/media/MediaCard.vue'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 
 const props = defineProps({
 	member: { type: Object, required: true },
@@ -12,6 +13,7 @@ const props = defineProps({
 
 const emit = defineEmits(['updated'])
 const { confirm } = useConfirm()
+const { canUpload, canDelete } = useCan()
 const image = computed(() => props.member.media?.[0] || null)
 
 async function onUploaded(media) {
@@ -45,7 +47,7 @@ async function onDelete() {
 	<template v-if="image">
 		<MediaCard
 			:item="image"
-			:deletable="true"
+			:deletable="canDelete"
 			:show-filename="true"
 			:compact="true"
 			@delete="onDelete"
@@ -53,7 +55,7 @@ async function onDelete() {
 	</template>
 
 	<template v-else>
-		<MediaUploader @uploaded="onUploaded" />
+		<MediaUploader v-if="canUpload" @uploaded="onUploaded" />
 	</template>
 
 </template>

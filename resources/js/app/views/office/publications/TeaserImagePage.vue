@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import publicationsApi from '@/api/publications'
 import mediaApi from '@/api/media'
 import { usePublication } from '@/composables/usePublication'
+import { useCan } from '@/composables/useCan'
 import PublicationLayout from '@/views/office/publications/components/Layout.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -11,6 +12,7 @@ import MediaCard from '@/components/media/MediaCard.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
 
 const { publication, fetch } = usePublication()
+const { canUpload, canDelete } = useCan()
 
 const teaserImage = computed(() => publication.value?.media?.find(m => m.is_teaser) || null)
 
@@ -36,9 +38,9 @@ async function removeTeaser() {
 			</Span>
 			<Span class="col-span-2 col-start-2">
 				<div v-if="teaserImage">
-					<MediaCard :item="teaserImage" deletable @delete="removeTeaser" />
+					<MediaCard :item="teaserImage" :deletable="canDelete" @delete="removeTeaser" />
 				</div>
-				<MediaUploader v-else @uploaded="uploadTeaser" />
+				<MediaUploader v-else-if="canUpload" @uploaded="uploadTeaser" />
 			</Span>
 		</Grid>
 

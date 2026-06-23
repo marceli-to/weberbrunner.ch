@@ -7,6 +7,7 @@ import mediaApi from '@/api/media'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useFormErrors } from '@/composables/useFormErrors'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FormContainer from '@/components/ui/form/FormContainer.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -23,6 +24,7 @@ const router = useRouter()
 const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
 const { confirm } = useConfirm()
+const { canUpdate, canDelete, canUpload } = useCan()
 
 const isEdit = ref(!!route.params.id)
 const locationTitle = ref('')
@@ -151,13 +153,13 @@ function goBack() {
 				<template v-if="image">
 					<MediaCard
 						:item="image"
-						:deletable="true"
+						:deletable="canDelete"
 						:show-filename="true"
 						:compact="true"
 						@delete="onDeleteImage"
 					/>
 				</template>
-				<template v-else>
+				<template v-else-if="canUpload">
 					<MediaUploader @uploaded="onUploaded" />
 				</template>
 			</Span>
@@ -165,7 +167,7 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar v-show="dirty" @cancel="goBack" />
+		<ActionBar v-if="canUpdate" v-show="dirty" @cancel="goBack" />
 
 	</FormContainer>
 </template>

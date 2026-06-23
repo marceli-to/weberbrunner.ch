@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 import LandingIndex from '@/views/landing/IndexPage.vue'
 import ProjectsIndex from '@/views/projects/IndexPage.vue'
@@ -32,6 +33,8 @@ import OfficeAwards from '@/views/office/awards/IndexPage.vue'
 import OfficeAwardsForm from '@/views/office/awards/FormPage.vue'
 import SettingsIndex from '@/views/settings/IndexPage.vue'
 import ProfileIndex from '@/views/profile/IndexPage.vue'
+
+const EDITOR = ['admin', 'editor']
 
 const routes = [
   {
@@ -84,19 +87,19 @@ const routes = [
     path: '/dashboard/arbeiten/:id/stammdaten',
     name: 'projects.masterdata.edit',
     component: ProjectMasterdataEdit,
-    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index', roles: EDITOR },
   },
   {
     path: '/dashboard/arbeiten/:id/bilder',
     name: 'projects.images.edit',
     component: ProjectImagesEdit,
-    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index', roles: EDITOR },
   },
   {
     path: '/dashboard/arbeiten/:id/texte',
     name: 'projects.text.edit',
     component: ProjectTextEdit,
-    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index' },
+    meta: { title: 'Arbeiten', navSection: 'main', navParent: 'projects.index', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/intro',
@@ -162,13 +165,13 @@ const routes = [
     path: '/dashboard/buero/kontakt/erstellen',
     name: 'contacts.create',
     component: OfficeContactsForm,
-    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts' },
+    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/kontakt/:id/bearbeiten',
     name: 'contacts.edit',
     component: OfficeContactsForm,
-    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts' },
+    meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/jobs',
@@ -180,13 +183,13 @@ const routes = [
     path: '/dashboard/buero/jobs/erstellen',
     name: 'jobs.create',
     component: OfficeJobsForm,
-    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs' },
+    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/jobs/:id/bearbeiten',
     name: 'jobs.edit',
     component: OfficeJobsForm,
-    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs' },
+    meta: { title: 'Jobs', navSection: 'office', navParent: 'office.jobs', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/netzwerk',
@@ -204,13 +207,13 @@ const routes = [
     path: '/dashboard/buero/vortraege/erstellen',
     name: 'talks.create',
     component: OfficeTalksForm,
-    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks' },
+    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/vortraege/:id/bearbeiten',
     name: 'talks.edit',
     component: OfficeTalksForm,
-    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks' },
+    meta: { title: 'Vorträge', navSection: 'office', navParent: 'office.talks', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/jury',
@@ -222,13 +225,13 @@ const routes = [
     path: '/dashboard/buero/jury/erstellen',
     name: 'jury.create',
     component: OfficeJuryForm,
-    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury' },
+    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/jury/:id/bearbeiten',
     name: 'jury.edit',
     component: OfficeJuryForm,
-    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury' },
+    meta: { title: 'Jury', navSection: 'office', navParent: 'office.jury', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/auszeichnungen',
@@ -240,19 +243,19 @@ const routes = [
     path: '/dashboard/buero/auszeichnungen/erstellen',
     name: 'awards.create',
     component: OfficeAwardsForm,
-    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards' },
+    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards', roles: EDITOR },
   },
   {
     path: '/dashboard/buero/auszeichnungen/:id/bearbeiten',
     name: 'awards.edit',
     component: OfficeAwardsForm,
-    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards' },
+    meta: { title: 'Auszeichnungen', navSection: 'office', navParent: 'office.awards', roles: EDITOR },
   },
   {
     path: '/dashboard/voreinstellungen',
     name: 'settings.index',
     component: SettingsIndex,
-    meta: { title: 'Voreinstellungen', navSection: 'main', navLabel: 'Voreinstellungen', navOrder: 30 },
+    meta: { title: 'Voreinstellungen', navSection: 'main', navLabel: 'Voreinstellungen', navOrder: 30, roles: EDITOR },
   },
   {
     path: '/dashboard/profil',
@@ -265,6 +268,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach(async (to) => {
+  if (!to.meta.roles) return true
+  const auth = useAuthStore()
+  await auth.ensureUser()
+  const role = auth.user?.role
+  if (role && to.meta.roles.includes(role)) return true
+  return { name: 'projects.index' }
 })
 
 router.afterEach((to) => {

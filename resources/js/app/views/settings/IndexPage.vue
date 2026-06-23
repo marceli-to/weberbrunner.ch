@@ -7,6 +7,7 @@ import masterdataGroupsApi from '@/api/masterdata-groups'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -31,6 +32,7 @@ const masterdataGroupLightbox = ref(null)
 const masterdataEntryLightbox = ref(null)
 const { collapsed, toggle } = useCollapsed('settings')
 const { confirm } = useConfirm()
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 
 async function fetch() {
 	const [statusesRes, categoriesRes, masterdataRes] = await Promise.all([
@@ -179,11 +181,15 @@ load(fetch)
 							animation="150"
 							class="flex flex-col gap-10 min-h-1"
 							:class="{ 'mb-10': statuses.length }"
+							:disabled="!canReorder"
 							@change="reorderStatuses">
 							<template #item="{ element: status }">
 								<DraggableEntryRow
 									:label="status.title"
 									:show-publish="false"
+									:editable="canUpdate"
+									:draggable="canReorder"
+									:deletable="canDelete"
 									drag-handle-class="status-drag-handle"
 									@edit="statusLightbox.edit(status)"
 									@delete="destroyStatus(status)" />
@@ -192,7 +198,7 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-10">
 							<Span class="col-span-8 col-start-2">
-								<NewEntryButton @click="statusLightbox.open()" />
+								<NewEntryButton v-if="canCreate" @click="statusLightbox.open()" />
 							</Span>
 						</Grid>
 					</Span>
@@ -222,11 +228,15 @@ load(fetch)
 							animation="150"
 							class="flex flex-col gap-10 min-h-1"
 							:class="{ 'mb-10': categories.length }"
+							:disabled="!canReorder"
 							@change="reorderCategories">
 							<template #item="{ element: category }">
 								<DraggableEntryRow
 									:label="category.title"
 									:show-publish="false"
+									:editable="canUpdate"
+									:draggable="canReorder"
+									:deletable="canDelete"
 									drag-handle-class="category-drag-handle"
 									@edit="categoryLightbox.edit(category)"
 									@delete="destroyCategory(category)" />
@@ -235,7 +245,7 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-10">
 							<Span class="col-span-8 col-start-2">
-								<NewEntryButton @click="categoryLightbox.open()" />
+								<NewEntryButton v-if="canCreate" @click="categoryLightbox.open()" />
 							</Span>
 						</Grid>
 					</Span>
@@ -260,7 +270,7 @@ load(fetch)
 
 						<Grid :cols="10" class="mb-20">
 							<Span class="col-span-8 col-start-2">
-								<Button @click="masterdataGroupLightbox.open()" class="px-20">
+								<Button v-if="canCreate" @click="masterdataGroupLightbox.open()" class="px-20">
 									<template #icon-right>
 										<Plus class="w-10 h-10" />
 									</template>
@@ -276,6 +286,7 @@ load(fetch)
 							ghost-class="opacity-50"
 							animation="150"
 							class="flex flex-col gap-20 min-h-1"
+							:disabled="!canReorder"
 							@end="reorderMasterdataGroups">
 
 							<template #item="{ element: group }">
@@ -286,20 +297,20 @@ load(fetch)
 
 										<!-- Group header -->
 										<Span class="col-span-1 flex items-center justify-end">
-											<Burger class="w-18 h-10 cursor-grab masterdata-group-drag-handle" />
+											<Burger v-if="canReorder" class="w-18 h-10 cursor-grab masterdata-group-drag-handle" />
 										</Span>
 
 										<Span class="col-span-8">
 											<CollapsibleHeader
 												:title="group.section.title"
 												:collapsed="collapsed.has(`md-${group.section.uuid}`)"
-												editable
+												:editable="canUpdate"
 												@toggle="toggle(`md-${group.section.uuid}`)"
 												@edit="masterdataGroupLightbox.edit(group.section)" />
 										</Span>
 
 										<Span class="col-span-1 flex items-center justify-start">
-											<Cross class="w-10 cursor-pointer" @click="destroyMasterdataGroup(group)" />
+											<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroyMasterdataGroup(group)" />
 										</Span>
 
 										<!-- Entries -->
@@ -313,14 +324,18 @@ load(fetch)
 												animation="150"
 												class="flex flex-col gap-10 min-h-1"
 												:class="{ 'mb-10': group.entries.length }"
+												:disabled="!canReorder"
 												@change="reorderMasterdata(group)">
 												<template #item="{ element: entry }">
 													<DraggableEntryRow
 														:label="entry.title"
 														:split="true"
 														:show-publish="false"
-														:show-default="true"
+														:show-default="canUpdate"
 														:standard="entry.standard"
+														:editable="canUpdate"
+														:draggable="canReorder"
+														:deletable="canDelete"
 														drag-handle-class="masterdata-entry-drag-handle"
 														@edit="masterdataEntryLightbox.edit(entry, group.section.id)"
 														@toggle-default="toggleDefault(entry)"
@@ -330,7 +345,7 @@ load(fetch)
 
 											<Grid :cols="10" class="mb-10">
 												<Span class="col-span-8 col-start-2">
-													<NewEntryButton @click="masterdataEntryLightbox.open(group.section.id)" />
+													<NewEntryButton v-if="canCreate" @click="masterdataEntryLightbox.open(group.section.id)" />
 												</Span>
 											</Grid>
 

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import teamApi from '@/api/team'
 import { useFormErrors } from '@/composables/useFormErrors'
+import { useCan } from '@/composables/useCan'
 import Card from '@/components/ui/Card.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -17,6 +18,7 @@ const props = defineProps({
 const emit = defineEmits(['updated'])
 
 const { get, clear, submit } = useFormErrors()
+const { canCreate, canUpdate, canDelete } = useCan()
 const editing = ref(false)
 const bioForms = ref([])
 const removedUuids = ref([])
@@ -103,7 +105,7 @@ async function save() {
 					Lebenslauf Website
 				</Span>
 				<Span class="col-span-4 min-h-50 flex items-center justify-end border-b-thin">
-					<button type="button" @click="startEditing" class="cursor-pointer">
+					<button v-if="canUpdate" type="button" @click="startEditing" class="cursor-pointer">
 						<PencilCircle class="w-25" />
 					</button>
 				</Span>
@@ -136,7 +138,7 @@ async function save() {
 						</Span>
 						<Span class="col-span-4 pb-3 flex items-center gap-10">
 							<Input v-model="bio.description" :error="i === failedIndex ? get('description') : null" @focus="clear('description')" class="flex-1" />
-							<button type="button" @click="removeRow(i)" class="cursor-pointer shrink-0">
+							<button v-if="canDelete" type="button" @click="removeRow(i)" class="cursor-pointer shrink-0">
 								<Cross class="w-10 text-black" />
 							</button>
 						</Span>
@@ -145,8 +147,8 @@ async function save() {
 				<Grid :cols="6" class="pt-20">
 					<Span class="col-span-2" />
 					<Span class="col-span-4 flex flex-col gap-10">
-						<Button type="button" @click="addRow" class="px-10">Eintrag hinzufügen</Button>
-						<Button type="submit" class="px-10">Speichern</Button>
+						<Button v-if="canCreate" type="button" @click="addRow" class="px-10">Eintrag hinzufügen</Button>
+						<Button v-if="canUpdate" type="submit" class="px-10">Speichern</Button>
 						<Button type="button" @click="cancelEditing" class="px-10">Abbrechen</Button>
 					</Span>
 				</Grid>

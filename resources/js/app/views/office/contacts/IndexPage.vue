@@ -5,6 +5,7 @@ import contactsApi from '@/api/contacts'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -18,6 +19,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('contacts')
 const { confirm } = useConfirm()
+const { canCreate, canUpdate, canDelete } = useCan()
 
 async function fetch() {
 	const { data } = await contactsApi.index()
@@ -80,17 +82,19 @@ load(fetch)
 									<EntryRow
 										:label="contact.company_name"
 										:publish="contact.publish"
+										:editable="canUpdate"
+										:show-publish="canUpdate"
 										@edit="router.push({ name: 'contacts.edit', params: { id: contact.uuid } })"
 										@toggle-publish="toggle(contact)" />
 								</Span>
 								<Span class="col-span-1 flex items-center justify-start">
-									<Cross class="w-10 cursor-pointer" @click="destroy(contact)" />
+									<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroy(contact)" />
 								</Span>
 							</Grid>
 
 							<Grid v-if="!group.contacts.length" :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
-									<NewEntryButton @click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
+									<NewEntryButton v-if="canCreate" @click="router.push({ name: 'contacts.create', query: { location: group.location.uuid } })" />
 								</Span>
 							</Grid>
 

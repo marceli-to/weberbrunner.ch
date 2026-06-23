@@ -5,6 +5,7 @@ import sectionsApi from '@/api/sections'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
+import { useCan } from '@/composables/useCan'
 import draggable from 'vuedraggable'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -35,6 +36,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleSection } = useCollapsed(props.collapsedKey)
 const { confirm } = useConfirm()
+const { canCreate, canUpdate, canDelete, canReorder } = useCan()
 const lightbox = ref(null)
 
 async function fetch() {
@@ -120,7 +122,7 @@ load(fetch)
 
 		<Span class="col-span-8 col-start-2">
 
-			<Button @click="lightbox.open()" class="px-20">
+			<Button v-if="canCreate" @click="lightbox.open()" class="px-20">
 				<template #icon-right>
 					<Plus class="w-10 h-10" />
 				</template>
@@ -138,6 +140,7 @@ load(fetch)
 			v-model="groups"
 			item-key="section.uuid"
 			handle=".section-drag-handle"
+			:disabled="!canReorder"
 			ghost-class="opacity-50"
 			animation="150"
 			class="col-span-10 flex flex-col gap-20"
@@ -151,20 +154,20 @@ load(fetch)
 
 						<!-- Section header -->
 						<Span class="col-span-1 flex items-center justify-end">
-							<Burger class="w-18 h-10 cursor-grab section-drag-handle" />
+							<Burger v-if="canReorder" class="w-18 h-10 cursor-grab section-drag-handle" />
 						</Span>
 
 						<Span class="col-span-8">
 							<CollapsibleHeader
 								:title="group.section.title"
 								:collapsed="collapsed.has(group.section.uuid)"
-								editable
+								:editable="canUpdate"
 								@toggle="toggleSection(group.section.uuid)"
 								@edit="lightbox.edit(group.section)" />
 						</Span>
 
 						<Span class="col-span-1 flex items-center justify-start">
-							<Cross class="w-10 cursor-pointer" @click="destroySection(group)" />
+							<Cross v-if="canDelete" class="w-10 cursor-pointer" @click="destroySection(group)" />
 						</Span>
 
 						<!-- Entries -->
@@ -174,6 +177,7 @@ load(fetch)
 								group="entries"
 								item-key="uuid"
 								handle=".entry-drag-handle"
+								:disabled="!canReorder"
 								ghost-class="opacity-50"
 								animation="150"
 								class="flex flex-col gap-10 min-h-1"
@@ -183,6 +187,10 @@ load(fetch)
 									<DraggableEntryRow
 										:label="entry[labelField]"
 										:publish="entry.publish"
+										:draggable="canReorder"
+										:editable="canUpdate"
+										:show-publish="canUpdate"
+										:deletable="canDelete"
 										drag-handle-class="entry-drag-handle"
 										@edit="router.push({ name: `${routePrefix}.edit`, params: { id: entry.uuid } })"
 										@toggle-publish="toggle(entry)"
@@ -190,7 +198,7 @@ load(fetch)
 								</template>
 							</draggable>
 
-							<Grid :cols="10" class="mb-10">
+							<Grid v-if="canCreate" :cols="10" class="mb-10">
 								<Span class="col-span-8 col-start-2">
 									<NewEntryButton @click="router.push({ name: `${routePrefix}.create`, query: { section: group.section.uuid } })" />
 								</Span>

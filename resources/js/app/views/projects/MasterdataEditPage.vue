@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProject } from '@/composables/useProject'
+import { useCan } from '@/composables/useCan'
 import projectMasterdataApi from '@/api/project-masterdata'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -17,6 +18,7 @@ const route = useRoute()
 const router = useRouter()
 
 const { project } = useProject()
+const { canUpdate } = useCan()
 
 const entries = ref([])
 const form = ref({})
@@ -74,7 +76,7 @@ async function handleSubmit() {
 			</Span>
 		</Grid>
 
-		<ActionBar @cancel="goBack" />
+		<ActionBar v-if="canUpdate" @cancel="goBack" />
 	</FormContainer>
 
 </template>

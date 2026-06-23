@@ -6,6 +6,7 @@ import { useProject } from '@/composables/useProject'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useFormErrors } from '@/composables/useFormErrors'
 import { useToast } from '@/composables/useToast'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -26,6 +27,7 @@ const { project, fetch } = useProject((data) => {
 	original.value = { description: data.description ?? '', short_description: data.short_description ?? '' }
 })
 const { collapsed, toggle } = useCollapsed('project-text')
+const { canUpdate } = useCan()
 
 const descriptionDirty = computed(() => project.value && project.value.description !== original.value.description)
 const shortDescriptionDirty = computed(() => project.value && project.value.short_description !== original.value.short_description)
@@ -87,7 +89,7 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveShortDescription">
           <Editor v-model="project.short_description" />
 					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
+						<Button v-if="canUpdate" type="submit" class="flex justify-center" :disabled="!shortDescriptionDirty">Speichern</Button>
 					</div>
 				</form>
 			</Card>
@@ -107,7 +109,7 @@ async function saveShortDescription() {
 				<form @submit.prevent="saveDescription">
 					<Editor v-model="project.description" />
 					<div class="flex gap-20 mt-10">
-						<Button type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
+						<Button v-if="canUpdate" type="submit" class="flex justify-center" :disabled="!descriptionDirty">Speichern</Button>
 					</div>
 				</form>
 			</Card>

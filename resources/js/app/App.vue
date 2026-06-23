@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 const authStore = useAuthStore()
 const appReady = ref(false)
 
-authStore.fetchUser().then(() => {
+authStore.ensureUser().then(() => {
 	appReady.value = true
 })
 </script>

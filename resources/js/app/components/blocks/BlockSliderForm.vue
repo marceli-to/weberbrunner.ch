@@ -5,6 +5,9 @@ import MediaCard from '@/components/media/MediaCard.vue'
 import AddButton from '@/components/media/AddButton.vue'
 import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
+import { useCan } from '@/composables/useCan'
+
+const { canUpdate, canDelete, canReorder } = useCan()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -48,6 +51,7 @@ function onReorder() {
 			:list="images"
 			item-key="uuid"
 			handle=".drag-handle"
+			:disabled="!canReorder"
 			class="grid grid-cols-4 gap-20"
 			ghost-class="opacity-30"
 			animation="150"
@@ -55,10 +59,10 @@ function onReorder() {
 			<template #item="{ element }">
 				<MediaCard
 					:item="element"
-					draggable
-					publishable
-					deletable
-					editable
+					:draggable="canReorder"
+					:publishable="canUpdate"
+					:deletable="canDelete"
+					:editable="canUpdate"
 					show-filename
 					@delete="$emit('remove-media', element.uuid)"
 					@toggle-publish="$emit('toggle-publish', element)"

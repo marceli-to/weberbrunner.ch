@@ -5,6 +5,7 @@ import { pageBlocksApi } from '@/api/blocks'
 import mediaApi from '@/api/media'
 import { useToast } from '@/composables/useToast'
 import { useBlocks } from '@/composables/useBlocks'
+import { useCan } from '@/composables/useCan'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import BlockCard from '@/components/blocks/BlockCard.vue'
@@ -28,6 +29,7 @@ const emit = defineEmits(['updated'])
 
 const toast = useToast()
 const editingMedia = ref(null)
+const { canCreate, canUpdate, canDelete, canReorder, canUpload } = useCan()
 
 const {
 	blocks, lastCreatedUuid, blockTitleForm,
@@ -88,6 +90,7 @@ async function reorderMedia(block, items) {
 			v-model="blocks"
 			item-key="uuid"
 			handle=".drag-handle"
+			:disabled="!canReorder"
 			ghost-class="opacity-50"
 			animation="150"
 			class="col-span-10 flex flex-col gap-20"
@@ -99,7 +102,9 @@ async function reorderMedia(block, items) {
 					:block="element"
 					:initial-open="element.uuid === lastCreatedUuid"
 					:flush="element.type === 'links'"
-					editable
+					:editable="canUpdate"
+					:draggable="canReorder"
+					:deletable="canDelete"
 					@delete="deleteBlock(element)"
 					@edit-title="blockTitleForm.edit($event)">
 
@@ -112,7 +117,7 @@ async function reorderMedia(block, items) {
 						v-if="element.type === 'image'"
 						:block="element"
 						:allow-pick="false"
-						allow-upload
+						:allow-upload="canUpload"
 						@upload-media="(media) => uploadMedia(element, media)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@toggle-publish="togglePublish"
@@ -122,7 +127,7 @@ async function reorderMedia(block, items) {
 						v-if="element.type === 'slider'"
 						:block="element"
 						:allow-pick="false"
-						allow-upload
+						:allow-upload="canUpload"
 						@upload-media="(media) => uploadMedia(element, media)"
 						@remove-media="(uuid) => removeMedia(element, uuid)"
 						@reorder-media="(items) => reorderMedia(element, items)"
@@ -148,7 +153,7 @@ async function reorderMedia(block, items) {
 
 	<!-- Block type picker -->
 	<Grid class="mt-40">
-		<Span class="col-span-8 col-start-2">
+		<Span v-if="canCreate" class="col-span-8 col-start-2">
 			<BlockSelector :types="blockTypes" @select="addBlock" />
 		</Span>
 	</Grid>

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProject } from '@/composables/useProject'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
@@ -14,6 +15,7 @@ import TitleLightbox from '@/views/projects/components/TitleLightbox.vue'
 
 const router = useRouter()
 const { project, fetch } = useProject()
+const { canUpdate } = useCan()
 const titleLightbox = ref(null)
 
 function goBack() {
@@ -38,7 +40,7 @@ function goBack() {
 		</Span>
 
 		<Span class="col-span-8">
-			<PageTitle editable @edit="titleLightbox.open(project)">
+			<PageTitle :editable="canUpdate" @edit="titleLightbox.open(project)">
 				{{ project?.full_title }}
 			</PageTitle>
 		</Span>

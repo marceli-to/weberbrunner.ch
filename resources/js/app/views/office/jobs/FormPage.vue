@@ -5,6 +5,7 @@ import jobsApi from '@/api/jobs'
 import locationsApi from '@/api/locations'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useFormErrors } from '@/composables/useFormErrors'
+import { useCan } from '@/composables/useCan'
 import PageTitle from '@/components/ui/PageTitle.vue'
 import FormContainer from '@/components/ui/form/FormContainer.vue'
 import Grid from '@/components/ui/grid/Grid.vue'
@@ -18,6 +19,7 @@ const route = useRoute()
 const router = useRouter()
 const { load } = usePageLoader()
 const { get, clear, submit } = useFormErrors({ toast: true })
+const { canUpdate } = useCan()
 
 const isEdit = ref(!!route.params.id)
 const locationTitle = ref('')
@@ -99,7 +101,7 @@ function goBack() {
 		</Grid>
 
 		<!-- Bottom bar -->
-		<ActionBar v-show="dirty" @cancel="goBack" />
+		<ActionBar v-if="canUpdate" v-show="dirty" @cancel="goBack" />
 
 	</FormContainer>
 </template>
