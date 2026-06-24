@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BNg4YWP9.css",
+    "file": "assets/app-C4bqZRX7.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/site.css": {
-    "file": "assets/site-DdNdHwux.css",
+    "file": "assets/site-DJ6Chu0U.css",
     "src": "resources/css/site.css",
     "isEntry": true,
     "name": "site",
@@ -34,7 +34,7 @@
     "src": "resources/fonts/Routine-Semibold.woff2"
   },
   "resources/js/app/app.js": {
-    "file": "assets/app-Dn1ipzFl.js",
+    "file": "assets/app-DV1PFQYT.js",
     "name": "app",
     "src": "resources/js/app/app.js",
     "isEntry": true,
@@ -49,12 +49,12 @@
     "isEntry": true
   },
   "resources/js/site.js": {
-    "file": "assets/site-CJpSrQxb.js",
+    "file": "assets/site-B-fana5C.js",
     "name": "site",
     "src": "resources/js/site.js",
     "isEntry": true,
     "css": [
-      "assets/site-BJPu9yXy.css"
+      "assets/site-CVuONdbL.css"
     ]
   }
 }

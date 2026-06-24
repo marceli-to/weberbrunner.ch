@@ -261,7 +261,7 @@ const routes = [
     path: '/dashboard/profil',
     name: 'profile.index',
     component: ProfileIndex,
-    meta: { title: 'Profil', navSection: 'main', navLabel: 'Profil', navOrder: 40 },
+    meta: { title: 'Profil' },
   },
 ]
 
