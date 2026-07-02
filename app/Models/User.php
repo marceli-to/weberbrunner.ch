@@ -19,6 +19,7 @@ class User extends Authenticatable
 		'name',
 		'email',
 		'password',
+		'team_member_id',
 	];
 
 	protected $hidden = [
@@ -32,6 +33,11 @@ class User extends Authenticatable
 			'email_verified_at' => 'datetime',
 			'password' => 'hashed',
 		];
+	}
+
+	public function teamMember()
+	{
+		return $this->belongsTo(TeamMember::class);
 	}
 
 	public function isAdmin(): bool

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\User\DeleteAction as DeleteUserAction;
+use App\Actions\User\StoreAction as StoreUserAction;
+use App\Actions\User\UpdateAction as UpdateUserAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -19,23 +22,11 @@ class UserController extends Controller
 		return UserResource::collection($users);
 	}
 
-	public function store(Request $request)
+	public function store(StoreUserRequest $request)
 	{
 		$this->authorize('create', User::class);
 
-		$data = $request->validate([
-			'firstname' => 'nullable|string|max:255',
-			'name' => 'required|string|max:255',
-			'email' => 'required|email|unique:users,email',
-			'password' => 'required|string|min:8',
-			'role' => 'required|in:admin,editor,viewer',
-		]);
-
-		$data['password'] = Hash::make($data['password']);
-
-		$user = User::create($data);
-		$user->role = $data['role'];
-		$user->save();
+		$user = (new StoreUserAction)->execute($request->validated());
 
 		return new UserResource($user);
 	}
@@ -47,27 +38,11 @@ class UserController extends Controller
 		return new UserResource($user);
 	}
 
-	public function update(Request $request, User $user)
+	public function update(UpdateUserRequest $request, User $user)
 	{
 		$this->authorize('update', $user);
 
-		$data = $request->validate([
-			'firstname' => 'nullable|string|max:255',
-			'name' => 'required|string|max:255',
-			'email' => 'required|email|unique:users,email,' . $user->id,
-			'password' => 'nullable|string|min:8',
-			'role' => 'required|in:admin,editor,viewer',
-		]);
-
-		if (!empty($data['password'])) {
-			$data['password'] = Hash::make($data['password']);
-		} else {
-			unset($data['password']);
-		}
-
-		$user->update($data);
-		$user->role = $data['role'];
-		$user->save();
+		$user = (new UpdateUserAction)->execute($user, $request->validated());
 
 		return new UserResource($user);
 	}
@@ -76,7 +51,7 @@ class UserController extends Controller
 	{
 		$this->authorize('delete', $user);
 
-		$user->delete();
+		(new DeleteUserAction)->execute($user);
 
 		return response()->json(null, 204);
 	}

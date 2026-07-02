@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import categoriesApi from '@/api/categories'
 import statusesApi from '@/api/statuses'
 import masterdataApi from '@/api/masterdata'
 import masterdataGroupsApi from '@/api/masterdata-groups'
+import usersApi from '@/api/users'
+import teamApi from '@/api/team'
 import { usePageLoader } from '@/composables/usePageLoader'
 import { useCollapsed } from '@/composables/useCollapsed'
 import { useConfirm } from '@/composables/useConfirm'
@@ -21,28 +23,67 @@ import DraggableEntryRow from '@/components/ui/DraggableEntryRow.vue'
 import NewEntryButton from '@/components/ui/NewEntryButton.vue'
 import SectionTitleForm from '@/components/ui/SectionTitleForm.vue'
 import MasterdataEntryForm from '@/components/ui/MasterdataEntryForm.vue'
+import UserForm from '@/views/settings/components/UserForm.vue'
 
 const { load } = usePageLoader()
 const statuses = ref([])
 const categories = ref([])
 const masterdataGroups = ref([])
+const users = ref([])
+const teamMembers = ref([])
 const statusLightbox = ref(null)
 const categoryLightbox = ref(null)
 const masterdataGroupLightbox = ref(null)
 const masterdataEntryLightbox = ref(null)
+const userLightbox = ref(null)
 const { collapsed, toggle } = useCollapsed('settings')
 const { confirm } = useConfirm()
-const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+const { isAdmin, canCreate, canUpdate, canDelete, canReorder } = useCan()
+
+const roleLabels = {
+	admin: 'Publizierende',
+	editor: 'Autor:innen',
+	viewer: 'Lesende',
+}
+
+const linkedTeamMemberIds = computed(() =>
+	users.value.filter((u) => u.team_member_id).map((u) => u.team_member_id)
+)
 
 async function fetch() {
-	const [statusesRes, categoriesRes, masterdataRes] = await Promise.all([
-		statusesApi.index(),
-		categoriesApi.index(),
-		masterdataApi.index(),
-	])
+	const requests = [statusesApi.index(), categoriesApi.index(), masterdataApi.index()]
+	if (isAdmin.value) {
+		requests.push(usersApi.index(), teamApi.index())
+	}
+	const [statusesRes, categoriesRes, masterdataRes, usersRes, teamRes] = await Promise.all(requests)
 	statuses.value = statusesRes.data.data
 	categories.value = categoriesRes.data.data
 	masterdataGroups.value = masterdataRes.data.data
+	if (isAdmin.value) {
+		users.value = usersRes.data.data
+		teamMembers.value = teamRes.data.data.filter((m) => m.email)
+	}
+}
+
+function userLabel(user) {
+	return user.firstname ? `${user.firstname} ${user.name}` : user.name
+}
+
+function userSublabel(user) {
+	const kind = user.type === 'intern' ? 'Intern' : 'Extern'
+	return `${roleLabels[user.role] ?? user.role} · ${kind}`
+}
+
+async function destroyUser(user) {
+	const ok = await confirm({
+		message: `Möchtest Du «${userLabel(user)}» wirklich löschen?`,
+		confirmLabel: 'Löschen',
+		variant: 'danger',
+	})
+	if (ok) {
+		await usersApi.destroy(user.uuid)
+		await fetch()
+	}
 }
 
 async function destroyStatus(status) {
@@ -377,6 +418,45 @@ load(fetch)
 
 			</Span>
 
+			<!-- Benutzer*innen -->
+			<Span v-if="isAdmin" class="col-span-10">
+
+				<Grid :cols="10">
+
+					<Span class="col-span-8 col-start-2">
+						<CollapsibleHeader
+							title="Benutzer*innen"
+							:collapsed="collapsed.has('users')"
+							@toggle="toggle('users')" />
+					</Span>
+
+					<Span v-show="!collapsed.has('users')" class="col-span-10 col-start-1">
+
+						<div class="flex flex-col gap-10 min-h-1" :class="{ 'mb-10': users.length }">
+							<DraggableEntryRow
+								v-for="user in users"
+								:key="user.uuid"
+								:split="true"
+								:label="userLabel(user)"
+								:sublabel="userSublabel(user)"
+								:show-publish="false"
+								:draggable="false"
+								@edit="userLightbox.edit(user)"
+								@delete="destroyUser(user)" />
+						</div>
+
+						<Grid :cols="10" class="mb-10">
+							<Span class="col-span-8 col-start-2">
+								<NewEntryButton @click="userLightbox.open()" />
+							</Span>
+						</Grid>
+
+					</Span>
+
+				</Grid>
+
+			</Span>
+
 		</div>
 
 	</Grid>
@@ -410,6 +490,15 @@ load(fetch)
 		ref="masterdataEntryLightbox"
 		:store-fn="masterdataApi.store"
 		:update-fn="masterdataApi.update"
+		@stored="fetch"
+		@updated="fetch" />
+
+	<UserForm
+		ref="userLightbox"
+		:store-fn="usersApi.store"
+		:update-fn="usersApi.update"
+		:team-members="teamMembers"
+		:linked-team-member-ids="linkedTeamMemberIds"
 		@stored="fetch"
 		@updated="fetch" />
 
