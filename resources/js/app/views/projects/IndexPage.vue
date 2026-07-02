@@ -73,7 +73,7 @@ load(fetch)
 						Ort
 					</ListTableCell>
 					<ListTableCell span="col-span-1" last header>
-						&nbsp;
+					  &nbsp;
 					</ListTableCell>
 				</ListTableRow>
 
@@ -96,11 +96,9 @@ load(fetch)
 						</span>
 					</ListTableCell>
 					<ListTableCell span="col-span-1" last>
-            <template v-if="!project.publish">
 						<span class="w-full flex items-center justify-center">
-							<span class="rounded-full bg-lime w-8 h-8"></span>
+							<span class="rounded-full w-9 h-9" :class="!project.publish ? 'bg-lime' : 'bg-gray/50'"></span>
 						</span>
-            </template>
 					</ListTableCell>
 				</ListTableRow>
 
