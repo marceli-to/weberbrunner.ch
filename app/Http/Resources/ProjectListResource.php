@@ -15,6 +15,7 @@ class ProjectListResource extends JsonResource
 			'number' => $this->number,
 			'title' => $this->title,
 			'city' => $this->city,
+			'publish' => $this->publish,
 		];
 	}
 }

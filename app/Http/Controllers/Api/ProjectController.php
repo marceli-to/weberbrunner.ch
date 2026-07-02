@@ -22,7 +22,7 @@ class ProjectController extends Controller
 		$this->authorize('viewAny', Project::class);
 
 		$projects = Project::query()
-			->select(['uuid', 'priority', 'number', 'title', 'city'])
+			->select(['uuid', 'priority', 'number', 'title', 'city', 'publish'])
 			->orderBy('number')
 			->get();
 
