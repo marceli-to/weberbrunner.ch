@@ -6,7 +6,7 @@ import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
 import { useCan } from '@/composables/useCan'
 
-const { canUpdate, canDelete } = useCan()
+const { canUpdate, canDelete, canPublish } = useCan()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -41,7 +41,7 @@ function onDrawerSubmit() {
 			<MediaCard
 				v-if="image"
 				:item="image"
-				:publishable="canUpdate"
+				:publishable="canPublish"
 				:deletable="canDelete"
 				:editable="canUpdate"
 				show-filename

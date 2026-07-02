@@ -12,7 +12,7 @@ import Tabs from '@/components/ui/navbar/Tabs.vue'
 const route = useRoute()
 const toast = useToast()
 const { project } = useProject(null, { skipFetch: true })
-const { canUpdate } = useCan()
+const { canPublish } = useCan()
 
 const items = [
 	{ label: 'Web', name: 'projects.layout', icon: Window },
@@ -34,5 +34,5 @@ async function togglePublish() {
 </script>
 
 <template>
-	<Tabs :items="items" :publishable="project" :can-publish="canUpdate" @toggle-publish="togglePublish" />
+	<Tabs :items="items" :publishable="project" :can-publish="canPublish" @toggle-publish="togglePublish" />
 </template>

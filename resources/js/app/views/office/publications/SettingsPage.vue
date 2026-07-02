@@ -11,7 +11,7 @@ import PublishToggle from '@/components/ui/form/PublishToggle.vue'
 
 const { publication, fetch } = usePublication()
 const toast = useToast()
-const { canUpdate } = useCan()
+const { canPublish } = useCan()
 
 async function togglePublish() {
 	await publicationsApi.toggle(publication.value.uuid)
@@ -27,7 +27,7 @@ async function togglePublish() {
 		<Grid class="mb-20">
 			<Span class="col-span-8 col-start-2">
 				<PublishToggle
-					v-if="publication && canUpdate"
+					v-if="publication && canPublish"
 					:model-value="publication.publish"
 					@update:model-value="togglePublish" />
 			</Span>

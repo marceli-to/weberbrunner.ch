@@ -7,7 +7,7 @@ import MediaPickerDrawer from '@/components/media/MediaPickerDrawer.vue'
 import MediaUploader from '@/components/media/MediaUploader.vue'
 import { useCan } from '@/composables/useCan'
 
-const { canUpdate, canDelete, canReorder } = useCan()
+const { canUpdate, canDelete, canReorder, canPublish } = useCan()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -60,7 +60,7 @@ function onReorder() {
 				<MediaCard
 					:item="element"
 					:draggable="canReorder"
-					:publishable="canUpdate"
+					:publishable="canPublish"
 					:deletable="canDelete"
 					:editable="canUpdate"
 					show-filename

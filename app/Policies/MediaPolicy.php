@@ -32,6 +32,11 @@ class MediaPolicy
 		return $user->isAdmin() || $user->isEditor();
 	}
 
+	public function publish(User $user, Media $model): bool
+	{
+		return $user->isAdmin();
+	}
+
 	public function delete(User $user, Media $model): bool
 	{
 		return $user->isAdmin();

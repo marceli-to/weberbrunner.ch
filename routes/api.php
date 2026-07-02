@@ -41,7 +41,7 @@ Route::bind('publication', fn ($value) => Publication::where('uuid', $value)->fi
 Route::bind('pageText', fn ($value) => PageText::where('page', $value)->firstOrFail());
 
 Route::prefix('dashboard')
-	->middleware(['web', 'auth'])
+	->middleware(['web', 'auth', \App\Http\Middleware\RestrictPublishToAdmin::class])
 	->group(function () {
 
 		$blockRoutes = function () {

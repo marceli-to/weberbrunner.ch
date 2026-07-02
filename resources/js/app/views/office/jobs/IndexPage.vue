@@ -19,7 +19,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('jobs')
 const { confirm } = useConfirm()
-const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+const { canCreate, canUpdate, canDelete, canReorder, canPublish } = useCan()
 
 async function fetch() {
 	const { data } = await jobsApi.index()
@@ -100,7 +100,7 @@ load(fetch)
 										:label="job.title"
 										:publish="job.publish"
 										:editable="canUpdate"
-										:show-publish="canUpdate"
+										:show-publish="canPublish"
 										:draggable="canReorder"
 										:deletable="canDelete"
 										drag-handle-class="job-drag-handle"

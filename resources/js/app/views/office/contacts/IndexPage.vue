@@ -19,7 +19,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleLocation } = useCollapsed('contacts')
 const { confirm } = useConfirm()
-const { canCreate, canUpdate, canDelete } = useCan()
+const { canCreate, canUpdate, canDelete, canPublish } = useCan()
 
 async function fetch() {
 	const { data } = await contactsApi.index()
@@ -83,7 +83,7 @@ load(fetch)
 										:label="contact.company_name"
 										:publish="contact.publish"
 										:editable="canUpdate"
-										:show-publish="canUpdate"
+										:show-publish="canPublish"
 										@edit="router.push({ name: 'contacts.edit', params: { id: contact.uuid } })"
 										@toggle-publish="toggle(contact)" />
 								</Span>

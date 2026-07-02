@@ -10,7 +10,7 @@ import Grid from '@/components/ui/grid/Grid.vue'
 import Span from '@/components/ui/grid/Span.vue'
 import { useCan } from '@/composables/useCan'
 
-const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+const { canCreate, canUpdate, canDelete, canReorder, canPublish } = useCan()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -91,7 +91,7 @@ function onReorder() {
 				:publish="element.publish"
 				:draggable="canReorder"
 				:editable="canUpdate"
-				:show-publish="canUpdate"
+				:show-publish="canPublish"
 				:deletable="canDelete"
 				drag-handle-class="link-drag-handle"
 				@edit="openEdit(element)"

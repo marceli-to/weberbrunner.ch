@@ -36,7 +36,7 @@ const { load } = usePageLoader()
 const groups = ref([])
 const { collapsed, toggle: toggleSection } = useCollapsed(props.collapsedKey)
 const { confirm } = useConfirm()
-const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+const { canCreate, canUpdate, canDelete, canReorder, canPublish } = useCan()
 const lightbox = ref(null)
 
 async function fetch() {
@@ -195,7 +195,7 @@ load(fetch)
 										:publish="entry.publish"
 										:draggable="canReorder"
 										:editable="canUpdate"
-										:show-publish="canUpdate"
+										:show-publish="canPublish"
 										:deletable="canDelete"
 										drag-handle-class="entry-drag-handle"
 										@edit="router.push({ name: `${routePrefix}.edit`, params: { id: entry.uuid } })"

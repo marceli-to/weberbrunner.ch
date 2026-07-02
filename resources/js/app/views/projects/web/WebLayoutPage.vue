@@ -21,7 +21,7 @@ import { useCan } from '@/composables/useCan'
 const { project, fetch } = useProject()
 const toast = useToast()
 const { collapsed, toggle } = useCollapsed('web-layout')
-const { canCreate, canUpdate, canDelete, canReorder } = useCan()
+const { canCreate, canUpdate, canDelete, canReorder, canPublish } = useCan()
 
 const editingMedia = ref(null)
 const sliderDrawerOpen = ref(false)
@@ -101,7 +101,7 @@ async function reorderSliderImages() {
 							animation="150"
 							@end="reorderSliderImages">
 							<template #item="{ element }">
-								<MediaCard :item="element" :draggable="canReorder" :publishable="canUpdate" :deletable="canDelete" :editable="canUpdate" show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
+								<MediaCard :item="element" :draggable="canReorder" :publishable="canPublish" :deletable="canDelete" :editable="canUpdate" show-filename @delete="removeSliderImage" @toggle-publish="toggleSliderPublish" @edit="editingMedia = $event" />
 							</template>
 							<template #footer>
 								<template v-if="canCreate">

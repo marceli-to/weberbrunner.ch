@@ -95,7 +95,7 @@ class MediaController extends Controller
 
 	public function togglePublish(Media $media)
 	{
-		$this->authorize('update', $media);
+		$this->authorize('publish', $media);
 
 		$media = (new TogglePublishAction)->execute($media);
 
