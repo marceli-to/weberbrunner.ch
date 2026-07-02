@@ -69,8 +69,11 @@ load(fetch)
 					<ListTableCell span="col-span-8" header sortable :sort-active="sortKey === 'title'" :sort-dir="sortDir" @sort="toggleSort('title')">
 						Projektname
 					</ListTableCell>
-					<ListTableCell span="col-span-5" last header sortable :sort-active="sortKey === 'city'" :sort-dir="sortDir" @sort="toggleSort('city')">
+					<ListTableCell span="col-span-4" header sortable :sort-active="sortKey === 'city'" :sort-dir="sortDir" @sort="toggleSort('city')">
 						Ort
+					</ListTableCell>
+					<ListTableCell span="col-span-1" last header>
+						&nbsp;
 					</ListTableCell>
 				</ListTableRow>
 
@@ -87,10 +90,17 @@ load(fetch)
 							{{ project.title }}
 						</span>
 					</ListTableCell>
-					<ListTableCell span="col-span-5" last>
+					<ListTableCell span="col-span-4">
 						<span class="block truncate">
 							{{ project.city }}
 						</span>
+					</ListTableCell>
+					<ListTableCell span="col-span-1" last>
+            <template v-if="!project.publish">
+						<span class="w-full flex items-center justify-center">
+							<span class="rounded-full bg-lime w-8 h-8"></span>
+						</span>
+            </template>
 					</ListTableCell>
 				</ListTableRow>
 

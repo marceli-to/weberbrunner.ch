@@ -11,7 +11,6 @@
 	$isSmall = $variant === 'sm' ? true : false;
 	$wrapperClass = $isSmall ? 'p-10 pb-15 md:px-15 md:pb-15 lg:p-15' : 'p-20 md:p-15 md:pb-20 lg:p-20 lg:pb-25';
 	$titleClass = $isSmall ? 'text-sm md:text-md' : 'text-md md:text-lg lg:text-xl';
-	$imageClass = ($orientation === 'portrait' || $orientation === 'square') && $variant !== 'sm' ? 'max-w-[80%] mx-auto' : '';
 @endphp
 <a
 	href="{{ route('page.about.publications.show', $slug) }}"
@@ -24,7 +23,7 @@
 			:alt="$caption ?? ''"
 			sizes="(min-width: 1024px) 19vw, (min-width: 768px) 25vw, 50vw"
 			:max-width="1024"
-			class="group-hover:opacity-90 transition-all {{ $imageClass }}"
+			class="group-hover:opacity-90 transition-all"
 		/>
 	@endif
 
