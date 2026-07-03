@@ -37,7 +37,7 @@
 
       <div class="pr-20 lg:pr-40 max-w-prose">
         <x-headings.h3>Rechtsform:</x-headings.h3>
-        <p>weberbrunner architekten ag</p>
+        <p>weberbrunner architektur ag</p>
 
         <x-headings.h3>Gründung:</x-headings.h3>
         <p>1999, Aktiengesellschaft seit 2008</p>
@@ -66,7 +66,7 @@
 
       <div class="pr-20 lg:pr-40 max-w-prose">
         <x-headings.h3>Rechtsform:</x-headings.h3>
-        <p>weberbrunner berlin Gesellschaft von Architekten mbH</p>
+        <p>weberbrunner pischetsrieder Gesellschaft von Architekten mbH</p>
 
         <x-headings.h3>Eintragung:</x-headings.h3>
         <p>Architektenkammer Berlin 2016</p>

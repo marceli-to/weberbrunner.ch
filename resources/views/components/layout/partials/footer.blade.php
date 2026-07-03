@@ -37,10 +37,10 @@
       </a>
     </div>
     <div class="flex flex-row gap-x-10 md:justify-end md:col-span-1 lg:justify-start lg:col-span-1 lg:col-start-12">
-      <a href="https://www.instagram.com/weberbrunner/" target="_blank" aria-label="Folgen Sie uns auf Instagram">
+      <a href="https://www.instagram.com/weberbrunner.pischetsrieder" target="_blank" aria-label="Folgen Sie uns auf Instagram">
         <x-icons.instagram size="lg" class="w-24 md:w-30 h-auto" />
       </a>
-      <a href="https://www.linkedin.com/company/weberbrunner/" target="_blank" aria-label="Folgen Sie uns auf LinkedIn">
+      <a href="https://www.linkedin.com/company/weberbrunnerpischetsriederarchitektur" target="_blank" aria-label="Folgen Sie uns auf LinkedIn">
         <x-icons.linkedin size="lg" class="w-24 md:w-30 h-auto" />
       </a>
     </div>
