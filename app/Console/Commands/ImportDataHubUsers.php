@@ -26,6 +26,12 @@ class ImportDataHubUsers extends Command
 		'C' => 'viewer',
 	];
 
+	private array $roleLabels = [
+		'admin' => 'Publizierende',
+		'editor' => 'Autor:innen',
+		'viewer' => 'Lesende',
+	];
+
 	private const PASSWORD_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 	public function handle(): int
@@ -223,7 +229,8 @@ class ImportDataHubUsers extends Command
 		$handle = fopen($path, 'w');
 		fputcsv($handle, ['name', 'email', 'password', 'role', 'type']);
 		foreach ($created as $row) {
-			fputcsv($handle, [$row['name'], $row['email'], $row['password'], $row['role'], $row['type']]);
+			$roleLabel = $this->roleLabels[$row['role']] ?? $row['role'];
+			fputcsv($handle, [$row['name'], $row['email'], $row['password'], $roleLabel, $row['type']]);
 		}
 		fclose($handle);
 
