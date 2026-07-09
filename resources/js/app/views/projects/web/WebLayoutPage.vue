@@ -126,11 +126,11 @@ async function reorderSliderImages() {
 
 				</Span>
 
-			  <!-- Projektbeschrieb -->
+			  <!-- Zum Projekt -->
 				<Span class="col-span-8 col-start-2">
 
 					<CollapsibleHeader
-						title="Projektbeschrieb"
+						title="Zum Projekt"
 						:collapsed="collapsed.has('description')"
 						@toggle="toggle('description')" />
 

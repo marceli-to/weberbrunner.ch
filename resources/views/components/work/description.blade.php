@@ -1,5 +1,5 @@
 @props([
-  'title' => 'Projektbeschrieb',
+  'title' => 'Zum Projekt',
 ])
 
 <x-blocks.section :title="$title" class="mb-40 lg:mb-80">

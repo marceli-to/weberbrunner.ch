@@ -76,7 +76,7 @@ async function saveShortDescription() {
 		</Span>
 	</Grid>
 
-	<!-- Projektbeschrieb -->
+	<!-- Zum Projekt -->
 	<Grid v-if="project" class="mb-20">
 		<Span class="col-span-8 col-start-2">
 			<CollapsibleHeader
