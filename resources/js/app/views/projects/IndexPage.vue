@@ -97,7 +97,7 @@ load(fetch)
 					</ListTableCell>
 					<ListTableCell span="col-span-1" last>
 						<span class="w-full flex items-center justify-center">
-							<span class="rounded-full w-9 h-9" :class="!project.publish ? 'bg-lime' : 'bg-gray/50'"></span>
+							<span class="rounded-full w-9 h-9" :class="project.publish ? 'bg-lime' : 'bg-gray/50'"></span>
 						</span>
 					</ListTableCell>
 				</ListTableRow>
