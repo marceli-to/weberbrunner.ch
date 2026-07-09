@@ -80,7 +80,7 @@ async function saveShortDescription() {
 	<Grid v-if="project" class="mb-20">
 		<Span class="col-span-8 col-start-2">
 			<CollapsibleHeader
-				:title="'Projektbeschrieb (Web)'"
+				:title="'Zum Projekt'"
 				:collapsed="collapsed.has('short-description')"
 				@toggle="toggle('short-description')" />
 		</Span>

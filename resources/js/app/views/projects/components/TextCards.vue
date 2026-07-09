@@ -32,7 +32,7 @@ defineProps({
     <Span class="col-span-4 h-full">
       <Card header class="h-full flex flex-col">
         <div class="font-semibold text-md min-h-50 flex items-center justify-between border-b-thin w-full">
-          <span>Projektbeschrieb (Web)</span>
+          <span>Zum Projekt</span>
           <template v-if="canUpdate">
             <RouterLink :to="{ name: 'projects.text.edit', params: { id: project.uuid } }" class="cursor-pointer">
               <PencilCircle class="w-25" />
