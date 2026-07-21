@@ -9,8 +9,8 @@
 	<x-media.image
 		:media="$media"
 		:alt="$caption ?? ''"
-		sizes="(min-width: 1280px) 70vw, (min-width: 768px) 85vw, 90vw"
-		:max-width="1920"
+		:display-heights="config('media.slideshow_heights')"
+		fit="max"
 		class="h-(--slideshow-item-height) md:h-(--slideshow-item-height-md) xl:h-(--slideshow-item-height-xl) w-auto"
 	/>
 	@if($caption)

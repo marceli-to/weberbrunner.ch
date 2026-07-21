@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Media;
+use App\Support\ImageVariants;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -50,8 +51,11 @@ class WarmGlideCacheJob implements ShouldQueue
 
 		$aspectRatio = $media->height / max($media->width, 1);
 
+		$heightVariants = ImageVariants::byHeight($media->width, $media->height);
+
 		foreach ($formats as $format) {
 			$fm = $format === 'jpeg' ? 'jpg' : $format;
+
 			foreach ($fits as $fit) {
 				foreach ($widths as $w) {
 					$h = (int) round($w * $aspectRatio);
@@ -63,6 +67,16 @@ class WarmGlideCacheJob implements ShouldQueue
 						'q' => $quality,
 					]);
 				}
+			}
+
+			foreach ($heightVariants as $variant) {
+				$server->makeImage($media->file, [
+					'w' => $variant['w'],
+					'h' => $variant['h'],
+					'fit' => 'max',
+					'fm' => $fm,
+					'q' => $quality,
+				]);
 			}
 		}
 	}

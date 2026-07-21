@@ -4,6 +4,7 @@ namespace App\View\Components\Media;
 
 use App\Models\Media;
 use App\Support\ImageUrlSigner;
+use App\Support\ImageVariants;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -34,6 +35,7 @@ class Image extends Component
 		?array $formats = null,
 		string $class = '',
 		string $loading = 'lazy',
+		?array $displayHeights = null,
 	) {
 		$this->src = $media->file;
 		$this->alt = $alt ?? $media->alt ?? '';
@@ -48,6 +50,23 @@ class Image extends Component
 		$baseHeight = $media->height ?? 1;
 		$this->aspectRatio = $baseHeight / max($baseWidth, 1);
 
+		$variants = $displayHeights
+			? $this->variantsByHeight($media, $displayHeights)
+			: $this->variantsByWidth($media, $maxWidth);
+
+		if ($displayHeights) {
+			$this->sizes = $this->buildSizesFromHeights($displayHeights);
+		}
+
+		$last = end($variants);
+		$this->width = $last['w'];
+		$this->height = $last['h'];
+
+		$this->buildSources($variants);
+	}
+
+	protected function variantsByWidth(Media $media, int $maxWidth): array
+	{
 		$widths = array_values(array_filter(config('media.widths', []), fn ($w) => $w <= $maxWidth));
 		if ($media->width) {
 			$widths = array_values(array_filter($widths, fn ($w) => $w <= $media->width));
@@ -56,13 +75,38 @@ class Image extends Component
 			$widths = [min($maxWidth, $media->width ?: $maxWidth)];
 		}
 
-		$this->width = end($widths);
-		$this->height = (int) round($this->width * $this->aspectRatio);
-
-		$this->buildSources($widths);
+		return array_map(fn ($w) => [
+			'w' => $w,
+			'h' => (int) round($w * $this->aspectRatio),
+		], $widths);
 	}
 
-	protected function buildSources(array $widths): void
+	protected function variantsByHeight(Media $media, array $displayHeights): array
+	{
+		$maxHeight = max($displayHeights) * 2;
+		$variants = ImageVariants::byHeight($media->width, $media->height, $maxHeight);
+
+		if (empty($variants)) {
+			$variants = $this->variantsByWidth($media, 1920);
+		}
+
+		return $variants;
+	}
+
+	protected function buildSizesFromHeights(array $displayHeights): string
+	{
+		krsort($displayHeights);
+
+		$parts = [];
+		foreach ($displayHeights as $minWidth => $cssHeight) {
+			$w = (int) round($cssHeight / max($this->aspectRatio, 0.0001));
+			$parts[] = $minWidth > 0 ? "(min-width: {$minWidth}px) {$w}px" : "{$w}px";
+		}
+
+		return implode(', ', $parts);
+	}
+
+	protected function buildSources(array $variants): void
 	{
 		foreach ($this->formats as $format) {
 			if ($format === 'jpg' || $format === 'jpeg') {
@@ -70,7 +114,7 @@ class Image extends Component
 			}
 
 			$this->sources[] = [
-				'srcset' => $this->buildSrcset($format, $widths),
+				'srcset' => $this->buildSrcset($format, $variants),
 				'type' => $this->getMimeType($format),
 				'sizes' => $this->sizes,
 			];
@@ -79,12 +123,11 @@ class Image extends Component
 		$this->fallbackUrl = $this->buildUrl('jpg', $this->width, $this->height);
 	}
 
-	protected function buildSrcset(string $format, array $widths): string
+	protected function buildSrcset(string $format, array $variants): string
 	{
 		$parts = [];
-		foreach ($widths as $w) {
-			$h = (int) round($w * $this->aspectRatio);
-			$parts[] = $this->buildUrl($format, $w, $h) . ' ' . $w . 'w';
+		foreach ($variants as $variant) {
+			$parts[] = $this->buildUrl($format, $variant['w'], $variant['h']) . ' ' . $variant['w'] . 'w';
 		}
 
 		return implode(', ', $parts);
