@@ -10,13 +10,12 @@ class ImageVariants
 			return [];
 		}
 
+		$ceiling = $maxHeight ? min($maxHeight, $sourceHeight) : $sourceHeight;
+
 		$variants = [];
 
 		foreach (config('media.heights', []) as $h) {
-			if ($maxHeight && $h > $maxHeight) {
-				continue;
-			}
-			if ($h > $sourceHeight) {
+			if ($h > $ceiling) {
 				continue;
 			}
 
@@ -28,8 +27,9 @@ class ImageVariants
 			$variants[$w] = ['w' => $w, 'h' => $h];
 		}
 
-		if (empty($variants)) {
-			$variants[$sourceWidth] = ['w' => $sourceWidth, 'h' => $sourceHeight];
+		$ceilingWidth = min($sourceWidth, (int) round($ceiling * $sourceWidth / $sourceHeight));
+		if ($ceilingWidth > 0 && !isset($variants[$ceilingWidth])) {
+			$variants[$ceilingWidth] = ['w' => $ceilingWidth, 'h' => $ceiling];
 		}
 
 		ksort($variants);
