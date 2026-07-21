@@ -7,9 +7,10 @@ use Intervention\Image\ImageManager;
 
 class ImageDownsizer
 {
-	public static function downsizeIfNeeded(string $absolutePath, ?int $maxEdge = null, ?int $quality = null): ?array
+	public static function downsizeIfNeeded(string $absolutePath, ?int $maxLongEdge = null, ?int $quality = null, ?int $maxShortEdge = null): ?array
 	{
-		$maxEdge ??= (int) config('media.max_upload_edge', 3000);
+		$maxLongEdge ??= (int) config('media.max_upload_edge', 6000);
+		$maxShortEdge ??= (int) config('media.max_upload_short_edge', 1400);
 		$quality ??= (int) config('media.upload_quality', 85);
 
 		$dimensions = @getimagesize($absolutePath);
@@ -18,9 +19,8 @@ class ImageDownsizer
 		}
 
 		[$width, $height] = $dimensions;
-		$longEdge = max($width, $height);
 
-		if ($longEdge <= $maxEdge) {
+		if (max($width, $height) <= $maxLongEdge && min($width, $height) <= $maxShortEdge) {
 			return [
 				'width' => $width,
 				'height' => $height,
@@ -33,9 +33,9 @@ class ImageDownsizer
 		$image = $manager->read($absolutePath);
 
 		if ($width >= $height) {
-			$image->scaleDown(width: $maxEdge);
+			$image->scaleDown(width: $maxLongEdge, height: $maxShortEdge);
 		} else {
-			$image->scaleDown(height: $maxEdge);
+			$image->scaleDown(width: $maxShortEdge, height: $maxLongEdge);
 		}
 
 		$extension = strtolower(pathinfo($absolutePath, PATHINFO_EXTENSION));

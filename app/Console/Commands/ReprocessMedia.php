@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ReprocessMedia extends Command
 {
-	protected $signature = 'media:reprocess {--no-warm : Skip dispatching Glide cache warm jobs} {--no-resize : Skip resizing originals, only warm cache}';
+	protected $signature = 'media:reprocess {--no-warm : Skip dispatching Glide cache warm jobs} {--resize : Downsize originals in place (destructive, overwrites source files)}';
 
 	protected $description = 'Downsize oversized media originals and dispatch Glide cache warm jobs';
 
@@ -19,7 +19,8 @@ class ReprocessMedia extends Command
 		@ini_set('memory_limit', config('media.warm_memory_limit', '512M'));
 
 		$disk = Storage::disk('public');
-		$maxEdge = (int) config('media.max_upload_edge', 3000);
+		$maxLongEdge = (int) config('media.max_upload_edge', 6000);
+		$maxShortEdge = (int) config('media.max_upload_short_edge', 1400);
 
 		$query = Media::query()->where('mime_type', 'like', 'image/%');
 		$total = $query->count();
@@ -29,7 +30,14 @@ class ReprocessMedia extends Command
 			return self::SUCCESS;
 		}
 
-		$this->info("Processing {$total} image(s). Max edge: {$maxEdge}px.");
+		if ($this->option('resize')) {
+			$this->warn("Originals will be overwritten in place. Long edge: {$maxLongEdge}px, short edge: {$maxShortEdge}px.");
+			if (!$this->confirm('This cannot be undone. Continue?', false)) {
+				return self::FAILURE;
+			}
+		}
+
+		$this->info("Processing {$total} image(s).");
 		$bar = $this->output->createProgressBar($total);
 		$bar->start();
 
@@ -45,7 +53,7 @@ class ReprocessMedia extends Command
 					continue;
 				}
 
-				if (!$this->option('no-resize')) {
+				if ($this->option('resize')) {
 					$absolute = $disk->path($media->file);
 					$info = ImageDownsizer::downsizeIfNeeded($absolute);
 					if ($info && $info['resized']) {
