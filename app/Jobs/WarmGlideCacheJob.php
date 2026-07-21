@@ -48,6 +48,7 @@ class WarmGlideCacheJob implements ShouldQueue
 		$formats = config('media.formats', ['avif', 'webp', 'jpg']);
 		$fits = config('media.fits', ['crop', 'max']);
 		$quality = (int) config('media.quality', 90);
+		$sharpen = (int) config('media.sharpen', 0);
 
 		$aspectRatio = $media->height / max($media->width, 1);
 
@@ -55,6 +56,8 @@ class WarmGlideCacheJob implements ShouldQueue
 
 		foreach ($formats as $format) {
 			$fm = $format === 'jpeg' ? 'jpg' : $format;
+
+			$sharp = $sharpen > 0 ? ['sharp' => $sharpen] : [];
 
 			foreach ($fits as $fit) {
 				foreach ($widths as $w) {
@@ -65,7 +68,7 @@ class WarmGlideCacheJob implements ShouldQueue
 						'fit' => $fit,
 						'fm' => $fm,
 						'q' => $quality,
-					]);
+					] + $sharp);
 				}
 			}
 
@@ -76,7 +79,7 @@ class WarmGlideCacheJob implements ShouldQueue
 					'fit' => 'max',
 					'fm' => $fm,
 					'q' => $quality,
-				]);
+				] + $sharp);
 			}
 		}
 	}

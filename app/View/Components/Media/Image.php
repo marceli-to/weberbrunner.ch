@@ -18,6 +18,7 @@ class Image extends Component
 	public float $aspectRatio;
 	public string $fit;
 	public int $quality;
+	public int $sharpen;
 	public array $formats;
 	public string $class;
 	public string $loading;
@@ -36,11 +37,13 @@ class Image extends Component
 		string $class = '',
 		string $loading = 'lazy',
 		?array $displayHeights = null,
+		?int $sharpen = null,
 	) {
 		$this->src = $media->file;
 		$this->alt = $alt ?? $media->alt ?? '';
 		$this->fit = $fit;
 		$this->quality = $quality ?? (int) config('media.quality', 90);
+		$this->sharpen = $sharpen ?? (int) config('media.sharpen', 0);
 		$this->formats = $formats ?? config('media.formats', ['avif', 'webp', 'jpg']);
 		$this->class = $class;
 		$this->loading = $loading;
@@ -135,13 +138,19 @@ class Image extends Component
 
 	protected function buildUrl(string $format, int $width, int $height): string
 	{
-		return ImageUrlSigner::signUrl($this->src, [
+		$params = [
 			'w' => $width,
 			'h' => $height,
 			'fit' => $this->fit,
 			'fm' => $format,
 			'q' => $this->quality,
-		]);
+		];
+
+		if ($this->sharpen > 0) {
+			$params['sharp'] = $this->sharpen;
+		}
+
+		return ImageUrlSigner::signUrl($this->src, $params);
 	}
 
 	protected function getMimeType(string $format): string

@@ -10,5 +10,6 @@ return [
 	'formats' => ['avif', 'webp', 'jpg'],
 	'fits' => ['crop', 'max'],
 	'quality' => 90,
+	'sharpen' => 5,
 	'warm_memory_limit' => '512M',
 ];
