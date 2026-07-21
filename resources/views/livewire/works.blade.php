@@ -30,6 +30,7 @@
               :title="$project['title']"
               :media="$project['media']"
               :slug="$project['slug']"
+              sizes="50vw"
               variant="sm" />
           @endforeach
         </div>
@@ -46,6 +47,7 @@
               :title="$project['title']"
               :media="$project['media']"
               :slug="$project['slug']"
+              sizes="25vw"
               variant="sm" />
           @endforeach
         </div>
@@ -62,6 +64,7 @@
               :title="$project['title']"
               :media="$project['media']"
               :slug="$project['slug']"
+              sizes="17vw"
               variant="sm" />
           @endforeach
         </div>

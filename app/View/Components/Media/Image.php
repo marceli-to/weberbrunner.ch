@@ -100,10 +100,22 @@ class Image extends Component
 	{
 		krsort($displayHeights);
 
+		$maxDpr = (int) config('media.max_dpr', 0);
+		$cappedDpr = $maxDpr + 1;
+
 		$parts = [];
 		foreach ($displayHeights as $minWidth => $cssHeight) {
 			$w = (int) round($cssHeight / max($this->aspectRatio, 0.0001));
-			$parts[] = $minWidth > 0 ? "(min-width: {$minWidth}px) {$w}px" : "{$w}px";
+			$viewport = $minWidth > 0 ? "(min-width: {$minWidth}px)" : '';
+
+			if ($maxDpr >= 2) {
+				$capped = (int) floor($w * $maxDpr / $cappedDpr);
+				$resolution = "(min-resolution: {$cappedDpr}dppx)";
+				$condition = $viewport ? "{$viewport} and {$resolution}" : $resolution;
+				$parts[] = "{$condition} {$capped}px";
+			}
+
+			$parts[] = $viewport ? "{$viewport} {$w}px" : "{$w}px";
 		}
 
 		return implode(', ', $parts);
