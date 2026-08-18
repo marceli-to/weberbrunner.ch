@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Media;
+use App\Models\TeamMember;
 
 class MediaPolicy
 {
@@ -39,7 +40,7 @@ class MediaPolicy
 
 	public function delete(User $user, Media $model): bool
 	{
-		return $user->isAdmin();
+		return $user->isAdmin() || ($user->isEditor() && $model->mediable_type === TeamMember::class);
 	}
 
 	public function restore(User $user, Media $model): bool
