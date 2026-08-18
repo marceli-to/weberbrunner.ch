@@ -1,21 +1,41 @@
 <script setup>
+import { computed } from 'vue'
 import Burger from '@/components/icons/Burger.vue'
 import Cross from '@/components/icons/Cross.vue'
 import Document from '@/components/icons/Document.vue'
 import Eye from '@/components/icons/Eye.vue'
 
-defineProps({
+const props = defineProps({
 	item: { type: Object, required: true },
 	deletable: { type: Boolean, default: false },
 	draggable: { type: Boolean, default: false },
 	publishable: { type: Boolean, default: false },
 	showFilename: { type: Boolean, default: false },
+	showMeta: { type: Boolean, default: false },
 	editable: { type: Boolean, default: false },
 	variant: { type: String, default: 'light' },
 	compact: { type: Boolean, default: false },
 })
 
 defineEmits(['delete', 'edit', 'toggle-publish'])
+
+function formatBytes(bytes) {
+	if (bytes >= 1048576) {
+		return `${(bytes / 1048576).toFixed(1)} MB`
+	}
+	return `${Math.round(bytes / 1024)} KB`
+}
+
+const meta = computed(() => {
+	const parts = []
+	if (props.item.width && props.item.height) {
+		parts.push(`${props.item.width} × ${props.item.height} px`)
+	}
+	if (props.item.size) {
+		parts.push(formatBytes(props.item.size))
+	}
+	return parts.join(' · ')
+})
 </script>
 
 <template>
@@ -64,10 +84,11 @@ defineEmits(['delete', 'edit', 'toggle-publish'])
 
 		<div
 			v-if="showFilename"
-			class="text-center py-5 px-20 text-sm border-t-thin overflow-hidden text-ellipsis whitespace-nowrap"
+			class="flex items-baseline justify-center gap-5 py-5 px-20 text-sm border-t-thin"
 			:class="[variant === 'dark' ? 'border-t-black' : 'border-t-silver', editable ? 'cursor-pointer' : '']"
 			@click="editable && $emit('edit', item)">
-			{{ item.original_name }}
+			<span class="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{{ item.original_name }}</span>
+			<span v-if="showMeta && meta" class="shrink-0 text-gray whitespace-nowrap">{{ meta }}</span>
 		</div>
 		
 	</div>

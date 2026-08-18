@@ -129,6 +129,7 @@ async function handleSubmit() {
 							:deletable="canDelete"
 							:editable="canUpdate"
 							:show-filename="true"
+							:show-meta="true"
 							variant="dark"
 							@delete="onDelete"
 							@edit="editingMedia = $event" />
