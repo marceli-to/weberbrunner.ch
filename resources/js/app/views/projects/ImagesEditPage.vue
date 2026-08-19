@@ -25,7 +25,7 @@ const router = useRouter()
 const mediaStore = useMediaStore()
 const { confirm } = useConfirm()
 const toast = useToast()
-const { canUpdate, canDelete, canReorder, canUpload } = useCan()
+const { canUpdate, canDeleteImage, canReorder, canUpload } = useCan()
 
 const { project, fetch } = useProject((data) => {
 	mediaStore.setItems(data.media || [])
@@ -126,7 +126,7 @@ async function handleSubmit() {
 						<MediaCard
 							:item="element"
 							:draggable="canReorder"
-							:deletable="canDelete"
+							:deletable="canDeleteImage"
 							:editable="canUpdate"
 							:show-filename="true"
 							:show-meta="true"

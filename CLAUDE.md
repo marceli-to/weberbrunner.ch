@@ -76,7 +76,7 @@ database/factories/{Domain}Factory.php
 
 Exceptions:
 - `UserPolicy` restricts viewAny/view to admin+editor only.
-- `MediaPolicy` lets editors delete media attached to a TeamMember (portraits), so they can replace them.
+- `MediaPolicy` lets editors delete media attached to a TeamMember (portraits) or a Project (Arbeiten images), so they can replace them.
 
 ### API Routes
 

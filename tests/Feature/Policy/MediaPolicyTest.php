@@ -2,6 +2,7 @@
 
 use App\Models\Media;
 use App\Models\Project;
+use App\Models\Publication;
 use App\Models\TeamMember;
 use App\Models\User;
 
@@ -28,9 +29,20 @@ it('allows admin and editor to delete a team member portrait', function () {
 	expect($viewer->can('delete', $portrait))->toBeFalse();
 });
 
-it('allows only admin to delete media that is not a team member portrait', function () {
+it('allows admin and editor to delete a project image', function () {
 	$project = Project::factory()->create();
 	$image = $project->media()->save(Media::factory()->make());
+	$admin = User::factory()->create(['role' => 'admin']);
+	$editor = User::factory()->create(['role' => 'editor']);
+	$viewer = User::factory()->create(['role' => 'viewer']);
+	expect($admin->can('delete', $image))->toBeTrue();
+	expect($editor->can('delete', $image))->toBeTrue();
+	expect($viewer->can('delete', $image))->toBeFalse();
+});
+
+it('allows only admin to delete media of other types', function () {
+	$publication = Publication::factory()->create();
+	$image = $publication->media()->save(Media::factory()->make());
 	$admin = User::factory()->create(['role' => 'admin']);
 	$editor = User::factory()->create(['role' => 'editor']);
 	expect($admin->can('delete', $image))->toBeTrue();

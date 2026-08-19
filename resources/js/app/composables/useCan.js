@@ -15,7 +15,7 @@ export function useCan() {
 	const canReorder = computed(() => isAdmin.value || isEditor.value)
 	const canUpload = computed(() => isAdmin.value || isEditor.value)
 	const canDelete = computed(() => isAdmin.value)
-	const canDeletePortrait = computed(() => isAdmin.value || isEditor.value)
+	const canDeleteImage = computed(() => isAdmin.value || isEditor.value)
 	const canRestore = computed(() => isAdmin.value)
 	const canPublish = computed(() => isAdmin.value)
 
@@ -25,7 +25,7 @@ export function useCan() {
 	return {
 		role,
 		isAdmin, isEditor, isViewer,
-		canCreate, canUpdate, canDelete, canDeletePortrait, canRestore, canReorder, canUpload, canPublish,
+		canCreate, canUpdate, canDelete, canDeleteImage, canRestore, canReorder, canUpload, canPublish,
 		canViewActivity, canViewSettings,
 	}
 }

@@ -13,7 +13,7 @@ const props = defineProps({
 
 const emit = defineEmits(['updated'])
 const { confirm } = useConfirm()
-const { canUpload, canDeletePortrait } = useCan()
+const { canUpload, canDeleteImage } = useCan()
 const image = computed(() => props.member.media?.[0] || null)
 
 async function onUploaded(media) {
@@ -47,7 +47,7 @@ async function onDelete() {
 	<template v-if="image">
 		<MediaCard
 			:item="image"
-			:deletable="canDeletePortrait"
+			:deletable="canDeleteImage"
 			:show-filename="true"
 			:compact="true"
 			@delete="onDelete"
