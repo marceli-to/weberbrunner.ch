@@ -4,7 +4,7 @@ Laravel 12 headless CMS with Vue 3 (Inertia) dashboard. API-only backend, Blade 
 
 ## Tech Stack
 
-- **Backend:** Laravel 12, PHP 8.4, SQLite
+- **Backend:** Laravel 12, PHP 8.4, MySQL (local: MySQL 5.7 via DBngin)
 - **Frontend:** Vue 3 + Inertia.js + Tailwind CSS 4
 - **Auth:** Laravel Breeze (session-based)
 - **Activity logging:** spatie/laravel-activitylog
