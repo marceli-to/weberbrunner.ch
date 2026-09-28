@@ -14,6 +14,7 @@ use App\Http\Controllers\AwardController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JuryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ImprintController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\TalkController;
 use App\Http\Controllers\TeamController;
@@ -54,7 +55,7 @@ Route::prefix('buero')->name('page.about')->group(function () {
 
 // Legal
 Route::name('page.privacy.')->group(function () {
-	Route::view('/impressum', 'pages.misc.imprint')->name('imprint');
+	Route::get('/impressum', ImprintController::class)->name('imprint');
 	Route::view('/datenschutz', 'pages.misc.privacy')->name('privacy');
 });
 

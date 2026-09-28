@@ -22,6 +22,7 @@ import OfficeTeam from '@/views/office/team/IndexPage.vue'
 import OfficeTeamShow from '@/views/office/team/DetailPage.vue'
 import OfficeContacts from '@/views/office/contacts/IndexPage.vue'
 import OfficeContactsForm from '@/views/office/contacts/FormPage.vue'
+import OfficeImprint from '@/views/office/imprint/IndexPage.vue'
 import OfficeJobs from '@/views/office/jobs/IndexPage.vue'
 import OfficeJobsForm from '@/views/office/jobs/FormPage.vue'
 import OfficeNetwork from '@/views/office/network/IndexPage.vue'
@@ -172,6 +173,12 @@ const routes = [
     name: 'contacts.edit',
     component: OfficeContactsForm,
     meta: { title: 'Kontakt', navSection: 'office', navParent: 'office.contacts', roles: EDITOR },
+  },
+  {
+    path: '/dashboard/buero/impressum',
+    name: 'office.imprint',
+    component: OfficeImprint,
+    meta: { title: 'Impressum', navSection: 'office', navLabel: 'Impressum', navOrder: 80 },
   },
   {
     path: '/dashboard/buero/jobs',

@@ -23,6 +23,7 @@ import BlockLink from '@/components/icons/BlockLink.vue'
 
 const props = defineProps({
 	page: { type: Object, required: true },
+	types: { type: Array, default: null },
 })
 
 const emit = defineEmits(['updated'])
@@ -44,12 +45,16 @@ const {
 
 watchBlocks(() => props.page.blocks)
 
-const blockTypes = [
+const allBlockTypes = [
 	{ type: 'text', label: 'Text', icon: { component: BlockText, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 	{ type: 'slider', label: 'Slider', icon: { component: BlockGallery, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 	{ type: 'image', label: 'Bild', icon: { component: BlockImage, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 	{ type: 'links', label: 'Link', icon: { component: BlockLink, class: 'w-auto h-40', wrapperClass: 'flex justify-center' } },
 ]
+
+const blockTypes = props.types
+	? allBlockTypes.filter(t => props.types.includes(t.type))
+	: allBlockTypes
 
 async function uploadMedia(block, media) {
 	const { data } = await mediaApi.persist(media)
