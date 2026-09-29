@@ -38,6 +38,10 @@
 	@apply border-thin border-silver px-16 py-8 text-sm text-gray hover:border-black hover:text-black cursor-pointer;
 }
 
+.media-uploader__btn:disabled {
+	@apply opacity-50 cursor-default pointer-events-none;
+}
+
 .media-uploader .uppy-StatusBar {
 	@apply rounded-none border-thin border-silver border-t-0;
 }

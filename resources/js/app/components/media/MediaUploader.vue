@@ -7,6 +7,7 @@ import German from '@uppy/locales/lib/de_DE'
 
 import PlusCircle from '@/components/icons/PlusCircle.vue'
 import { useCan } from '@/composables/useCan'
+import { useSaving } from '@/composables/useSaving'
 
 import '@uppy/core/css/style.min.css'
 import '@uppy/status-bar/css/style.min.css'
@@ -19,6 +20,7 @@ const props = defineProps({
 const emit = defineEmits(['uploaded', 'save', 'cancel'])
 
 const { canUpload } = useCan()
+const { isSaving } = useSaving()
 
 const statusBarRef = ref(null)
 const fileInputRef = ref(null)
@@ -150,7 +152,7 @@ onBeforeUnmount(() => {
 			</div>
 			<div ref="statusBarRef"></div>
 			<div v-if="showButtons" class="media-uploader__buttons">
-				<button type="button" class="media-uploader__btn" @click="$emit('save')">Speichern</button>
+				<button type="button" class="media-uploader__btn" :disabled="isSaving" @click="$emit('save')">Speichern</button>
 				<button type="button" class="media-uploader__btn" @click="$emit('cancel')">Abbrechen</button>
 			</div>
 		</div>

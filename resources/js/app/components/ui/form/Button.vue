@@ -1,4 +1,6 @@
 <script setup>
+import { useSaving } from '@/composables/useSaving'
+
 defineProps({
 	disabled: { type: Boolean, default: false },
 	type: { type: String, default: 'button' },
@@ -7,6 +9,8 @@ defineProps({
 })
 
 const $slots = defineSlots()
+
+const { isSaving } = useSaving()
 
 const variantClasses = {
 	default: '',
@@ -27,7 +31,7 @@ const variantClasses = {
 		:is="as"
 		class="form-button"
 		:class="[variantClasses[variant], { 'justify-between': $slots['icon-right'] }]"
-		:disabled="disabled"
+		:disabled="disabled || (type === 'submit' && isSaving)"
 		:type="type">
 
 		<span v-if="$slots['icon-left']" class="shrink-0">

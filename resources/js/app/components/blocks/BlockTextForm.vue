@@ -3,8 +3,10 @@ import { ref, watch } from 'vue'
 import Editor from '@/components/ui/form/editor/Editor.vue'
 import Button from '@/components/ui/form/Button.vue'
 import { useCan } from '@/composables/useCan'
+import { useSaving } from '@/composables/useSaving'
 
 const { canUpdate } = useCan()
+const { isSaving } = useSaving()
 
 const props = defineProps({
 	block: { type: Object, required: true },
@@ -30,7 +32,7 @@ function save() {
 		<Editor v-model="form.content" :editable="canUpdate" />
 		<template v-if="canUpdate">
 			<div class="flex justify-end pt-5">
-				<Button @click="save" class="flex justify-center">Speichern</Button>
+				<Button @click="save" class="flex justify-center" :disabled="isSaving">Speichern</Button>
 			</div>
 		</template>
 	</div>

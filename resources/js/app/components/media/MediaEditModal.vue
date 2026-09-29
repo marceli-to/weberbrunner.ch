@@ -7,12 +7,15 @@ import Span from '@/components/ui/grid/Span.vue'
 import Label from '@/components/ui/form/Label.vue'
 import Input from '@/components/ui/form/Input.vue'
 import Button from '@/components/ui/form/Button.vue'
+import { useSaving } from '@/composables/useSaving'
 
 const props = defineProps({
 	media: { type: Object, default: null },
 })
 
 const emit = defineEmits(['close', 'save'])
+
+const { isSaving } = useSaving()
 
 const open = computed(() => !!props.media)
 
@@ -96,7 +99,7 @@ function handleSave() {
 		<!-- Actions -->
 		<Grid :cols="8" class="gap-y-10 px-20">
 			<Span class="col-span-6 col-start-3">
-				<Button type="button" @click="handleSave" class="px-10">Speichern</Button>
+				<Button type="button" @click="handleSave" class="px-10" :disabled="isSaving">Speichern</Button>
 			</Span>
 			<Span class="col-span-6 col-start-3">
 				<Button type="button" @click="emit('close')" class="px-10">Abbrechen</Button>
