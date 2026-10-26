@@ -5,7 +5,6 @@ namespace App\Actions\TeamMember;
 use App\Actions\Media\AttachAction as AttachMediaAction;
 use App\Models\TeamMember;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class UpdateAction
 {
@@ -14,7 +13,7 @@ class UpdateAction
 		$media = $data['media'] ?? [];
 		unset($data['media']);
 
-		$data['slug'] = Str::slug($data['firstname'] . ' ' . $data['name']);
+		$data['slug'] = (new GenerateSlugAction)->execute($data['firstname'], $data['name'], $teamMember->id);
 
 		return DB::transaction(function () use ($teamMember, $data, $media): TeamMember {
 			$teamMember->update($data);

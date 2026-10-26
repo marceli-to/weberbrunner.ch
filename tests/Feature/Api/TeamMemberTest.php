@@ -65,6 +65,55 @@ it('updates a team member', function () {
 		->assertJsonPath('data.firstname', 'Updated');
 });
 
+it('transliterates umlauts in the slug', function () {
+	asAdmin();
+	$member = TeamMember::factory()->create();
+	$this->putJson("/api/dashboard/team/{$member->uuid}", [
+		'firstname' => 'Fabian',
+		'name' => 'Bürgler',
+		'email' => 'fabian@example.com',
+	])
+		->assertOk()
+		->assertJsonPath('data.slug', 'fabian-buergler');
+});
+
+it('keeps the slug unique when another member has the same name', function () {
+	asAdmin();
+	TeamMember::factory()->create(['slug' => 'fabian-buergler'])->delete();
+	$member = TeamMember::factory()->create();
+	$this->putJson("/api/dashboard/team/{$member->uuid}", [
+		'firstname' => 'Fabian',
+		'name' => 'Bürgler',
+		'email' => 'fabian@example.com',
+	])
+		->assertOk()
+		->assertJsonPath('data.slug', 'fabian-buergler-2');
+});
+
+it('keeps its own slug when updated without a name change', function () {
+	asAdmin();
+	$member = TeamMember::factory()->create(['firstname' => 'Max', 'name' => 'Muster', 'slug' => 'max-muster']);
+	$this->putJson("/api/dashboard/team/{$member->uuid}", [
+		'firstname' => 'Max',
+		'name' => 'Muster',
+		'email' => 'max@example.com',
+	])
+		->assertOk()
+		->assertJsonPath('data.slug', 'max-muster');
+});
+
+it('creates a unique slug for a duplicate name', function () {
+	asAdmin();
+	TeamMember::factory()->create(['slug' => 'max-muster']);
+	$this->postJson('/api/dashboard/team', [
+		'firstname' => 'Max',
+		'name' => 'Muster',
+		'email' => 'max@example.com',
+	])
+		->assertCreated()
+		->assertJsonPath('data.slug', 'max-muster-2');
+});
+
 it('deletes a team member', function () {
 	asAdmin();
 	$member = TeamMember::factory()->create();
